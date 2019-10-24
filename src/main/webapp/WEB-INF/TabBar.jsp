@@ -50,22 +50,13 @@
 	</li>
 
 	<!-- ค่าใช้จ่าย -->
-	<li class="nav-item">
-		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
-			aria-controls="collapseTwo">
-			<i class="fas fa-fw fa-donate"></i> <span>ค่าใช้จ่าย</span>
-		</a>
-		<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="/expenses">ค่าใช้จ่าย</a>
-				<a class="collapse-item" href="/expenses-deductions">หัก ณ ที่จ่าย</a>
-			</div>
-		</div>
+	<li class="nav-item"><a class="nav-link" href="/product-list">
+		<i class="fas fa-fw fa-chart-line"></i> <span>ค่าใช้จ่าย</span></a>
 	</li>
 
 	<!-- ผังบัญชี  -->
 	<li class="nav-item"><a class="nav-link" href="/chart-accounts">
-			<i class="fas fa-fw fa-chart-line"></i> <span>ผังบัญชี</span></a>
+			<i class="fas fa-fw fa-chart-bar"></i> <span>ผังบัญชี</span></a>
 	</li>
 
 	<!-- สมุดรายวัน -->
@@ -93,7 +84,7 @@
 	</li>
 
 	<!-- ตั้งค่า -->
-	<li class="nav-item"><a class="nav-link" href="/setting">
+	<li class="nav-item"><a class="nav-link" href="/customers-list">
 			<i class="fas fa-fw fa-cog"></i> <span>ตั้งค่า</span></a>
 	</li>
 
