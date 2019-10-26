@@ -7,8 +7,8 @@
 	<title>Users List</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 	<script src="/data-table/customers-list.js" type="text/javascript"></script>
+	
 </head>
 
 <body>
@@ -38,9 +38,9 @@
 									<div class="col-sm-8"></div>
 									<div class="col-sm-2"></div>
 									<div class="col-sm-2" style="text-align: right;">
-										<button type="button" class="btn btn-primary"
-											data-toggle="modal" data-target="#myModal">เพิ่มรายชื่อ</button>
-									<!-- <button type="button" class="btn btn-primary"  onclick="sd()">TEST SWEET ALERT</button> -->
+										<button type="button" class="btn btn-primary" data-toggle="modal"
+											data-target="#myModal">เพิ่มรายชื่อ</button>
+										<!-- <button type="button" class="btn btn-primary"  onclick="sd()">TEST SWEET ALERT</button> -->
 									</div>
 								</div>
 								<table id="customersList" class="table table-striped table-bordered" width="100%">
@@ -158,19 +158,21 @@
 	</div>
 	<!--End The Modal -->
 
-<script>
-function sd() {
-	swal({
-		  title: "บันทึก สำเร็จ",
-		  type: "success",
-		  confirmButtonClass: "btn-success",
-		  confirmButtonText: "ตกลง",
-		},
-		function(){
-			window.location.href = "/customers-list";
-	});
-}
-</script>
+	<!-- script -->
+	<%@include file="/WEB-INF/Extensions/js.jsp" %>
+	<script>
+		function sd() {
+			swal({
+				title: "บันทึก สำเร็จ",
+				type: "success",
+				confirmButtonClass: "btn-success",
+				confirmButtonText: "ตกลง",
+			},
+				function () {
+					window.location.href = "/customers-list";
+				});
+		}
+	</script>
 
 </body>
 </html>

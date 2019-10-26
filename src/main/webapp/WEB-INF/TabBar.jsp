@@ -84,7 +84,7 @@
 	</li>
 
 	<!-- ตั้งค่า -->
-	<li class="nav-item"><a class="nav-link" href="/customers-list">
+	<li class="nav-item"><a class="nav-link" href="/setting">
 			<i class="fas fa-fw fa-cog"></i> <span>ตั้งค่า</span></a>
 	</li>
 

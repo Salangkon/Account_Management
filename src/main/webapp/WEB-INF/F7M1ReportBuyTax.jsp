@@ -7,7 +7,6 @@
 <title>Report Buy Tax</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>	
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 
 </head>
 <body>
@@ -69,6 +68,8 @@
 		</div>
 	</div>
 	
+	<!-- script -->
+	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 	<script>
 		$('#datepicker').datepicker({
 			uiLibrary: 'bootstrap4'

@@ -11,18 +11,6 @@
 	<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.print.min.js" type="text/javascript"></script>
 	<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.colVis.min.js" type="text/javascript"></script> -->
 	
-	<script src="/data-table/js/jquery-3.3.1.js" type="text/javascript"></script>
-	<script src="/data-table/js/jquery.dataTables.min.js" type="text/javascript"></script>
-	<script src="/data-table/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
-	<script src="/data-table/js/dataTables.buttons.min.js" type="text/javascript"></script>
-	<script src="/data-table/js/buttons.bootstrap4.min.js" type="text/javascript"></script>
-	<script src="/data-table/js/jszip.min.js" type="text/javascript"></script>
-	<script src="/data-table/js/pdfmake.min.js" type="text/javascript"></script>
-	<script src="/data-table/js/vfs_fonts.js" type="text/javascript"></script>
-	<script src="/data-table/js/buttons.html5.min.js" type="text/javascript"></script>
-	<script src="/data-table/js/buttons.print.min.js" type="text/javascript"></script>
-	<script src="/data-table/js/buttons.colVis.min.js" type="text/javascript"></script>
-	
 	<!-- bootstrap 4 datepicker -->
 	<!-- <script src="/data-table/js/gijgo.min.js" type="text/javascript"></script> -->
 	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
@@ -38,7 +26,7 @@
 	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<!-- <script src="js/sb-admin-2.min.js"></script> -->
+	<script src="js/sb-admin-2.min.js"></script>
 
 	<!-- Page level plugins -->
 	<!-- <script src="vendor/chart.js/Chart.min.js"></script> -->

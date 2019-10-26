@@ -7,7 +7,6 @@
 <title>Tax Invoice List</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>	
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 
 </head>
 <body>
@@ -35,5 +34,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- script -->
+	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 </body>
 </html>

@@ -7,7 +7,6 @@
 <title>Purchase Order List</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>	
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>script"></script>
 
 </head>
 <body>
@@ -33,5 +32,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- script -->
+	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 </body>
 </html>
