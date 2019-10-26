@@ -16,7 +16,8 @@
 	<!-- bootstrap 4 datepicker -->
 	<!-- <link href="/data-table/css/gijgo.min.css" rel="stylesheet" type="text/css"> -->
 	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
-
+	
+	<!-- Data Table JS-->
 	<script src="/data-table/js/jquery-3.3.1.js" type="text/javascript"></script>
 	<script src="/data-table/js/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="/data-table/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>

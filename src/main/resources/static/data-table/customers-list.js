@@ -2,15 +2,15 @@ $(document).ready(
 	function() {				
 		var table = $('#customersList').DataTable({
 			lengthChange : false,
-			buttons : [ 'copy', 'excel', 'pdf', 'colvis' ],
 			"order": [[ 4, 'desc' ]],
 			"sAjaxSource" : "/api/customers-list",
 			"iDisplayLength": 10,
 			"sAjaxDataProp" : "",
-			dom: 'Bfrtip',
-			buttons: [
-				'copy', 'csv', 'excel', 'pdf', 'print'
-			],
+			dom: 'Blfrtip',
+			buttons : [ 'copy', 'excel', 'pdf', 'print', 'colvis' ],
+			// buttons: [
+			// 	'copy', 'csv', 'excel', 'pdf', 'print'
+			// ],
 			"aoColumns" : [{
 				"mData" : "companyName",
 				"sWidth" : "260px" 

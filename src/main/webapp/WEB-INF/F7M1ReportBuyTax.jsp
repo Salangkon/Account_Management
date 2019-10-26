@@ -2,13 +2,15 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Report Buy Tax</title>
 
-	<%@include file="/WEB-INF/Extensions/css.jsp" %>	
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Report Buy Tax</title>
+
+	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 
 </head>
+
 <body>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -37,11 +39,13 @@
 							<div class="table-responsive col-sm-12">
 								<div class="row" style="margin-bottom: 10px;">
 									<div class="col-sm-7"></div>
-									<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker"/> </div>
+									<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
 									<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
-									<div class="col-sm-1"><button class="btn btn-primary" type="button" style="margin-top: 33px"> ค้นหา <i class="fas fa-fw fa-search"></i> </button></div>
+									<div class="col-sm-1"><button class="btn btn-primary" type="button"
+											style="margin-top: 32px"> ค้นหา <i class="fas fa-fw fa-search"></i>
+										</button></div>
 								</div>
-								<table id="" class="table table-striped table-bordered" width="100%">
+								<table id="example" class="table table-striped table-bordered" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>วันที่</th>
@@ -53,21 +57,16 @@
 											<th>ตัวเลือก</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr> 
-											<td colspan="7" align="center">No date</td> 
-										</tr>
-									</tbody>	 				
 								</table>
 							</div>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- script -->
 	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 	<script>
@@ -77,6 +76,17 @@
 		$('#datepicker1').datepicker({
 			uiLibrary: 'bootstrap4'
 		});
+
+		$(document).ready(function () {
+			var table = $('#example').DataTable({
+				lengthChange: false,
+				buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
+			});
+
+			table.buttons().container()
+				.appendTo('#example_wrapper .col-md-6:eq(0)');
+		});
 	</script>
 </body>
+
 </html>
