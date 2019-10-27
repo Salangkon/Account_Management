@@ -39,8 +39,8 @@
 							<div class="table-responsive col-sm-12">
 								<div class="table-responsive col-sm-12">
 									<div class="row">
-										<div class="col-sm-8"></div>
-										<div class="col-sm-3"></div>
+										<div class="col-sm-10"></div>
+										<div class="col-sm-1"></div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" data-toggle="modal"
 												data-target="#myModal">สร้างใหม่</button>
@@ -56,7 +56,8 @@
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="example" class="table table-sm table-striped table-bordered" width="100%">
+									<table id="example" class="table table-sm table-striped table-bordered"
+										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
 												<th>วันที่</th>
@@ -96,7 +97,8 @@
 									<form class="user">
 										<div class="form-group row">
 											<div class="col-sm-12" style="text-align: right;">
-												<a href="#"><i class="fas fa-2x fa-print"></i></a>
+												<a href="#"><i class="fas fa-2x fa-print"
+														style="margin-right: 10px;"></i></a>
 												<a href="#"><i class="fas fa-2x fa-download"></i></a>
 											</div>
 											<div class="col-sm-12">
@@ -149,8 +151,11 @@
 													</thead>
 													<tfoot>
 														<tr>
-															<th style="text-align: center;"><a href="#"><i class="fas fa-trash"></i></a></th>
-															<th colspan="2"><i class="fas fa-plus" style="color: red;"></i> <a href="#">เพิ่มรายการ</a></th>
+															<th style="text-align: center;"><a href="#"><i
+																		class="fas fa-trash"></i></a></th>
+															<th colspan="2"><i class="fas fa-plus"
+																	style="color: red;"></i> <a href="#">เพิ่มรายการ</a>
+															</th>
 															<th style="text-align: right;"><label>รวม</label></th>
 															<th>00.00</th>
 															<th>00.00</th>
