@@ -33,7 +33,7 @@
 							<h4 class="m-0 font-weight-bold text-primary">ผังบัญชี</h4>
 						</div>
 						<div class="card-body">
-							<table id="example" class="table table-striped table-bordered" width="100%">
+							<table id="example" class="table table-sm table-striped table-bordered" width="100%">
 								<thead class="bg-gradient-primary" style="color: white;">
 									<tr>
 										<th>ชื่อบริษัท</th>

@@ -52,11 +52,11 @@
 										<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
 										<div class="col-sm-1">
 											<button class="btn btn-primary" type="button"
-												style="margin-top: 32px;width: 97px;"> ค้นหา <i
+												style="margin-top: 32px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="example" class="table table-striped table-bordered" width="100%">
+									<table id="example" class="table table-sm table-striped table-bordered" width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
 												<th>วันที่</th>
@@ -83,7 +83,7 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title">เพิ่มรายชื่อ</h4>
+						<h4 class="modal-title">สร้างสมุดรายวัน</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -92,74 +92,79 @@
 						<!-- Nested Row within Card Body -->
 						<div class="row">
 							<div class="col-lg-12">
-								<div class="p-5">
+								<div class="p-3">
 									<form class="user">
 										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<label>ประเภท</label>
-												<select class="form-control" id="companyType">
-													<option value="">ประเภท</option>
-													<option value="test01">test01</option>
-													<option value="test02">test02</option>
+											<div class="col-sm-12" style="text-align: right;">
+												<a href="#"><i class="fas fa-2x fa-print"></i></a>
+												<a href="#"><i class="fas fa-2x fa-download"></i></a>
+											</div>
+											<div class="col-sm-12">
+												<label>สมุดรายวัน</label>
+												<select class="form-control" id="companyType" style="width: 200px;">
+													<option value="สมุดรายวันขาย">สมุดรายวันขาย</option>
+													<option value="สมุดรายวันซื้อ">สมุดรายวันซื้อ</option>
 												</select>
 											</div>
-											<div class="col-sm-6">
-												<label>เลขประจำตัวผู้เสียภาษี</label><input type="password"
-													class="form-control form-control" id="taxId"
-													placeholder="เลขประจำตัวผู้เสียภาษี">
+
+											<div class="col-sm-7 mb-3 mb-sm-0">
+												<div>
+													<label>ชื่อลูกค้า</label><input class="form-control" id=""
+														placeholder="ชื่อลูกค้า">
+												</div>
+												<div>
+													<label>คำอธิบาย</label>
+													<textarea class="form-control" style="height: 110px"></textarea>
+												</div>
 											</div>
-										</div>
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<label>รหัสผู้ติดต่อ</label><input type="text"
-													class="form-control form-control" id="companyId"
-													placeholder="รหัสผู้ติดต่อ">
+											<div class="col-sm-5">
+
+												<div>
+													<label>เลขประจำตัวผู้เสียภาษี</label><input type="password"
+														class="form-control form-control" id="taxId"
+														placeholder="เลขประจำตัวผู้เสียภาษี">
+												</div>
+												<div>
+													<label>เลขที่เอกสาร</label><input class="form-control" id=""
+														placeholder="เลขที่เอกสาร">
+												</div>
+												<div>
+													<label>เอกสารอ้างอิง</label><input class="form-control" id=""
+														placeholder="เอกสารอ้างอิง">
+												</div>
 											</div>
-											<div class="col-sm-6">
-												<label>ชื่อบริษัท</label><input type="text"
-													class="form-control form-control" id="companyName"
-													placeholder="ชื่อบริษัท">
+
+											<div class="table-responsive col-sm-12" style="margin-top: 12px;">
+												<table id="example1" class="table table-sm table-striped table-bordered"
+													width="100%">
+													<thead class="bg-gradient-primary" style="color: white;">
+														<tr>
+															<th style="text-align: center;"><input type="checkbox"></th>
+															<th>รหัสบัญชี</th>
+															<th>ชื่อบัญชี</th>
+															<th>รายละเอียด</th>
+															<th>เดบิต</th>
+															<th>เครดิต</th>
+														</tr>
+													</thead>
+													<tfoot>
+														<tr>
+															<th style="text-align: center;"><a href="#"><i class="fas fa-trash"></i></a></th>
+															<th colspan="2"><i class="fas fa-plus" style="color: red;"></i> <a href="#">เพิ่มรายการ</a></th>
+															<th style="text-align: right;"><label>รวม</label></th>
+															<th>00.00</th>
+															<th>00.00</th>
+														</tr>
+													</tfoot>
+												</table>
 											</div>
-										</div>
-										<div class="form-group row">
-											<div class="col-sm-12 mb-3 mb-sm-0">
-												<label>สำนักงาน / สาขาที่</label>
-												<input type="radio" name="">
-												สำนักงานใหญ่
-												<input type="radio" name=""> สาขาที่
-												<input type="text" id="department">
-											</div>
-										</div>
-										<div class="form-group">
-											<label>ที่อยู่</label>
-											<textarea class="form-control" id="address" style="height: 100px"
-												placeholder="ที่อยู่"></textarea>
-										</div>
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<label>ชื่อผู้ติดต่อ</label><input type="text"
-													class="form-control form-control" id="customerName"
-													placeholder="ชื่อผู้ติดต่อ">
-											</div>
-											<div class="col-sm-6">
-												<label>E-mail</label><input type="email"
-													class="form-control form-control" id="email" placeholder="E-mail">
-											</div>
-										</div>
-										<div class="form-group row">
-											<div class="col-sm-6">
-												<label>เบอร์ติดต่อ</label><input type="tel"
-													class="form-control form-control" id="tel"
-													placeholder="เบอร์ติดต่อ">
-											</div>
-											<div class="col-sm-6"></div>
+
 										</div>
 									</form>
 								</div>
 							</div>
 						</div>
 					</div>
-
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" id="save">บันทึก</button>
@@ -183,9 +188,17 @@
 
 			$(document).ready(function () {
 				var table = $('#example').DataTable({
-					lengthChange: false,
+					lengthChange: true,
+					// dom: 'Bfrtip',
 					buttons: ['copy', 'excel', 'pdf', 'colvis']
 				});
+
+				var table = $('#example1').DataTable({
+					// lengthChange: false,
+					// dom: 'lrtip',
+				});
+
+				var counter = 1;
 
 				table.buttons().container()
 					.appendTo('#example_wrapper .col-md-6:eq(0)');

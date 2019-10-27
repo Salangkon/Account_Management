@@ -43,7 +43,7 @@
 										<!-- <button type="button" class="btn btn-primary"  onclick="sd()">TEST SWEET ALERT</button> -->
 									</div>
 								</div>
-								<table id="customersList" class="table table-striped table-bordered" width="100%">
+								<table id="customersList" class="table table-sm table-striped table-bordered" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>ชื่อบริษัท</th>

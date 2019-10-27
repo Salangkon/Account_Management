@@ -45,7 +45,7 @@
 											style="margin-top: 32px"> ค้นหา <i class="fas fa-fw fa-search"></i>
 										</button></div>
 								</div>
-								<table id="example" class="table table-striped table-bordered" width="100%">
+								<table id="example" class="table table-sm table-striped table-bordered" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>วันที่</th>
