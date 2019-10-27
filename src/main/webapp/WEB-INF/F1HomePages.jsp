@@ -9,8 +9,7 @@
 	<title>Account Management Online</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>
-	
+
 </head>
 
 <body id="page-top">
@@ -47,7 +46,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">ใบเสนอราคา</div>
 										</div>
 										<div class="col-auto">
-											<a href="/offer-price-list"><i class="fas fa-file-alt fa-3x text-gray-500"></i></a>
+											<a href="/offer-price-list"><i
+													class="fas fa-file-alt fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -66,7 +66,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">ใบวางบิล</div>
 										</div>
 										<div class="col-auto">
-											<a href="/billing-list"><i class="fas fa-file-alt fa-3x text-gray-500"></i></a>
+											<a href="/billing-list"><i
+													class="fas fa-file-alt fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -89,7 +90,8 @@
 											</div>
 										</div>
 										<div class="col-auto">
-											<a href="/tax-invoice-list"><i class="fas fa-file-alt fa-3x text-gray-500"></i></a>
+											<a href="/tax-invoice-list"><i
+													class="fas fa-file-alt fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -108,7 +110,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">ใบเสร็จรับเงิน</div>
 										</div>
 										<div class="col-auto">
-											<a href="/receipt-list"><i class="fas fa-file-alt fa-3x text-gray-500"></i></a>
+											<a href="/receipt-list"><i
+													class="fas fa-file-alt fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -130,7 +133,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">ใบสั่งซื้อ</div>
 										</div>
 										<div class="col-auto">
-											<a href="/purchase-order-list"><i class="fas fa-clipboard fa-3x text-gray-500"></i></a>
+											<a href="/purchase-order-list"><i
+													class="fas fa-clipboard fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -149,7 +153,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">ใบรับสินค้า</div>
 										</div>
 										<div class="col-auto">
-											<a href="/product-list"><i class="fas fa-clipboard fa-3x text-gray-500"></i></a>
+											<a href="/product-list"><i
+													class="fas fa-clipboard fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -172,7 +177,8 @@
 											</div>
 										</div>
 										<div class="col-auto">
-											<a href="/product-list"><i class="fas fa-chart-line fa-3x text-gray-500"></i></a>
+											<a href="/product-list"><i
+													class="fas fa-chart-line fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -191,7 +197,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">ผังบัญชี</div>
 										</div>
 										<div class="col-auto">
-											<a href="/chart-accounts"><i class="fas fa-chart-bar fa-3x text-gray-500"></i></a>
+											<a href="/chart-accounts"><i
+													class="fas fa-chart-bar fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -213,7 +220,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">สมุดรายวัน</div>
 										</div>
 										<div class="col-auto">
-											<a href="/report-quotidia"><i class="fas fa-book fa-3x text-gray-500"></i></a>
+											<a href="/report-quotidia"><i
+													class="fas fa-book fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -232,7 +240,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">รายงานภาษีซื้อ</div>
 										</div>
 										<div class="col-auto">
-											<a href="/report-buy-tax"><i class="fas fa-balance-scale fa-3x text-gray-500"></i></a>
+											<a href="/report-buy-tax"><i
+													class="fas fa-balance-scale fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -256,7 +265,8 @@
 											</div>
 										</div>
 										<div class="col-auto">
-											<a href="/report-sale-tax"><i class="fas fa-balance-scale fa-3x text-gray-500"></i></a>
+											<a href="/report-sale-tax"><i
+													class="fas fa-balance-scale fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -275,7 +285,8 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">สมุดรายชื่อ</div>
 										</div>
 										<div class="col-auto">
-											<a href="/customers-list"><i class="fas fa-address-book fa-3x text-gray-500"></i></a>
+											<a href="/customers-list"><i
+													class="fas fa-address-book fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
 								</div>
@@ -364,6 +375,7 @@
 		</div>
 	</div>
 
+	<!-- script -->
+	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 </body>
-
 </html>
