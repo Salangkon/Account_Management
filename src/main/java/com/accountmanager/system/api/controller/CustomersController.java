@@ -23,10 +23,10 @@ public class CustomersController {
 		return customersListRepo.findAll();
 	}
 	
-	@GetMapping("/customers-list/{xx}")
-	public CustomersList customersList(@PathVariable("xx") String xx) {
-		System.err.println(xx);
-		return customersListRepo.findOne(xx);
+	@GetMapping("/customers-list/{customersId}")
+	public CustomersList customersList(@PathVariable("customersId") String customersId) {
+		System.err.println(customersId);
+		return customersListRepo.findOne(customersId);
 	}
 
 	@PostMapping("/add-update-customers-list")
