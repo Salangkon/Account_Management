@@ -8,7 +8,7 @@
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<script src="/data-table/customers-list.js" type="text/javascript"></script>
-	
+
 </head>
 
 <body>
@@ -38,12 +38,13 @@
 									<div class="col-sm-8"></div>
 									<div class="col-sm-2"></div>
 									<div class="col-sm-2" style="text-align: right;">
-										<button type="button" class="btn btn-primary" data-toggle="modal"
+										<button type="button" class="btn btn-primary" data-toggle="modal" onclick="update(null)"
 											data-target="#myModal">เพิ่มรายชื่อ</button>
 										<!-- <button type="button" class="btn btn-primary"  onclick="sd()">TEST SWEET ALERT</button> -->
 									</div>
 								</div>
-								<table id="customersList" class="table table-sm table-striped table-bordered" width="100%">
+								<table id="customersList" class="table table-sm table-striped table-bordered"
+									width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>ชื่อบริษัท</th>
@@ -64,14 +65,15 @@
 		</div>
 	</div>
 
-	<!-- The Modal -->
+	<!-- The Modal Create-->
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">เพิ่มรายชื่อ</h4>
+					<div id="myDIV1"><h4 class="modal-title">เปลี่ยนแปลงรายชื่อ</h4></div>
+					<div id="myDIV"><h4 class="modal-title">เพิ่มรายชื่อ</h4></div>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 
@@ -112,9 +114,9 @@
 									<div class="form-group row">
 										<div class="col-sm-12 mb-3 mb-sm-0">
 											<label>สำนักงาน / สาขาที่</label>
-											<input type="radio" name="">
+											<input type="radio" name="officeType" id="officeType1" value="1">
 											สำนักงานใหญ่
-											<input type="radio" name=""> สาขาที่
+											<input type="radio" name="officeType" id="officeType2" value="2"> สาขาที่
 											<input type="text" id="department">
 										</div>
 									</div>
@@ -136,8 +138,8 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-6">
-											<label>เบอร์ติดต่อ</label><input type="tel"
-												class="form-control form-control" id="tel" placeholder="เบอร์ติดต่อ">
+											<label>เบอร์ติดต่อ</label><input type="text" OnKeyPress="return chkNumber(this)"
+												class="form-control form-control" id="tel" maxlength="10" placeholder="เบอร์ติดต่อ">
 										</div>
 										<div class="col-sm-6"></div>
 									</div>
@@ -156,7 +158,7 @@
 			</div>
 		</div>
 	</div>
-	<!--End The Modal -->
+	<!--End The Modal Create-->
 
 	<!-- script -->
 	<%@include file="/WEB-INF/Extensions/js.jsp" %>
@@ -172,7 +174,15 @@
 					window.location.href = "/customers-list";
 				});
 		}
+
+		//กรอกได้เฉพราะ ตัวเลข
+		function chkNumber(ele) {
+			var vchar = String.fromCharCode(event.keyCode);
+			if ((vchar < '0' || vchar > '9') && (vchar != '.')) return false;
+			ele.onKeyPress = vchar;
+		}
 	</script>
 
 </body>
+
 </html>
