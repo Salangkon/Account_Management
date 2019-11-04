@@ -87,7 +87,7 @@
 
 		<!-- The Modal -->
 		<div class="modal fade" id="myModal">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog modal-lg" style="max-width: 1200px;">
 				<div class="modal-content">
 
 					<!-- Modal Header -->
@@ -183,7 +183,8 @@
 															<th style="text-align: center;"><a href="#"><i
 																		class="fas fa-trash"></i></a></th>
 															<th colspan="2"><i class="fas fa-plus"
-																	style="color: red;"></i> <a href="#">เพิ่มรายการ</a>
+																	style="color: red;"></i> <a href="#"
+																	id="Add">เพิ่มรายการ</a>
 															</th>
 															<th style="text-align: right;"><label>รวม</label></th>
 															<th>00.00</th>
@@ -212,36 +213,7 @@
 
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
-		<script>
-			$('#datepicker').datepicker({
-				uiLibrary: 'bootstrap4'
-			});
-			$('#datepicker1').datepicker({
-				uiLibrary: 'bootstrap4'
-			});
-			$('#datepicker2').datepicker({
-				uiLibrary: 'bootstrap4'
-			});
-
-			$(document).ready(function () {
-				var table = $('#example').DataTable({
-					lengthChange: true,
-					searching: true,
-					// dom: 'Bfrtip',
-					// buttons: ['copy', 'excel', 'pdf', 'colvis']
-				});
-
-				var table = $('#example1').DataTable({
-					lengthChange: false,
-					searching: false,
-					// lengthChange: false,
-					// dom: 'lrtip',
-				});
-
-				var counter = 1;
-
-			});
-		</script>
+		<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
 
 </body>
 

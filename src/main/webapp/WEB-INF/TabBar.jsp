@@ -50,7 +50,7 @@
 	</li>
 
 	<!-- ค่าใช้จ่าย -->
-	<li class="nav-item"><a class="nav-link" href="/product-list">
+	<li class="nav-item"><a class="nav-link" href="/expenses">
 		<i class="fas fa-fw fa-chart-line"></i> <span>ค่าใช้จ่าย</span></a>
 	</li>
 
