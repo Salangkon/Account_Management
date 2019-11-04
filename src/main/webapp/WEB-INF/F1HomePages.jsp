@@ -177,7 +177,7 @@
 											</div>
 										</div>
 										<div class="col-auto">
-											<a href="/product-list"><i
+											<a href="/expenses"><i
 													class="fas fa-chart-line fa-3x text-gray-500"></i></a>
 										</div>
 									</div>
