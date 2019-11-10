@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav sidebar bg-secondary sidebar-dark accordion" id="accordionSidebar" style="background-color: silver;"
 
 	<!-- Sidebar - Brand -->
 	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
@@ -81,6 +81,11 @@
 	<!-- สมุดรายชื่อ -->
 	<li class="nav-item"><a class="nav-link" href="/customers-list">
 			<i class="fas fa-fw fa-address-book"></i> <span>สมุดรายชื่อ</span></a>
+	</li>
+	
+	<!-- จัดเก็ยไฟล์ -->
+	<li class="nav-item"><a class="nav-link" href="/file-storage">
+			<i class="fas fa-fw fa-address-book"></i> <span>จัดเก็บไฟล์เอกสาร</span></a>
 	</li>
 
 	<!-- ตั้งค่า -->
