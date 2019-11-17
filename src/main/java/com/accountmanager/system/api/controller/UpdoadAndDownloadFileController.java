@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.accountmanager.system.model.DBFile;
+import com.accountmanager.system.repository.DBFileRepository;
+
 @RestController
 public class UpdoadAndDownloadFileController {
+	@Autowired
+	DBFileRepository DBFileRepo;
 	
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public String fileUpload(@RequestParam("file") MultipartFile file) throws IOException {
@@ -28,12 +34,16 @@ public class UpdoadAndDownloadFileController {
 		} catch (Exception exe) {
 			exe.printStackTrace();
 		}
+		DBFile dbFile = new DBFile();
+		dbFile.setFileName("D:/work/" + file.getOriginalFilename());
+		dbFile.setFileType(file.getName());
+		DBFileRepo.save(dbFile);
 		return "File has uploaded successfully";
 	}
 
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public ResponseEntity<Object> downloadFile() throws IOException {
-		String filename = "D:/work/KEAM copy.jpg";
+		String filename = "D:/work/IMG_20181229_154743.jpg";
 		File file = new File(filename);
 		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 

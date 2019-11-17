@@ -29,3 +29,9 @@
 	<script src="/data-table/js/buttons.html5.min.js" type="text/javascript"></script>
 	<script src="/data-table/js/buttons.print.min.js" type="text/javascript"></script>
 	<script src="/data-table/js/buttons.colVis.min.js" type="text/javascript"></script>
+	
+	<style type="text/css">
+		.icon-color {
+		color: purple;
+		} 
+	</style>
