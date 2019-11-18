@@ -125,26 +125,25 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
-											<select class="form-control" id="companyType"
-												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน">
-												<option value="สมุดรายวันขาย">TEST 01</option>
-												<option value="สมุดรายวันซื้อ">TEST 01</option>
+											<select class="form-control"
+												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
+												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน </option>
 											</select>
 										</div>
 										<div class="col-sm-4"><label>ที่อยู่</label></div>
 										<div class="col-sm-8">
-											<textarea class="form-control" style="height: 110px"></textarea>
+											<textarea class="form-control" style="height: 110px" id="address"></textarea>
 										</div>
 										<div class="col-sm-4"><label>เลขประจำตัวผู้เสียภาษี</label></div>
 										<div class="col-sm-8">
 											<input type="text" style="margin-top: 10px;"
 												class="form-control form-control" id="taxId"
-												placeholder="เลขประจำตัวผู้เสียภาษี">
+												placeholder="เลขประจำตัวผู้เสียภาษี" id="taxId">
 										</div>
 										<div class="col-sm-4"><label>สำนักงาน / สาขาที่ </label></div>
 										<div class="col-sm-8" style="margin-top: 6px;">
-											<input style="margin-top: 10px;" type="radio" name=""> สำนักงานใหญ่
-											<input style="margin-top: 10px;" type="radio" name=""> สาขาที่
+											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType1"> สำนักงานใหญ่
+											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType2"> สาขาที่
 											<!-- <input type="text" id="department"> -->
 										</div>
 									</div>
@@ -207,7 +206,9 @@
 																	class="fas fa-trash"></i></a></th>
 														<th><i class="fas fa-plus" style="color: red;"></i><a href="#"
 																id="Add">เพิ่มรายการ</a></th>
-														<th style="text-align: right;"><p>รวม</p></th>
+														<th style="text-align: right;">
+															<p>รวม</p>
+														</th>
 														<th>00.00</th>
 														<th>00.00</th>
 													</tr>
@@ -224,13 +225,15 @@
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
 														<div class="col-sm-6">100.00</div>
 
-														<div class="col-sm-6 text-primary">ส่วนลด <input type="number" style="width: 63px;">%</div>
+														<div class="col-sm-6 text-primary">ส่วนลด <input type="number"
+																style="width: 63px;">%</div>
 														<div class="col-sm-6">0.00</div>
 
 														<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด</div>
 														<div class="col-sm-6">100.00</div>
 
-														<div class="col-sm-6 text-primary"><input type="checkbox"> ภาษีมูลค่าเพิ่ม 7%</div>
+														<div class="col-sm-6 text-primary"><input type="checkbox">
+															ภาษีมูลค่าเพิ่ม 7%</div>
 														<div class="col-sm-6">7.00</div>
 
 														<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น</div>

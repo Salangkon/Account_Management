@@ -9,6 +9,46 @@ $('#datepicker2').datepicker({
 });
 
 $(document).ready(function () {
+    //data customer
+    $.ajax({
+        type: "GET",
+        url: "/api/customers-list",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            // console.log("customer list :: " + JSON.stringify(msg))
+            for (var i = 0; i < msg.length; i++) {
+                $('#customers').append('<option value="' + msg[i].companyId + '">' + msg[i].companyName + '</option>');
+            }
+        }
+    });
+    $('#customers').change(function () {
+        console.log($('#customers').val());
+        if ($('#customers').val() != "") {
+            $.ajax({
+                type: "GET",
+                url: "/api/customers-list/" + $('#customers').val(),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    console.log("customer :: " + JSON.stringify(msg))
+                    $('#address').val(msg.address);
+                    $('#taxId').val(msg.taxId);
+                    if (msg.officeType == 1) {
+                        document.getElementById("officeType1").checked = true;
+                    } else {
+                        document.getElementById("officeType2").checked = true;
+                    }
+                }
+            });
+        } else {
+            $('#address').val("");
+            $('#taxId').val("");
+            document.getElementById("officeType1").checked = false;
+            document.getElementById("officeType2").checked = false;
+        }
+    });
+    // table seve offer price
     var table = $('#example').DataTable({
         lengthChange: true,
         searching: true,
@@ -44,8 +84,7 @@ $(document).ready(function () {
         // lengthChange: false,
         // dom: 'lrtip',
         "bAutoWidth": false,
-        "aoColumns": [
-            {
+        "aoColumns": [{
                 sWidth: "5px",
             },
             {
@@ -70,9 +109,9 @@ $(document).ready(function () {
     // });
 
     var counter = 1;
-    $('#Add').click(function() {
+    $('#Add').click(function () {
         tableSelect.row.add([
-            '<div style="text-align: center">'+counter+'</div>',
+            '<div style="text-align: center">' + counter + '</div>',
             '<div><input type="text" style="width: 100%;"></div>',
             '<div><input type="number" style="text-align: center;"></div>',
             '<div><input type="number" style="text-align: center;"></div>',
@@ -82,6 +121,6 @@ $(document).ready(function () {
     });
 
     // Automatically add a first row of data
-//    $('#Add').click();
+    //    $('#Add').click();
 
 });
