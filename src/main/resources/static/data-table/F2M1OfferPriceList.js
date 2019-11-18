@@ -44,20 +44,18 @@ $(document).ready(function () {
         // lengthChange: false,
         // dom: 'lrtip',
         "bAutoWidth": false,
-        "aoColumns": [{
-                sWidth: "5px",
-            },
+        "aoColumns": [
             {
                 sWidth: "5px",
             },
             {
-                sWidth: "60%",
+                sWidth: "55%",
             },
             {
                 sWidth: "10%",
             },
             {
-                sWidth: "10%",
+                sWidth: "20%",
             },
             {
                 sWidth: "10%",
@@ -74,8 +72,7 @@ $(document).ready(function () {
     var counter = 1;
     $('#Add').click(function() {
         tableSelect.row.add([
-            '<div><input type="checkbox" style="text-align: center;"></div>',
-            counter,
+            '<div style="text-align: center">'+counter+'</div>',
             '<div><input type="text" style="width: 100%;"></div>',
             '<div><input type="number" style="text-align: center;"></div>',
             '<div><input type="number" style="text-align: center;"></div>',

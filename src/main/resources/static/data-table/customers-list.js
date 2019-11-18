@@ -91,6 +91,14 @@ $(document).ready(
 
 	});
 
+function CheckOffice(officeType) {
+	if (officeType == 1) {
+		document.getElementById("officeTypeCheck").hidden = true;
+	} else {
+		document.getElementById("officeTypeCheck").hidden = false;
+	}
+	console.log("CheckOffice :: "+officeType);
+}
 
 function deleteId(companyId) {
 	console.log(companyId);
@@ -122,11 +130,13 @@ function update(companyId) {
 	console.log("id :: " + companyId);
 	if (companyId == null) {
 		console.log("null");
+		document.getElementById("officeTypeCheck").hidden = true;
+
 		var x = document.getElementById("myDIV1");
 		x.style.display = "none"
 		var x = document.getElementById("myDIV");
 		x.style.display = "block"
-			
+
 		$('#companyId').val("");
 		document.getElementById("companyId").disabled = false;
 		$('#companyName').val("");
@@ -148,11 +158,17 @@ function update(companyId) {
 			dataType: "json",
 			success: function (msg) {
 				console.log(JSON.stringify(msg));
+				document.getElementById("officeTypeCheck").hidden = false;
+				if (msg.officeType == 1) {
+					document.getElementById("officeTypeCheck").hidden = true;
+				} 
+				console.log("CheckOffice :: "+msg.officeType);
+
 				var x = document.getElementById("myDIV1");
 				x.style.display = "block"
 				var x = document.getElementById("myDIV");
 				x.style.display = "none"
-					
+
 				$('#companyId').val(msg.companyId);
 				document.getElementById("companyId").disabled = true;
 				$('#companyName').val(msg.companyName);
