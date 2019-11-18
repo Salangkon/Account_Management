@@ -22,6 +22,12 @@ public class CustomersController {
 	public Iterable<CustomersList> customersList() {
 		return customersListRepo.findAll();
 	}
+	
+	@GetMapping("/customers-list/{customersId}")
+	public CustomersList customersList(@PathVariable("customersId") String customersId) {
+		System.err.println(customersId);
+		return customersListRepo.findOne(customersId);
+	}
 
 	@PostMapping("/add-update-customers-list")
 	public CustomersList addUpdatecustomersList(@RequestBody CustomersList customersList) {

@@ -87,6 +87,12 @@ public class HomePageController {
 	public String usersList() {
 		return "F8CustomersList";
 	}
+	
+	/* จัดเก็บไฟล์  ขอเพิ่มจาก  user*/
+	@RequestMapping("/file-storage")
+	public String fileStorage() {
+		return "F10FileStorage";
+	}
 
 	/* ตั้งค่า */
 	@RequestMapping("/setting")

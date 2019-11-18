@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Report Sale Tax</title>
 
-	<%@include file="/WEB-INF/Extensions/css.jsp" %>	
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Report Sale Tax</title>
+
+	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 
 </head>
+
 <body>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -25,12 +26,66 @@
 				<%@include file="Topbar.jsp"%>
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<p>รายงานภาษี / รายงานภาษีขาย</p>
+					<!-- <p>รายงานภาษี / รายงานภาษีขาย</p> -->
 					<!-- Content Row -->
-					<div class="row" style="margin-top: 50px"></div>
+					<div class="row"></div>
+
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h4 class="m-0 font-weight-bold text-primary">รายงานภาษี / รายงานภาษีขาย</h4>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive col-sm-12">
+								<div class="row" style="margin-bottom: 10px;">
+									<div class="col-sm-7"></div>
+									<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
+									<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
+									<div class="col-sm-1"><button class="btn btn-primary" type="button"
+											style="margin-top: 32px"> ค้นหา <i class="fas fa-fw fa-search"></i>
+										</button></div>
+								</div>
+								<table id="example" class="table table-sm table-striped table-bordered" width="100%">
+									<thead class="bg-gradient-primary" style="color: white;">
+										<tr>
+											<th>วันที่</th>
+											<th>เลขที่เอกสาร</th>
+											<th>ชื่อลูกค้า</th>
+											<th>จำนวนเงิน</th>
+											<th>ภาษี</th>
+											<th>รวม</th>
+											<th>ตัวเลือก</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- script -->
+	<%@include file="/WEB-INF/Extensions/js.jsp" %>
+	<script>
+		$('#datepicker').datepicker({
+			uiLibrary: 'bootstrap4'
+		});
+		$('#datepicker1').datepicker({
+			uiLibrary: 'bootstrap4'
+		});
+
+		$(document).ready(function () {
+			var table = $('#example').DataTable({
+				lengthChange: false,
+				buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
+			});
+
+			table.buttons().container()
+				.appendTo('#example_wrapper .col-md-6:eq(0)');
+		});
+	</script>
 </body>
+
 </html>
