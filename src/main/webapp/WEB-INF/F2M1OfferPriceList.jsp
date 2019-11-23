@@ -132,18 +132,18 @@
 										</div>
 										<div class="col-sm-4"><label>ที่อยู่</label></div>
 										<div class="col-sm-8">
-											<textarea class="form-control" style="height: 110px" id="address"></textarea>
+											<textarea class="form-control" style="height: 110px" id="address" disabled></textarea>
 										</div>
 										<div class="col-sm-4"><label>เลขประจำตัวผู้เสียภาษี</label></div>
 										<div class="col-sm-8">
 											<input type="text" style="margin-top: 10px;"
 												class="form-control form-control" id="taxId"
-												placeholder="เลขประจำตัวผู้เสียภาษี" id="taxId">
+												placeholder="เลขประจำตัวผู้เสียภาษี" id="taxId" disabled>
 										</div>
 										<div class="col-sm-4"><label>สำนักงาน / สาขาที่ </label></div>
 										<div class="col-sm-8" style="margin-top: 6px;">
-											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType1"> สำนักงานใหญ่
-											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType2"> สาขาที่
+											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType1" disabled> สำนักงานใหญ่
+											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType2" disabled> สาขาที่
 											<!-- <input type="text" id="department"> -->
 										</div>
 									</div>
@@ -153,29 +153,26 @@
 							<div class="col-lg-4">
 								<div class="p-3">
 									<div class="form-group row">
-										<div class="col-sm-3"><label>วันที่</label></div>
-										<div class="col-sm-9">
+										<div class="col-sm-4"><label>วันที่</label></div>
+										<div class="col-sm-8">
 											<input id="datepicker2" />
 										</div>
-										<div class="col-sm-3"><label>เลขที่เอกสาร</label></div>
-										<div class="col-sm-9">
+										<div class="col-sm-4"><label>เลขที่เอกสาร</label></div>
+										<div class="col-sm-8">
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขที่เอกสาร">
 										</div>
-										<div class="col-sm-3"><label>ครบกำหนด</label></div>
-										<div class="col-sm-9">
-											<select class="form-control" id="companyType" placeholder="ครบกำหนด">
-												<option value="สมุดรายวันขาย">TEST 01</option>
-												<option value="สมุดรายวันซื้อ">TEST 01</option>
-											</select>
+										<div class="col-sm-4"><label>ครบกำหนด</label></div>
+										<div class="col-sm-8">
+											<input id="datepicker3" style="margin-top: 10px;"/>
 										</div>
-										<div class="col-sm-3"><label>เลขอ้างอิง</label></div>
-										<div class="col-sm-9">
+										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
+										<div class="col-sm-8">
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขอ้างอิง">
 										</div>
-										<div class="col-sm-3"><label>ราคาสินค้า</label></div>
-										<div class="col-sm-9">
+										<div class="col-sm-4"><label>ราคาสินค้า</label></div>
+										<div class="col-sm-8">
 											<select class="form-control" id="companyType" placeholder="ราคาไม่รวมภาษี">
 												<option value="สมุดรายวันขาย">TEST 01</option>
 												<option value="สมุดรายวันซื้อ">TEST 01</option>
@@ -191,26 +188,26 @@
 									<div class="card">
 										<div class="card-body">
 											<table id="example1" class="table table-sm table-striped table-bordered">
-												<thead class="bg-gradient-primary" style="color: white;">
+												<thead style="color: white;background-color: purple;">
 													<tr>
 														<th>ลำดับ</th>
 														<th>รายละเอียด</th>
 														<th>จำนวน</th>
 														<th>ราคาต่อหน่วย</th>
 														<th>ราคารวม</th>
+														<th></th>
 													</tr>
 												</thead>
 												<tfoot>
 													<tr>
 														<th style="text-align: center;"><a href="#"><i
 																	class="fas fa-trash"></i></a></th>
-														<th><i class="fas fa-plus" style="color: red;"></i><a href="#"
-																id="Add">เพิ่มรายการ</a></th>
-														<th style="text-align: right;">
-															<p>รวม</p>
+														<th colspan="5">
+															<button type="button" class="btn btn-default btn-sm" id="Add">
+																<i class="fas fa-plus" style="color: red" ></i> 
+																เพิ่มรายการ
+															</button>
 														</th>
-														<th>00.00</th>
-														<th>00.00</th>
 													</tr>
 												</tfoot>
 											</table>
@@ -223,7 +220,7 @@
 												<div class="col-sm-3">
 													<div class="form-group row">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
-														<div class="col-sm-6">100.00</div>
+														<div class="col-sm-6"><label id="rentDateSumTotal"></label></div>
 
 														<div class="col-sm-6 text-primary">ส่วนลด <input type="number"
 																style="width: 63px;">%</div>
