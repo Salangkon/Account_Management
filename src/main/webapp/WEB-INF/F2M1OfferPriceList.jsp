@@ -132,7 +132,8 @@
 										</div>
 										<div class="col-sm-4"><label>ที่อยู่</label></div>
 										<div class="col-sm-8">
-											<textarea class="form-control" style="height: 110px" id="address" disabled></textarea>
+											<textarea class="form-control" style="height: 110px" id="address"
+												disabled></textarea>
 										</div>
 										<div class="col-sm-4"><label>เลขประจำตัวผู้เสียภาษี</label></div>
 										<div class="col-sm-8">
@@ -142,8 +143,10 @@
 										</div>
 										<div class="col-sm-4"><label>สำนักงาน / สาขาที่ </label></div>
 										<div class="col-sm-8" style="margin-top: 6px;">
-											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType1" disabled> สำนักงานใหญ่
-											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType2" disabled> สาขาที่
+											<input style="margin-top: 10px;" type="radio" name="officeType"
+												id="officeType1" disabled> สำนักงานใหญ่
+											<input style="margin-top: 10px;" type="radio" name="officeType"
+												id="officeType2" disabled> สาขาที่
 											<!-- <input type="text" id="department"> -->
 										</div>
 									</div>
@@ -164,7 +167,7 @@
 										</div>
 										<div class="col-sm-4"><label>ครบกำหนด</label></div>
 										<div class="col-sm-8">
-											<input id="datepicker3" style="margin-top: 10px;"/>
+											<input id="datepicker3" style="margin-top: 10px;" />
 										</div>
 										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
 										<div class="col-sm-8">
@@ -203,8 +206,9 @@
 														<th style="text-align: center;"><a href="#"><i
 																	class="fas fa-trash"></i></a></th>
 														<th colspan="5">
-															<button type="button" class="btn btn-default btn-sm" id="Add">
-																<i class="fas fa-plus" style="color: red" ></i> 
+															<button type="button" class="btn btn-default btn-sm"
+																id="Add">
+																<i class="fas fa-plus" style="color: red"></i>
 																เพิ่มรายการ
 															</button>
 														</th>
@@ -220,21 +224,23 @@
 												<div class="col-sm-3">
 													<div class="form-group row">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
-														<div class="col-sm-6"><label id="rentDateSumTotal"></label></div>
+														<div class="col-sm-6"><label id="rentDateSumTotal"></label>
+														</div>
 
-														<div class="col-sm-6 text-primary">ส่วนลด <input type="number"
-																style="width: 63px;">%</div>
-														<div class="col-sm-6">0.00</div>
+														<div class="col-sm-6 text-primary">ส่วนลด <input type="text"
+																OnKeyPress="return chkNumber(this)" id="xxx"
+																style="width: 63px;" onkeyup="myFunction()"> % </div>
+														<div class="col-sm-6"><label id="per"></label></div>
 
 														<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด</div>
-														<div class="col-sm-6">100.00</div>
+														<div class="col-sm-6" class="form-control"><label id="sumAllPer1"></label></div>
 
-														<div class="col-sm-6 text-primary"><input type="checkbox">
+														<div class="col-sm-6 text-primary"><input type="checkbox" id="myCheck" onclick="myFunction()">
 															ภาษีมูลค่าเพิ่ม 7%</div>
 														<div class="col-sm-6">7.00</div>
 
 														<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น</div>
-														<div class="col-sm-6">107.00</div>
+														<div class="col-sm-6"><label id="sumAllPer"></label></div>
 													</div>
 												</div>
 											</div>

@@ -18,6 +18,7 @@ function chkNumber(ele) {
     ele.onKeyPress = vchar;
 }
 
+var sumPer = 0;
 $('#example1').on('keyup', 'input', function () {
     var sum1 = $(this).parent().parent().find('td')[4];
     var number1 = $(this).parent().parent().find('td')[2];
@@ -41,8 +42,29 @@ $('#example1').on('keyup', 'input', function () {
             sum = sum + parseFloat($(sumvalues[i]).val());
         }
     }
+    sumPer = parseFloat(sum);
     $('#rentDateSumTotal').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
+
+    myFunction();
 });
+
+function myFunction() {
+    var sumAllPer = 0;
+    var x = document.getElementById("xxx").value;
+    console.log(sumPer + " :: " + x);
+    $('#per').text(parseFloat(sumPer * x / 100).toFixed(2));
+    sumAllPer = sumPer - (sumPer * x / 100)
+    console.log("x :: " + sumAllPer);
+    $('#sumAllPer1').text(parseFloat(sumAllPer).toFixed(2));
+
+    var checkBox = document.getElementById("myCheck");
+    // Get the output text
+    if (checkBox.checked == true) {
+        $('#sumAllPer').text(parseFloat(sumAllPer + (sumAllPer * 7 / 100)).toFixed(2));
+    } else {
+        $('#sumAllPer').text(parseFloat(sumAllPer).toFixed(2));
+    }
+}
 
 
 $(document).ready(function () {
@@ -140,6 +162,12 @@ $(document).ready(function () {
             },
             {
                 sWidth: "60%",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="' +
+                        index.row +
+                        '" value=""/></div><div><textarea class="form-control" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
+                }
             },
             {
                 sWidth: "10%",
@@ -147,7 +175,7 @@ $(document).ready(function () {
                     type, row, index) {
                     return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="allowence' +
                         index.row +
-                        '" value=""/>';
+                        '" value="1"/>';
                 }
             },
             {
@@ -180,10 +208,10 @@ $(document).ready(function () {
         ]
     });
 
-
     $('#example1').on('click', 'a', function () {
         tableSelect.row($(this).parents('tr')).remove().draw();
         var num = $('#example1').DataTable().rows().data().length;
+
         counter--;
         // set allowenceSumTotal
         var sumvalues = $("[name='rentDateSum']");
@@ -193,14 +221,32 @@ $(document).ready(function () {
                 sum = sum + parseFloat($(sumvalues[i]).val());
             }
         }
-        $('#rentDateSumTotal').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
+        sumPer = parseFloat(sum);
+        $('#rentDateSumTotal').text(parseFloat(sum).toFixed(2));
+
+        var sumAllPer = 0;
+        var x = document.getElementById("xxx").value;
+        console.log(sumPer + " :: " + x);
+        $('#per').text(parseFloat(sum * x / 100).toFixed(2));
+        sumAllPer = sumPer - (sumPer * x / 100)
+        console.log("x :: " + sumAllPer);
+        $('#sumAllPer1').text(parseFloat(sumAllPer).toFixed(2));
+
+        var checkBox = document.getElementById("myCheck");
+        // Get the output text
+        if (checkBox.checked == true) {
+            $('#sumAllPer').text(parseFloat(sumAllPer + (sumAllPer * 7 / 100)).toFixed(2));
+        } else {
+            $('#sumAllPer').text(parseFloat(sumAllPer).toFixed(2));
+        }
     });
+
     // counter column
     var counter = 1;
     $('#Add').click(function () {
         tableSelect.row.add([
             '<div style="text-align: center">' + counter + '</div>',
-            '<div><input type="text" style="width: 100%;"></div>',
+            '',
             '',
             '',
             // '<div><input class="number1" type="number" style="text-align: center;"></div>',
@@ -210,5 +256,4 @@ $(document).ready(function () {
         ]).draw(false);
         counter++;
     });
-
 });
