@@ -45,7 +45,7 @@ public class F2ListModel implements Serializable {
 	private String f2Id;
 
 	//bi-directional many-to-one association to F2Model
-	@ManyToOne(optional = false)
+	@ManyToOne
 	@JoinColumn(name = "f2_id", referencedColumnName = "id", insertable = false, updatable = false)
 	@JsonBackReference
 	private F2Model f2Model;

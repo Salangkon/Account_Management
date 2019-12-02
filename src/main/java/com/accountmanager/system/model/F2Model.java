@@ -44,11 +44,16 @@ public class F2Model implements Serializable {
 	@Column(name="discount_price")
 	private float discountPrice;
 
+	@Column(name="discount_product_price")
+	private float discountProductPrice;
+
 	@Lob
 	private String note;
 
-	@Column(name="product_price")
-	private float productPrice;
+	private float price;
+
+	@Column(name="product_price_all")
+	private float productPriceAll;
 
 	@Column(name="update_by")
 	private String updateBy;
@@ -137,6 +142,14 @@ public class F2Model implements Serializable {
 		this.discountPrice = discountPrice;
 	}
 
+	public float getDiscountProductPrice() {
+		return this.discountProductPrice;
+	}
+
+	public void setDiscountProductPrice(float discountProductPrice) {
+		this.discountProductPrice = discountProductPrice;
+	}
+
 	public String getNote() {
 		return this.note;
 	}
@@ -145,12 +158,20 @@ public class F2Model implements Serializable {
 		this.note = note;
 	}
 
-	public float getProductPrice() {
-		return this.productPrice;
+	public float getPrice() {
+		return this.price;
 	}
 
-	public void setProductPrice(float productPrice) {
-		this.productPrice = productPrice;
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public float getProductPriceAll() {
+		return this.productPriceAll;
+	}
+
+	public void setProductPriceAll(float productPriceAll) {
+		this.productPriceAll = productPriceAll;
 	}
 
 	public String getUpdateBy() {

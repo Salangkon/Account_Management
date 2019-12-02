@@ -73,7 +73,7 @@
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="example" class="table table-sm table-striped table-bordered"
+									<table id="tableQuotation" class="table table-sm table-striped table-bordered"
 										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
@@ -127,7 +127,8 @@
 										<div class="col-sm-8">
 											<select class="form-control"
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
-												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน </option>
+												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
+												</option>
 											</select>
 										</div>
 										<div class="col-sm-4"><label>ที่อยู่</label></div>
@@ -158,16 +159,16 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>วันที่</label></div>
 										<div class="col-sm-8">
-											<input id="datepicker2" />
+											<input id="date" />
 										</div>
 										<div class="col-sm-4"><label>เลขที่เอกสาร</label></div>
 										<div class="col-sm-8">
-											<input class="form-control" style="margin-top: 10px;" id=""
+											<input class="form-control" style="margin-top: 10px;" id="departmentId"
 												placeholder="เลขที่เอกสาร">
 										</div>
 										<div class="col-sm-4"><label>ครบกำหนด</label></div>
-										<div class="col-sm-8">
-											<input id="datepicker3" style="margin-top: 10px;" />
+										<div class="col-sm-8" style="margin-top: 10px;">
+											<input id="dateEnd"/>
 										</div>
 										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
 										<div class="col-sm-8">
@@ -190,7 +191,8 @@
 								<div style="margin-left: 2%;width: 97%;">
 									<div class="card">
 										<div class="card-body">
-											<table id="example1" class="table table-sm table-striped table-bordered">
+											<table id="tableCreateQuotationDisplay"
+												class="table table-sm table-bordered">
 												<thead style="color: white;background-color: purple;">
 													<tr>
 														<th>ลำดับ</th>
@@ -204,7 +206,7 @@
 												<tfoot>
 													<tr>
 														<th style="text-align: center;"><a href="#"><i
-																	class="fas fa-trash"></i></a></th>
+																	class="fas fa-trash" id="remove"></i></a></th>
 														<th colspan="5">
 															<button type="button" class="btn btn-default btn-sm"
 																id="Add">
@@ -218,29 +220,31 @@
 											<div class="form-group row" style="margin-top: 30px;">
 												<div class="col-sm-4">
 													<p style="text-align: left;">หมายเหตุ</p>
-													<textarea class="form-control" style="height: 80px"></textarea>
+													<textarea class="form-control" style="height: 80px" id="note"></textarea>
 												</div>
 												<div class="col-sm-5"></div>
 												<div class="col-sm-3">
 													<div class="form-group row">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
-														<div class="col-sm-6"><label id="rentDateSumTotal"></label>
+														<div class="col-sm-6"><p id="price">0.00</p>
 														</div>
 
 														<div class="col-sm-6 text-primary">ส่วนลด <input type="text"
-																OnKeyPress="return chkNumber(this)" id="xxx"
-																style="width: 63px;" onkeyup="myFunction()"> % </div>
-														<div class="col-sm-6"><label id="per"></label></div>
+																OnKeyPress="return chkNumber(this)" id="discount"
+																style="width: 63px;text-align: center;" onkeyup="myFunction()"> % </div>
+														<div class="col-sm-6"><p id="discountPrice">0.00</p></div>
 
 														<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด</div>
-														<div class="col-sm-6" class="form-control"><label id="sumAllPer1"></label></div>
+														<div class="col-sm-6" class="form-control"><p
+																id="discountProductPrice">0.00</p></div>
 
-														<div class="col-sm-6 text-primary"><input type="checkbox" id="myCheck" onclick="myFunction()">
+														<div class="col-sm-6 text-primary"><input type="checkbox"
+																id="myCheck" onclick="myFunction()">
 															ภาษีมูลค่าเพิ่ม 7%</div>
-														<div class="col-sm-6">7.00</div>
+														<div class="col-sm-6"><p id="vat">0.00</p> </div>
 
 														<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น</div>
-														<div class="col-sm-6"><label id="sumAllPer"></label></div>
+														<div class="col-sm-6"><p id="productPriceAll">0.00</p></div>
 													</div>
 												</div>
 											</div>
@@ -252,21 +256,20 @@
 
 						</div>
 					</div>
-				</div>
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-success" id="save">บันทึก</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-				</div>
 
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" id="saveCreateQuotation">บันทึก</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<!--End The Modal -->
+		<!--End The Modal -->
 
-	<!-- script -->
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>
-	<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
+		<!-- script -->
+		<%@include file="/WEB-INF/Extensions/js.jsp" %>
+		<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
 
 </body>
 
