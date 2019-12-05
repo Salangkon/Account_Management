@@ -10,7 +10,6 @@
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<style>
 		label,
-		select,
 		textarea,
 		.input-top {
 			margin-top: 10px;
@@ -52,7 +51,7 @@
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-9"></div>
 										<div class="col-sm-2">
-											<select class="form-control">
+											<select class="form-control" style="margin-top: 10px;">
 												<option value="">ทุกสถานะ</option>
 												<option value="">สถานะที่ 1</option>
 												<option value="">สถานะที่ 2</option>
@@ -73,17 +72,16 @@
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="example" class="table table-sm table-striped table-bordered"
+									<table id="tableQuotation" class="table table-sm"
 										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
-												<th style="text-align: center;"><input type="checkbox"></th>
-												<th>วันที่</th>
-												<th>เลขที่เอกสาร</th>
-												<th>ชื่อลูกค้า</th>
-												<th>จำนวนเงิน</th>
-												<th>สถานะ</th>
-												<th>ตัวเลือก</th>
+												<th style="text-align: center;">วันที่</th>
+												<th style="text-align: center;">เลขที่เอกสาร</th>
+												<th style="text-align: center;">ชื่อลูกค้า</th>
+												<th style="text-align: center;">จำนวนเงิน</th>
+												<th style="text-align: center;">สถานะ</th>
+												<th style="text-align: center;">ตัวเลือก</th>
 											</tr>
 										</thead>
 									</table>
@@ -106,6 +104,8 @@
 					<div class="modal-header">
 						<h4 class="modal-title">สร้างใบเสนอราคา</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<input hidden id="type" value="Quotation">
+						<input hidden id="status" value="สถานะ">
 					</div>
 
 					<!-- Modal body -->
@@ -125,25 +125,29 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
-											<select class="form-control"
+											<select class="form-control" style="margin-top: 10px;" 
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
-												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน </option>
+												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
+												</option>
 											</select>
 										</div>
 										<div class="col-sm-4"><label>ที่อยู่</label></div>
 										<div class="col-sm-8">
-											<textarea class="form-control" style="height: 110px" id="address"></textarea>
+											<textarea class="form-control" style="height: 110px" id="address"
+												disabled></textarea>
 										</div>
 										<div class="col-sm-4"><label>เลขประจำตัวผู้เสียภาษี</label></div>
 										<div class="col-sm-8">
 											<input type="text" style="margin-top: 10px;"
 												class="form-control form-control" id="taxId"
-												placeholder="เลขประจำตัวผู้เสียภาษี" id="taxId">
+												placeholder="เลขประจำตัวผู้เสียภาษี" id="taxId" disabled>
 										</div>
 										<div class="col-sm-4"><label>สำนักงาน / สาขาที่ </label></div>
 										<div class="col-sm-8" style="margin-top: 6px;">
-											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType1"> สำนักงานใหญ่
-											<input style="margin-top: 10px;" type="radio" name="officeType" id="officeType2"> สาขาที่
+											<input style="margin-top: 10px;" type="radio" name="officeType"
+												id="officeType1" disabled> สำนักงานใหญ่
+											<input style="margin-top: 10px;" type="radio" name="officeType"
+												id="officeType2" disabled> สาขาที่
 											<!-- <input type="text" id="department"> -->
 										</div>
 									</div>
@@ -153,30 +157,27 @@
 							<div class="col-lg-4">
 								<div class="p-3">
 									<div class="form-group row">
-										<div class="col-sm-3"><label>วันที่</label></div>
-										<div class="col-sm-9">
-											<input id="datepicker2" />
+										<div class="col-sm-4"><label>วันที่</label></div>
+										<div class="col-sm-8">
+											<input id="date" />
 										</div>
-										<div class="col-sm-3"><label>เลขที่เอกสาร</label></div>
-										<div class="col-sm-9">
-											<input class="form-control" style="margin-top: 10px;" id=""
+										<div class="col-sm-4"><label>เลขที่เอกสาร</label></div>
+										<div class="col-sm-8">
+											<input class="form-control" style="margin-top: 10px;" id="departmentId"
 												placeholder="เลขที่เอกสาร">
 										</div>
-										<div class="col-sm-3"><label>ครบกำหนด</label></div>
-										<div class="col-sm-9">
-											<select class="form-control" id="companyType" placeholder="ครบกำหนด">
-												<option value="สมุดรายวันขาย">TEST 01</option>
-												<option value="สมุดรายวันซื้อ">TEST 01</option>
-											</select>
+										<div class="col-sm-4"><label>ครบกำหนด</label></div>
+										<div class="col-sm-8" style="margin-top: 10px;">
+											<input id="dateEnd"/>
 										</div>
-										<div class="col-sm-3"><label>เลขอ้างอิง</label></div>
-										<div class="col-sm-9">
+										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
+										<div class="col-sm-8">
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขอ้างอิง">
 										</div>
-										<div class="col-sm-3"><label>ราคาสินค้า</label></div>
-										<div class="col-sm-9">
-											<select class="form-control" id="companyType" placeholder="ราคาไม่รวมภาษี">
+										<div class="col-sm-4"><label>ราคาสินค้า</label></div>
+										<div class="col-sm-8">
+											<select class="form-control" style="margin-top: 10px;" id="companyType" placeholder="ราคาไม่รวมภาษี">
 												<option value="สมุดรายวันขาย">TEST 01</option>
 												<option value="สมุดรายวันซื้อ">TEST 01</option>
 											</select>
@@ -190,54 +191,61 @@
 								<div style="margin-left: 2%;width: 97%;">
 									<div class="card">
 										<div class="card-body">
-											<table id="example1" class="table table-sm table-striped table-bordered">
-												<thead class="bg-gradient-primary" style="color: white;">
+											<table id="tableCreateQuotationDisplay"
+												class="table table-sm table-bordered">
+												<thead style="color: white;background-color: purple;">
 													<tr>
 														<th>ลำดับ</th>
 														<th>รายละเอียด</th>
 														<th>จำนวน</th>
 														<th>ราคาต่อหน่วย</th>
 														<th>ราคารวม</th>
+														<th></th>
 													</tr>
 												</thead>
 												<tfoot>
 													<tr>
-														<th style="text-align: center;"><a href="#"><i
-																	class="fas fa-trash"></i></a></th>
-														<th><i class="fas fa-plus" style="color: red;"></i><a href="#"
-																id="Add">เพิ่มรายการ</a></th>
-														<th style="text-align: right;">
-															<p>รวม</p>
+														<th style="text-align: center;">
+															<!-- <a href="#"><i class="fas fa-trash" id="remove"></i></a> -->
 														</th>
-														<th>00.00</th>
-														<th>00.00</th>
+														<th colspan="5">
+															<button type="button" class="btn btn-default btn-sm"
+																id="Add">
+																<i class="fas fa-plus" style="color: red"></i>
+																เพิ่มรายการ
+															</button>
+														</th>
 													</tr>
 												</tfoot>
 											</table>
 											<div class="form-group row" style="margin-top: 30px;">
 												<div class="col-sm-4">
 													<p style="text-align: left;">หมายเหตุ</p>
-													<textarea class="form-control" style="height: 80px"></textarea>
+													<textarea class="form-control" style="height: 80px" id="note"></textarea>
 												</div>
 												<div class="col-sm-5"></div>
 												<div class="col-sm-3">
 													<div class="form-group row">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
-														<div class="col-sm-6">100.00</div>
+														<div class="col-sm-6"><p id="price">0.00</p>
+														</div>
 
-														<div class="col-sm-6 text-primary">ส่วนลด <input type="number"
-																style="width: 63px;">%</div>
-														<div class="col-sm-6">0.00</div>
+														<div class="col-sm-6 text-primary">ส่วนลด <input type="text"
+																OnKeyPress="return chkNumber(this)" id="discount"
+																style="width: 63px;text-align: center;" onkeyup="myFunction()"> % </div>
+														<div class="col-sm-6"><p id="discountPrice">0.00</p></div>
 
 														<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด</div>
-														<div class="col-sm-6">100.00</div>
+														<div class="col-sm-6" class="form-control"><p
+																id="discountProductPrice">0.00</p></div>
 
-														<div class="col-sm-6 text-primary"><input type="checkbox">
+														<div class="col-sm-6 text-primary"><input type="checkbox"
+																id="myCheck" onclick="myFunction()">
 															ภาษีมูลค่าเพิ่ม 7%</div>
-														<div class="col-sm-6">7.00</div>
+														<div class="col-sm-6"><p id="vat">0.00</p> </div>
 
 														<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น</div>
-														<div class="col-sm-6">107.00</div>
+														<div class="col-sm-6"><p id="productPriceAll">0.00</p></div>
 													</div>
 												</div>
 											</div>
@@ -249,21 +257,20 @@
 
 						</div>
 					</div>
-				</div>
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-success" id="save">บันทึก</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-				</div>
 
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" id="saveCreateQuotation">บันทึก</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<!--End The Modal -->
+		<!--End The Modal -->
 
-	<!-- script -->
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>
-	<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
+		<!-- script -->
+		<%@include file="/WEB-INF/Extensions/js.jsp" %>
+		<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
 
 </body>
 
