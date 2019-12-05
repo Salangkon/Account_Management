@@ -9,6 +9,8 @@
 	<link href="/data-table/css/bootstrap.css" rel="stylesheet" type="text/css">
 	<link href="/data-table/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
 	<link href="/data-table/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+	<link href="/data-table/css/select.dataTables.min.css" rel="stylesheet" type="text/css">
+	
 	
 	<!-- sweet-alert -->
 	<link href="/data-table/css/sweetalert.min.css" rel="stylesheet" type="text/css">
@@ -29,6 +31,8 @@
 	<script src="/data-table/js/buttons.html5.min.js" type="text/javascript"></script>
 	<script src="/data-table/js/buttons.print.min.js" type="text/javascript"></script>
 	<script src="/data-table/js/buttons.colVis.min.js" type="text/javascript"></script>
+	<script src="/data-table/js/dataTables.select.min.js" type="text/javascript"></script>
+	
 	
 	<style type="text/css">
 		.icon-color {

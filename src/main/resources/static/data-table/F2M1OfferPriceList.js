@@ -18,7 +18,6 @@ function chkNumber(ele) {
     ele.onKeyPress = vchar;
 }
 
-
 var discountPrice = 0;
 $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
     var sum1 = $(this).parent().parent().find('td')[4];
@@ -67,10 +66,16 @@ function myFunction() {
     }
 }
 
-
+function changeFunc($i) {
+    // alert($i);
+    if ($i == 1) {
+        
+    }
+}
 
 $(document).ready(function () {
 
+    // วันปัจจุบัน
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
@@ -82,7 +87,7 @@ $(document).ready(function () {
         mm = '0' + mm;
     }
     var today = dd + '/' + mm + '/' + yyyy;
-    // document.getElementById('date').value = today;
+    document.getElementById('date').value = today;
 
     //data customer
     $.ajax({
@@ -126,33 +131,55 @@ $(document).ready(function () {
 
     // table seve offer price
     var tableQuotation = $('#tableQuotation').DataTable({
-        lengthChange: true,
+        lengthChange: false,
         searching: true,
-        // dom: 'Bfrtip',
-        // buttons: ['copy', 'excel', 'pdf', 'colvis']
+        "sAjaxSource": "/api-f2/get-by/Quotation",
+        "sAjaxDataProp": "",
         "aoColumns": [{
-                "sWidth": "5%",
+                "mData": "date",
+                "className": "text-center",
+                "sWidth": "8%",
             },
             {
+                "mData": "departmentId",
+                "sWidth": "16%",
+            },
+            {
+                "mData": "companyId",
+                "sWidth": "42%",
+            },
+            {
+                "mData": "",
                 "sWidth": "12%",
+                "mRender": function (data,
+                    type, row, index, full) {
+                    return row.productPriceAll.toFixed(2);
+                }
             },
             {
-                "sWidth": "12%",
+                "mData": "status",
+                "className": "text-center",
+                "sWidth": "10%",
             },
             {
-                "sWidth": "35%",
-            },
-            {
-                "sWidth": "12%",
-            },
-            {
-                "sWidth": "12%",
-            },
-            {
-                "sWidth": "12%",
+                "mData": "",
+                "sWidth": "5px",
+                "className": "text-center",
+                "mRender": function (data, type, full) {
+                    return '<select class="form-control form-control-sm" id="selectBox" onchange="changeFunc(value);">\n\
+                                    <option value="">ตัวเลือก</option/>\n\
+                                    <option value="1">อัพเดท</option/>\n\
+                                    <option value="2">ผ่านการตวจสอบ</option/>\n\
+                                    <option value="3">ยกเลิก</option/>\n\
+                            </select>';
+                }
             }
         ]
     });
+
+    // $('#tableQuotation').on('click', 'tr', function () {
+    //     $(this).toggleClass('selected');
+    // });
 
     var tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
@@ -163,15 +190,13 @@ $(document).ready(function () {
         "bAutoWidth": false,
         "sAjaxDataProp": "",
         "aoColumns": [{
-                "mData": "companyId",
-                className: 'select-checkbox',
+                "sWidth": "5%",
                 "mRender": function (data,
                     type, row, index) {
-                    return '';
+                    index.row++;
+                    return '<div style="text-align: center"> ' + index.row + '</div>';
                 }
-            },
-            {
-                "mData": "",
+            }, {
                 "sWidth": "60%",
                 "mRender": function (data,
                     type, row, index) {
@@ -213,7 +238,7 @@ $(document).ready(function () {
                 "sWidth": "5px",
                 "mRender": function (data,
                     type, row, index) {
-                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;"></a></div>';
+                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
                 }
             }
         ]
@@ -256,18 +281,23 @@ $(document).ready(function () {
     $('#Add').click(function () {
         tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
     });
-    $('#tableCreateQuotationDisplay').on('click', 'tr', function () {
-        $(this).toggleClass('selected');
-    });
+    // $('#tableCreateQuotationDisplay').on('click', 'tr', function () {
+    //     $(this).toggleClass('selected');
+    // });
     $('#remove').click(function () {
         tableCreateQuotation.rows('.selected').remove().draw();
     });
 
     $('#saveCreateQuotation').click(function () {
-        
+
+        var date01 =
+            console.log(date01);
+
         var insertQuotation = {
-            customersId: $('#customers').val(), //ลูกค้า
+            companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
+            type: $('#type').val(), //ประเภท
+            status: $('#status').val(), //สถานะ
             price: $('#price').text(), //รวมเป็นเงิน
             productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
             discount: $('#discount').val(), //ส่วนลด
@@ -275,8 +305,8 @@ $(document).ready(function () {
             discountProductPrice: $('#discountProductPrice').text(), //
             vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
             note: $('#note').val(), //หมาบเหตุ
-            date: $('#date').val(), //วันที่
-            dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            date: new Date($('#date').val()), //วันที่
+            dateEnd: new Date($('#dateEnd').val()), //วันที่_ครบกำหนด
             f2ListModels: [],
         }
         var data = tableCreateQuotation.data();
@@ -295,9 +325,9 @@ $(document).ready(function () {
             type: 'POST',
             url: '/api-f2/add-update',
             data: JSON.stringify(insertQuotation),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-            success: function (result) {                
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
                 window.location.href = "/offer-price-list";
             }
         });

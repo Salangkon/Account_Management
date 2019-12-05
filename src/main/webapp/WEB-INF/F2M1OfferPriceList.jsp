@@ -10,7 +10,6 @@
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<style>
 		label,
-		select,
 		textarea,
 		.input-top {
 			margin-top: 10px;
@@ -52,7 +51,7 @@
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-9"></div>
 										<div class="col-sm-2">
-											<select class="form-control">
+											<select class="form-control" style="margin-top: 10px;">
 												<option value="">ทุกสถานะ</option>
 												<option value="">สถานะที่ 1</option>
 												<option value="">สถานะที่ 2</option>
@@ -73,17 +72,16 @@
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="tableQuotation" class="table table-sm table-striped table-bordered"
+									<table id="tableQuotation" class="table table-sm"
 										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
-												<th style="text-align: center;"><input type="checkbox"></th>
-												<th>วันที่</th>
-												<th>เลขที่เอกสาร</th>
-												<th>ชื่อลูกค้า</th>
-												<th>จำนวนเงิน</th>
-												<th>สถานะ</th>
-												<th>ตัวเลือก</th>
+												<th style="text-align: center;">วันที่</th>
+												<th style="text-align: center;">เลขที่เอกสาร</th>
+												<th style="text-align: center;">ชื่อลูกค้า</th>
+												<th style="text-align: center;">จำนวนเงิน</th>
+												<th style="text-align: center;">สถานะ</th>
+												<th style="text-align: center;">ตัวเลือก</th>
 											</tr>
 										</thead>
 									</table>
@@ -106,6 +104,8 @@
 					<div class="modal-header">
 						<h4 class="modal-title">สร้างใบเสนอราคา</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<input hidden id="type" value="Quotation">
+						<input hidden id="status" value="สถานะ">
 					</div>
 
 					<!-- Modal body -->
@@ -125,7 +125,7 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
-											<select class="form-control"
+											<select class="form-control" style="margin-top: 10px;" 
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
 												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
 												</option>
@@ -177,7 +177,7 @@
 										</div>
 										<div class="col-sm-4"><label>ราคาสินค้า</label></div>
 										<div class="col-sm-8">
-											<select class="form-control" id="companyType" placeholder="ราคาไม่รวมภาษี">
+											<select class="form-control" style="margin-top: 10px;" id="companyType" placeholder="ราคาไม่รวมภาษี">
 												<option value="สมุดรายวันขาย">TEST 01</option>
 												<option value="สมุดรายวันซื้อ">TEST 01</option>
 											</select>
@@ -205,8 +205,9 @@
 												</thead>
 												<tfoot>
 													<tr>
-														<th style="text-align: center;"><a href="#"><i
-																	class="fas fa-trash" id="remove"></i></a></th>
+														<th style="text-align: center;">
+															<!-- <a href="#"><i class="fas fa-trash" id="remove"></i></a> -->
+														</th>
 														<th colspan="5">
 															<button type="button" class="btn btn-default btn-sm"
 																id="Add">
