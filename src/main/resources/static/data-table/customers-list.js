@@ -39,55 +39,136 @@ $(document).ready(function () {
 		]
 	});
 
-	table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
-
+	var officeType = 1;
 	$("#officeType1").change(function () {
 		officeType = 1;
 	});
 	$("#officeType2").change(function () {
 		officeType = 2;
 	});
-
 	$('#save').click(function () {
-		console.log("");
-		var customers = {
-			companyId: $('#companyId').val(),
-			address: $('#address').val(),
-			companyName: $('#companyName').val(),
-			companyType: $('#companyType').val(),
-			customerName: $('#customerName').val(),
-			department: $('#department').val(),
-			email: $('#email').val(),
-			officeType: officeType,
-			taxId: $('#taxId').val(),
-			tel: $('#tel').val(),
-		}
-		console.log(JSON.stringify(customers));
-		$.ajax({
-			type: "POST",
-			url: "/api/add-update-customers-list",
-			// The key needs to match your method's input parameter (case-sensitive).
-			data: JSON.stringify(customers),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: function (data) {
-				swal({
-						title: "บันทึก สำเร็จ",
-						type: "success",
-						confirmButtonClass: "btn-success",
-						confirmButtonText: "ตกลง",
-					},
-					function () {
-						window.location.href = "/customers-list";
-					});
-			},
-			failure: function (errMsg) {
-				alert(errMsg);
+		var pass = true;
+		pass = validateInput();
+		console.log("pass :: ", pass);
+		if (pass) {
+			var customers = {
+				companyId: $('#companyId').val(),
+				address: $('#address').val(),
+				companyName: $('#companyName').val(),
+				companyType: $('#companyType').val(),
+				customerName: $('#customerName').val(),
+				department: $('#department').val(),
+				email: $('#email').val(),
+				officeType: officeType,
+				taxId: $('#taxId').val(),
+				tel: $('#tel').val(),
 			}
-		});
 
+			console.log(JSON.stringify(customers));
+			$.ajax({
+				type: "POST",
+				url: "/api/add-update-customers-list",
+				data: JSON.stringify(customers),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (data) {
+					swal({
+							title: "บันทึก สำเร็จ",
+							type: "success",
+							confirmButtonClass: "btn-success",
+							confirmButtonText: "ตกลง",
+						},
+						function () {
+							window.location.href = "/customers-list";
+						});
+				},
+				failure: function (errMsg) {
+					alert(errMsg);
+				}
+			});
+		}
 	}); // and save
 
+	// validate
+	function validateInput() {
+		var pass = true;
+
+		if ('' == $('#tel').val()) {
+			tel.focus()
+			$('#error-tel').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-tel').addClass("hide")
+		}
+
+		if ('' == $('#email').val()) {
+			email.focus()
+			$('#error-email').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-email').addClass("hide")
+		}
+
+		if ('' == $('#customerName').val()) {
+			customerName.focus()
+			$('#error-customerName').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-customerName').addClass("hide")
+		}
+
+		if ('2' == officeType) {
+			if ('' == $('#department').val()) {
+				department.focus()
+				$('#error-department').removeClass("hide")
+				pass = false;
+			} else {
+				$('#error-department').addClass("hide")
+			}
+		}
+
+		if ('' == $('#taxId').val()) {
+			taxId.focus()
+			$('#error-taxId').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-taxId').addClass("hide")
+		}
+
+		if ('' == $('#address').val()) {
+			address.focus()
+			$('#error-address').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-address').addClass("hide")
+		}
+
+		if ('' == $('#companyName').val()) {
+			companyName.focus()
+			$('#error-companyName').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-companyName').addClass("hide")
+		}
+
+		if ('' == $('#companyId').val()) {
+			companyId.focus()
+			$('#error-companyId').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-companyId').addClass("hide")
+		}
+
+		if ('' == $('#companyType').val()) {
+			companyType.focus()
+			$('#error-companyType').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-companyType').addClass("hide")
+		}
+
+		return pass;
+	} // end validate
 });
 
 function CheckOffice(officeType) {
@@ -144,8 +225,7 @@ function update(companyId) {
 		$('#customerName').val("");
 		$('#address').val("");
 		$('#email').val("");
-		$('#officeType1').val("");
-		$('#officeType2').val("");
+		document.getElementById("officeType1").checked = true;
 		$('#taxId').val("");
 		$('#tel').val("");
 
@@ -178,8 +258,10 @@ function update(companyId) {
 				$('#email').val(msg.email);
 				if (msg.officeType == 1) {
 					document.getElementById("officeType1").checked = true;
+					$("#officeType1").val("1")
 				} else {
 					document.getElementById("officeType2").checked = true;
+					$("#officeType2").val("2")
 				}
 
 				$('#taxId').val(msg.taxId);
@@ -187,5 +269,4 @@ function update(companyId) {
 			}
 		});
 	}
-
 }; // update

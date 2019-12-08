@@ -67,9 +67,9 @@ function myFunction() {
 }
 
 function changeFunc($i) {
-    // alert($i);
-    if ($i == 1) {
-        
+    console.log($i);
+    if ($i == "1") {
+        $('#myModal').modal('show');
     }
 }
 

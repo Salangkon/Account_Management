@@ -96,7 +96,7 @@
 
 
 		<!-- The Modal -->
-		<div class="modal fade" id="myModal">
+		<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog modal-lg" style="max-width: 1400px;">
 				<div class="modal-content">
 
