@@ -102,6 +102,7 @@ $(document).ready(function () {
             }
         }
     });
+    
     $('#customers').change(function () {
         console.log($('#customers').val());
         if ($('#customers').val() != "") {
@@ -276,7 +277,7 @@ $(document).ready(function () {
             $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
             $('#vat').text("00.00");
         }
-    });
+    }); // end table
 
     $('#Add').click(function () {
         tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
@@ -289,48 +290,81 @@ $(document).ready(function () {
     });
 
     $('#saveCreateQuotation').click(function () {
-
+        var pass = true;
+		pass = validateInput();
         var date01 =
-            console.log(date01);
-
-        var insertQuotation = {
-            companyId: $('#customers').val(), //ลูกค้า
-            departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-            type: $('#type').val(), //ประเภท
-            status: $('#status').val(), //สถานะ
-            price: $('#price').text(), //รวมเป็นเงิน
-            productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
-            discount: $('#discount').val(), //ส่วนลด
-            discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
-            discountProductPrice: $('#discountProductPrice').text(), //
-            vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
-            note: $('#note').val(), //หมาบเหตุ
-            date: new Date($('#date').val()), //วันที่
-            dateEnd: new Date($('#dateEnd').val()), //วันที่_ครบกำหนด
-            f2ListModels: [],
-        }
-        var data = tableCreateQuotation.data();
-        for (let i = 0; i < data.length; i++) {
-            var d = {};
-            d.product = $("#product" + i).val(); //สินค้า
-            d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
-            d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
-            d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
-            d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
-            insertQuotation.f2ListModels.push(d)
-        }
-        console.log(JSON.stringify(insertQuotation));
-
-        $.ajax({
-            type: 'POST',
-            url: '/api-f2/add-update',
-            data: JSON.stringify(insertQuotation),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                window.location.href = "/offer-price-list";
+        console.log(date01);
+        if (pass) {
+            var insertQuotation = {
+                companyId: $('#customers').val(), //ลูกค้า
+                departmentId: $('#departmentId').val(), //เลขที่เอกสาร
+                type: $('#type').val(), //ประเภท
+                status: $('#status').val(), //สถานะ
+                price: $('#price').text(), //รวมเป็นเงิน
+                productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
+                discount: $('#discount').val(), //ส่วนลด
+                discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
+                discountProductPrice: $('#discountProductPrice').text(), //
+                vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+                note: $('#note').val(), //หมาบเหตุ
+                date: new Date($('#date').val()), //วันที่
+                dateEnd: new Date($('#dateEnd').val()), //วันที่_ครบกำหนด
+                f2ListModels: [],
             }
-        });
-    });
+            var data = tableCreateQuotation.data();
+            for (let i = 0; i < data.length; i++) {
+                var d = {};
+                d.product = $("#product" + i).val(); //สินค้า
+                d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
+                d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
+                d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
+                d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
+                insertQuotation.f2ListModels.push(d)
+            }
+            console.log(JSON.stringify(insertQuotation));
+    
+            $.ajax({
+                type: 'POST',
+                url: '/api-f2/add-update',
+                data: JSON.stringify(insertQuotation),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    window.location.href = "/offer-price-list";
+                }
+            });
+        }
+    }); // save
+
+    // validate
+    function validateInput() {
+        var pass = true;
+
+        if ('' == $('#dateEnd').val()) {
+            dateEnd.focus()
+            $('#error-dateEnd').removeClass("hide")
+            pass = false;
+        } else {
+            $('#error-dateEnd').addClass("hide")
+        }
+
+        if ('' == $('#date').val()) {
+            date.focus()
+            $('#error-date').removeClass("hide")
+            pass = false;
+        } else {
+            $('#error-date').addClass("hide")
+        }
+
+        if ('' == $('#customers').val()) {
+            customers.focus()
+            $('#error-customers').removeClass("hide")
+            pass = false;
+        } else {
+            $('#error-customers').addClass("hide")
+        }
+
+        return pass;
+    } // end validate
 
 }); // end document
