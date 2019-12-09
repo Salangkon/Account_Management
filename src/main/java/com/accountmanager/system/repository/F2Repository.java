@@ -9,5 +9,6 @@ import com.accountmanager.system.model.F2Model;
 public interface F2Repository extends CrudRepository<F2Model, String> {
 
 	List<F2Model> findByType(String type);
+	F2Model findById(String id);
 
 }

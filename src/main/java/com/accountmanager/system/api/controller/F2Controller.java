@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +47,29 @@ public class F2Controller {
 		}
 		return f2ModelsDisplay;
 	}
-
+	
+	@GetMapping("/get-by-id/{id}")
+	public F2Model getById(@PathVariable("id") String id) {
+		return f2Repo.findById(id);
+	}
+	
+	@PostMapping("/update-status/{id}/{status}")
+	public F2Model updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
+		F2Model f2ListModel = f2Repo.findById(id);
+		switch (status) {
+		case "0":
+			f2ListModel.setStatus("รอพิจารณา");
+			break;
+		case "2":
+			f2ListModel.setStatus("ผ่านการตวจสอบ");
+			break;
+		case "3":
+			f2ListModel.setStatus("ยกเลิก");
+			break;
+		}
+		
+		return f2Repo.save(f2ListModel);
+	}
 
 	@PostMapping("/add-update")
 	public ResponseEntity<?> Quotation(@RequestBody F2Model f2Model) {

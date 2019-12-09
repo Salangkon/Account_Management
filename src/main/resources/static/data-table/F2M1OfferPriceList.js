@@ -66,11 +66,37 @@ function myFunction() {
     }
 }
 
+// update status
 function changeFunc($i) {
-    console.log($i);
-    if ($i == "1") {
-        $('#myModal').modal('show');
+    var type = $i.slice(0, 1);
+    var id = $i.substr(1, 100);
+    console.log(type, " :: ", id, " :: ", $i);
+    switch (type) {
+        case "0":
+            updateStatus(id, "0");
+            break;
+        case "1":
+            $('#myModal').modal('show');
+            break;
+        case "2":
+            updateStatus(id, "2");
+            break;
+        case "3":
+            updateStatus(id, "3");
+            break;
     }
+} // end update status
+
+function updateStatus(id, status) {
+    $.ajax({
+        type: 'POST',
+        url: '/api-f2/update-status/' + id + "/" + status,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            window.location.href = "/offer-price-list";
+        }
+    });
 }
 
 $(document).ready(function () {
@@ -102,7 +128,7 @@ $(document).ready(function () {
             }
         }
     });
-    
+
     $('#customers').change(function () {
         console.log($('#customers').val());
         if ($('#customers').val() != "") {
@@ -147,7 +173,7 @@ $(document).ready(function () {
             },
             {
                 "mData": "companyId",
-                "sWidth": "42%",
+                "sWidth": "40%",
             },
             {
                 "mData": "",
@@ -158,20 +184,30 @@ $(document).ready(function () {
                 }
             },
             {
-                "mData": "status",
+                "mData": "",
                 "className": "text-center",
-                "sWidth": "10%",
+                "sWidth": "12%",
+                "mRender": function (data, type, row, index) {
+                    if (row.status == 'รอพิจารณา') {
+                        return '<label style="color: black">รอพิจารณา</label>';
+                    } else if (row.status == 'ผ่านการตวจสอบ') {
+                        return '<label style="color: green">ผ่านการตวจสอบ</label>';
+                    } else if (row.status == 'ยกเลิก') {
+                        return '<label style="color: red">ยกเลิก</label>';
+                    }
+                }
             },
             {
                 "mData": "",
                 "sWidth": "5px",
                 "className": "text-center",
-                "mRender": function (data, type, full) {
-                    return '<select class="form-control form-control-sm" id="selectBox" onchange="changeFunc(value);">\n\
+                "mRender": function (data, type, row, index, full) {
+                    return '<select class="form-control form-control-sm" onchange="changeFunc(value)">\n\
                                     <option value="">ตัวเลือก</option/>\n\
-                                    <option value="1">อัพเดท</option/>\n\
-                                    <option value="2">ผ่านการตวจสอบ</option/>\n\
-                                    <option value="3">ยกเลิก</option/>\n\
+                                    <option value="0' + row.id + '">รอพิจารณา</option/>\n\
+                                    <option value="1' + row.id + '">อัพเดท</option/>\n\
+                                    <option value="2' + row.id + '">ผ่านการตวจสอบ</option/>\n\
+                                    <option value="3' + row.id + '">ยกเลิก</option/>\n\
                             </select>';
                 }
             }
@@ -291,9 +327,9 @@ $(document).ready(function () {
 
     $('#saveCreateQuotation').click(function () {
         var pass = true;
-		pass = validateInput();
+        pass = validateInput();
         var date01 =
-        console.log(date01);
+            console.log(date01);
         if (pass) {
             var insertQuotation = {
                 companyId: $('#customers').val(), //ลูกค้า
@@ -322,7 +358,7 @@ $(document).ready(function () {
                 insertQuotation.f2ListModels.push(d)
             }
             console.log(JSON.stringify(insertQuotation));
-    
+
             $.ajax({
                 type: 'POST',
                 url: '/api-f2/add-update',

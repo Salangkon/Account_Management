@@ -60,9 +60,10 @@
 										<div class="col-sm-9"></div>
 										<div class="col-sm-2">
 											<select class="form-control" style="margin-top: 10px;">
-												<option value="">ทุกสถานะ</option>
-												<option value="">สถานะที่ 1</option>
-												<option value="">สถานะที่ 2</option>
+												<option value="ทั้งหมด" style="color: blue;">ทั้งหมด</option>
+												<option value="รอพิจารณา" style="color: black;">รอพิจารณา</option>
+												<option value="ผ่านการตวจสอบ" style="color: green;">ผ่านการตวจสอบ</option>
+												<option value="ยกเลิก" style="color: red;">ยกเลิก</option>
 											</select>
 										</div>
 										<div class="col-sm-1">
@@ -112,7 +113,7 @@
 						<h4 class="modal-title">สร้างใบเสนอราคา</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<input hidden id="type" value="Quotation">
-						<input hidden id="status" value="สถานะ">
+						<input hidden id="status" value="รอพิจารณา">
 					</div>
 
 					<!-- Modal body -->
