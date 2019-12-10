@@ -36,6 +36,7 @@ public class F2Model implements Serializable {
 	private Timestamp createDate;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name="date")
 	private Date date;
 
 	@Temporal(TemporalType.DATE)

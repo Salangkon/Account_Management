@@ -1,14 +1,22 @@
-$('#datepicker').datepicker({
-    uiLibrary: 'bootstrap4'
+$('#fromDate').datepicker({
+	uiLibrary: 'bootstrap4',
+	format:'yyyy-mm-dd',
+	startDate: '-3d'
 });
-$('#datepicker1').datepicker({
-    uiLibrary: 'bootstrap4'
+$('#toDate').datepicker({
+	uiLibrary: 'bootstrap4',
+	format:'yyyy-mm-dd',
+	startDate: '-3d'
 });
 $('#date').datepicker({
-    uiLibrary: 'bootstrap4'
+	uiLibrary: 'bootstrap4',
+	format: 'yyyy-mm-dd',
+    startDate: '-3d'
 });
 $('#dateEnd').datepicker({
-    uiLibrary: 'bootstrap4'
+	uiLibrary: 'bootstrap4',
+	format: 'yyyy-mm-dd',
+    startDate: '-3d'
 });
 
 //กรอกได้เฉพราะ ตัวเลข
@@ -99,6 +107,89 @@ function updateStatus(id, status) {
     });
 }
 
+function searchDate() {
+    var searchStatus = null;
+    var fromDate = 0;
+    var toDate = 0;
+    if (document.getElementById('searchStatus').value != '') {
+        searchStatus = document.getElementById('searchStatus').value;
+    }
+    if (document.getElementById('fromDate').value != '') {
+        fromDate = document.getElementById('fromDate').value
+    }
+    if (document.getElementById('toDate').value != '') {
+        toDate = document.getElementById('toDate').value;
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/get-by/Quotation/" + searchStatus + "/" + fromDate + "/" + toDate,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            // console.log("customer :: " + JSON.stringify(msg))
+            // table seve offer price
+            var tableQuotation = $('#tableQuotation').DataTable({
+                paging: false,
+                searching: false,
+                "bDestroy": true,
+                // "sAjaxSource": searchDate(),
+                data: jQuery.parseJSON(JSON.stringify(msg)),
+                "sAjaxDataProp": "",
+                "aoColumns": [{
+                        'data': 'date',
+                        "className": "text-center",
+                        "sWidth": "8%",
+                    },
+                    {
+                        'data': 'departmentId',
+                        "sWidth": "16%",
+                    },
+                    {
+                        'data': 'companyId',
+                        "sWidth": "40%",
+                    },
+                    {
+                        'data': '',
+                        "sWidth": "16%",
+                        "mRender": function (data,
+                            type, row, index, full) {
+                            return row.productPriceAll.toFixed(2);
+                        }
+                    },
+                    {
+                        'data': '',
+                        "className": "text-center",
+                        "sWidth": "10%",
+                        "mRender": function (data, type, row, index) {
+                            if (row.status == 'รอพิจารณา') {
+                                return '<p style="color: black">รอพิจารณา</p>';
+                            } else if (row.status == 'ผ่านการตวจสอบ') {
+                                return '<p style="color: green">ผ่านการตวจสอบ</p>';
+                            } else if (row.status == 'ยกเลิก') {
+                                return '<p style="color: red">ยกเลิก</p>';
+                            }
+                        }
+                    },
+                    {
+                        'data': '',
+                        "sWidth": "10%",
+                        "mRender": function (data, type, row, index, full) {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)">\n\
+                                    <option value="">ตัวเลือก</option/>\n\
+                                    <option value="0' + row.id + '">รอพิจารณา</option/>\n\
+                                    <option value="1' + row.id + '">อัพเดท</option/>\n\
+                                    <option value="2' + row.id + '">ผ่านการตวจสอบ</option/>\n\
+                                    <option value="3' + row.id + '">ยกเลิก</option/>\n\
+                                </select>';
+                        }
+                    },
+                ]
+            }); // END tableQuotation
+        }
+    });
+};
+
 $(document).ready(function () {
 
     // วันปัจจุบัน
@@ -112,8 +203,10 @@ $(document).ready(function () {
     if (mm < 10) {
         mm = '0' + mm;
     }
-    var today = dd + '/' + mm + '/' + yyyy;
+    var today = yyyy + '-' + mm + '-' + dd;
     document.getElementById('date').value = today;
+
+    searchDate();
 
     //data customer
     $.ajax({
@@ -155,68 +248,6 @@ $(document).ready(function () {
             document.getElementById("officeType2").checked = false;
         }
     });
-
-    // table seve offer price
-    var tableQuotation = $('#tableQuotation').DataTable({
-        lengthChange: false,
-        searching: true,
-        "sAjaxSource": "/api-f2/get-by/Quotation",
-        "sAjaxDataProp": "",
-        "aoColumns": [{
-                "mData": "date",
-                "className": "text-center",
-                "sWidth": "8%",
-            },
-            {
-                "mData": "departmentId",
-                "sWidth": "16%",
-            },
-            {
-                "mData": "companyId",
-                "sWidth": "40%",
-            },
-            {
-                "mData": "",
-                "sWidth": "12%",
-                "mRender": function (data,
-                    type, row, index, full) {
-                    return row.productPriceAll.toFixed(2);
-                }
-            },
-            {
-                "mData": "",
-                "className": "text-center",
-                "sWidth": "12%",
-                "mRender": function (data, type, row, index) {
-                    if (row.status == 'รอพิจารณา') {
-                        return '<label style="color: black">รอพิจารณา</label>';
-                    } else if (row.status == 'ผ่านการตวจสอบ') {
-                        return '<label style="color: green">ผ่านการตวจสอบ</label>';
-                    } else if (row.status == 'ยกเลิก') {
-                        return '<label style="color: red">ยกเลิก</label>';
-                    }
-                }
-            },
-            {
-                "mData": "",
-                "sWidth": "5px",
-                "className": "text-center",
-                "mRender": function (data, type, row, index, full) {
-                    return '<select class="form-control form-control-sm" onchange="changeFunc(value)">\n\
-                                    <option value="">ตัวเลือก</option/>\n\
-                                    <option value="0' + row.id + '">รอพิจารณา</option/>\n\
-                                    <option value="1' + row.id + '">อัพเดท</option/>\n\
-                                    <option value="2' + row.id + '">ผ่านการตวจสอบ</option/>\n\
-                                    <option value="3' + row.id + '">ยกเลิก</option/>\n\
-                            </select>';
-                }
-            }
-        ]
-    });
-
-    // $('#tableQuotation').on('click', 'tr', function () {
-    //     $(this).toggleClass('selected');
-    // });
 
     var tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
@@ -283,9 +314,7 @@ $(document).ready(function () {
 
     $('#tableCreateQuotationDisplay').on('click', 'a', function () {
         tableCreateQuotation.row($(this).parents('tr')).remove().draw();
-        // var num = $('#tableCreateQuotation').DataTable().rows().data().length;
 
-        // set allowenceSumTotal
         var sumvalues = $("[name='rentDateSum']");
         var sum = 0;
         for (var i = 0; i < sumvalues.length; i++) {
@@ -318,9 +347,7 @@ $(document).ready(function () {
     $('#Add').click(function () {
         tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
     });
-    // $('#tableCreateQuotationDisplay').on('click', 'tr', function () {
-    //     $(this).toggleClass('selected');
-    // });
+
     $('#remove').click(function () {
         tableCreateQuotation.rows('.selected').remove().draw();
     });
@@ -328,8 +355,8 @@ $(document).ready(function () {
     $('#saveCreateQuotation').click(function () {
         var pass = true;
         pass = validateInput();
-        var date01 =
-            console.log(date01);
+
+        console.log($('#date').val());
         if (pass) {
             var insertQuotation = {
                 companyId: $('#customers').val(), //ลูกค้า
@@ -343,8 +370,10 @@ $(document).ready(function () {
                 discountProductPrice: $('#discountProductPrice').text(), //
                 vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
                 note: $('#note').val(), //หมาบเหตุ
-                date: new Date($('#date').val()), //วันที่
-                dateEnd: new Date($('#dateEnd').val()), //วันที่_ครบกำหนด
+                // date: new Date($('#date').val()), //วันที่
+                // dateEnd: new Date($('#dateEnd').val()), //วันที่_ครบกำหนด
+                date: $('#date').val(), //วันที่
+                dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
                 f2ListModels: [],
             }
             var data = tableCreateQuotation.data();

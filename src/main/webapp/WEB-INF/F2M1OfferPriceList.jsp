@@ -59,11 +59,11 @@
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-9"></div>
 										<div class="col-sm-2">
-											<select class="form-control" style="margin-top: 10px;">
-												<option value="ทั้งหมด" style="color: blue;">ทั้งหมด</option>
-												<option value="รอพิจารณา" style="color: black;">รอพิจารณา</option>
-												<option value="ผ่านการตวจสอบ" style="color: green;">ผ่านการตวจสอบ</option>
-												<option value="ยกเลิก" style="color: red;">ยกเลิก</option>
+											<select class="form-control" style="margin-top: 10px;" id="searchStatus">
+												<option value="" style="color: blue;">ทั้งหมด</option>
+												<option value="1" style="color: black;">รอพิจารณา</option>
+												<option value="2" style="color: green;">ผ่านการตวจสอบ</option>
+												<option value="3" style="color: red;">ยกเลิก</option>
 											</select>
 										</div>
 										<div class="col-sm-1">
@@ -73,10 +73,11 @@
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-7"></div>
-										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
-										<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
+										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" value="" />
+										</div>
+										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /></div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button"
+											<button class="btn btn-primary" type="button" onclick="searchDate()"
 												style="margin-top: 42px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
