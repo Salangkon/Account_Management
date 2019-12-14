@@ -6,4 +6,6 @@ import com.accountmanager.system.model.CustomersList;
 
 public interface CustomersListRepository extends CrudRepository<CustomersList, String> {
 
+	CustomersList findByCompanyName(String companyName);
+
 }

@@ -1,21 +1,21 @@
 $('#fromDate').datepicker({
-	uiLibrary: 'bootstrap4',
-	format:'yyyy-mm-dd',
-	startDate: '-3d'
+    uiLibrary: 'bootstrap4',
+    format: 'yyyy-mm-dd',
+    startDate: '-3d'
 });
 $('#toDate').datepicker({
-	uiLibrary: 'bootstrap4',
-	format:'yyyy-mm-dd',
-	startDate: '-3d'
+    uiLibrary: 'bootstrap4',
+    format: 'yyyy-mm-dd',
+    startDate: '-3d'
 });
 $('#date').datepicker({
-	uiLibrary: 'bootstrap4',
-	format: 'yyyy-mm-dd',
+    uiLibrary: 'bootstrap4',
+    format: 'yyyy-mm-dd',
     startDate: '-3d'
 });
 $('#dateEnd').datepicker({
-	uiLibrary: 'bootstrap4',
-	format: 'yyyy-mm-dd',
+    uiLibrary: 'bootstrap4',
+    format: 'yyyy-mm-dd',
     startDate: '-3d'
 });
 
@@ -83,9 +83,9 @@ function changeFunc($i) {
         case "0":
             updateStatus(id, "0");
             break;
-        case "1":
-            $('#myModal').modal('show');
-            break;
+            // case "1":
+            //     $('#myModal').modal('show');
+            //     break;
         case "2":
             updateStatus(id, "2");
             break;
@@ -94,6 +94,23 @@ function changeFunc($i) {
             break;
     }
 } // end update status
+
+// update Quotation
+function updateQuotation(id) {
+    console.log(id);
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/get-by-id/" + id,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            console.log(JSON.stringify(msg));
+            dataCustomer(msg.companyId)
+        }
+    })
+    $('#myModal').modal('show');
+
+} // end update Quotation
 
 function updateStatus(id, status) {
     $.ajax({
@@ -105,6 +122,76 @@ function updateStatus(id, status) {
             window.location.href = "/offer-price-list";
         }
     });
+}
+
+function dataCustomer(companyId) {
+    console.log(companyId);
+
+    $.ajax({
+        type: "GET",
+        url: "/api/customers-list",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (companyId != null) {
+                for (var i = 0; i < msg.length; i++) {
+                    $('#customers').append('<option value="' + companyId + '">' + companyId + '</option>');
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/customers-list/" + companyId,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            console.log("customer :: " + JSON.stringify(msg))
+                            $('#customers').val(msg.companyId);
+                            $('#address').val(msg.address);
+                            $('#taxId').val(msg.taxId);
+                            if (msg.officeType == 1) {
+                                document.getElementById("officeType1").checked = true;
+                            } else {
+                                document.getElementById("officeType2").checked = true;
+                            }
+                        }
+                    });
+                }
+            } else {
+                $('#customers').val("");
+                $('#address').val("");
+                $('#taxId').val("");
+                document.getElementById("officeType1").checked = false;
+                document.getElementById("officeType2").checked = false;
+                for (var i = 0; i < msg.length; i++) {
+                    $('#customers').append('<option value="' + msg[i].companyId + '">' + msg[i].companyName + '</option>');
+                }
+                $('#customers').change(function () {
+                    if ($('#customers').val() != "") {
+                        $.ajax({
+                            type: "GET",
+                            url: "/api/customers-list/" + $('#customers').val(),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                console.log("customer :: " + JSON.stringify(msg))
+                                $('#address').val(msg.address);
+                                $('#taxId').val(msg.taxId);
+                                if (msg.officeType == 1) {
+                                    document.getElementById("officeType1").checked = true;
+                                } else {
+                                    document.getElementById("officeType2").checked = true;
+                                }
+                            }
+                        });
+                    } else {
+                        $('#address').val("");
+                        $('#taxId').val("");
+                        document.getElementById("officeType1").checked = false;
+                        document.getElementById("officeType2").checked = false;
+                    }
+                });
+            }
+        }
+    });
+
 }
 
 function searchDate() {
@@ -157,33 +244,60 @@ function searchDate() {
                             return row.productPriceAll.toFixed(2);
                         }
                     },
-                    {
-                        'data': '',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                        "mRender": function (data, type, row, index) {
-                            if (row.status == 'รอพิจารณา') {
-                                return '<p style="color: black">รอพิจารณา</p>';
-                            } else if (row.status == 'ผ่านการตวจสอบ') {
-                                return '<p style="color: green">ผ่านการตวจสอบ</p>';
-                            } else if (row.status == 'ยกเลิก') {
-                                return '<p style="color: red">ยกเลิก</p>';
-                            }
-                        }
-                    },
+                    // {
+                    //     'data': '',
+                    //     "className": "text-center",
+                    //     "sWidth": "10%",
+                    //     "mRender": function (data, type, row, index) {
+                    //         if (row.status == 'รอพิจารณา') {
+                    //             return '<p style="color: black">รอพิจารณา</p>';
+                    //         } else if (row.status == 'ผ่านการตวจสอบ') {
+                    //             return '<p style="color: green">ผ่านการตวจสอบ</p>';
+                    //         } else if (row.status == 'ยกเลิก') {
+                    //             return '<p style="color: red">ยกเลิก</p>';
+                    //         }
+                    //     }
+                    // },
                     {
                         'data': '',
                         "sWidth": "10%",
                         "mRender": function (data, type, row, index, full) {
-                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)">\n\
-                                    <option value="">ตัวเลือก</option/>\n\
-                                    <option value="0' + row.id + '">รอพิจารณา</option/>\n\
-                                    <option value="1' + row.id + '">อัพเดท</option/>\n\
-                                    <option value="2' + row.id + '">ผ่านการตวจสอบ</option/>\n\
-                                    <option value="3' + row.id + '">ยกเลิก</option/>\n\
+                            if (row.status == 'รอพิจารณา') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                                <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
+                                <option value="2' + row.id + '" style="color: green">ผ่านการตวจสอบ</option/>\n\
+                                <option value="3' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                 </select>';
+                            } else if (row.status == 'ผ่านการตวจสอบ') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
+                                <option value="2' + row.id + '" style="color: green">ผ่านการตวจสอบ</option/>\n\
+                                <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
+                                <option value="3' + row.id + '" style="color: red">ยกเลิก</option/>\n\
+                                </select>';
+                            } else if (row.status == 'ยกเลิก') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
+                                <option value="3' + row.id + '" style="color: red">ยกเลิก</option/>\n\
+                                <option value="0' + row.id + '" style="color: green">รอพิจารณา</option/>\n\
+                                <option value="2' + row.id + '" style="color: black">ผ่านการตวจสอบ</option/>\n\
+                                </select>';
+                            }
+                            // return '<select class="form-control form-control-sm" onchange="changeFunc(value)">\n\
+                            //         <option value="">ตัวเลือก</option/>\n\
+                            //         <option value="0' + row.id + '">รอพิจารณา</option/>\n\
+                            //         <option value="1' + row.id + '">อัพเดท</option/>\n\
+                            //         <option value="2' + row.id + '">ผ่านการตวจสอบ</option/>\n\
+                            //         <option value="3' + row.id + '">ยกเลิก</option/>\n\
+                            //     </select>';
                         }
                     },
+                    {
+                        'data': '',
+                        "className": "text-center",
+                        "sWidth": "10%",
+                        "mRender": function (data, type, full) {
+                            return '<button type="button" class="btn btn-primary" onclick="updateQuotation(' + "'" + full.id + "'" + ')"> อัพเดท </button>';
+                        }
+                    }
                 ]
             }); // END tableQuotation
         }
@@ -207,47 +321,7 @@ $(document).ready(function () {
     document.getElementById('date').value = today;
 
     searchDate();
-
-    //data customer
-    $.ajax({
-        type: "GET",
-        url: "/api/customers-list",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            // console.log("customer list :: " + JSON.stringify(msg))
-            for (var i = 0; i < msg.length; i++) {
-                $('#customers').append('<option value="' + msg[i].companyId + '">' + msg[i].companyName + '</option>');
-            }
-        }
-    });
-
-    $('#customers').change(function () {
-        console.log($('#customers').val());
-        if ($('#customers').val() != "") {
-            $.ajax({
-                type: "GET",
-                url: "/api/customers-list/" + $('#customers').val(),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    console.log("customer :: " + JSON.stringify(msg))
-                    $('#address').val(msg.address);
-                    $('#taxId').val(msg.taxId);
-                    if (msg.officeType == 1) {
-                        document.getElementById("officeType1").checked = true;
-                    } else {
-                        document.getElementById("officeType2").checked = true;
-                    }
-                }
-            });
-        } else {
-            $('#address').val("");
-            $('#taxId').val("");
-            document.getElementById("officeType1").checked = false;
-            document.getElementById("officeType2").checked = false;
-        }
-    });
+    dataCustomer(null);
 
     var tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
