@@ -19,6 +19,14 @@
 		.col-sm-4 {
 			text-align: right;
 		}
+
+		p {
+			color: red;
+		}
+
+		.hide {
+			display: none;
+		}
 	</style>
 </head>
 
@@ -51,35 +59,36 @@
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-9"></div>
 										<div class="col-sm-2">
-											<select class="form-control" style="margin-top: 10px;">
-												<option value="">ทุกสถานะ</option>
-												<option value="">สถานะที่ 1</option>
-												<option value="">สถานะที่ 2</option>
+											<select class="form-control" style="margin-top: 10px;" id="searchStatus">
+												<option value="" style="color: blue;">ทั้งหมด</option>
+												<option value="1" style="color: black;">รอพิจารณา</option>
+												<option value="2" style="color: green;">ผ่านการตวจสอบ</option>
+												<option value="3" style="color: red;">ยกเลิก</option>
 											</select>
 										</div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" style="margin-top: 10px"
-												data-toggle="modal" data-target="#myModal">สร้างใหม่</button>
+												data-toggle="modal" data-target="#myModal" onclick="dataCustomer(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-7"></div>
-										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
-										<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
+										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" value="" />
+										</div>
+										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /></div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button"
+											<button class="btn btn-primary" type="button" onclick="searchDate()"
 												style="margin-top: 42px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="tableQuotation" class="table table-sm"
-										width="100%">
+									<table id="tableQuotation" class="table table-sm" width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
 												<th style="text-align: center;">วันที่</th>
-												<th style="text-align: center;">เลขที่เอกสาร</th>
-												<th style="text-align: center;">ชื่อลูกค้า</th>
-												<th style="text-align: center;">จำนวนเงิน</th>
+												<th>เลขที่เอกสาร</th>
+												<th>ชื่อลูกค้า</th>
+												<th>จำนวนเงิน</th>
 												<th style="text-align: center;">สถานะ</th>
 												<th style="text-align: center;">ตัวเลือก</th>
 											</tr>
@@ -96,7 +105,7 @@
 
 
 		<!-- The Modal -->
-		<div class="modal fade" id="myModal">
+		<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog modal-lg" style="max-width: 1400px;">
 				<div class="modal-content">
 
@@ -105,7 +114,7 @@
 						<h4 class="modal-title">สร้างใบเสนอราคา</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<input hidden id="type" value="Quotation">
-						<input hidden id="status" value="สถานะ">
+						<input hidden id="status" value="รอพิจารณา">
 					</div>
 
 					<!-- Modal body -->
@@ -125,11 +134,13 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
-											<select class="form-control" style="margin-top: 10px;" 
+											<select class="form-control" style="margin-top: 10px;"
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
 												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
 												</option>
 											</select>
+											<p class="hide" id="error-customers">กรุณาเลือก
+												ชื่อลูกค้า</p>
 										</div>
 										<div class="col-sm-4"><label>ที่อยู่</label></div>
 										<div class="col-sm-8">
@@ -160,6 +171,8 @@
 										<div class="col-sm-4"><label>วันที่</label></div>
 										<div class="col-sm-8">
 											<input id="date" />
+											<p class="hide" id="error-date">กรุณาเลือก
+												วันที่</p>
 										</div>
 										<div class="col-sm-4"><label>เลขที่เอกสาร</label></div>
 										<div class="col-sm-8">
@@ -168,7 +181,9 @@
 										</div>
 										<div class="col-sm-4"><label>ครบกำหนด</label></div>
 										<div class="col-sm-8" style="margin-top: 10px;">
-											<input id="dateEnd"/>
+											<input id="dateEnd" />
+											<p class="hide" id="error-dateEnd">กรุณาเลือก
+												ครบกำหนด</p>
 										</div>
 										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
 										<div class="col-sm-8">
@@ -177,7 +192,8 @@
 										</div>
 										<div class="col-sm-4"><label>ราคาสินค้า</label></div>
 										<div class="col-sm-8">
-											<select class="form-control" style="margin-top: 10px;" id="companyType" placeholder="ราคาไม่รวมภาษี">
+											<select class="form-control" style="margin-top: 10px;" id="companyType"
+												placeholder="ราคาไม่รวมภาษี">
 												<option value="สมุดรายวันขาย">TEST 01</option>
 												<option value="สมุดรายวันซื้อ">TEST 01</option>
 											</select>
@@ -221,31 +237,41 @@
 											<div class="form-group row" style="margin-top: 30px;">
 												<div class="col-sm-4">
 													<p style="text-align: left;">หมายเหตุ</p>
-													<textarea class="form-control" style="height: 80px" id="note"></textarea>
+													<textarea class="form-control" style="height: 80px"
+														id="note"></textarea>
 												</div>
 												<div class="col-sm-5"></div>
 												<div class="col-sm-3">
 													<div class="form-group row">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
-														<div class="col-sm-6"><p id="price">0.00</p>
+														<div class="col-sm-6">
+															<p id="price">0.00</p>
 														</div>
 
 														<div class="col-sm-6 text-primary">ส่วนลด <input type="text"
 																OnKeyPress="return chkNumber(this)" id="discount"
-																style="width: 63px;text-align: center;" onkeyup="myFunction()"> % </div>
-														<div class="col-sm-6"><p id="discountPrice">0.00</p></div>
+																style="width: 63px;text-align: center;"
+																onkeyup="myFunction()"> % </div>
+														<div class="col-sm-6">
+															<p id="discountPrice">0.00</p>
+														</div>
 
 														<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด</div>
-														<div class="col-sm-6" class="form-control"><p
-																id="discountProductPrice">0.00</p></div>
+														<div class="col-sm-6" class="form-control">
+															<p id="discountProductPrice">0.00</p>
+														</div>
 
 														<div class="col-sm-6 text-primary"><input type="checkbox"
 																id="myCheck" onclick="myFunction()">
 															ภาษีมูลค่าเพิ่ม 7%</div>
-														<div class="col-sm-6"><p id="vat">0.00</p> </div>
+														<div class="col-sm-6">
+															<p id="vat">0.00</p>
+														</div>
 
 														<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น</div>
-														<div class="col-sm-6"><p id="productPriceAll">0.00</p></div>
+														<div class="col-sm-6">
+															<p id="productPriceAll">0.00</p>
+														</div>
 													</div>
 												</div>
 											</div>
