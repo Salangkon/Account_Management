@@ -13,20 +13,22 @@
 			margin-top: 13px;
 		}
 
-		textarea {
-			margin-top: 13px;
-		}
-
+		textarea,
 		label {
 			margin-top: 10px;
 		}
 
-		.col-sm-4 {
+		.col-sm-4,
+		.col-sm-3 {
 			text-align: right;
 		}
 
-		.col-sm-3 {
-			text-align: right;
+		.hide {
+			display: none;
+		}
+
+		p {
+			color: red;
 		}
 	</style>
 
@@ -111,33 +113,42 @@
 								<div class="form-group row">
 									<div class="col-sm-4"><label>ประเภท</label></div>
 									<div class="col-sm-8">
-
 										<select class="form-control" id="companyType">
 											<option value="">ประเภท</option>
 											<option value="test01">test01</option>
 											<option value="test02">test02</option>
 										</select>
+										<p class="hide" id="error-companyType">กรุณาเลือก
+											ประเภท</p>
 									</div>
 									<div class="col-sm-4"><label>รหัสผู้ติดต่อ</label></div>
 									<div class="col-sm-8">
 										<input type="text" class="form-control form-control" id="companyId"
 											placeholder="รหัสผู้ติดต่อ">
+										<p class="hide" id="error-companyId">กรุณากรอก
+											รหัสผู้ติดต่อ</p>
 									</div>
 									<div class="col-sm-4"><label>ชื่อบริษัท</label></div>
 									<div class="col-sm-8">
 										<input type="text" class="form-control form-control" id="companyName"
-											placeholder="ชื่อบริษัท">
+											placeholder="ชื่อบริษัท" required>
+										<p class="hide" id="error-companyName">กรุณากรอก
+											ชื่อบริษัท</p>
 									</div>
 									<div class="col-sm-4"><label>ที่อยู่</label></div>
 									<div class="col-sm-8">
 										<textarea class="form-control" id="address" style="height: 100px"
 											placeholder="ที่อยู่"></textarea>
+										<p class="hide" id="error-address">กรุณากรอก
+											ที่อยู่</p>
 									</div>
 									<div class="col-sm-4">
 										<label>เลขประจำตัวผู้เสียภาษี</label></div>
 									<div class="col-sm-8">
 										<input type="text" class="form-control form-control" id="taxId"
 											placeholder="เลขประจำตัวผู้เสียภาษี">
+										<p class="hide" id="error-taxId">กรุณากรอก
+											เลขประจำตัวผู้เสียภาษี</p>
 									</div>
 									<div class="col-sm-4"><label>สำนักงาน / สาขาที่</label></div>
 									<div class="col-sm-8">
@@ -146,7 +157,6 @@
 										สำนักงานใหญ่
 										<input type="radio" name="officeType" id="officeType2" onclick="CheckOffice(2)"
 											value="2" style="margin-left: 10px"> สาขาที่
-										<!-- <input type="text" id="department"> -->
 									</div>
 									<div class="col-sm-4"></div>
 									<div class="col-sm-8" id="officeTypeCheck">
@@ -156,6 +166,8 @@
 											<input type="text" class="form-control" placeholder="ชื่อสาขา"
 												aria-describedby="inputGroup-sizing-sm" id="department">
 										</div>
+										<p class="hide" id="error-department">กรุณากรอก
+											ชื่อสาขา</p>
 									</div>
 								</div>
 							</div>
@@ -168,19 +180,26 @@
 									</di>
 									<div class="col-sm-3" style="margin-top: 23px"><label>ชื่อผู้ติดต่อ</label></div>
 									<div class="col-sm-9">
-										<input type="text" style="max-width: 90%;margin-top: 25px" class="form-control form-control"
-											id="customerName" placeholder="ชื่อผู้ติดต่อ">
+										<input type="text" style="max-width: 90%;margin-top: 25px"
+											class="form-control form-control" id="customerName"
+											placeholder="ชื่อผู้ติดต่อ">
+										<p class="hide" id="error-customerName">กรุณากรอก
+											ชื่อผู้ติดต่อ</p>
 									</div>
 									<div class="col-sm-3"><label>E-mail</label></div>
 									<div class="col-sm-9" style="max-width: 90%;">
 										<input type="email" style="max-width: 90%;" class="form-control form-control"
 											id="email" placeholder="E-mail">
+										<p class="hide" id="error-email">กรุณากรอก
+											E-mail</p>
 									</div>
 									<div class="col-sm-3"><label>เบอร์ติดต่อ</label></div>
 									<div class="col-sm-9" style="max-width: 90%;">
 										<input type="text" style="max-width: 90%;" OnKeyPress="return chkNumber(this)"
-											class="form-control form-control" id="tel" maxlength="10"
-											placeholder="เบอร์ติดต่อ">
+											class="form-control form-con
+											trol" id="tel" maxlength="10" placeholder="เบอร์ติดต่อ">
+										<p class="hide" id="error-tel">กรุณากรอก
+											เบอร์ติดต่อ</p>
 									</div>
 								</div>
 							</div>

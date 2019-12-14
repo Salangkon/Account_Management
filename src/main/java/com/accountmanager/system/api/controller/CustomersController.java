@@ -28,6 +28,12 @@ public class CustomersController {
 		System.err.println(customersId);
 		return customersListRepo.findOne(customersId);
 	}
+	
+	@GetMapping("/customers-list/name/{companyName}")
+	public CustomersList customersListName(@PathVariable("companyName") String companyName) {
+		System.err.println(companyName);
+		return customersListRepo.findByCompanyName(companyName);
+	}
 
 	@PostMapping("/add-update-customers-list")
 	public CustomersList addUpdatecustomersList(@RequestBody CustomersList customersList) {
