@@ -44,7 +44,6 @@ public class F2Controller {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
 
 		return f2ListModels;
 	}
@@ -52,7 +51,6 @@ public class F2Controller {
 	@DeleteMapping("/delete-f2/{id}")
 	public String deletecustomersList(@PathVariable("id") String id) {
 		String result = "Success";
-		System.out.println(id);
 		try {
 			F2Model f2Model = f2Repo.findById(id);
 			if (f2Model.getF2ListModels() != null) {
@@ -173,14 +171,20 @@ public class F2Controller {
 	@PostMapping("/add-update")
 	public ResponseEntity<?> Quotation(@RequestBody F2Model f2Model) {
 		try {
-			if (f2Model.getId() == null) {
+			if (f2Model.getId() == null || f2Model.getId().equals("")) {
 				f2Model.setId(UUID.randomUUID().toString());
 			}
 			List<F2ListModel> f2ListModels = new ArrayList<>();
-			for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
-				if (f2ListModel.getId() == null) {
-					f2ListModel.setId(UUID.randomUUID().toString());
+
+			F2Model f2ListModels2 = f2Repo.findById(f2Model.getId());
+			if (f2ListModels2 != null) {
+				for (F2ListModel f2ListModel : f2ListModels2.getF2ListModels()) {
+					f2ListRepo.delete(f2ListModel.getId());
 				}
+			}
+
+			for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
+				f2ListModel.setId(UUID.randomUUID().toString());
 				f2ListModel.setF2Id(f2Model.getId());
 				f2ListModels.add(f2ListModel);
 			}

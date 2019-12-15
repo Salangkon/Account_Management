@@ -61,53 +61,6 @@ $(document).ready(function () {
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
-
-    $('#saveCreateQuotation').click(function () {
-        var pass = true;
-        pass = validateInput();
-
-        console.log($('#date').val());
-        if (pass) {
-            var insertQuotation = {
-                companyId: $('#customers').val(), //ลูกค้า
-                departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-                type: $('#type').val(), //ประเภท
-                status: $('#status').val(), //สถานะ
-                price: $('#price').text(), //รวมเป็นเงิน
-                productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
-                discount: $('#discount').val(), //ส่วนลด
-                discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
-                discountProductPrice: $('#discountProductPrice').text(), //
-                vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
-                note: $('#note').val(), //หมาบเหตุ
-                date: $('#date').val(), //วันที่
-                dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
-                f2ListModels: [],
-            }
-            var data = tableCreateQuotation.data();
-            for (let i = 0; i < data.length; i++) {
-                var d = {};
-                d.product = $("#product" + i).val(); //สินค้า
-                d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
-                d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
-                d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
-                d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
-                insertQuotation.f2ListModels.push(d)
-            }
-            console.log(JSON.stringify(insertQuotation));
-
-            $.ajax({
-                type: 'POST',
-                url: '/api-f2/add-update',
-                data: JSON.stringify(insertQuotation),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    window.location.href = "/offer-price-list";
-                }
-            });
-        }
-    }); // save
 }); // end document
 
 function myFunction() {
@@ -132,7 +85,6 @@ function myFunction() {
 function changeFunc($i) {
     var type = $i.slice(0, 1);
     var id = $i.substr(1, 100);
-    console.log(type, " :: ", id, " :: ", $i);
     switch (type) {
         case "0":
             updateStatus(id, "0");
@@ -148,36 +100,52 @@ function changeFunc($i) {
 
 // update Quotation
 function updateQuotation(id) {
-    console.log(id);
-    $.ajax({
-        type: "GET",
-        url: "/api-f2/get-by-id/" + id,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            console.log(JSON.stringify(msg));
-            dataCustomer(msg.companyId)
-            $('#id').val(msg.id), //เลขที่เอกสาร
-                $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
-                $('#type').val(msg.type), //ประเภท
-                $('#status').val(msg.status), //สถานะ
-                $('#price').text(msg.price), //รวมเป็นเงิน
-                $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
-                $('#discount').val(msg.discount), //ส่วนลด
-                $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
-                $('#discountProductPrice').text(msg.discountProductPrice), //
-                $('#vat').text(msg.vat), //ภาษีมูลค่าเพิ่ม
-                $('#note').val(msg.note), //หมาบเหตุ
-                $('#date').val(msg.date), //วันที่
-                $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
-            if (msg.vat == null || msg.vat == 0) {
-                document.getElementById("myCheck").checked = false;
-            } else {
-                document.getElementById("myCheck").checked = true;
+    if (id != null) {
+        $.ajax({
+            type: "GET",
+            url: "/api-f2/get-by-id/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                $('#id').val(msg.id), //เลขที่เอกสาร
+                    $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
+                    $('#status').val(msg.type), //สถานะ
+                    $('#status').val(msg.status), //สถานะ
+                    $('#price').text(msg.price), //รวมเป็นเงิน
+                    $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
+                    $('#discount').val(msg.discount), //ส่วนลด
+                    $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
+                    $('#discountProductPrice').text(msg.discountProductPrice), //
+                    $('#vat').text(msg.vat), //ภาษีมูลค่าเพิ่ม
+                    $('#note').val(msg.note), //หมาบเหตุ
+                    $('#date').val(msg.date), //วันที่
+                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                if (msg.vat == null || msg.vat == 0) {
+                    document.getElementById("myCheck").checked = false;
+                } else {
+                    document.getElementById("myCheck").checked = true;
+                }
+                dataCustomer(msg.companyId)
+                tableCreateQuotationDisplay1(msg.id);
             }
-            tableCreateQuotationDisplay1(msg.id);
-        }
-    })
+        })
+    } else {
+        tableCreateQuotationDisplay1(null);
+        dataCustomer(null)
+
+        $('#id').val(""), //เลขที่เอกสาร
+            $('#departmentId').val(""), //เลขที่เอกสาร
+            $('#price').text(""), //รวมเป็นเงิน
+            $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
+            $('#discount').val(""), //ส่วนลด
+            $('#discountPrice').text(""), //ราคาหักส่วนลด
+            $('#discountProductPrice').text(""), //
+            $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
+            $('#note').val(""), //หมาบเหตุ
+            $('#date').val(document.getElementById('date').value), //วันที่
+            $('#dateEnd').val("") //วันที่_ครบกำหนด
+        document.getElementById("myCheck").checked = false;
+    }
     $('#myModal').modal('show');
 } // end update Quotation
 
@@ -194,7 +162,6 @@ function updateStatus(id, status) {
 }
 
 function dataCustomer(companyId) {
-    console.log(companyId);
     $.ajax({
         type: "GET",
         url: "/api/customers-list",
@@ -210,7 +177,6 @@ function dataCustomer(companyId) {
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
-                            console.log("customer :: " + JSON.stringify(msg))
                             $('#customers').val(msg.companyId);
                             $('#address').val(msg.address);
                             $('#taxId').val(msg.taxId);
@@ -239,7 +205,6 @@ function dataCustomer(companyId) {
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (msg) {
-                                console.log("customer :: " + JSON.stringify(msg))
                                 $('#address').val(msg.address);
                                 $('#taxId').val(msg.taxId);
                                 if (msg.officeType == 1) {
@@ -261,9 +226,10 @@ function dataCustomer(companyId) {
     });
 }
 
+var tableCreateQuotation
+
 function tableCreateQuotationDisplay1(id) {
-    console.log("tableCreateQuotationDisplay :: " +id);
-    var tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
+    tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
         searching: false,
         responsive: true,
@@ -384,14 +350,62 @@ function tableCreateQuotationDisplay1(id) {
             $('#vat').text("00.00");
         }
     }); // end table
+}
 
-    $('#Add').click(function () {
-        tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
-    });
+function Add() {
+    tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
+}
 
-    $('#remove').click(function () {
-        tableCreateQuotation.rows('.selected').remove().draw();
-    });
+function remove() {
+    tableCreateQuotation.rows('.selected').remove().draw();
+}
+
+function saveCreateQuotation() {
+    var pass = true;
+    pass = validateInput();
+
+    if (pass) {
+        var insertQuotation = {
+            id: $('#id').val(), //ลูกค้า
+            companyId: $('#customers').val(), //ลูกค้า
+            departmentId: $('#departmentId').val(), //เลขที่เอกสาร
+            type: $('#type').val(), //ประเภท
+            status: $('#status').val(), //สถานะ
+            price: $('#price').text(), //รวมเป็นเงิน
+            productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
+            discount: $('#discount').val(), //ส่วนลด
+            discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
+            discountProductPrice: $('#discountProductPrice').text(), //
+            vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+            note: $('#note').val(), //หมาบเหตุ
+            date: $('#date').val(), //วันที่
+            dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            f2ListModels: [],
+        }
+        var data = tableCreateQuotation.data();
+        for (let i = 0; i < data.length; i++) {
+            var d = {};
+            d.product = $("#product" + i).val(); //สินค้า
+            d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
+            d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
+            d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
+            d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
+            insertQuotation.f2ListModels.push(d)
+        }
+
+        console.log(JSON.stringify(insertQuotation));
+
+        $.ajax({
+            type: 'POST',
+            url: '/api-f2/add-update',
+            data: JSON.stringify(insertQuotation),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                window.location.href = "/offer-price-list";
+            }
+        });
+    }
 }
 
 function tableQuotation() {
@@ -428,7 +442,6 @@ function tableQuotation() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            // console.log("customer :: " + JSON.stringify(msg))
             // table seve offer price
             var tableQuotation = $('#tableQuotation').DataTable({
                 paging: false,
@@ -444,7 +457,7 @@ function tableQuotation() {
                     },
                     {
                         'data': 'departmentId',
-                        "sWidth": "16%",
+                        "sWidth": "13%",
                     },
                     {
                         'data': 'companyId',
@@ -452,7 +465,7 @@ function tableQuotation() {
                     },
                     {
                         'data': '',
-                        "sWidth": "16%",
+                        "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
                             return row.productPriceAll.toFixed(2);
@@ -460,7 +473,7 @@ function tableQuotation() {
                     },
                     {
                         'data': '',
-                        "sWidth": "10%",
+                        "sWidth": "13%",
                         "mRender": function (data, type, row, index, full) {
                             if (row.status == 'รอพิจารณา') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
@@ -485,14 +498,20 @@ function tableQuotation() {
                     {
                         'data': '',
                         "className": "text-center",
-                        "sWidth": "10%",
+                        "sWidth": "13%",
                         "mRender": function (data, type, full) {
-                            if (full.status == 'ยกเลิก' || full.status == 'ผ่านการตวจสอบ') {
+                            if (full.status == 'ยกเลิก') {
                                 return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>\n\
-                                       <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
-                            } else {
+                                       <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
+                                       <button type="button" class="btn btn-primary btn-sm" onclick="" disabled><i class="fas fa-print"></i></button></div>';
+                            } else if(full.status == 'ผ่านการตวจสอบ') {
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>\n\
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-trash"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick=""><i class="fas fa-print"></i></button></div>';
+                            } else if(full.status == 'รอพิจารณา') {
                                 return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')"><i class="fas fa-edit"></i></button>\n\
-                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-trash"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick="" disabled><i class="fas fa-print"></i></button></div>';
                             }
                         }
                     }
@@ -503,7 +522,6 @@ function tableQuotation() {
 }; // END tableQuotation
 
 function deleteId(id) {
-    console.log(id);
     swal({
             title: "Are you sure?",
             text: "Your will not be able to recover this imaginary file!",
