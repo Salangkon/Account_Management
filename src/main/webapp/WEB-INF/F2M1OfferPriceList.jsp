@@ -68,7 +68,8 @@
 										</div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" style="margin-top: 10px"
-												data-toggle="modal" data-target="#myModal" onclick="dataCustomer(null)">สร้างใหม่</button>
+												data-toggle="modal" data-target="#myModal"
+												onclick="dataCustomer(null),tableCreateQuotationDisplay1(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">

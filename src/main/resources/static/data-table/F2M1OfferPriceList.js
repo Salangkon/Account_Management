@@ -58,125 +58,9 @@ $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
 
 $(document).ready(function () {
 
-    // วันปัจจุบัน
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-    var today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById('date').value = today;
-
-    searchDate();
+    tableQuotation();
     dataCustomer(null);
-
-    var tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
-        lengthChange: false,
-        searching: false,
-        responsive: true,
-        // lengthChange: false,
-        // dom: 'lrtip',
-        "bAutoWidth": false,
-        "sAjaxDataProp": "",
-        "aoColumns": [{
-                "sWidth": "5%",
-                "mRender": function (data,
-                    type, row, index) {
-                    index.row++;
-                    return '<div style="text-align: center"> ' + index.row + '</div>';
-                }
-            }, {
-                "sWidth": "60%",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' +
-                        index.row +
-                        '" value=""/></div><div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
-                }
-            },
-            {
-                "sWidth": "10%",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
-                        index.row +
-                        '" value="1"/>';
-                }
-            },
-            {
-                "sWidth": "10%",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
-                        index.row +
-                        '" value=""/>';
-                }
-            },
-            {
-                "mData": "",
-                "sWidth": "10%",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
-                        index.row +
-                        '" disabled/>';
-                }
-            },
-            {
-                "mData": "",
-                "sWidth": "5px",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
-                }
-            }
-        ]
-    });
-
-    $('#tableCreateQuotationDisplay').on('click', 'a', function () {
-        tableCreateQuotation.row($(this).parents('tr')).remove().draw();
-
-        var sumvalues = $("[name='rentDateSum']");
-        var sum = 0;
-        for (var i = 0; i < sumvalues.length; i++) {
-            if ($(sumvalues[i]).val() != "") {
-                sum = sum + parseFloat($(sumvalues[i]).val());
-            }
-        }
-        discountPrice = parseFloat(sum);
-        $('#price').text(parseFloat(sum).toFixed(2));
-
-        var productPriceAll = 0;
-        var discount = document.getElementById("discount").value;
-        // console.log(discountPrice + " :: " + discount);
-        $('#discountPrice').text(parseFloat(sum * discount / 100).toFixed(2));
-        productPriceAll = discountPrice - (discountPrice * discount / 100)
-        // console.log("discount :: " + sumAllPer);
-        $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
-
-        var checkBox = document.getElementById("myCheck");
-        // Get the output text
-        if (checkBox.checked == true) {
-            $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
-            $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
-        } else {
-            $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
-            $('#vat').text("00.00");
-        }
-    }); // end table
-
-    $('#Add').click(function () {
-        tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
-    });
-
-    $('#remove').click(function () {
-        tableCreateQuotation.rows('.selected').remove().draw();
-    });
+    tableCreateQuotationDisplay1(null);
 
     $('#saveCreateQuotation').click(function () {
         var pass = true;
@@ -196,8 +80,6 @@ $(document).ready(function () {
                 discountProductPrice: $('#discountProductPrice').text(), //
                 vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
                 note: $('#note').val(), //หมาบเหตุ
-                // date: new Date($('#date').val()), //วันที่
-                // dateEnd: new Date($('#dateEnd').val()), //วันที่_ครบกำหนด
                 date: $('#date').val(), //วันที่
                 dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
                 f2ListModels: [],
@@ -255,9 +137,6 @@ function changeFunc($i) {
         case "0":
             updateStatus(id, "0");
             break;
-            // case "1":
-            //     $('#myModal').modal('show');
-            //     break;
         case "2":
             updateStatus(id, "2");
             break;
@@ -278,10 +157,28 @@ function updateQuotation(id) {
         success: function (msg) {
             console.log(JSON.stringify(msg));
             dataCustomer(msg.companyId)
+            $('#id').val(msg.id), //เลขที่เอกสาร
+                $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
+                $('#type').val(msg.type), //ประเภท
+                $('#status').val(msg.status), //สถานะ
+                $('#price').text(msg.price), //รวมเป็นเงิน
+                $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
+                $('#discount').val(msg.discount), //ส่วนลด
+                $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
+                $('#discountProductPrice').text(msg.discountProductPrice), //
+                $('#vat').text(msg.vat), //ภาษีมูลค่าเพิ่ม
+                $('#note').val(msg.note), //หมาบเหตุ
+                $('#date').val(msg.date), //วันที่
+                $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+            if (msg.vat == null || msg.vat == 0) {
+                document.getElementById("myCheck").checked = false;
+            } else {
+                document.getElementById("myCheck").checked = true;
+            }
+            tableCreateQuotationDisplay1(msg.id);
         }
     })
     $('#myModal').modal('show');
-
 } // end update Quotation
 
 function updateStatus(id, status) {
@@ -298,7 +195,6 @@ function updateStatus(id, status) {
 
 function dataCustomer(companyId) {
     console.log(companyId);
-
     $.ajax({
         type: "GET",
         url: "/api/customers-list",
@@ -363,10 +259,156 @@ function dataCustomer(companyId) {
             }
         }
     });
-
 }
 
-function searchDate() {
+function tableCreateQuotationDisplay1(id) {
+    console.log("tableCreateQuotationDisplay :: " +id);
+    var tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
+        lengthChange: false,
+        searching: false,
+        responsive: true,
+        "bDestroy": true,
+        "sAjaxSource": "/api-f2/get-f2ListRepo-by-id/" + id,
+        "bAutoWidth": false,
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                "sWidth": "5%",
+                "mRender": function (data,
+                    type, row, index) {
+                    index.row++;
+                    return '<div style="text-align: center"> ' + index.row + '</div>';
+                }
+            }, {
+                "sWidth": "60%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.product != null && row.productDetail != null) {
+                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
+                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า">' + row.productDetail + ' </textarea></div>';
+                    } else if (row.product != null) {
+                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
+                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
+                    } else if (row.productDetail != null) {
+                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
+                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า">' + row.productDetail + '</textarea></div>';
+                    } else {
+                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
+                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
+                    }
+
+                }
+            },
+            {
+                "sWidth": "10%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.productNumber != null) {
+                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
+                            index.row +
+                            '" value="' + row.productNumber + '"/>';
+                    } else {
+                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
+                            index.row +
+                            '" value="1"/>';
+                    }
+                }
+            },
+            {
+                "sWidth": "10%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.productPrice != null) {
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
+                            index.row +
+                            '" value="' + row.productPrice + '"/>';
+                    } else {
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
+                            index.row +
+                            '" value=""/>';
+                    }
+                }
+            },
+            {
+                "mData": "",
+                "sWidth": "10%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.productSumPrice != null) {
+                        return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                            index.row +
+                            '" value="' + row.productSumPrice + '" disabled/>';
+                    } else {
+                        return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                            index.row +
+                            '" value="" disabled/>';
+                    }
+                }
+            },
+            {
+                "mData": "",
+                "sWidth": "5px",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                }
+            }
+        ]
+    });
+
+    $('#tableCreateQuotationDisplay').on('click', 'a', function () {
+        tableCreateQuotation.row($(this).parents('tr')).remove().draw();
+
+        var sumvalues = $("[name='rentDateSum']");
+        var sum = 0;
+        for (var i = 0; i < sumvalues.length; i++) {
+            if ($(sumvalues[i]).val() != "") {
+                sum = sum + parseFloat($(sumvalues[i]).val());
+            }
+        }
+        discountPrice = parseFloat(sum);
+        $('#price').text(parseFloat(sum).toFixed(2));
+
+        var productPriceAll = 0;
+        var discount = document.getElementById("discount").value;
+        $('#discountPrice').text(parseFloat(sum * discount / 100).toFixed(2));
+        productPriceAll = discountPrice - (discountPrice * discount / 100)
+        $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
+
+        var checkBox = document.getElementById("myCheck");
+        // Get the output text
+        if (checkBox.checked == true) {
+            $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
+            $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
+        } else {
+            $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
+            $('#vat').text("00.00");
+        }
+    }); // end table
+
+    $('#Add').click(function () {
+        tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
+    });
+
+    $('#remove').click(function () {
+        tableCreateQuotation.rows('.selected').remove().draw();
+    });
+}
+
+function tableQuotation() {
+    // วันปัจจุบัน
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('date').value = today;
+
     var searchStatus = null;
     var fromDate = 0;
     var toDate = 0;
@@ -446,10 +488,11 @@ function searchDate() {
                         "sWidth": "10%",
                         "mRender": function (data, type, full) {
                             if (full.status == 'ยกเลิก' || full.status == 'ผ่านการตวจสอบ') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>';
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>\n\
+                                       <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             } else {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')"><i class="fas fa-edit"></i></button>';
-
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             }
                         }
                     }
@@ -459,6 +502,31 @@ function searchDate() {
     });
 }; // END tableQuotation
 
+function deleteId(id) {
+    console.log(id);
+    swal({
+            title: "Are you sure?",
+            text: "Your will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
+        function () {
+            $.ajax({
+                url: '/api-f2/delete-f2/' + id,
+                type: 'DELETE',
+                success: function (result) {
+                    if (result == "Success") {
+                        window.location.href = "/offer-price-list";
+                    } else {
+                        alert("Delete Fail!!!");
+                    }
+                }
+            });
+        });
+} //end delete
 
 // validate
 function validateInput() {
