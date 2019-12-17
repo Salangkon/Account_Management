@@ -156,7 +156,7 @@ function updateStatus(id, status) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            window.location.href = "/offer-price-list";
+            window.location.href = "/billing-list";
         }
     });
 }
@@ -537,7 +537,7 @@ function deleteId(id) {
                 type: 'DELETE',
                 success: function (result) {
                     if (result == "Success") {
-                        window.location.href = "/offer-price-list";
+                        window.location.href = "/billing-list";
                     } else {
                         alert("Delete Fail!!!");
                     }
