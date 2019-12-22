@@ -78,7 +78,7 @@
 										</div>
 										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /></div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button" onclick="searchDate()"
+											<button class="btn btn-primary" type="button" onclick="tableQuotation()"
 												style="margin-top: 42px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
