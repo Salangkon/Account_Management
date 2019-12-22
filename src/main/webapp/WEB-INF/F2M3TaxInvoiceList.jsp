@@ -194,7 +194,7 @@
 										</div>
 										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label></div>
 										<div class="col-sm-8">
-											<h3 id="price" style="margin-top: 40px;"></h3>
+											<h3 id="priceDisplay" style="margin-top: 40px;"></h3>
 										</div>
 									</div>
 								</div>

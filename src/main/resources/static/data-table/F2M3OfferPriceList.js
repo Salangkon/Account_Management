@@ -52,7 +52,7 @@ $('#tableCreateTaxInvoiceDisplay').on('keyup', 'input', function () {
     }
     discountPrice = parseFloat(sum);
     $('#price').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
-
+    $('#priceDisplay').text(parseFloat(sum).toFixed(2));
     myFunction();
 });
 
@@ -112,6 +112,7 @@ function updateQuotation(id) {
                     $('#status').val(msg.type), //สถานะ
                     $('#status').val(msg.status), //สถานะ
                     $('#price').text(msg.price), //รวมเป็นเงิน
+                    $('#priceDisplay').text(msg.price);
                     $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
                     $('#discount').val(msg.discount), //ส่วนลด
                     $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
@@ -136,6 +137,7 @@ function updateQuotation(id) {
         $('#id').val(""), //เลขที่เอกสาร
             $('#departmentId').val(""), //เลขที่เอกสาร
             $('#price').text(""), //รวมเป็นเงิน
+            $('#priceDisplay').text("");
             $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
             $('#discount').val(""), //ส่วนลด
             $('#discountPrice').text(""), //ราคาหักส่วนลด
@@ -333,7 +335,7 @@ function tableCreateTaxInvoice1(id) {
         }
         discountPrice = parseFloat(sum);
         $('#price').text(parseFloat(sum).toFixed(2));
-
+        $('#priceDisplay').text(parseFloat(sum).toFixed(2));
         var productPriceAll = 0;
         var discount = document.getElementById("discount").value;
         $('#discountPrice').text(parseFloat(sum * discount / 100).toFixed(2));
@@ -480,12 +482,11 @@ function tableTaxInvoice() {
                                     <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
                                     <option value="2' + row.id + '" style="color: black">ผ่านการตวจสอบ</option/>\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
+                                    <option value="" style="color: black">ใบเสร็จรับเงิน</option/>\n\
                                     </select>';
                             } else if (row.status == 'ผ่านการตวจสอบ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
-                                    <option value="2' + row.id + '" style="color: black">ผ่านการตวจสอบ</option/>\n\
-                                    <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
+                                    <option value="" style="color: black">ผ่านการตวจสอบ</option/>\n\
                                     </select>';
                             } else if (row.status == 'ยกเลิก') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
