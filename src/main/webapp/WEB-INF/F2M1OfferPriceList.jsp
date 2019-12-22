@@ -68,7 +68,8 @@
 										</div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" style="margin-top: 10px"
-												data-toggle="modal" data-target="#myModal" onclick="dataCustomer(null)">สร้างใหม่</button>
+												data-toggle="modal" data-target="#myModal"
+												onclick="updateQuotation(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
@@ -134,6 +135,7 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
+											<input id="id">
 											<select class="form-control" style="margin-top: 10px;"
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
 												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
@@ -190,13 +192,9 @@
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขอ้างอิง">
 										</div>
-										<div class="col-sm-4"><label>ราคาสินค้า</label></div>
+										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label></div>
 										<div class="col-sm-8">
-											<select class="form-control" style="margin-top: 10px;" id="companyType"
-												placeholder="ราคาไม่รวมภาษี">
-												<option value="สมุดรายวันขาย">TEST 01</option>
-												<option value="สมุดรายวันซื้อ">TEST 01</option>
-											</select>
+											<h3 id="price" style="margin-top: 40px;"></h3>
 										</div>
 									</div>
 								</div>
@@ -226,7 +224,7 @@
 														</th>
 														<th colspan="5">
 															<button type="button" class="btn btn-default btn-sm"
-																id="Add">
+																onclick="Add()">
 																<i class="fas fa-plus" style="color: red"></i>
 																เพิ่มรายการ
 															</button>
@@ -286,7 +284,7 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" id="saveCreateQuotation">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>

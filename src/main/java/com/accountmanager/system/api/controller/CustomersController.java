@@ -25,7 +25,6 @@ public class CustomersController {
 	
 	@GetMapping("/customers-list/{customersId}")
 	public CustomersList customersList(@PathVariable("customersId") String customersId) {
-		System.err.println(customersId);
 		return customersListRepo.findOne(customersId);
 	}
 	
