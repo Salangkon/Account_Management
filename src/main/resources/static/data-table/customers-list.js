@@ -199,7 +199,7 @@ function deleteId(companyId) {
 					if (result == "Success") {
 						window.location.href = "/customers-list";
 					} else {
-						alert("Delete Fail!!!");
+						alert("มีเอกสาร ที่เกี่ยวข้องกับหน่วยงานนี้!!!");
 					}
 				}
 			});

@@ -192,13 +192,9 @@
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขอ้างอิง">
 										</div>
-										<div class="col-sm-4"><label>ราคาสินค้า</label></div>
+										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label></div>
 										<div class="col-sm-8">
-											<select class="form-control" style="margin-top: 10px;" id="companyType"
-												placeholder="ราคาไม่รวมภาษี">
-												<option value="สมุดรายวันขาย">TEST 01</option>
-												<option value="สมุดรายวันซื้อ">TEST 01</option>
-											</select>
+											<h3 id="price" style="margin-top: 40px;"></h3>
 										</div>
 									</div>
 								</div>
