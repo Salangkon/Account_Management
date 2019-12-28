@@ -8,6 +8,8 @@
 	<title>Offer Price List</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
+	<link rel="stylesheet" href="/css/A4.css">
+	
 	<style>
 		label,
 		textarea,
@@ -28,6 +30,7 @@
 			display: none;
 		}
 	</style>
+
 </head>
 
 <body>
@@ -193,7 +196,8 @@
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขอ้างอิง">
 										</div>
-										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label></div>
+										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>
+										</div>
 										<div class="col-sm-8">
 											<h3 id="priceDisplay" style="margin-top: 40px;"></h3>
 										</div>
@@ -285,8 +289,10 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()" id="saveBiilingFlg">บันทึก</button>
-						<button type="button" class="btn btn-success" onclick="saveCreateQuotationBilling()" id="saveBiilingFlgDefault">บันทึกใบวางบิล</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()"
+							id="saveBiilingFlg">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotationBilling()"
+							id="saveBiilingFlgDefault">บันทึกใบวางบิล</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>
@@ -294,9 +300,21 @@
 		</div>
 		<!--End The Modal -->
 
+		<div id="printPDF">printPDF</div>
+
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
+
+		<script>
+			function myFunction() {
+				var printContents = document.getElementById("printPDF").innerHTML;
+				var originalContents = document.body.innerHTML;
+				document.body.innerHTML = printContents;
+				window.print();
+				document.body.innerHTML = originalContents;
+			}
+		</script>
 
 </body>
 
