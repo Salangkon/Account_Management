@@ -112,7 +112,7 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title">สร้างใบเสนอราคา</h4>
+						<h4 class="modal-title">สร้างใบวางบิล</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<input hidden id="type" value="Biiling">
 						<input hidden id="status" value="รอพิจารณา">
