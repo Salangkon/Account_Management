@@ -112,7 +112,8 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title">สร้างใบเสนอราคา</h4>
+						<h4 class="modal-title" id="ReceiptFlg">สร้างใบเสนอราคา</h4>
+						<h4 class="modal-title" id="ReceiptFlgDefault">สร้างใบเสร็จรับเงิน</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<input hidden id="type" value="TaxInvoice">
 						<input hidden id="status" value="รอพิจารณา">
@@ -284,7 +285,8 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()" id="saveReceiptFlg">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotationReceipt()" id="saveReceiptFlgDefault">บันทึกใบเสร็จรับเงิน</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>
