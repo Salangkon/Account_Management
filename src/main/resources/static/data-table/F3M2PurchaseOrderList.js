@@ -411,7 +411,7 @@ function saveCreateQuotation() {
             }
         });
     }
-}   
+}
 
 function tableQuotation() {
     // วันปัจจุบัน
@@ -503,17 +503,17 @@ function tableQuotation() {
                         "sWidth": "13%",
                         "mRender": function (data, type, full) {
                             if (full.status == 'ยกเลิก') {
-                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>\n\
                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
-                                       <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                                       <button type="button" class="btn btn-primary btn-sm" onclick="" disabled><i class="fas fa-print"></i></button></div>';
                             } else if (full.status == 'ผ่านการตวจสอบ') {
-                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
-                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF()"><i class="fas fa-print"></i></button></div>';
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>\n\
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-trash"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick=""><i class="fas fa-print"></i></button></div>';
                             } else if (full.status == 'รอพิจารณา') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
-                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-trash"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick="" disabled><i class="fas fa-print"></i></button></div>';
                             }
                         }
                     }
@@ -578,4 +578,3 @@ function validateInput() {
 
     return pass;
 } // end validate
-

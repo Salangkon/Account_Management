@@ -475,6 +475,7 @@ function tableReceipt() {
                     },
                     {
                         'data': '',
+                        "className": "text-center",
                         "sWidth": "13%",
                         "mRender": function (data, type, row, index, full) {
                             if (row.status == 'รอพิจารณา') {
@@ -484,11 +485,7 @@ function tableReceipt() {
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     </select>';
                             } else if (row.status == 'ผ่านการตวจสอบ') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
-                                    <option value="2' + row.id + '" style="color: black">ผ่านการตวจสอบ</option/>\n\
-                                    <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
-                                    </select>';
+                                return '<label style="color: green">ผ่านการตวจสอบ</label>';
                             } else if (row.status == 'ยกเลิก') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
