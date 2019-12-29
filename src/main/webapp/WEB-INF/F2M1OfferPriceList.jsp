@@ -300,14 +300,14 @@
 		</div>
 		<!--End The Modal -->
 
-		<div id="printPDF">printPDF</div>
+		<div id="printPDF" hidden="">printPDF</div>
 
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
 
 		<script>
-			function myFunction() {
+			function printPDF() {
 				var printContents = document.getElementById("printPDF").innerHTML;
 				var originalContents = document.body.innerHTML;
 				document.body.innerHTML = printContents;
