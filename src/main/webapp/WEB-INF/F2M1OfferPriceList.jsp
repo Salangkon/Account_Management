@@ -9,7 +9,7 @@
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<link rel="stylesheet" href="/css/A4.css">
-	
+
 	<style>
 		label,
 		textarea,
@@ -139,7 +139,7 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
-											<input id="id">
+											<input id="id" hidden>
 											<select class="form-control" style="margin-top: 10px;"
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
 												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
@@ -300,7 +300,22 @@
 		</div>
 		<!--End The Modal -->
 
-		<div id="printPDF" hidden="">printPDF</div>
+		<div id="printPDF" hidden="">
+			<div style="padding: 10%;">
+				<table style="width: 100%;">
+					<tr>
+						<th style="width: 60%;">ใบเสนอราคา</th>
+						<th style="width: 40%;">asas</th>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td style="max-width: 50%;"><label>หมายเหตุ <br> ตัวอย่าง หมายเหตุ</label></td>
+						<td style="max-width: 50%;"><label></label></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>

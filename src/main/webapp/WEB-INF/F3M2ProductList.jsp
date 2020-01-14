@@ -138,7 +138,7 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
-											<input id="id">
+											<input id="id" hidden>
 											<select class="form-control" style="margin-top: 10px;"
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
 												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
