@@ -1,11 +1,24 @@
-@page {
+/* .page {
   size: A4;
   margin: 0;
+  width: 210mm;
+  height: 297mm;
 }
+ */
 @media print {
-  html, body {
-    width: 210mm;
-    height: 297mm;
+  body * {
+    visibility:hidden;
   }
-  /* ... the rest of the rules ... */
-} 
+  #printSection, #printSection * {
+    visibility:visible;
+    size: A4;
+  }
+
+  #printSection {
+    size: A4;
+    position:absolute;
+    left:0;
+    top:0;
+  }
+}
+
