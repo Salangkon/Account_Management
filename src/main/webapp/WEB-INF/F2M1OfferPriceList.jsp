@@ -307,13 +307,13 @@
 			aria-hidden="true">
 			<div class="modal-dialog modal-lg" style="max-width: 1150px;">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-footer" style="padding: 10px;">
 						<button id="btnPrint" type="button" class="btn btn-primary">Print</button>
-						<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">Close</button>
 					</div>
-					<div class="page" id="printThis">
+					<div style="border: 20px solid red;padding: 10px;">
 						<%@include file="/WEB-INF/PrintPDF/PrintPDF.jsp" %>
-					</div>
+					</div style="border-color: brown;">
 				</div>
 			</div>
 		</div>

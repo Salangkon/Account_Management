@@ -1,24 +1,25 @@
-/* .page {
+@page {
   size: A4;
   margin: 0;
-  width: 210mm;
-  height: 297mm;
 }
- */
+
 @media print {
-  body * {
-    visibility:hidden;
-  }
-  #printSection, #printSection * {
-    visibility:visible;
+
+  html,
+  body {
+    visibility: hidden;
     size: A4;
   }
 
   #printSection {
+    visibility: visible;
+    position: absolute;
+    padding-top: 2.5cm;
+    padding-left: 2cm;
+    padding-right: 2cm;
+    padding-bottom: 2cm;
     size: A4;
-    position:absolute;
-    left:0;
-    top:0;
+    left: 0;
+    top: 0;
   }
 }
-

@@ -2,8 +2,6 @@
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="/data-table/css/css.css" rel="stylesheet">
 
-<link rel="stylesheet" href="/css/A4.css">
-
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -19,6 +17,8 @@
 <!-- bootstrap 4 datepicker -->
 <!-- <link href="/data-table/css/gijgo.min.css" rel="stylesheet" type="text/css"> -->
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="/css/A4.css">
 
 <!-- Data Table JS-->
 <script src="/data-table/js/jquery-3.3.1.js" type="text/javascript"></script>

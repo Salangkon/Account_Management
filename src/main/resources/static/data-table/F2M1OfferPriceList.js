@@ -172,6 +172,76 @@ function updateQuotation(id, Biiling) {
     $('#myModal').modal('show');
 } // end update Quotation
 
+// Print PDF
+function printPDF(id) {
+    console.log("Print :: ", id);
+    var myObject
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/get-by-id/" + id,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            $('#id').val(msg.id), //เลขที่เอกสาร
+                $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
+                $('#status').val(msg.type), //สถานะ
+                $('#status').val(msg.status), //สถานะ
+                $('#price').text(msg.price), //รวมเป็นเงิน
+                $('#priceDisplay').text(msg.price), //รวมเป็นเงิน
+                $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
+                $('#discount').val(msg.discount), //ส่วนลด
+                $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
+                $('#discountProductPrice').text(msg.discountProductPrice), //
+                $('#vat').text(msg.vat), //ภาษีมูลค่าเพิ่ม
+                $('#note').val(msg.note), //หมาบเหตุ
+                $('#date').val(msg.date), //วันที่
+                $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+
+            console.log(JSON.stringify(msg));
+
+            dataCustomer(msg.companyId)
+
+            $('#tablePrintPDFDisplay').DataTable({
+                "columnDefs": [ {
+                    "targets": 0,
+                    "searchable": false
+                  } ],
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": false,
+                "bDestroy": true,
+                // "sAjaxSource": searchDate(),
+                data: jQuery.parseJSON(JSON.stringify(msg.f2ListModels)),
+                "sAjaxDataProp": "",
+                "aoColumns": [{
+                        'data': 'productDetail',
+                        "className": "text-center",
+                        "sWidth": "8%",
+                    },
+                    {
+                        'data': 'productDetail',
+                        "sWidth": "13%",
+                    },
+                    {
+                        'data': 'productDetail',
+                        "sWidth": "40%",
+                    },
+                    {
+                        'data': 'productDetail',
+                        "sWidth": "40%",
+                    },
+                    {
+                        'data': 'productDetail',
+                        "sWidth": "40%",
+                    }
+                ]
+            });
+        }
+    })
+} // end Print PDF
+
+
 function updateStatus(id, status) {
     $.ajax({
         type: 'POST',
@@ -575,7 +645,7 @@ function tableQuotation() {
                             } else if (full.status == 'ผ่านการตวจสอบ') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
                                 <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')">ใบวางบิล</button></div>';
                             } else if (full.status == 'รอพิจารณา') {
                                 return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
@@ -652,15 +722,15 @@ document.getElementById("btnPrint").onclick = function () {
 
 function printElement(elem) {
     var domClone = elem.cloneNode(true);
-    
+
     var $printSection = document.getElementById("printSection");
-    
+
     if (!$printSection) {
         var $printSection = document.createElement("div");
         $printSection.id = "printSection";
         document.body.appendChild($printSection);
     }
-    
+
     $printSection.innerHTML = "";
     $printSection.appendChild(domClone);
     window.print();
