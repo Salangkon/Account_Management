@@ -58,16 +58,14 @@
 				<td style="width: 50%;"></td>
 			</tr>
 		</table>
-		<table id="tablePrintPDFDisplay" class="table table-sm" style="margin-top: 20px;width: 100%;">
-			<thead>
-				<tr>
-					<th>ลำดับ</th>
-					<th>รายละเอียด</th>
-					<th>จำนวน</th>
-					<th>ราคาต่อหน่วย</th>
-					<th>ยอมยอด</th>
-				</tr>
-			</thead>
+		<table class="table table-bordered table-striped" id="tablePrintPDFDisplay">
+			<tr>
+				<th>ลำดับ</th>
+				<th>รายละเอียด</th>
+				<th>จำนวน</th>
+				<th>ราคาต่อหน่วย</th>
+				<th>ยอมยอด</th>
+			</tr>
 		</table>
 		<table style="width: 100%;">
 			<tr>

@@ -175,7 +175,9 @@ function updateQuotation(id, Biiling) {
 // Print PDF
 function printPDF(id) {
     console.log("Print :: ", id);
-    var myObject
+    var number = 0;
+    var tablePrintPDF = [];
+    tablePrintPD = [];
     $.ajax({
         type: "GET",
         url: "/api-f2/get-by-id/" + id,
@@ -201,42 +203,18 @@ function printPDF(id) {
 
             dataCustomer(msg.companyId)
 
-            $('#tablePrintPDFDisplay').DataTable({
-                "columnDefs": [ {
-                    "targets": 0,
-                    "searchable": false
-                  } ],
-                "bPaginate": false,
-                "bLengthChange": false,
-                "bFilter": true,
-                "bInfo": false,
-                "bDestroy": true,
-                // "sAjaxSource": searchDate(),
-                data: jQuery.parseJSON(JSON.stringify(msg.f2ListModels)),
-                "sAjaxDataProp": "",
-                "aoColumns": [{
-                        'data': 'productDetail',
-                        "className": "text-center",
-                        "sWidth": "8%",
-                    },
-                    {
-                        'data': 'productDetail',
-                        "sWidth": "13%",
-                    },
-                    {
-                        'data': 'productDetail',
-                        "sWidth": "40%",
-                    },
-                    {
-                        'data': 'productDetail',
-                        "sWidth": "40%",
-                    },
-                    {
-                        'data': 'productDetail',
-                        "sWidth": "40%",
-                    }
-                ]
+            msg.f2ListModels.forEach(value => {
+                console.log(value.productDetail);
+                number++;
+                tablePrintPDF += '<tr>';
+                tablePrintPDF += '<td>'+number+'</td>';
+                tablePrintPDF += '<td>'+value.productDetail+'</td>';
+                tablePrintPDF += '<td>'+value.productDetail+'</td>';
+                tablePrintPDF += '<td>'+value.productDetail+'</td>';
+                tablePrintPDF += '<td>'+value.productDetail+'</td>';
+                tablePrintPDF += '</tr>';
             });
+            $('#tablePrintPDFDisplay').append(tablePrintPDF);    
         }
     })
 } // end Print PDF

@@ -8,7 +8,6 @@
 	<title>Offer Price List</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
-
 	<style>
 		label,
 		textarea,
