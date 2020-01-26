@@ -4,8 +4,8 @@
 <html>
 
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Offer Price List</title>
+	<meta charset="UTF-8">
+	<title>Quotation</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<style>
@@ -321,7 +321,7 @@
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
-
+		<script src="/print-pdf-js/f2m1-print-pdf-Quotation.js" type="text/javascript"></script>
 </body>
 
 </html>

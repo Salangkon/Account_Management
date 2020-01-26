@@ -172,54 +172,6 @@ function updateQuotation(id, Biiling) {
     $('#myModal').modal('show');
 } // end update Quotation
 
-// Print PDF
-function printPDF(id) {
-    console.log("Print :: ", id);
-    var number = 0;
-    var tablePrintPDF = [];
-    tablePrintPD = [];
-    $.ajax({
-        type: "GET",
-        url: "/api-f2/get-by-id/" + id,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            $('#id').val(msg.id), //เลขที่เอกสาร
-                $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
-                $('#status').val(msg.type), //สถานะ
-                $('#status').val(msg.status), //สถานะ
-                $('#price').text(msg.price), //รวมเป็นเงิน
-                $('#priceDisplay').text(msg.price), //รวมเป็นเงิน
-                $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
-                $('#discount').val(msg.discount), //ส่วนลด
-                $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
-                $('#discountProductPrice').text(msg.discountProductPrice), //
-                $('#vat').text(msg.vat), //ภาษีมูลค่าเพิ่ม
-                $('#note').val(msg.note), //หมาบเหตุ
-                $('#date').val(msg.date), //วันที่
-                $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
-
-            console.log(JSON.stringify(msg));
-
-            dataCustomer(msg.companyId)
-
-            msg.f2ListModels.forEach(value => {
-                console.log(value.productDetail);
-                number++;
-                tablePrintPDF += '<tr>';
-                tablePrintPDF += '<td>'+number+'</td>';
-                tablePrintPDF += '<td>'+value.productDetail+'</td>';
-                tablePrintPDF += '<td>'+value.productDetail+'</td>';
-                tablePrintPDF += '<td>'+value.productDetail+'</td>';
-                tablePrintPDF += '<td>'+value.productDetail+'</td>';
-                tablePrintPDF += '</tr>';
-            });
-            $('#tablePrintPDFDisplay').append(tablePrintPDF);    
-        }
-    })
-} // end Print PDF
-
-
 function updateStatus(id, status) {
     $.ajax({
         type: 'POST',
@@ -248,12 +200,17 @@ function dataCustomer(companyId) {
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
+                            $('#customersPrint').text(msg.companyId);
+                            $('#taxIdPrint').text("เลขประจำาตัวผู้เสียภาษี  " + msg.taxId);
+
                             $('#customers').val(msg.companyId);
                             $('#address').val(msg.address);
                             $('#taxId').val(msg.taxId);
                             if (msg.officeType == 1) {
+                                $('#customersNamePrint').text(msg.customerName + " ( สำนักงานใหญ่ )");
                                 document.getElementById("officeType1").checked = true;
                             } else {
+                                $('#customersNamePrint').text(msg.customerName + " ( " + msg.department + " )");
                                 document.getElementById("officeType2").checked = true;
                             }
                         }
@@ -554,7 +511,7 @@ function tableQuotation() {
     if (document.getElementById('toDate').value != '') {
         toDate = document.getElementById('toDate').value;
     }
-
+    
     $.ajax({
         type: "GET",
         url: "/api-f2/get-by/Quotation/" + searchStatus + "/" + fromDate + "/" + toDate,

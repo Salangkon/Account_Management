@@ -20,6 +20,24 @@
 
 <link rel="stylesheet" href="/css/A4.css">
 
+<style type="text/css">
+	.icon-color {
+		color: purple;
+	}
+
+	.triangle {
+		width: 0px;
+		height: 00px;
+		border-top: 100px solid purple;
+		border-right: 0px solid transparent;
+		/* ซ่อนขอบขวา */
+		border-left: 100px solid transparent;
+		/* ซ่อนขอบซ้าย */
+		text-alinght: right;
+	}
+</style>
+
+<script src="/js/thaibath.js" type="text/javascript" charset="utf-8"></script>
 <!-- Data Table JS-->
 <script src="/data-table/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script src="/data-table/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -33,9 +51,3 @@
 <script src="/data-table/js/buttons.print.min.js" type="text/javascript"></script>
 <script src="/data-table/js/buttons.colVis.min.js" type="text/javascript"></script>
 <script src="/data-table/js/dataTables.select.min.js" type="text/javascript"></script>
-
-<style type="text/css">
-	.icon-color {
-		color: purple;
-	}
-</style>
