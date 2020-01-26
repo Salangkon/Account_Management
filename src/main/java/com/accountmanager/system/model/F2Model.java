@@ -2,56 +2,55 @@ package com.accountmanager.system.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
-
 
 /**
  * The persistent class for the f2_model database table.
  * 
  */
 @Entity
-@Table(name="f2_model")
-@NamedQuery(name="F2Model.findAll", query="SELECT f FROM F2Model f")
+@Table(name = "f2_model")
+@NamedQuery(name = "F2Model.findAll", query = "SELECT f FROM F2Model f")
 public class F2Model implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
 
-	@Column(name="company_id")
+	@Column(name = "company_id")
 	private String companyId;
 
-	@Column(name="create_by")
-	private String createBy;
-	
-	@Column(name="type")
+	@Column(name = "type")
 	private String type;
 
-	@Column(name="status")
+	@Column(name = "status")
 	private String status;
 
-	@Column(name="create_date")
-	private Timestamp createDate;
-
 	@Temporal(TemporalType.DATE)
-	@Column(name="date")
+	@Column(name = "date")
 	private Date date;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_end")
+	@Column(name = "date_end")
 	private Date dateEnd;
 
-	@Column(name="department_id")
+	@Column(name = "department_id")
 	private String departmentId;
 
 	private float discount;
 
-	@Column(name="discount_price")
+	@Column(name = "discount_price")
 	private float discountPrice;
 
-	@Column(name="discount_product_price")
+	@Column(name = "discount_product_price")
 	private float discountProductPrice;
 
 	@Lob
@@ -59,19 +58,29 @@ public class F2Model implements Serializable {
 
 	private float price;
 
-	@Column(name="product_price_all")
+	@Column(name = "product_price_all")
 	private float productPriceAll;
 
-	@Column(name="update_by")
+	@CreatedBy
+	@Column(name = "create_by")
+	private String createBy;
+
+	@CreatedDate
+	@Column(name = "create_date")
+	private Timestamp createDate;
+
+	@LastModifiedBy
+	@Column(name = "update_by")
 	private String updateBy;
 
-	@Column(name="update_date")
+	@LastModifiedDate
+	@Column(name = "update_date")
 	private Timestamp updateDate;
 
 	private float vat;
 
-	//bi-directional many-to-one association to F2ListModel
-	@OneToMany(mappedBy="f2Model", cascade = CascadeType.MERGE)
+	// bi-directional many-to-one association to F2ListModel
+	@OneToMany(mappedBy = "f2Model", cascade = CascadeType.MERGE)
 	private List<F2ListModel> f2ListModels;
 
 	public F2Model() {

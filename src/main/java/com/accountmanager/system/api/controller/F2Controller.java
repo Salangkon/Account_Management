@@ -1,12 +1,15 @@
 package com.accountmanager.system.api.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,20 +35,38 @@ public class F2Controller {
 	@Autowired
 	CustomersListRepository customersListRepo;
 
-//	@GetMapping("/get-by/{type}")
-//	public List<F2Model> F2Model(@PathVariable String type) {
-//		List<F2Model> f2Models = new ArrayList<F2Model>();
-//		List<F2Model> f2ModelsDisplay = new ArrayList<F2Model>();
-//		f2Models = f2Repo.findByType(type);
-//		for (F2Model f2Model : f2Models) {
-//			F2Model model = new F2Model();
-//			CustomersList customers = customersListRepo.findOne(f2Model.getCompanyId());
-//			model = f2Model;
-//			model.setCompanyId(customers.getCompanyName());
-//			f2ModelsDisplay.add(f2Model);
-//		}
-//		return f2ModelsDisplay;
-//	}
+	@GetMapping("/get-f2ListRepo-by-id/{id}")
+	public List<F2ListModel> getByIdF2ListRepo(@PathVariable("id") String id) {
+		List<F2ListModel> f2ListModels = new ArrayList<F2ListModel>();
+		try {
+			if (id != null) {
+				F2Model f2Model = f2Repo.findById(id);
+				f2ListModels = f2Model.getF2ListModels();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return f2ListModels;
+	}
+
+	@DeleteMapping("/delete-f2/{id}")
+	public String deletecustomersList(@PathVariable("id") String id) {
+		String result = "Success";
+		try {
+			F2Model f2Model = f2Repo.findById(id);
+			if (f2Model.getF2ListModels() != null) {
+				for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
+					f2ListRepo.delete(f2ListModel);
+				}
+			}
+			f2Repo.delete(id);
+		} catch (Exception e) {
+			e.getStackTrace();
+			result = "Fail";
+		}
+		return result;
+	}
 
 	@GetMapping("/get-by/{type}/{status}/{startDate}/{endDate}")
 	public List<F2Model> F2Model(@PathVariable String type, @PathVariable String status, @PathVariable String startDate,
@@ -94,11 +115,18 @@ public class F2Controller {
 			CustomersList customers = customersListRepo.findOne(f2Model.getCompanyId());
 			model = f2Model;
 			model.setCompanyId(customers.getCompanyName());
+			if (f2Model.getUpdateDate() == null) {
+				f2Model.setUpdateDate(f2Model.getCreateDate());
+			}
 			f2ModelsDisplay.add(f2Model);
 		}
+
+		f2ModelsDisplay.sort(
+				(e2, e1) -> new Long(e1.getUpdateDate().getTime()).compareTo(new Long(e2.getUpdateDate().getTime())));
+
 		return f2ModelsDisplay;
 	}
-	
+
 	public List<F2Model> searchF2(String type, String status, String startDate, String endDate) {
 		List<F2Model> f2Models = new ArrayList<F2Model>();
 		switch (startDate) {
@@ -134,6 +162,12 @@ public class F2Controller {
 	@PostMapping("/update-status/{id}/{status}")
 	public F2Model updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
 		F2Model f2ListModel = f2Repo.findById(id);
+		
+		// Convert Date to Timestamp
+		Date date = new Date();
+		Timestamp ts = new Timestamp(date.getTime());
+		f2ListModel.setUpdateDate(ts);
+		
 		switch (status) {
 		case "0":
 			f2ListModel.setStatus("รอพิจารณา");
@@ -151,15 +185,29 @@ public class F2Controller {
 
 	@PostMapping("/add-update")
 	public ResponseEntity<?> Quotation(@RequestBody F2Model f2Model) {
+		// Convert Date to Timestamp
+		Date date = new Date();
+		Timestamp ts = new Timestamp(date.getTime());
+
+		List<F2ListModel> f2ListModels = new ArrayList<>();
+
 		try {
-			if (f2Model.getId() == null) {
+			if (f2Model.getId() == null || f2Model.getId().equals("")) {
 				f2Model.setId(UUID.randomUUID().toString());
+				f2Model.setCreateDate(ts);
+			} else {
+				f2Model.setCreateDate(f2Repo.findById(f2Model.getId()).getCreateDate());
+				f2Model.setUpdateDate(ts);
 			}
-			List<F2ListModel> f2ListModels = new ArrayList<>();
-			for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
-				if (f2ListModel.getId() == null) {
-					f2ListModel.setId(UUID.randomUUID().toString());
+			F2Model f2ListModels2 = f2Repo.findById(f2Model.getId());
+			if (f2ListModels2 != null) {
+				for (F2ListModel f2ListModel : f2ListModels2.getF2ListModels()) {
+					f2ListRepo.delete(f2ListModel.getId());
 				}
+			}
+
+			for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
+				f2ListModel.setId(UUID.randomUUID().toString());
 				f2ListModel.setF2Id(f2Model.getId());
 				f2ListModels.add(f2ListModel);
 			}

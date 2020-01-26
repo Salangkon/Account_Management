@@ -52,35 +52,217 @@ $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
     }
     discountPrice = parseFloat(sum);
     $('#price').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
-
+    $('#priceDisplay').text(parseFloat(sum).toFixed(2));
     myFunction();
 });
 
 $(document).ready(function () {
 
-    // วันปัจจุบัน
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-    var today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById('date').value = today;
-
-    searchDate();
+    tableQuotation();
     dataCustomer(null);
+    tableCreateQuotationDisplay1(null);
+}); // end document
 
-    var tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
+function myFunction() {
+    var productPriceAll = 0;
+    var discount = document.getElementById("discount").value;
+    $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
+    productPriceAll = discountPrice - (discountPrice * discount / 100)
+    $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
+
+    var checkBox = document.getElementById("myCheck");
+    // Get the output text
+    if (checkBox.checked == true) {
+        $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
+        $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
+    } else {
+        $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
+        $('#vat').text("00.00");
+    }
+}
+
+// update status
+function changeFunc($i) {
+    var type = $i.slice(0, 1);
+    var id = $i.substr(1, 100);
+    switch (type) {
+        case "0":
+            updateStatus(id, "0");
+            break;
+        case "2":
+            updateStatus(id, "2");
+            break;
+        case "3":
+            updateStatus(id, "3");
+            break;
+            // case "4":
+            //     $('#myModal').modal('show');
+            //     break;
+    }
+} // end update status
+
+// update Quotation
+function updateQuotation(id, Biiling) {
+    console.log("test :: ", id + Biiling);
+    if (id == null || Biiling == "false") {
+        Biiling = false;
+    } else {
+        Biiling = true;
+    }
+    if (Biiling) {
+        document.getElementById("BiilingFlg").style.display = "none";
+        document.getElementById("BiilingFlgDefault").style.display = "block";
+        document.getElementById("saveBiilingFlg").style.display = "none";
+        document.getElementById("saveBiilingFlgDefault").style.display = "block";
+    } else {
+        document.getElementById("BiilingFlg").style.display = "block";
+        document.getElementById("BiilingFlgDefault").style.display = "none";
+        document.getElementById("saveBiilingFlg").style.display = "block";
+        document.getElementById("saveBiilingFlgDefault").style.display = "none";
+    }
+
+    if (id != null) {
+        $.ajax({
+            type: "GET",
+            url: "/api-f2/get-by-id/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                $('#id').val(msg.id), //เลขที่เอกสาร
+                    $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
+                    $('#status').val(msg.type), //สถานะ
+                    $('#status').val(msg.status), //สถานะ
+                    $('#price').text(msg.price), //รวมเป็นเงิน
+                    $('#priceDisplay').text(msg.price), //รวมเป็นเงิน
+                    $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
+                    $('#discount').val(msg.discount), //ส่วนลด
+                    $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
+                    $('#discountProductPrice').text(msg.discountProductPrice), //
+                    $('#vat').text(msg.vat), //ภาษีมูลค่าเพิ่ม
+                    $('#note').val(msg.note), //หมาบเหตุ
+                    $('#date').val(msg.date), //วันที่
+                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                if (msg.vat == null || msg.vat == 0) {
+                    document.getElementById("myCheck").checked = false;
+                } else {
+                    document.getElementById("myCheck").checked = true;
+                }
+                dataCustomer(msg.companyId)
+                tableCreateQuotationDisplay1(msg.id);
+            }
+        })
+    } else {
+        tableCreateQuotationDisplay1(null);
+        dataCustomer(null)
+
+        $('#id').val(""), //เลขที่เอกสาร
+            $('#departmentId').val(""), //เลขที่เอกสาร
+            $('#price').text(""), //รวมเป็นเงิน
+            $('#priceDisplay').text(""), //รวมเป็นเงิน
+            $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
+            $('#discount').val(""), //ส่วนลด
+            $('#discountPrice').text(""), //ราคาหักส่วนลด
+            $('#discountProductPrice').text(""), //
+            $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
+            $('#note').val(""), //หมาบเหตุ
+            $('#date').val(document.getElementById('date').value), //วันที่
+            $('#dateEnd').val("") //วันที่_ครบกำหนด
+        document.getElementById("myCheck").checked = false;
+    }
+    $('#myModal').modal('show');
+} // end update Quotation
+
+function updateStatus(id, status) {
+    $.ajax({
+        type: 'POST',
+        url: '/api-f2/update-status/' + id + "/" + status,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            window.location.href = "/offer-price-list";
+        }
+    });
+}
+
+function dataCustomer(companyId) {
+    $.ajax({
+        type: "GET",
+        url: "/api/customers-list",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (companyId != null) {
+                for (var i = 0; i < msg.length; i++) {
+                    $('#customers').append('<option value="' + companyId + '">' + companyId + '</option>');
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/customers-list/" + companyId,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            $('#customersPrint').text(msg.companyId);
+                            $('#taxIdPrint').text("เลขประจำาตัวผู้เสียภาษี  " + msg.taxId);
+
+                            $('#customers').val(msg.companyId);
+                            $('#address').val(msg.address);
+                            $('#taxId').val(msg.taxId);
+                            if (msg.officeType == 1) {
+                                $('#customersNamePrint').text(msg.customerName + " ( สำนักงานใหญ่ )");
+                                document.getElementById("officeType1").checked = true;
+                            } else {
+                                $('#customersNamePrint').text(msg.customerName + " ( " + msg.department + " )");
+                                document.getElementById("officeType2").checked = true;
+                            }
+                        }
+                    });
+                }
+            } else {
+                $('#customers').val("");
+                $('#address').val("");
+                $('#taxId').val("");
+                document.getElementById("officeType1").checked = false;
+                document.getElementById("officeType2").checked = false;
+                for (var i = 0; i < msg.length; i++) {
+                    $('#customers').append('<option value="' + msg[i].companyId + '">' + msg[i].companyName + '</option>');
+                }
+                $('#customers').change(function () {
+                    if ($('#customers').val() != "") {
+                        $.ajax({
+                            type: "GET",
+                            url: "/api/customers-list/" + $('#customers').val(),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                $('#address').val(msg.address);
+                                $('#taxId').val(msg.taxId);
+                                if (msg.officeType == 1) {
+                                    document.getElementById("officeType1").checked = true;
+                                } else {
+                                    document.getElementById("officeType2").checked = true;
+                                }
+                            }
+                        });
+                    } else {
+                        $('#address').val("");
+                        $('#taxId').val("");
+                        document.getElementById("officeType1").checked = false;
+                        document.getElementById("officeType2").checked = false;
+                    }
+                });
+            }
+        }
+    });
+}
+
+var tableCreateQuotation
+
+function tableCreateQuotationDisplay1(id) {
+    tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
         searching: false,
         responsive: true,
-        // lengthChange: false,
-        // dom: 'lrtip',
+        "bDestroy": true,
+        "sAjaxSource": "/api-f2/get-f2ListRepo-by-id/" + id,
         "bAutoWidth": false,
         "sAjaxDataProp": "",
         "aoColumns": [{
@@ -94,27 +276,50 @@ $(document).ready(function () {
                 "sWidth": "60%",
                 "mRender": function (data,
                     type, row, index) {
-                    return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' +
-                        index.row +
-                        '" value=""/></div><div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
+                    if (row.product != null && row.productDetail != null) {
+                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
+                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า">' + row.productDetail + ' </textarea></div>';
+                    } else if (row.product != null) {
+                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
+                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
+                    } else if (row.productDetail != null) {
+                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
+                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า">' + row.productDetail + '</textarea></div>';
+                    } else {
+                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
+                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
+                    }
+
                 }
             },
             {
                 "sWidth": "10%",
                 "mRender": function (data,
                     type, row, index) {
-                    return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
-                        index.row +
-                        '" value="1"/>';
+                    if (row.productNumber != null) {
+                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
+                            index.row +
+                            '" value="' + row.productNumber + '"/>';
+                    } else {
+                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
+                            index.row +
+                            '" value="1"/>';
+                    }
                 }
             },
             {
                 "sWidth": "10%",
                 "mRender": function (data,
                     type, row, index) {
-                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
-                        index.row +
-                        '" value=""/>';
+                    if (row.productPrice != null) {
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
+                            index.row +
+                            '" value="' + row.productPrice + '"/>';
+                    } else {
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
+                            index.row +
+                            '" value=""/>';
+                    }
                 }
             },
             {
@@ -122,9 +327,15 @@ $(document).ready(function () {
                 "sWidth": "10%",
                 "mRender": function (data,
                     type, row, index) {
-                    return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
-                        index.row +
-                        '" disabled/>';
+                    if (row.productSumPrice != null) {
+                        return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                            index.row +
+                            '" value="' + row.productSumPrice + '" disabled/>';
+                    } else {
+                        return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                            index.row +
+                            '" value="" disabled/>';
+                    }
                 }
             },
             {
@@ -150,13 +361,11 @@ $(document).ready(function () {
         }
         discountPrice = parseFloat(sum);
         $('#price').text(parseFloat(sum).toFixed(2));
-
+        $('#priceDisplay').text(parseFloat(sum).toFixed(2)); //รวมเป็นเงิน
         var productPriceAll = 0;
         var discount = document.getElementById("discount").value;
-        // console.log(discountPrice + " :: " + discount);
         $('#discountPrice').text(parseFloat(sum * discount / 100).toFixed(2));
         productPriceAll = discountPrice - (discountPrice * discount / 100)
-        // console.log("discount :: " + sumAllPer);
         $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
 
         var checkBox = document.getElementById("myCheck");
@@ -169,204 +378,127 @@ $(document).ready(function () {
             $('#vat').text("00.00");
         }
     }); // end table
+}
 
-    $('#Add').click(function () {
-        tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
-    });
+function Add() {
+    tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
+}
 
-    $('#remove').click(function () {
-        tableCreateQuotation.rows('.selected').remove().draw();
-    });
+function remove() {
+    tableCreateQuotation.rows('.selected').remove().draw();
+}
 
-    $('#saveCreateQuotation').click(function () {
-        var pass = true;
-        pass = validateInput();
+function saveCreateQuotation() {
+    var pass = true;
+    pass = validateInput();
 
-        console.log($('#date').val());
-        if (pass) {
-            var insertQuotation = {
-                companyId: $('#customers').val(), //ลูกค้า
-                departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-                type: $('#type').val(), //ประเภท
-                status: $('#status').val(), //สถานะ
-                price: $('#price').text(), //รวมเป็นเงิน
-                productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
-                discount: $('#discount').val(), //ส่วนลด
-                discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
-                discountProductPrice: $('#discountProductPrice').text(), //
-                vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
-                note: $('#note').val(), //หมาบเหตุ
-                // date: new Date($('#date').val()), //วันที่
-                // dateEnd: new Date($('#dateEnd').val()), //วันที่_ครบกำหนด
-                date: $('#date').val(), //วันที่
-                dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
-                f2ListModels: [],
-            }
-            var data = tableCreateQuotation.data();
-            for (let i = 0; i < data.length; i++) {
-                var d = {};
-                d.product = $("#product" + i).val(); //สินค้า
-                d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
-                d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
-                d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
-                d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
-                insertQuotation.f2ListModels.push(d)
-            }
-            console.log(JSON.stringify(insertQuotation));
-
-            $.ajax({
-                type: 'POST',
-                url: '/api-f2/add-update',
-                data: JSON.stringify(insertQuotation),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    window.location.href = "/offer-price-list";
-                }
-            });
+    if (pass) {
+        var insertQuotation = {
+            id: $('#id').val(), //ลูกค้า
+            companyId: $('#customers').val(), //ลูกค้า
+            departmentId: $('#departmentId').val(), //เลขที่เอกสาร
+            type: $('#type').val(), //ประเภท
+            status: $('#status').val(), //สถานะ
+            price: $('#price').text(), //รวมเป็นเงิน
+            productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
+            discount: $('#discount').val(), //ส่วนลด
+            discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
+            discountProductPrice: $('#discountProductPrice').text(), //
+            vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+            note: $('#note').val(), //หมาบเหตุ
+            date: $('#date').val(), //วันที่
+            dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            f2ListModels: [],
         }
-    }); // save
-}); // end document
+        var data = tableCreateQuotation.data();
+        for (let i = 0; i < data.length; i++) {
+            var d = {};
+            d.product = $("#product" + i).val(); //สินค้า
+            d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
+            d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
+            d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
+            d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
+            insertQuotation.f2ListModels.push(d)
+        }
 
-function myFunction() {
-    var productPriceAll = 0;
-    var discount = document.getElementById("discount").value;
-    $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
-    productPriceAll = discountPrice - (discountPrice * discount / 100)
-    $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
+        console.log(JSON.stringify(insertQuotation));
 
-    var checkBox = document.getElementById("myCheck");
-    // Get the output text
-    if (checkBox.checked == true) {
-        $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
-        $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
-    } else {
-        $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
-        $('#vat').text("00.00");
+        $.ajax({
+            type: 'POST',
+            url: '/api-f2/add-update',
+            data: JSON.stringify(insertQuotation),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                window.location.href = "/offer-price-list";
+            }
+        });
     }
 }
 
-// update status
-function changeFunc($i) {
-    var type = $i.slice(0, 1);
-    var id = $i.substr(1, 100);
-    console.log(type, " :: ", id, " :: ", $i);
-    switch (type) {
-        case "0":
-            updateStatus(id, "0");
-            break;
-            // case "1":
-            //     $('#myModal').modal('show');
-            //     break;
-        case "2":
-            updateStatus(id, "2");
-            break;
-        case "3":
-            updateStatus(id, "3");
-            break;
-    }
-} // end update status
+function saveCreateQuotationBilling() {
+    var pass = true;
+    pass = validateInput();
 
-// update Quotation
-function updateQuotation(id) {
-    console.log(id);
-    $.ajax({
-        type: "GET",
-        url: "/api-f2/get-by-id/" + id,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            console.log(JSON.stringify(msg));
-            dataCustomer(msg.companyId)
+    if (pass) {
+        var insertQuotation = {
+            // id: $('#id').val(), //ลูกค้า
+            companyId: $('#customers').val(), //ลูกค้า
+            departmentId: $('#departmentId').val(), //เลขที่เอกสาร
+            type: "Biiling", //ประเภท
+            status: "รอพิจารณา", //สถานะ
+            price: $('#price').text(), //รวมเป็นเงิน
+            productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
+            discount: $('#discount').val(), //ส่วนลด
+            discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
+            discountProductPrice: $('#discountProductPrice').text(), //
+            vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+            note: $('#note').val(), //หมาบเหตุ
+            date: $('#date').val(), //วันที่
+            dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            f2ListModels: [],
         }
-    })
-    $('#myModal').modal('show');
-
-} // end update Quotation
-
-function updateStatus(id, status) {
-    $.ajax({
-        type: 'POST',
-        url: '/api-f2/update-status/' + id + "/" + status,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            window.location.href = "/offer-price-list";
+        var data = tableCreateQuotation.data();
+        for (let i = 0; i < data.length; i++) {
+            var d = {};
+            d.product = $("#product" + i).val(); //สินค้า
+            d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
+            d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
+            d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
+            d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
+            insertQuotation.f2ListModels.push(d)
         }
-    });
-}
 
-function dataCustomer(companyId) {
-    console.log(companyId);
+        console.log(JSON.stringify(insertQuotation));
 
-    $.ajax({
-        type: "GET",
-        url: "/api/customers-list",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            if (companyId != null) {
-                for (var i = 0; i < msg.length; i++) {
-                    $('#customers').append('<option value="' + companyId + '">' + companyId + '</option>');
-                    $.ajax({
-                        type: "GET",
-                        url: "/api/customers-list/" + companyId,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (msg) {
-                            console.log("customer :: " + JSON.stringify(msg))
-                            $('#customers').val(msg.companyId);
-                            $('#address').val(msg.address);
-                            $('#taxId').val(msg.taxId);
-                            if (msg.officeType == 1) {
-                                document.getElementById("officeType1").checked = true;
-                            } else {
-                                document.getElementById("officeType2").checked = true;
-                            }
-                        }
-                    });
-                }
-            } else {
-                $('#customers').val("");
-                $('#address').val("");
-                $('#taxId').val("");
-                document.getElementById("officeType1").checked = false;
-                document.getElementById("officeType2").checked = false;
-                for (var i = 0; i < msg.length; i++) {
-                    $('#customers').append('<option value="' + msg[i].companyId + '">' + msg[i].companyName + '</option>');
-                }
-                $('#customers').change(function () {
-                    if ($('#customers').val() != "") {
-                        $.ajax({
-                            type: "GET",
-                            url: "/api/customers-list/" + $('#customers').val(),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (msg) {
-                                console.log("customer :: " + JSON.stringify(msg))
-                                $('#address').val(msg.address);
-                                $('#taxId').val(msg.taxId);
-                                if (msg.officeType == 1) {
-                                    document.getElementById("officeType1").checked = true;
-                                } else {
-                                    document.getElementById("officeType2").checked = true;
-                                }
-                            }
-                        });
-                    } else {
-                        $('#address').val("");
-                        $('#taxId').val("");
-                        document.getElementById("officeType1").checked = false;
-                        document.getElementById("officeType2").checked = false;
-                    }
-                });
+        $.ajax({
+            type: 'POST',
+            url: '/api-f2/add-update',
+            data: JSON.stringify(insertQuotation),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                window.location.href = "/billing-list";
             }
-        }
-    });
-
+        });
+    }
 }
 
-function searchDate() {
+function tableQuotation() {
+    // วันปัจจุบัน
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('date').value = today;
+
     var searchStatus = null;
     var fromDate = 0;
     var toDate = 0;
@@ -379,14 +511,13 @@ function searchDate() {
     if (document.getElementById('toDate').value != '') {
         toDate = document.getElementById('toDate').value;
     }
-
+    
     $.ajax({
         type: "GET",
         url: "/api-f2/get-by/Quotation/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            // console.log("customer :: " + JSON.stringify(msg))
             // table seve offer price
             var tableQuotation = $('#tableQuotation').DataTable({
                 paging: false,
@@ -402,7 +533,7 @@ function searchDate() {
                     },
                     {
                         'data': 'departmentId',
-                        "sWidth": "16%",
+                        "sWidth": "13%",
                     },
                     {
                         'data': 'companyId',
@@ -410,7 +541,7 @@ function searchDate() {
                     },
                     {
                         'data': '',
-                        "sWidth": "16%",
+                        "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
                             return row.productPriceAll.toFixed(2);
@@ -418,7 +549,8 @@ function searchDate() {
                     },
                     {
                         'data': '',
-                        "sWidth": "10%",
+                        "className": "text-center",
+                        "sWidth": "13%",
                         "mRender": function (data, type, row, index, full) {
                             if (row.status == 'รอพิจารณา') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
@@ -427,11 +559,7 @@ function searchDate() {
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     </select>';
                             } else if (row.status == 'ผ่านการตวจสอบ') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
-                                    <option value="2' + row.id + '" style="color: black">ผ่านการตวจสอบ</option/>\n\
-                                    <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
-                                    </select>';
+                                return '<label style="color: green">ผ่านการตวจสอบ</label>';
                             } else if (row.status == 'ยกเลิก') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
@@ -443,13 +571,21 @@ function searchDate() {
                     {
                         'data': '',
                         "className": "text-center",
-                        "sWidth": "10%",
+                        "sWidth": "13%",
                         "mRender": function (data, type, full) {
-                            if (full.status == 'ยกเลิก' || full.status == 'ผ่านการตวจสอบ') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>';
-                            } else {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')"><i class="fas fa-edit"></i></button>';
-
+                            if (full.status == 'ยกเลิก') {
+                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
+                                       <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
+                                       <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                            } else if (full.status == 'ผ่านการตวจสอบ') {
+                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')">ใบวางบิล</button></div>';
+                            } else if (full.status == 'รอพิจารณา') {
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
+                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
                             }
                         }
                     }
@@ -459,6 +595,30 @@ function searchDate() {
     });
 }; // END tableQuotation
 
+function deleteId(id) {
+    swal({
+            title: "Are you sure?",
+            text: "Your will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
+        function () {
+            $.ajax({
+                url: '/api-f2/delete-f2/' + id,
+                type: 'DELETE',
+                success: function (result) {
+                    if (result == "Success") {
+                        window.location.href = "/offer-price-list";
+                    } else {
+                        alert("Delete Fail!!!");
+                    }
+                }
+            });
+        });
+} //end delete
 
 // validate
 function validateInput() {
@@ -490,3 +650,23 @@ function validateInput() {
 
     return pass;
 } // end validate
+
+document.getElementById("btnPrint").onclick = function () {
+    printElement(document.getElementById("printThis"));
+}
+
+function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+
+    var $printSection = document.getElementById("printSection");
+
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
+    }
+
+    $printSection.innerHTML = "";
+    $printSection.appendChild(domClone);
+    window.print();
+}
