@@ -1,6 +1,8 @@
 package com.accountmanager.system.api.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -113,8 +115,15 @@ public class F2Controller {
 			CustomersList customers = customersListRepo.findOne(f2Model.getCompanyId());
 			model = f2Model;
 			model.setCompanyId(customers.getCompanyName());
+			if (f2Model.getUpdateDate() == null) {
+				f2Model.setUpdateDate(f2Model.getCreateDate());
+			}
 			f2ModelsDisplay.add(f2Model);
 		}
+
+		f2ModelsDisplay.sort(
+				(e2, e1) -> new Long(e1.getUpdateDate().getTime()).compareTo(new Long(e2.getUpdateDate().getTime())));
+
 		return f2ModelsDisplay;
 	}
 
@@ -153,6 +162,12 @@ public class F2Controller {
 	@PostMapping("/update-status/{id}/{status}")
 	public F2Model updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
 		F2Model f2ListModel = f2Repo.findById(id);
+		
+		// Convert Date to Timestamp
+		Date date = new Date();
+		Timestamp ts = new Timestamp(date.getTime());
+		f2ListModel.setUpdateDate(ts);
+		
 		switch (status) {
 		case "0":
 			f2ListModel.setStatus("รอพิจารณา");
@@ -170,12 +185,20 @@ public class F2Controller {
 
 	@PostMapping("/add-update")
 	public ResponseEntity<?> Quotation(@RequestBody F2Model f2Model) {
+		// Convert Date to Timestamp
+		Date date = new Date();
+		Timestamp ts = new Timestamp(date.getTime());
+
+		List<F2ListModel> f2ListModels = new ArrayList<>();
+
 		try {
 			if (f2Model.getId() == null || f2Model.getId().equals("")) {
 				f2Model.setId(UUID.randomUUID().toString());
+				f2Model.setCreateDate(ts);
+			} else {
+				f2Model.setCreateDate(f2Repo.findById(f2Model.getId()).getCreateDate());
+				f2Model.setUpdateDate(ts);
 			}
-			List<F2ListModel> f2ListModels = new ArrayList<>();
-
 			F2Model f2ListModels2 = f2Repo.findById(f2Model.getId());
 			if (f2ListModels2 != null) {
 				for (F2ListModel f2ListModel : f2ListModels2.getF2ListModels()) {

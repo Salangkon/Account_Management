@@ -78,7 +78,7 @@
 										</div>
 										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /></div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button" onclick="searchDate()"
+											<button class="btn btn-primary" type="button" onclick="tableReceipt()"
 												style="margin-top: 42px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
@@ -112,7 +112,7 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title">สร้างใบเสนอราคา</h4>
+						<h4 class="modal-title">สร้างใบเสร็จรับเงิน</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<input hidden id="type" value="Receipt">
 						<input hidden id="status" value="รอพิจารณา">
@@ -135,7 +135,7 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
-											<input id="id">
+											<input id="id" hidden>
 											<select class="form-control" style="margin-top: 10px;"
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
 												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
@@ -194,7 +194,7 @@
 										</div>
 										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label></div>
 										<div class="col-sm-8">
-											<h3 id="price" style="margin-top: 40px;"></h3>
+											<h3 id="priceDisplay" style="margin-top: 40px;"></h3>
 										</div>
 									</div>
 								</div>

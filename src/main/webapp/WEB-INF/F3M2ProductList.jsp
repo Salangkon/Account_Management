@@ -5,9 +5,31 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Offer Price List</title>
+	<title>Receive Report</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
+	<link rel="stylesheet" href="/css/A4.css">
+	
+	<style>
+		label,
+		textarea,
+		.input-top {
+			margin-top: 10px;
+		}
+
+		.col-sm-3,
+		.col-sm-4 {
+			text-align: right;
+		}
+
+		p {
+			color: red;
+		}
+
+		.hide {
+			display: none;
+		}
+	</style>
 
 </head>
 
@@ -32,7 +54,7 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">เอกสารซื้อ / ใบรับสินค้า (Reccive Report)</h4>
+							<h4 class="m-0 font-weight-bold text-primary">เอกสารซื้อ / ใบรับสินค้า (Receive Report)</h4>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
@@ -40,38 +62,39 @@
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-9"></div>
 										<div class="col-sm-2">
-											<select class="form-control">
-												<option value="">ทุกสถานะ</option>
-												<option value="">สถานะที่ 1</option>
-												<option value="">สถานะที่ 2</option>
+											<select class="form-control" style="margin-top: 10px;" id="searchStatus">
+												<option value="" style="color: blue;">ทั้งหมด</option>
+												<option value="1" style="color: black;">รอพิจารณา</option>
+												<option value="2" style="color: green;">ผ่านการตวจสอบ</option>
+												<option value="3" style="color: red;">ยกเลิก</option>
 											</select>
 										</div>
 										<div class="col-sm-1">
-											<button type="button" class="btn btn-primary" data-toggle="modal"
-												data-target="#myModal">สร้างใหม่</button>
+											<button type="button" class="btn btn-primary" style="margin-top: 10px"
+												data-toggle="modal" data-target="#myModal"
+												onclick="updateQuotation(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-7"></div>
-										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
-										<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
+										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" value="" />
+										</div>
+										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /></div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button"
-												style="margin-top: 32px;width: 87px;"> ค้นหา <i
+											<button class="btn btn-primary" type="button" onclick="tableQuotation()"
+												style="margin-top: 42px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="example" class="table table-sm table-striped table-bordered"
-										width="100%">
+									<table id="tableQuotation" class="table table-sm" width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
-												<th style="text-align: center;"><input type="checkbox"></th>
-												<th>วันที่</th>
+												<th style="text-align: center;">วันที่</th>
 												<th>เลขที่เอกสาร</th>
 												<th>ชื่อลูกค้า</th>
 												<th>จำนวนเงิน</th>
-												<th>สถานะ</th>
-												<th>ตัวเลือก</th>
+												<th style="text-align: center;">สถานะ</th>
+												<th style="text-align: center;">ตัวเลือก</th>
 											</tr>
 										</thead>
 									</table>
@@ -86,134 +109,208 @@
 
 
 		<!-- The Modal -->
-		<div class="modal fade" id="myModal">
-			<div class="modal-dialog modal-lg" style="max-width: 1200px;">
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog modal-lg" style="max-width: 1400px;">
 				<div class="modal-content">
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title">สร้างใบกำกับภาษี</h4>
+						<h4 class="modal-title">สร้างใบรับสินค้า</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<input hidden id="type" value="ReceiveReport">
+						<input hidden id="status" value="รอพิจารณา">
 					</div>
 
 					<!-- Modal body -->
 					<div class="card-body p-0">
-						<!-- Nested Row within Card Body -->
 						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-3">
-									<form class="user">
-										<div class="form-group row">
-											<div class="col-sm-12" style="text-align: right;">
-												<a href="#"><i class="fas fa-2x fa-print"
-														style="margin-right: 10px;"></i></a>
-												<a href="#"><i class="fas fa-2x fa-download"></i></a>
-											</div>
-											<div class="col-sm-7 mb-3 mb-sm-0">
-												<div>
-													<label>ชื่อลูกค้า</label>
-													<select class="form-control" id="companyType"
-														placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน">
-														<option value="สมุดรายวันขาย">TEST 01</option>
-														<option value="สมุดรายวันซื้อ">TEST 01</option>
-													</select>
-												</div>
-												<div>
-													<label>ที่อยู่</label>
-													<textarea class="form-control" style="height: 110px"></textarea>
-												</div>
-												<div>
-													<label>เลขประจำตัวผู้เสียภาษี</label><input type="password"
-														class="form-control form-control" id="taxId"
-														placeholder="เลขประจำตัวผู้เสียภาษี">
-												</div>
-												<div>
-													<label>สำนักงาน / สาขาที่ </label>
-													<input type="radio" name=""> สำนักงานใหญ่
-													<input type="radio" name=""> สาขาที่
-													<input type="text" id="department"
-														style="width: 120px;margin-top: 35px;">
-												</div>
-											</div>
-											<div class="col-sm-5">
-												<div><label>วันที่</label>
-													<input id="datepicker2" />
-												</div>
-												<div>
-													<label>เลขที่เอกสาร</label><input class="form-control" id=""
-														placeholder="เลขที่เอกสาร">
-												</div>
-												<div>
-													<label>ครบกำหนด</label>
-													<select class="form-control" id="companyType"
-														placeholder="ครบกำหนด">
-														<option value="สมุดรายวันขาย">TEST 01</option>
-														<option value="สมุดรายวันซื้อ">TEST 01</option>
-													</select>
-												</div>
-												<div>
-													<label>เลขอ้างอิง</label><input class="form-control" id=""
-														placeholder="เลขอ้างอิง">
-												</div>
-												<div>
-													<label>ราคาไม่รวมภาษี</label>
-													<select class="form-control" id="companyType"
-														placeholder="ราคาไม่รวมภาษี">
-														<option value="สมุดรายวันขาย">TEST 01</option>
-														<option value="สมุดรายวันซื้อ">TEST 01</option>
-													</select>
-												</div>
-											</div>
-
-											<div class="table-responsive col-sm-12" style="margin-top: 12px;">
-												<table id="example1" class="table table-sm table-striped table-bordered"
-													width="100%">
-													<thead class="bg-gradient-primary" style="color: white;">
-														<tr>
-															<th style="text-align: center;"><input type="checkbox"></th>
-															<th>ลำดับ</th>
-															<th>รายละเอียด</th>
-															<th>จำนวน</th>
-															<th>ราคาต่อหน่วย</th>
-															<th>ราคารวม</th>
-														</tr>
-													</thead>
-													<tfoot>
-														<tr>
-															<th style="text-align: center;"><a href="#"><i
-																		class="fas fa-trash"></i></a></th>
-															<th colspan="2"><i class="fas fa-plus"
-																	style="color: red;"></i> <a href="#"
-																	id="Add">เพิ่มรายการ</a>
-															</th>
-															<th style="text-align: right;"><label>รวม</label></th>
-															<th>00.00</th>
-															<th>00.00</th>
-														</tr>
-													</tfoot>
-												</table>
-											</div>
-
-										</div>
-									</form>
+							<div class="col-sm-11"></div>
+							<div class="col-sm-1">
+								<div class="p-1">
+									<div class="form-group row">
+										<a href="#"><i class="fas fa-2x fa-print" style="margin-right: 10px;"></i></a>
+										<a href="#"><i class="fas fa-2x fa-download"></i></a>
+									</div>
 								</div>
 							</div>
+							<div class="col-lg-5">
+								<div class="p-3">
+									<div class="form-group row">
+										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
+										<div class="col-sm-8">
+											<input id="id" hidden>
+											<select class="form-control" style="margin-top: 10px;"
+												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
+												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
+												</option>
+											</select>
+											<p class="hide" id="error-customers">กรุณาเลือก
+												ชื่อลูกค้า</p>
+										</div>
+										<div class="col-sm-4"><label>ที่อยู่</label></div>
+										<div class="col-sm-8">
+											<textarea class="form-control" style="height: 110px" id="address"
+												disabled></textarea>
+										</div>
+										<div class="col-sm-4"><label>เลขประจำตัวผู้เสียภาษี</label></div>
+										<div class="col-sm-8">
+											<input type="text" style="margin-top: 10px;"
+												class="form-control form-control" id="taxId"
+												placeholder="เลขประจำตัวผู้เสียภาษี" id="taxId" disabled>
+										</div>
+										<div class="col-sm-4"><label>สำนักงาน / สาขาที่ </label></div>
+										<div class="col-sm-8" style="margin-top: 6px;">
+											<input style="margin-top: 10px;" type="radio" name="officeType"
+												id="officeType1" disabled> สำนักงานใหญ่
+											<input style="margin-top: 10px;" type="radio" name="officeType"
+												id="officeType2" disabled> สาขาที่
+											<!-- <input type="text" id="department"> -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3"></div>
+							<div class="col-lg-4">
+								<div class="p-3">
+									<div class="form-group row">
+										<div class="col-sm-4"><label>วันที่</label></div>
+										<div class="col-sm-8">
+											<input id="date" />
+											<p class="hide" id="error-date">กรุณาเลือก
+												วันที่</p>
+										</div>
+										<div class="col-sm-4"><label>เลขที่เอกสาร</label></div>
+										<div class="col-sm-8">
+											<input class="form-control" style="margin-top: 10px;" id="departmentId"
+												placeholder="เลขที่เอกสาร">
+										</div>
+										<div class="col-sm-4"><label>ครบกำหนด</label></div>
+										<div class="col-sm-8" style="margin-top: 10px;">
+											<input id="dateEnd" />
+											<p class="hide" id="error-dateEnd">กรุณาเลือก
+												ครบกำหนด</p>
+										</div>
+										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
+										<div class="col-sm-8">
+											<input class="form-control" style="margin-top: 10px;" id=""
+												placeholder="เลขอ้างอิง">
+										</div>
+										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>
+										</div>
+										<div class="col-sm-8">
+											<h3 id="priceDisplay" style="margin-top: 40px;"></h3>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- table -->
+
+							<div class="table-responsive col-sm-12" style="margin-top: 12px;">
+								<div style="margin-left: 2%;width: 97%;">
+									<div class="card">
+										<div class="card-body">
+											<table id="tableCreateQuotationDisplay"
+												class="table table-sm table-bordered">
+												<thead style="color: white;background-color: purple;">
+													<tr>
+														<th>ลำดับ</th>
+														<th>รายละเอียด</th>
+														<th>จำนวน</th>
+														<th>ราคาต่อหน่วย</th>
+														<th>ราคารวม</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tfoot>
+													<tr>
+														<th style="text-align: center;">
+															<!-- <a href="#"><i class="fas fa-trash" id="remove"></i></a> -->
+														</th>
+														<th colspan="5">
+															<button type="button" class="btn btn-default btn-sm"
+																onclick="Add()">
+																<i class="fas fa-plus" style="color: red"></i>
+																เพิ่มรายการ
+															</button>
+														</th>
+													</tr>
+												</tfoot>
+											</table>
+											<div class="form-group row" style="margin-top: 30px;">
+												<div class="col-sm-4">
+													<p style="text-align: left;">หมายเหตุ</p>
+													<textarea class="form-control" style="height: 80px"
+														id="note"></textarea>
+												</div>
+												<div class="col-sm-5"></div>
+												<div class="col-sm-3">
+													<div class="form-group row">
+														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
+														<div class="col-sm-6">
+															<p id="price">0.00</p>
+														</div>
+
+														<div class="col-sm-6 text-primary">ส่วนลด <input type="text"
+																OnKeyPress="return chkNumber(this)" id="discount"
+																style="width: 63px;text-align: center;"
+																onkeyup="myFunction()"> % </div>
+														<div class="col-sm-6">
+															<p id="discountPrice">0.00</p>
+														</div>
+
+														<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด</div>
+														<div class="col-sm-6" class="form-control">
+															<p id="discountProductPrice">0.00</p>
+														</div>
+
+														<div class="col-sm-6 text-primary"><input type="checkbox"
+																id="myCheck" onclick="myFunction()">
+															ภาษีมูลค่าเพิ่ม 7%</div>
+														<div class="col-sm-6">
+															<p id="vat">0.00</p>
+														</div>
+
+														<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น</div>
+														<div class="col-sm-6">
+															<p id="productPriceAll">0.00</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--end table -->
+
 						</div>
 					</div>
+
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" id="save">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
-
 				</div>
 			</div>
 		</div>
 		<!--End The Modal -->
 
+		<div id="printPDF" hidden="">printPDF</div>
+
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="/data-table/F3M2PurchaseOrderList.js" type="text/javascript"></script>
+
+		<script>
+			function printPDF() {
+				var printContents = document.getElementById("printPDF").innerHTML;
+				var originalContents = document.body.innerHTML;
+				document.body.innerHTML = printContents;
+				window.print();
+				document.body.innerHTML = originalContents;
+			}
+		</script>
 
 </body>
 

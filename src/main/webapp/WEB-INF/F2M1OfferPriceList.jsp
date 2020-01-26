@@ -4,8 +4,8 @@
 <html>
 
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Offer Price List</title>
+	<meta charset="UTF-8">
+	<title>Quotation</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<style>
@@ -28,6 +28,7 @@
 			display: none;
 		}
 	</style>
+
 </head>
 
 <body>
@@ -78,7 +79,7 @@
 										</div>
 										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /></div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button" onclick="searchDate()"
+											<button class="btn btn-primary" type="button" onclick="tableQuotation()"
 												style="margin-top: 42px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
@@ -112,7 +113,8 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title">สร้างใบเสนอราคา</h4>
+						<h4 class="modal-title" id="BiilingFlg">สร้างใบเสนอราคา</h4>
+						<h4 class="modal-title" id="BiilingFlgDefault">สร้างใบวางบิล</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<input hidden id="type" value="Quotation">
 						<input hidden id="status" value="รอพิจารณา">
@@ -135,7 +137,7 @@
 									<div class="form-group row">
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
-											<input id="id">
+											<input id="id" hidden>
 											<select class="form-control" style="margin-top: 10px;"
 												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
 												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
@@ -192,9 +194,10 @@
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขอ้างอิง">
 										</div>
-										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label></div>
+										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>
+										</div>
 										<div class="col-sm-8">
-											<h3 id="price" style="margin-top: 40px;"></h3>
+											<h3 id="priceDisplay" style="margin-top: 40px;"></h3>
 										</div>
 									</div>
 								</div>
@@ -284,18 +287,41 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()"
+							id="saveBiilingFlg">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotationBilling()"
+							id="saveBiilingFlgDefault">บันทึกใบวางบิล</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!--End The Modal -->
+		<!--End The Modal -->
+		<!--End The Modal -->
+		<!---------------------->
+
+
+		<div id="MyModalPrintPDF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-lg" style="max-width: 1100px;">
+				<div class="modal-content">
+					<div class="modal-footer border border-danger">
+						<button id="btnPrint" type="button" class="btn btn-primary">พิมพ์</button>
+						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
+					</div>
+					<div>
+						<%@include file="/WEB-INF/PrintPDF/PrintPDF.jsp" %>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
-
+		<script src="/print-pdf-js/f2m1-print-pdf-Quotation.js" type="text/javascript"></script>
 </body>
 
 </html>
