@@ -304,15 +304,15 @@
 
 		<div id="MyModalPrintPDF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 			aria-hidden="true">
-			<div class="modal-dialog modal-lg" style="max-width: 1150px;">
+			<div class="modal-dialog modal-lg" style="max-width: 1100px;">
 				<div class="modal-content">
-					<div class="modal-footer" style="padding: 10px;">
-						<button id="btnPrint" type="button" class="btn btn-primary">Print</button>
-						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">Close</button>
+					<div class="modal-footer border border-danger">
+						<button id="btnPrint" type="button" class="btn btn-primary">พิมพ์</button>
+						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
 					</div>
-					<div style="border: 20px solid red;padding: 10px;">
+					<div>
 						<%@include file="/WEB-INF/PrintPDF/PrintPDF.jsp" %>
-					</div style="border-color: brown;">
+					</div>
 				</div>
 			</div>
 		</div>
