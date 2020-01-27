@@ -23,21 +23,21 @@ function printPDF(id) {
                 $('#notePrint').text(msg.note), //หมาบเหตุ
                 $('#datePrint').text(msg.date), //วันที่
                 $('#dateEndPrint').text(msg.dateEnd) //วันที่_ครบกำหนด
-                if (msg.price == 0) {
-                    $('#priceDisplayPrintTh').text("");// แปลงไทย
-                } else {
-                    $('#priceDisplayPrintTh').text("( "+ArabicNumberToText(msg.productPriceAll)+" )");// แปลงไทย
-                }
+            if (msg.price == 0) {
+                $('#priceDisplayPrintTh').text("( ศูนย์บาทถ้วน )"); // แปลงไทย
+            } else {
+                $('#priceDisplayPrintTh').text("( " + ArabicNumberToText(msg.productPriceAll) + " )"); // แปลงไทย
+            }
             dataCustomer(msg.companyId)
             msg.f2ListModels.forEach(value => {
                 console.log(value.productDetail);
                 number++;
                 tablePrintPDF += '<tr class="tablePrintPDFDefault">';
-                tablePrintPDF += '<td>' + number + '</td>';
+                tablePrintPDF += '<td style="text-align: center">' + number + '</td>';
                 tablePrintPDF += '<td>' + value.product + '</td>';
-                tablePrintPDF += '<td>' + value.productNumber + '</td>';
-                tablePrintPDF += '<td>' + value.productPrice + '</td>';
-                tablePrintPDF += '<td>' + value.productSumPrice + '</td>';
+                tablePrintPDF += '<td style="text-align: center">' + parseFloat(value.productNumber).toFixed(0).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + '</td>';
+                tablePrintPDF += '<td style="text-align: center">' + parseFloat(value.productPrice).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + '</td>';
+                tablePrintPDF += '<td style="text-align: center">' + parseFloat(value.productSumPrice).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + '</td>';
                 tablePrintPDF += '</tr>';
             });
             $('#tablePrintPDFDisplay').append(tablePrintPDF);

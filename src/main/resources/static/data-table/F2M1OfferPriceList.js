@@ -526,10 +526,15 @@ function tableQuotation() {
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
+                "order": [[ 0, "desc" ]],
                 "aoColumns": [{
-                        'data': 'date',
+                        'data': 'updateDate',
                         "className": "text-center",
                         "sWidth": "8%",
+                        "mRender": function (data,
+                                type, row, index, full) {
+                                return row.date;
+                            }
                     },
                     {
                         'data': 'departmentId',
