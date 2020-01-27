@@ -511,7 +511,7 @@ function tableQuotation() {
     if (document.getElementById('toDate').value != '') {
         toDate = document.getElementById('toDate').value;
     }
-    
+
     $.ajax({
         type: "GET",
         url: "/api-f2/get-by/Quotation/" + searchStatus + "/" + fromDate + "/" + toDate,
@@ -526,15 +526,17 @@ function tableQuotation() {
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
-                "order": [[ 0, "desc" ]],
+                "order": [
+                    [0, "desc"]
+                ],
                 "aoColumns": [{
                         'data': 'updateDate',
                         "className": "text-center",
                         "sWidth": "8%",
                         "mRender": function (data,
-                                type, row, index, full) {
-                                return row.date;
-                            }
+                            type, row, index, full) {
+                            return row.date;
+                        }
                     },
                     {
                         'data': 'departmentId',
@@ -655,23 +657,3 @@ function validateInput() {
 
     return pass;
 } // end validate
-
-document.getElementById("btnPrint").onclick = function () {
-    printElement(document.getElementById("printThis"));
-}
-
-function printElement(elem) {
-    var domClone = elem.cloneNode(true);
-
-    var $printSection = document.getElementById("printSection");
-
-    if (!$printSection) {
-        var $printSection = document.createElement("div");
-        $printSection.id = "printSection";
-        document.body.appendChild($printSection);
-    }
-
-    $printSection.innerHTML = "";
-    $printSection.appendChild(domClone);
-    window.print();
-}

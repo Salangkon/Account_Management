@@ -69,16 +69,17 @@
 						<td style="width: 50%;"></td>
 					</tr>
 				</table>
-				<table class="table table-bordered table-striped" id="tablePrintPDFDisplay" style="margin-top: 15px;">
+				<table class="table table-sm" id="tablePrintPDFDisplay" style="margin-top: 15px;">
 					<tr>
-						<th>ลำดับ</th>
-						<th>รายละเอียด</th>
-						<th>จำนวน</th>
-						<th>ราคาต่อหน่วย</th>
-						<th>รวมยอด</th>
+						<th style="width: 5%;text-align: center;">ลำดับ</th style="width: 100%;" >
+						<th style="width: 45%;text-align: center">รายละเอียด</th style="width: 100%;">
+						<th style="width: 10%;text-align: center">จำนวน</th style="width: 100%;">
+						<th style="width: 20%;text-align: center">ราคาต่อหน่วย</th style="width: 100%;">
+						<th style="width: 20%;text-align: center">รวมยอด</th style="width: 100%;">
 					</tr>
 				</table>
-				<table style="width: 100%;">
+				<hr>
+				<table style="width: 100%;margin-top: 15px;">
 					<tr>
 						<td style="width: 85%;text-align: right; color: orangered;">รวมเป็นเงิน</td>
 						<td style="width: 15%;text-align: right;" id="priceDisplayPrint">0</td>
@@ -118,9 +119,14 @@
 				</table>
 				<table>
 					<tr>
-						<td style="max-width: 50%;"><label style="color: orangered;">หมายเหตุ</label><br><label
-								style="margin-left: 20px;" id="notePrint"></label></td>
-						<td style="max-width: 50%;"><label></label></td>
+						<td style="width: 50%;"><label style="color: orangered;">หมายเหตุ</label></td>
+						<td style="width: 50%;"><label></label></td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td style="width: 50%;" id="notePrint"></td>
+						<td style="width: 50%;"></td>
 					</tr>
 				</table>
 				<!-- <table style="margin-top: 420px;width: 100%;">

@@ -300,21 +300,25 @@
 		</div>
 		<!--End The Modal -->
 
-		<div id="printPDF" hidden="">printPDF</div>
+		<div id="MyModalPrintPDF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-lg" style="max-width: 1100px;">
+				<div class="modal-content">
+					<div class="modal-footer border border-danger">
+						<button id="btnPrint" type="button" class="btn btn-primary">พิมพ์</button>
+						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
+					</div>
+					<div>
+						<%@include file="/WEB-INF/PrintPDF/PrintPDFF3M1.jsp" %>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="/data-table/F3M1PurchaseOrderList.js" type="text/javascript"></script>
-
-		<script>
-			function printPDF() {
-				var printContents = document.getElementById("printPDF").innerHTML;
-				var originalContents = document.body.innerHTML;
-				document.body.innerHTML = printContents;
-				window.print();
-				document.body.innerHTML = originalContents;
-			}
-		</script>
+		<script src="/print-pdf-js/f3m1-print-pdf-PurchaseOrderList.js" type="text/javascript"></script>
 
 </body>
 

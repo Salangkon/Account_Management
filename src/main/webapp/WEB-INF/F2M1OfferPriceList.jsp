@@ -297,10 +297,6 @@
 			</div>
 		</div>
 		<!--End The Modal -->
-		<!--End The Modal -->
-		<!--End The Modal -->
-		<!---------------------->
-
 
 		<div id="MyModalPrintPDF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 			aria-hidden="true">
