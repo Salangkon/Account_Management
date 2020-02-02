@@ -7,7 +7,7 @@
 	<meta charset="ISO-8859-1">
 	<title>Chart Accounts</title>
 
-	<%@include file="/WEB-INF/Extensions/css.jsp" %>
+	<%@include file="/WEB-INF/Extensions/css.jsp"%>
 
 </head>
 
@@ -43,6 +43,17 @@
 												data-target="#myModal">สร้างใหม่</button>
 										</div>
 									</div>
+									<div>
+										<input id="text">
+										<input id="icon">
+										<input id="step">
+									</div>
+									<button type="button" class="btn btn-default btn-sm" onclick="Add()">
+										<i class="fas fa-plus" style="color: red"></i>
+										เพิ่มรายการ
+									</button>
+									<div id="data" class="demo"></div>
+
 									<table id="example" class="table table-sm table-striped table-bordered"
 										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
@@ -61,7 +72,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 	<!-- The Modal -->
@@ -85,13 +95,12 @@
 									<div class="form-group row">
 										<div class="col-sm-12" style="text-align: right;">
 											<a href="#"><i class="fas fa-2x fa-print"
-													style="margin-right: 10px;"></i></a>
-											<a href="#"><i class="fas fa-2x fa-download"></i></a>
+													style="margin-right: 10px;"></i></a> <a href="#"><i
+													class="fas fa-2x fa-download"></i></a>
 										</div>
 										<div class="col-sm-7 mb-3 mb-sm-0">
 											<div>
-												<label>ชื่อลูกค้า</label>
-												<select class="form-control" id="companyType"
+												<label>ชื่อลูกค้า</label> <select class="form-control" id="companyType"
 													placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน">
 													<option value="สมุดรายวันขาย">TEST 01</option>
 													<option value="สมุดรายวันซื้อ">TEST 01</option>
@@ -107,24 +116,23 @@
 													placeholder="เลขประจำตัวผู้เสียภาษี">
 											</div>
 											<div>
-												<label>สำนักงาน / สาขาที่ </label>
-												<input type="radio" name=""> สำนักงานใหญ่
-												<input type="radio" name=""> สาขาที่
-												<input type="text" id="department"
-													style="width: 120px;margin-top: 35px;">
+												<label>สำนักงาน / สาขาที่ </label> <input type="radio" name="">
+												สำนักงานใหญ่ <input type="radio" name="">
+												สาขาที่ <input type="text" id="department"
+													style="width: 120px; margin-top: 35px;">
 											</div>
 										</div>
 										<div class="col-sm-5">
-											<div><label>วันที่</label>
-												<input id="datepicker2" />
+											<div>
+												<label>วันที่</label> <input id="datepicker2" />
 											</div>
 											<div>
 												<label>เลขที่เอกสาร</label><input class="form-control" id=""
 													placeholder="เลขที่เอกสาร">
 											</div>
 											<div>
-												<label>ครบกำหนด</label>
-												<select class="form-control" id="companyType" placeholder="ครบกำหนด">
+												<label>ครบกำหนด</label> <select class="form-control" id="companyType"
+													placeholder="ครบกำหนด">
 													<option value="สมุดรายวันขาย">TEST 01</option>
 													<option value="สมุดรายวันซื้อ">TEST 01</option>
 												</select>
@@ -134,9 +142,8 @@
 													placeholder="เลขอ้างอิง">
 											</div>
 											<div>
-												<label>ราคาไม่รวมภาษี</label>
-												<select class="form-control" id="companyType"
-													placeholder="ราคาไม่รวมภาษี">
+												<label>ราคาไม่รวมภาษี</label> <select class="form-control"
+													id="companyType" placeholder="ราคาไม่รวมภาษี">
 													<option value="สมุดรายวันขาย">TEST 01</option>
 													<option value="สมุดรายวันซื้อ">TEST 01</option>
 												</select>
@@ -161,8 +168,7 @@
 														<th style="text-align: center;"><a href="#"><i
 																	class="fas fa-trash"></i></a></th>
 														<th colspan="2"><i class="fas fa-plus" style="color: red;"></i>
-															<a href="#">เพิ่มรายการ</a>
-														</th>
+															<a href="#">เพิ่มรายการ</a></th>
 														<th style="text-align: right;"><label>รวม</label></th>
 														<th>00.00</th>
 														<th>00.00</th>
@@ -188,27 +194,78 @@
 	</div>
 	<!--End The Modal -->
 
+
 	<!-- script -->
-	<%@include file="/WEB-INF/Extensions/js.jsp" %>
+	<%@include file="/WEB-INF/Extensions/js.jsp"%>
+
 	<script>
-		$(document).ready(function () {
-			var table = $('#example').DataTable({
-				lengthChange: true,
-				// dom: 'Bfrtip',
-				buttons: ['copy', 'excel', 'pdf', 'colvis']
+
+		
+		function Add() {
+
+			var insertQuotation = {
+			text: $('#text').val(), //
+			icon: $('#icon').val(), //
+			step: $('#step').val(), //
+		}
+		console.log(JSON.stringify(insertQuotation));
+			$.ajax({
+				type: 'POST',
+				url: '/api-chart-account/add-update',
+				data: JSON.stringify(insertQuotation),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (result) {
+					window.location.href = "/chart-accounts";
+				}
 			});
+		};
 
-			var table = $('#example1').DataTable({
-				// lengthChange: false,
-				// dom: 'lrtip',
+		$(document).ready(
+
+			function jsonCharAccount() {
+				$.ajax({
+					type: 'GET',
+					url: '/api-chart-account/get-all',
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: function (result) {
+						console.log(JSON.stringify(result));
+						$('#data').on("changed.jstree", function (e, data) {
+							if (data.selected.length) {
+								alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text + data.instance.get_node(data.selected[1]).text);
+							}
+						}).jstree({
+							'core': {
+								"check_callback": true,
+								'force_text': true,
+								"themes": { "stripes": true },
+								'data': result
+							}
+						});
+					}
+				});
+			},
+
+			function () {
+				var table = $('#example').DataTable({
+					lengthChange: true,
+					// dom: 'Bfrtip',
+					buttons: ['copy', 'excel', 'pdf', 'colvis']
+				});
+
+				var table = $('#example1').DataTable({
+					// lengthChange: false,
+					// dom: 'lrtip',
+				});
+
+				var counter = 1;
+
+				table.buttons().container().appendTo(
+					'#example_wrapper .col-md-6:eq(0)');
 			});
-
-			var counter = 1;
-
-			table.buttons().container()
-				.appendTo('#example_wrapper .col-md-6:eq(0)');
-		});
 	</script>
+
 </body>
 
 </html>
