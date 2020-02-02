@@ -113,7 +113,7 @@ function updateQuotation(id) {
                     $('#status').val(msg.status), //สถานะ
                     $('#price').text(msg.price), //รวมเป็นเงิน
                     $('#priceDisplay').text(msg.price);
-                    $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
+                $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
                     $('#discount').val(msg.discount), //ส่วนลด
                     $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
                     $('#discountProductPrice').text(msg.discountProductPrice), //
@@ -138,7 +138,7 @@ function updateQuotation(id) {
             $('#departmentId').val(""), //เลขที่เอกสาร
             $('#price').text(""), //รวมเป็นเงิน
             $('#priceDisplay').text("");
-            $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
+        $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
             $('#discount').val(""), //ส่วนลด
             $('#discountPrice').text(""), //ราคาหักส่วนลด
             $('#discountProductPrice').text(""), //
@@ -179,12 +179,17 @@ function dataCustomer(companyId) {
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
+                            $('#customersPrint').text(msg.companyId);
+                            $('#taxIdPrint').text("เลขประจำาตัวผู้เสียภาษี  " + msg.taxId);
+
                             $('#customers').val(msg.companyId);
                             $('#address').val(msg.address);
                             $('#taxId').val(msg.taxId);
                             if (msg.officeType == 1) {
+                                $('#customersNamePrint').text(msg.customerName + " ( สำนักงานใหญ่ )");
                                 document.getElementById("officeType1").checked = true;
                             } else {
+                                $('#customersNamePrint').text(msg.customerName + " ( " + msg.department + " )");
                                 document.getElementById("officeType2").checked = true;
                             }
                         }
@@ -452,10 +457,17 @@ function tableReceipt() {
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
+                "order": [
+                    [0, "desc"]
+                ],
                 "aoColumns": [{
-                        'data': 'date',
+                        'data': 'updateDate',
                         "className": "text-center",
                         "sWidth": "8%",
+                        "mRender": function (data,
+                            type, row, index, full) {
+                            return row.date;
+                        }
                     },
                     {
                         'data': 'departmentId',
@@ -500,17 +512,17 @@ function tableReceipt() {
                         "sWidth": "13%",
                         "mRender": function (data, type, full) {
                             if (full.status == 'ยกเลิก') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>\n\
+                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
-                                       <button type="button" class="btn btn-primary btn-sm" onclick="" disabled><i class="fas fa-print"></i></button></div>';
-                            } else if(full.status == 'ผ่านการตวจสอบ') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-edit"></i></button>\n\
-                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick=""><i class="fas fa-print"></i></button></div>';
-                            } else if(full.status == 'รอพิจารณา') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "'" + ')"><i class="fas fa-edit"></i></button>\n\
-                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')" disabled><i class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="" disabled><i class="fas fa-print"></i></button></div>';
+                                       <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                            } else if (full.status == 'ผ่านการตวจสอบ') {
+                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
+                            } else if (full.status == 'รอพิจารณา') {
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
+                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
                             }
                         }
                     }

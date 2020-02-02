@@ -192,7 +192,8 @@
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขอ้างอิง">
 										</div>
-										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label></div>
+										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>
+										</div>
 										<div class="col-sm-8">
 											<h3 id="priceDisplay" style="margin-top: 40px;"></h3>
 										</div>
@@ -205,8 +206,7 @@
 								<div style="margin-left: 2%;width: 97%;">
 									<div class="card">
 										<div class="card-body">
-											<table id="tableCreateReceiptDisplay"
-												class="table table-sm table-bordered">
+											<table id="tableCreateReceiptDisplay" class="table table-sm table-bordered">
 												<thead style="color: white;background-color: purple;">
 													<tr>
 														<th>ลำดับ</th>
@@ -292,9 +292,25 @@
 		</div>
 		<!--End The Modal -->
 
+		<div id="MyModalPrintPDF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-lg" style="max-width: 1100px;">
+				<div class="modal-content">
+					<div class="modal-footer border border-danger">
+						<button id="btnPrint" type="button" class="btn btn-primary">พิมพ์</button>
+						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
+					</div>
+					<div>
+						<%@include file="/WEB-INF/PrintPDF/PrintPDFF2M4.jsp" %>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="/data-table/F2M4OfferPriceList.js" type="text/javascript"></script>
+		<script src="/print-pdf-js/f2m4-print-pdf-Quotation.js" type="text/javascript"></script>
 
 </body>
 
