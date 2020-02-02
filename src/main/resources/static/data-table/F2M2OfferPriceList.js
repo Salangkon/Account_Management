@@ -196,12 +196,17 @@ function dataCustomer(companyId) {
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
+                            $('#customersPrint').text(msg.companyId);
+                            $('#taxIdPrint').text("เลขประจำาตัวผู้เสียภาษี  " + msg.taxId);
+
                             $('#customers').val(msg.companyId);
                             $('#address').val(msg.address);
                             $('#taxId').val(msg.taxId);
                             if (msg.officeType == 1) {
+                                $('#customersNamePrint').text(msg.customerName + " ( สำนักงานใหญ่ )");
                                 document.getElementById("officeType1").checked = true;
                             } else {
+                                $('#customersNamePrint').text(msg.customerName + " ( " + msg.department + " )");
                                 document.getElementById("officeType2").checked = true;
                             }
                         }
@@ -517,10 +522,17 @@ function tableBiiling() {
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
+                "order": [
+                    [0, "desc"]
+                ],
                 "aoColumns": [{
-                        'data': 'date',
+                        'data': 'updateDate',
                         "className": "text-center",
                         "sWidth": "8%",
+                        "mRender": function (data,
+                            type, row, index, full) {
+                            return row.date;
+                        }
                     },
                     {
                         'data': 'departmentId',
@@ -571,8 +583,8 @@ function tableBiiling() {
                             } else if (full.status == 'ผ่านการตวจสอบ') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick=""><i class="fas fa-print"></i></button></div>\n\
-                                <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')">ใบวางบิล</button></div>';
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')">ใบกำกับภาษี</button></div>';
                             } else if (full.status == 'รอพิจารณา') {
                                 return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
