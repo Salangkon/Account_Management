@@ -27,7 +27,7 @@ function chkNumber(ele) {
 }
 
 var discountPrice = 0;
-$('#tableCreateBiilingDisplay').on('keyup', 'input', function () {
+$('#tableCreateTaxInvoiceDisplay').on('keyup', 'input', function () {
     var sum1 = $(this).parent().parent().find('td')[4];
     var number1 = $(this).parent().parent().find('td')[2];
     var number2 = $(this).parent().parent().find('td')[3];
@@ -58,9 +58,9 @@ $('#tableCreateBiilingDisplay').on('keyup', 'input', function () {
 
 $(document).ready(function () {
 
-    tableBiiling();
+    tableTaxInvoice();
     dataCustomer(null);
-    tableCreateBiiling1(null);
+    tableCreateTaxInvoice1(null);
 }); // end document
 
 function myFunction() {
@@ -99,23 +99,23 @@ function changeFunc($i) {
 } // end update status
 
 // update Quotation
-function updateQuotation(id, TaxInvoice) {
-    console.log("test :: ", id + TaxInvoice);
-    if (id == null || TaxInvoice == "false") {
-        TaxInvoice = false;
+function updateQuotation(id, Receipt) {
+    console.log("test :: ", id + Receipt);
+    if (id == null || Receipt == "false") {
+        Receipt = false;
     } else {
-        TaxInvoice = true;
+        Receipt = true;
     }
-    if (TaxInvoice) {
-        document.getElementById("TaxInvoiceFlg").style.display = "none";
-        document.getElementById("TaxInvoiceFlgDefault").style.display = "block";
-        document.getElementById("saveTaxInvoiceFlg").style.display = "none";
-        document.getElementById("saveTaxInvoiceFlgDefault").style.display = "block";
+    if (Receipt) {
+        document.getElementById("ReceiptFlg").style.display = "none";
+        document.getElementById("ReceiptFlgDefault").style.display = "block";
+        document.getElementById("saveReceiptFlg").style.display = "none";
+        document.getElementById("saveReceiptFlgDefault").style.display = "block";
     } else {
-        document.getElementById("TaxInvoiceFlg").style.display = "block";
-        document.getElementById("TaxInvoiceFlgDefault").style.display = "none";
-        document.getElementById("saveTaxInvoiceFlg").style.display = "block";
-        document.getElementById("saveTaxInvoiceFlgDefault").style.display = "none";
+        document.getElementById("ReceiptFlg").style.display = "block";
+        document.getElementById("ReceiptFlgDefault").style.display = "none";
+        document.getElementById("saveReceiptFlg").style.display = "block";
+        document.getElementById("saveReceiptFlgDefault").style.display = "none";
     }
     if (id != null) {
         $.ajax({
@@ -144,12 +144,13 @@ function updateQuotation(id, TaxInvoice) {
                     document.getElementById("myCheck").checked = true;
                 }
                 dataCustomer(msg.companyId)
-                tableCreateBiiling1(msg.id);
+                tableCreateTaxInvoice1(msg.id);
             }
         })
     } else {
-        tableCreateBiiling1(null);
-        dataCustomer(null)
+        genDepartment();
+        tableCreateTaxInvoice1(null);
+        dataCustomer(null);
 
         $('#id').val(""), //เลขที่เอกสาร
             $('#departmentId').val(""), //เลขที่เอกสาร
@@ -168,6 +169,17 @@ function updateQuotation(id, TaxInvoice) {
     $('#myModal').modal('show');
 } // end update Quotation
 
+function genDepartment() {
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/generate-dep/T",
+        success: function (msg) {
+            console.log("dd" + msg)
+            $('#departmentId').val(msg) //เลขที่เอกสาร
+        }
+    })
+}
+
 function updateStatus(id, status) {
     $.ajax({
         type: 'POST',
@@ -175,7 +187,7 @@ function updateStatus(id, status) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            window.location.href = "/billing-list";
+            window.location.href = "/tax-invoice-list";
         }
     });
 }
@@ -252,8 +264,8 @@ function dataCustomer(companyId) {
 
 var tableCreateQuotation
 
-function tableCreateBiiling1(id) {
-    tableCreateBiiling = $('#tableCreateBiilingDisplay').DataTable({
+function tableCreateTaxInvoice1(id) {
+    tableCreateTaxInvoice = $('#tableCreateTaxInvoiceDisplay').DataTable({
         lengthChange: false,
         searching: false,
         responsive: true,
@@ -345,8 +357,8 @@ function tableCreateBiiling1(id) {
         ]
     });
 
-    $('#tableCreateBiilingDisplay').on('click', 'a', function () {
-        tableCreateBiiling.row($(this).parents('tr')).remove().draw();
+    $('#tableCreateTaxInvoiceDisplay').on('click', 'a', function () {
+        tableCreateTaxInvoice.row($(this).parents('tr')).remove().draw();
 
         var sumvalues = $("[name='rentDateSum']");
         var sum = 0;
@@ -377,11 +389,11 @@ function tableCreateBiiling1(id) {
 }
 
 function Add() {
-    tableCreateBiiling.row.add([tableCreateBiiling.data]).draw(false);
+    tableCreateTaxInvoice.row.add([tableCreateTaxInvoice.data]).draw(false);
 }
 
 function remove() {
-    tableCreateBiiling.rows('.selected').remove().draw();
+    tableCreateTaxInvoice.rows('.selected').remove().draw();
 }
 
 function saveCreateQuotation() {
@@ -389,7 +401,7 @@ function saveCreateQuotation() {
     pass = validateInput();
 
     if (pass) {
-        var insertBiiling = {
+        var insertTaxInvoice = {
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
@@ -406,7 +418,7 @@ function saveCreateQuotation() {
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
             f2ListModels: [],
         }
-        var data = tableCreateBiiling.data();
+        var data = tableCreateTaxInvoice.data();
         for (let i = 0; i < data.length; i++) {
             var d = {};
             d.product = $("#product" + i).val(); //สินค้า
@@ -414,34 +426,34 @@ function saveCreateQuotation() {
             d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
             d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
             d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
-            insertBiiling.f2ListModels.push(d)
+            insertTaxInvoice.f2ListModels.push(d)
         }
 
-        console.log(JSON.stringify(insertBiiling));
+        console.log(JSON.stringify(insertTaxInvoice));
 
         $.ajax({
             type: 'POST',
             url: '/api-f2/add-update',
-            data: JSON.stringify(insertBiiling),
+            data: JSON.stringify(insertTaxInvoice),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                window.location.href = "/billing-list";
+                window.location.href = "/tax-invoice-list";
             }
         });
     }
 }
 
-function saveCreateQuotationTaxInvoice() {
+function saveCreateQuotationReceipt() {
     var pass = true;
     pass = validateInput();
 
     if (pass) {
-        var insertBiiling = {
+        var insertTaxInvoice = {
             // id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-            type: "TaxInvoice", //ประเภท
+            type: "Receipt", //ประเภท
             status: "รอพิจารณา", //สถานะ
             price: $('#price').text(), //รวมเป็นเงิน
             productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
@@ -454,7 +466,7 @@ function saveCreateQuotationTaxInvoice() {
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
             f2ListModels: [],
         }
-        var data = tableCreateBiiling.data();
+        var data = tableCreateTaxInvoice.data();
         for (let i = 0; i < data.length; i++) {
             var d = {};
             d.product = $("#product" + i).val(); //สินค้า
@@ -462,25 +474,25 @@ function saveCreateQuotationTaxInvoice() {
             d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
             d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
             d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
-            insertBiiling.f2ListModels.push(d)
+            insertTaxInvoice.f2ListModels.push(d)
         }
 
-        console.log(JSON.stringify(insertBiiling));
+        console.log(JSON.stringify(insertTaxInvoice));
 
         $.ajax({
             type: 'POST',
             url: '/api-f2/add-update',
-            data: JSON.stringify(insertBiiling),
+            data: JSON.stringify(insertTaxInvoice),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                window.location.href = "/tax-invoice-list";
+                window.location.href = "/receipt-list";
             }
         });
     }
 }
 
-function tableBiiling() {
+function tableTaxInvoice() {
     // วันปัจจุบัน
     var today = new Date();
     var dd = today.getDate();
@@ -510,12 +522,12 @@ function tableBiiling() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/Biiling/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/TaxInvoice/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
             // table seve offer price
-            var tableBiiling = $('#tableBiiling').DataTable({
+            var tableTaxInvoice = $('#tableTaxInvoice').DataTable({
                 paging: false,
                 searching: false,
                 "bDestroy": true,
@@ -584,7 +596,7 @@ function tableBiiling() {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
                                 <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
-                                <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')">ใบกำกับภาษี</button></div>';
+                                <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')">ใบเสร็จรับเงิน</button></div>';
                             } else if (full.status == 'รอพิจารณา') {
                                 return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
@@ -596,7 +608,7 @@ function tableBiiling() {
             });
         }
     });
-}; // END tableBiiling
+}; // END tableTaxInvoice
 
 function deleteId(id) {
     swal({
@@ -614,7 +626,7 @@ function deleteId(id) {
                 type: 'DELETE',
                 success: function (result) {
                     if (result == "Success") {
-                        window.location.href = "/billing-list";
+                        window.location.href = "/tax-invoice-list";
                     } else {
                         alert("Delete Fail!!!");
                     }

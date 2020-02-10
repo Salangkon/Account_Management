@@ -48,9 +48,9 @@ public class HomePageController {
 		return "F3M1PurchaseOrderList";
 	}
 
-	@RequestMapping("/product-list")
+	@RequestMapping("/receive-report")
 	public String productList() {
-		return "F3M2ProductList";
+		return "F3M2ReceiveReport";
 	}
 	
 	/* ค่าใช้จ่าย */

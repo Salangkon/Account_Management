@@ -44,7 +44,7 @@
 		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<a class="collapse-item" href="/purchase-order-list" style="color: purple;">ใบสั่งซื้อ</a>
-				<a class="collapse-item" href="/product-list" style="color: purple;">ใบรับสินค้า</a>
+				<a class="collapse-item" href="/receive-report" style="color: purple;">ใบรับสินค้า</a>
 			</div>
 		</div>
 	</li>
