@@ -1,10 +1,16 @@
 package com.accountmanager.system.api.controller;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,6 +72,31 @@ public class F2Controller {
 			result = "Fail";
 		}
 		return result;
+	}
+
+	@GetMapping("/generate-dep/{type}")
+	public String getGenerateDepartmentCode(@PathVariable("type") String type) {
+		// format date yyMMdd
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyMMdd", Locale.US);
+		String date = simpleDateFormat.format(new Date());
+		// search number generate
+		String num = "%" + type + date + "%";
+
+		String gen = null;
+		gen = f2Repo.findByDepartmentIdLike(num);
+		if (gen == null) {
+			gen = type + date + "001";
+		} else {
+			String[] arrOfStr = gen.split(type);
+			for (String a : arrOfStr) {
+				gen = a;
+			}
+			System.out.println(gen);
+			int plus = Integer.parseInt(gen);
+			plus++;
+			gen = type + String.valueOf(plus);
+		}
+		return gen;
 	}
 
 	@GetMapping("/get-by/{type}/{status}/{startDate}/{endDate}")
@@ -162,12 +193,12 @@ public class F2Controller {
 	@PostMapping("/update-status/{id}/{status}")
 	public F2Model updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
 		F2Model f2ListModel = f2Repo.findById(id);
-		
+
 		// Convert Date to Timestamp
 		Date date = new Date();
 		Timestamp ts = new Timestamp(date.getTime());
 		f2ListModel.setUpdateDate(ts);
-		
+
 		switch (status) {
 		case "0":
 			f2ListModel.setStatus("รอพิจารณา");

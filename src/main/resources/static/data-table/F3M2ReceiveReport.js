@@ -27,7 +27,7 @@ function chkNumber(ele) {
 }
 
 var discountPrice = 0;
-$('#tableCreateReceiptDisplay').on('keyup', 'input', function () {
+$('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
     var sum1 = $(this).parent().parent().find('td')[4];
     var number1 = $(this).parent().parent().find('td')[2];
     var number2 = $(this).parent().parent().find('td')[3];
@@ -58,9 +58,9 @@ $('#tableCreateReceiptDisplay').on('keyup', 'input', function () {
 
 $(document).ready(function () {
 
-    tableReceipt();
+    tableQuotation();
     dataCustomer(null);
-    tableCreateReceipt1(null);
+    tableCreateQuotationDisplay1(null);
 }); // end document
 
 function myFunction() {
@@ -95,6 +95,9 @@ function changeFunc($i) {
         case "3":
             updateStatus(id, "3");
             break;
+            // case "4":
+            //     $('#myModal').modal('show');
+            //     break;
     }
 } // end update status
 
@@ -109,11 +112,11 @@ function updateQuotation(id) {
             success: function (msg) {
                 $('#id').val(msg.id), //เลขที่เอกสาร
                     $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
-                    $('#status').val(msg.type), //สถานะ
+                    $('#type').val(msg.type), //สถานะ
                     $('#status').val(msg.status), //สถานะ
                     $('#price').text(msg.price), //รวมเป็นเงิน
-                    $('#priceDisplay').text(msg.price);
-                $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
+                    $('#priceDisplay').text(msg.price), //รวมเป็นเงิน
+                    $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
                     $('#discount').val(msg.discount), //ส่วนลด
                     $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
                     $('#discountProductPrice').text(msg.discountProductPrice), //
@@ -127,18 +130,19 @@ function updateQuotation(id) {
                     document.getElementById("myCheck").checked = true;
                 }
                 dataCustomer(msg.companyId)
-                tableCreateReceipt1(msg.id);
+                tableCreateQuotationDisplay1(msg.id);
             }
         })
     } else {
-        tableCreateReceipt1(null);
-        dataCustomer(null)
+        genDepartment();
+        tableCreateQuotationDisplay1(null);
+        dataCustomer(null);
 
         $('#id').val(""), //เลขที่เอกสาร
             $('#departmentId').val(""), //เลขที่เอกสาร
             $('#price').text(""), //รวมเป็นเงิน
-            $('#priceDisplay').text("");
-        $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
+            $('#priceDisplay').text(""), //รวมเป็นเงิน
+            $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
             $('#discount').val(""), //ส่วนลด
             $('#discountPrice').text(""), //ราคาหักส่วนลด
             $('#discountProductPrice').text(""), //
@@ -151,6 +155,17 @@ function updateQuotation(id) {
     $('#myModal').modal('show');
 } // end update Quotation
 
+function genDepartment() {
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/generate-dep/RR",
+        success: function (msg) {
+            console.log("dd" + msg)
+            $('#departmentId').val(msg) //เลขที่เอกสาร
+        }
+    })
+}
+
 function updateStatus(id, status) {
     $.ajax({
         type: 'POST',
@@ -158,7 +173,7 @@ function updateStatus(id, status) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            window.location.href = "/receipt-list";
+            window.location.href = "/product-list";
         }
     });
 }
@@ -235,8 +250,8 @@ function dataCustomer(companyId) {
 
 var tableCreateQuotation
 
-function tableCreateReceipt1(id) {
-    tableCreateReceipt = $('#tableCreateReceiptDisplay').DataTable({
+function tableCreateQuotationDisplay1(id) {
+    tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
         searching: false,
         responsive: true,
@@ -328,8 +343,8 @@ function tableCreateReceipt1(id) {
         ]
     });
 
-    $('#tableCreateReceiptDisplay').on('click', 'a', function () {
-        tableCreateReceipt.row($(this).parents('tr')).remove().draw();
+    $('#tableCreateQuotationDisplay').on('click', 'a', function () {
+        tableCreateQuotation.row($(this).parents('tr')).remove().draw();
 
         var sumvalues = $("[name='rentDateSum']");
         var sum = 0;
@@ -340,7 +355,7 @@ function tableCreateReceipt1(id) {
         }
         discountPrice = parseFloat(sum);
         $('#price').text(parseFloat(sum).toFixed(2));
-        $('#priceDisplay').text(parseFloat(sum).toFixed(2));
+        $('#priceDisplay').text(parseFloat(sum).toFixed(2)); //รวมเป็นเงิน
         var productPriceAll = 0;
         var discount = document.getElementById("discount").value;
         $('#discountPrice').text(parseFloat(sum * discount / 100).toFixed(2));
@@ -360,11 +375,11 @@ function tableCreateReceipt1(id) {
 }
 
 function Add() {
-    tableCreateReceipt.row.add([tableCreateReceipt.data]).draw(false);
+    tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
 }
 
 function remove() {
-    tableCreateReceipt.rows('.selected').remove().draw();
+    tableCreateQuotation.rows('.selected').remove().draw();
 }
 
 function saveCreateQuotation() {
@@ -372,7 +387,7 @@ function saveCreateQuotation() {
     pass = validateInput();
 
     if (pass) {
-        var insertReceipt = {
+        var insertQuotation = {
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
@@ -389,7 +404,7 @@ function saveCreateQuotation() {
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
             f2ListModels: [],
         }
-        var data = tableCreateReceipt.data();
+        var data = tableCreateQuotation.data();
         for (let i = 0; i < data.length; i++) {
             var d = {};
             d.product = $("#product" + i).val(); //สินค้า
@@ -397,25 +412,25 @@ function saveCreateQuotation() {
             d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
             d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
             d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
-            insertReceipt.f2ListModels.push(d)
+            insertQuotation.f2ListModels.push(d)
         }
 
-        console.log(JSON.stringify(insertReceipt));
+        console.log(JSON.stringify(insertQuotation));
 
         $.ajax({
             type: 'POST',
             url: '/api-f2/add-update',
-            data: JSON.stringify(insertReceipt),
+            data: JSON.stringify(insertQuotation),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                window.location.href = "/receipt-list";
+                window.location.href = "/product-list";
             }
         });
     }
 }
 
-function tableReceipt() {
+function tableQuotation() {
     // วันปัจจุบัน
     var today = new Date();
     var dd = today.getDate();
@@ -445,12 +460,12 @@ function tableReceipt() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/Receipt/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/ReceiveReport/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
             // table seve offer price
-            var tableReceipt = $('#tableReceipt').DataTable({
+            var tableQuotation = $('#tableQuotation').DataTable({
                 paging: false,
                 searching: false,
                 "bDestroy": true,
@@ -530,7 +545,7 @@ function tableReceipt() {
             });
         }
     });
-}; // END tableReceipt
+}; // END tableQuotation
 
 function deleteId(id) {
     swal({
@@ -548,7 +563,7 @@ function deleteId(id) {
                 type: 'DELETE',
                 success: function (result) {
                     if (result == "Success") {
-                        window.location.href = "/receipt-list";
+                        window.location.href = "/product-list";
                     } else {
                         alert("Delete Fail!!!");
                     }

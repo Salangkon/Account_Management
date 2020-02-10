@@ -152,8 +152,9 @@ function updateQuotation(id, PurchaseOrder) {
             }
         })
     } else {
+        genDepartment();
         tableCreateQuotationDisplay1(null);
-        dataCustomer(null)
+        dataCustomer(null);
 
         $('#id').val(""), //เลขที่เอกสาร
             $('#departmentId').val(""), //เลขที่เอกสาร
@@ -171,6 +172,17 @@ function updateQuotation(id, PurchaseOrder) {
     }
     $('#myModal').modal('show');
 } // end update Quotation
+
+function genDepartment() {
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/generate-dep/PO",
+        success: function (msg) {
+            console.log("dd" + msg)
+            $('#departmentId').val(msg) //เลขที่เอกสาร
+        }
+    })
+}
 
 function updateStatus(id, status) {
     $.ajax({

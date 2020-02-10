@@ -1,15 +1,13 @@
 package com.accountmanager.system.pojo;
 
 import java.util.Date;
-import java.util.List;
 
-public class ChartAccountStep2Pojo {
+public class ChartAccountStep4Pojo {
 
 	private String step;
 	private String text;
 	private String icon;
 	private Date date;
-	private List<ChartAccountStep3Pojo> children;
 
 	public String getStep() {
 		return step;
@@ -41,14 +39,6 @@ public class ChartAccountStep2Pojo {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public List<ChartAccountStep3Pojo> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<ChartAccountStep3Pojo> children) {
-		this.children = children;
 	}
 
 }

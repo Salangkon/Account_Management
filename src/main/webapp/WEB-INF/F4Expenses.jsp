@@ -182,7 +182,7 @@
 										<div class="col-sm-4"><label>เลขที่เอกสาร</label></div>
 										<div class="col-sm-8">
 											<input class="form-control" style="margin-top: 10px;" id="departmentId"
-												placeholder="เลขที่เอกสาร">
+												placeholder="เลขที่เอกสาร" disabled>
 										</div>
 										<div class="col-sm-4"><label>ครบกำหนด</label></div>
 										<div class="col-sm-8" style="margin-top: 10px;">
