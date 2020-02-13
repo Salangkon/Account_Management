@@ -53,31 +53,52 @@ $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
     discountPrice = parseFloat(sum);
     $('#price').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
     $('#priceDisplay').text(parseFloat(sum).toFixed(2));
+
+    discountPrice1 = parseFloat(sum);
+    $('#price1').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
+    $('#priceDisplay1').text(parseFloat(sum).toFixed(2));
     myFunction();
 });
 
 $(document).ready(function () {
-
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
 }); // end document
 
 function myFunction() {
+    // ไม่รวมภาษี
     var productPriceAll = 0;
     var discount = document.getElementById("discount").value;
-    $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
     productPriceAll = discountPrice - (discountPrice * discount / 100)
+    $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
     $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
 
-    var checkBox = document.getElementById("myCheck");
+    var checkBox1 = document.getElementById("myCheck1");
     // Get the output text
-    if (checkBox.checked == true) {
+    if (checkBox1.checked == true) {
         $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
         $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
     } else {
         $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
         $('#vat').text("00.00");
+    }
+
+    // รวมภาษี
+    var productPriceAll1 = 0;
+    var discount1 = document.getElementById("discount1").value;
+    productPriceAll1 = discountPrice1 - (discountPrice1 * discount1 / 100)
+    $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
+    $('#discountProductPriceSum1').text(parseFloat(productPriceAll1).toFixed(2));
+    $('#discountPrice1').text(parseFloat(discountPrice1 * discount1 / 100).toFixed(2));
+    var checkBox2 = document.getElementById("myCheck2");
+    // Get the output text
+    if (checkBox2.checked == true) {
+        $('#productPriceAll1').text(parseFloat(productPriceAll1 - (productPriceAll1 * 7 / 100)).toFixed(2));
+        $('#vat1').text(parseFloat(productPriceAll1 * 7 / 100).toFixed(2));
+    } else {
+        $('#productPriceAll1').text(parseFloat(productPriceAll1).toFixed(2));
+        $('#vat1').text("00.00");
     }
 }
 
@@ -100,6 +121,19 @@ function changeFunc($i) {
             //     break;
     }
 } // end update status
+
+function statusVatFlg($i) {
+    switch ($i) {
+        case "1":
+            document.getElementById("statusVat2").hidden = true;
+            document.getElementById("statusVat1").hidden = false;
+            break;
+        case "2":
+            document.getElementById("statusVat1").hidden = true;
+            document.getElementById("statusVat2").hidden = false;
+            break;
+    }
+} // end update statu
 
 // update Quotation
 function updateQuotation(id, Biiling) {
@@ -132,20 +166,38 @@ function updateQuotation(id, Biiling) {
                     $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
                     $('#status').val(msg.type), //สถานะ
                     $('#status').val(msg.status), //สถานะ
-                    $('#price').text(msg.price), //รวมเป็นเงิน
-                    $('#priceDisplay').text(msg.price), //รวมเป็นเงิน
-                    $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
+                    
                     $('#discount').val(msg.discount), //ส่วนลด
-                    $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
-                    $('#discountProductPrice').text(msg.discountProductPrice), //
-                    $('#vat').text(msg.vat), //ภาษีมูลค่าเพิ่ม
+                    $('#price').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
+                    $('#priceDisplay').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
+                    $('#productPriceAll').text(parseFloat(msg.productPriceAll).toFixed(2)), //ราคาสินค้าทั้งหมด
+                    $('#discountPrice').text(parseFloat(msg.discountPrice).toFixed(2)), //ราคาหักส่วนลด
+                    $('#discountProductPrice').text(parseFloat(msg.discountProductPrice).toFixed(2)), //
+                    $('#vat').text(parseFloat(msg.vat).toFixed(2)), //ภาษีมูลค่าเพิ่ม
+
+                    $('#discount1').val(msg.discount), //ส่วนลด
+                    $('#price1').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
+                    $('#priceDisplay1').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
+                    $('#productPriceAll1').text(parseFloat(msg.productPriceAll).toFixed(2)), //ราคาสินค้าทั้งหมด
+                    $('#discountPrice1').text(parseFloat(msg.discountPrice).toFixed(2)), //ราคาหักส่วนลด
+                    $('#discountProductPrice1').text(parseFloat(msg.discountProductPrice).toFixed(2)), //
+                    $('#vat1').text(parseFloat(msg.vat).toFixed(2)), //ภาษีมูลค่าเพิ่ม
+
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
                     $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                    $('#statusVat').val(msg.statusVat)
+                    if (msg.statusVat == 1) {
+                        document.getElementById("statusVat1").hidden = true;
+                    } else {
+                        document.getElementById("statusVat2").hidden = true;
+                    }
                 if (msg.vat == null || msg.vat == 0) {
-                    document.getElementById("myCheck").checked = false;
+                    document.getElementById("myCheck1").checked = false;
+                    document.getElementById("myCheck2").checked = false;
                 } else {
-                    document.getElementById("myCheck").checked = true;
+                    document.getElementById("myCheck1").checked = true;
+                    document.getElementById("myCheck2").checked = true;
                 }
                 dataCustomer(msg.companyId)
                 tableCreateQuotationDisplay1(msg.id);
@@ -168,7 +220,26 @@ function updateQuotation(id, Biiling) {
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val("") //วันที่_ครบกำหนด
-        document.getElementById("myCheck").checked = false;
+            $('#statusVat').val("1")
+            document.getElementById("statusVat2").hidden = true;
+
+            // ไม่รวมภาษี
+            $('#discount').val(0), //ส่วนลด
+            $('#discountPrice').text(parseFloat(0).toFixed(2));
+            $('#discountProductPrice').text(parseFloat(0).toFixed(2));
+            $('#vat').text(parseFloat(0).toFixed(2));
+            $('#price').text(parseFloat(0).toFixed(2));
+            $('#productPriceAll').text(parseFloat(0).toFixed(2));
+            // รวมภาษี
+            $('#discount1').val(0), //ส่วนลด
+            $('#discountPrice1').text(parseFloat(0).toFixed(2));
+            $('#discountProductPrice1').text(parseFloat(0).toFixed(2));
+            $('#vat1').text(parseFloat(0).toFixed(2));
+            $('#price1').text(parseFloat(0).toFixed(2));
+            $('#productPriceAll1').text(parseFloat(0).toFixed(2));
+
+            document.getElementById("myCheck1").checked = true;
+            document.getElementById("myCheck2").checked = true;
     }
     $('#myModal').modal('show');
 } // end update Quotation
@@ -380,7 +451,7 @@ function tableCreateQuotationDisplay1(id) {
         productPriceAll = discountPrice - (discountPrice * discount / 100)
         $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
 
-        var checkBox = document.getElementById("myCheck");
+        var checkBox = document.getElementById("myCheck1");
         // Get the output text
         if (checkBox.checked == true) {
             $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));

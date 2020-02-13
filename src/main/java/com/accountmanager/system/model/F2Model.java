@@ -57,6 +57,9 @@ public class F2Model implements Serializable {
 	private String note;
 
 	private float price;
+	
+	@Column(name = "status_vat")
+	private String statusVat;
 
 	@Column(name = "product_price_all")
 	private float productPriceAll;
@@ -250,6 +253,14 @@ public class F2Model implements Serializable {
 		f2ListModel.setF2Model(null);
 
 		return f2ListModel;
+	}
+
+	public String getStatusVat() {
+		return statusVat;
+	}
+
+	public void setStatusVat(String statusVat) {
+		this.statusVat = statusVat;
 	}
 
 }
