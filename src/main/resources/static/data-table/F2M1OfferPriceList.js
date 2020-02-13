@@ -166,7 +166,8 @@ function updateQuotation(id, Biiling) {
                     $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
                     $('#status').val(msg.type), //สถานะ
                     $('#status').val(msg.status), //สถานะ
-                    
+                    $('#statusVat').val(msg.statusVat), //สถานะ ภาษี
+
                     $('#discount').val(msg.discount), //ส่วนลด
                     $('#price').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
                     $('#priceDisplay').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
@@ -188,9 +189,11 @@ function updateQuotation(id, Biiling) {
                     $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
                     $('#statusVat').val(msg.statusVat)
                     if (msg.statusVat == 1) {
-                        document.getElementById("statusVat1").hidden = true;
-                    } else {
+                        document.getElementById("statusVat1").hidden = false;
                         document.getElementById("statusVat2").hidden = true;
+                    } else {
+                        document.getElementById("statusVat1").hidden = true;
+                        document.getElementById("statusVat2").hidden = false;
                     }
                 if (msg.vat == null || msg.vat == 0) {
                     document.getElementById("myCheck1").checked = false;
@@ -483,6 +486,7 @@ function saveCreateQuotation() {
             type: $('#type').val(), //ประเภท
             status: $('#status').val(), //สถานะ
             price: $('#price').text(), //รวมเป็นเงิน
+            statusVat: $('#statusVat').val(), //สถานะ ภาษี
             productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
             discount: $('#discount').val(), //ส่วนลด
             discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
@@ -531,6 +535,7 @@ function saveCreateQuotationBilling() {
             type: "Biiling", //ประเภท
             status: "รอพิจารณา", //สถานะ
             price: $('#price').text(), //รวมเป็นเงิน
+            statusVat: $('#statusVat').val(), //สถานะ ภาษี
             productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
             discount: $('#discount').val(), //ส่วนลด
             discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
