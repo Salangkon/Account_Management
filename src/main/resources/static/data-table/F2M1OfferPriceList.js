@@ -167,7 +167,7 @@ function updateQuotation(id, Biiling) {
                     $('#status').val(msg.type), //สถานะ
                     $('#status').val(msg.status), //สถานะ
                     $('#statusVat').val(msg.statusVat), //สถานะ ภาษี
-
+                    // ไม่รวมภาษี
                     $('#discount').val(msg.discount), //ส่วนลด
                     $('#price').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
                     $('#priceDisplay').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
@@ -175,14 +175,15 @@ function updateQuotation(id, Biiling) {
                     $('#discountPrice').text(parseFloat(msg.discountPrice).toFixed(2)), //ราคาหักส่วนลด
                     $('#discountProductPrice').text(parseFloat(msg.discountProductPrice).toFixed(2)), //
                     $('#vat').text(parseFloat(msg.vat).toFixed(2)), //ภาษีมูลค่าเพิ่ม
-
-                    $('#discount1').val(msg.discount), //ส่วนลด
-                    $('#price1').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
-                    $('#priceDisplay1').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
-                    $('#productPriceAll1').text(parseFloat(msg.productPriceAll).toFixed(2)), //ราคาสินค้าทั้งหมด
-                    $('#discountPrice1').text(parseFloat(msg.discountPrice).toFixed(2)), //ราคาหักส่วนลด
-                    $('#discountProductPrice1').text(parseFloat(msg.discountProductPrice).toFixed(2)), //
-                    $('#vat1').text(parseFloat(msg.vat).toFixed(2)), //ภาษีมูลค่าเพิ่ม
+                    // รวมภาษี
+                    $('#discount1').val(msg.discount1), //ส่วนลด
+                    $('#price1').text(parseFloat(msg.price1).toFixed(2)), //รวมเป็นเงิน
+                    $('#priceDisplay1').text(parseFloat(msg.price1).toFixed(2)), //รวมเป็นเงิน
+                    $('#productPriceAll1').text(parseFloat(msg.productPriceAll1).toFixed(2)), //ราคาสินค้าทั้งหมด
+                    $('#discountPrice1').text(parseFloat(msg.discountPrice1).toFixed(2)), //ราคาหักส่วนลด
+                    $('#discountProductPrice1').text(parseFloat(msg.discountProductPrice1).toFixed(2)), //
+                    $('#discountProductPriceSum1').text(parseFloat(msg.discountProductPrice1).toFixed(2)), //
+                    $('#vat1').text(parseFloat(msg.vat1).toFixed(2)), //ภาษีมูลค่าเพิ่ม
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
@@ -237,6 +238,7 @@ function updateQuotation(id, Biiling) {
             $('#discount1').val(0), //ส่วนลด
             $('#discountPrice1').text(parseFloat(0).toFixed(2));
             $('#discountProductPrice1').text(parseFloat(0).toFixed(2));
+            $('#discountProductPriceSum1').text(parseFloat(0).toFixed(2)), //
             $('#vat1').text(parseFloat(0).toFixed(2));
             $('#price1').text(parseFloat(0).toFixed(2));
             $('#productPriceAll1').text(parseFloat(0).toFixed(2));
@@ -345,6 +347,7 @@ var tableCreateQuotation
 function tableCreateQuotationDisplay1(id) {
     tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
+        "paging": false,
         searching: false,
         responsive: true,
         "bDestroy": true,
@@ -485,13 +488,21 @@ function saveCreateQuotation() {
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
             type: $('#type').val(), //ประเภท
             status: $('#status').val(), //สถานะ
-            price: $('#price').text(), //รวมเป็นเงิน
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
+            // ไม่รวมภาษี
+            price: $('#price').text(), //รวมเป็นเงิน
             productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
             discount: $('#discount').val(), //ส่วนลด
             discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
             discountProductPrice: $('#discountProductPrice').text(), //
             vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+            // รวมภาษี
+            price1: $('#price1').text(), //รวมเป็นเงิน
+            productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
+            discountPrice1: $('#discount1').val(), //ส่วนลด
+            discountPrice1: $('#discountPrice1').text(), //ราคาหักส่วนลด
+            discountProductPrice1: $('#discountProductPrice1').text(), //
+            vat1: $('#vat1').text(), //ภาษีมูลค่าเพิ่ม
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
@@ -534,13 +545,21 @@ function saveCreateQuotationBilling() {
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
             type: "Biiling", //ประเภท
             status: "รอพิจารณา", //สถานะ
-            price: $('#price').text(), //รวมเป็นเงิน
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
+            // ไม่รวมภาษี
+            price: $('#price').text(), //รวมเป็นเงิน
             productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
             discount: $('#discount').val(), //ส่วนลด
             discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
             discountProductPrice: $('#discountProductPrice').text(), //
             vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+            // รวมภาษี
+            price1: $('#price1').text(), //รวมเป็นเงิน
+            productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
+            discountPrice1: $('#discount1').val(), //ส่วนลด
+            discountPrice1: $('#discountPrice1').text(), //ราคาหักส่วนลด
+            discountProductPrice1: $('#discountProductPrice1').text(), //
+            vat1: $('#vat1').text(), //ภาษีมูลค่าเพิ่ม
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
@@ -608,6 +627,7 @@ function tableQuotation() {
         success: function (msg) {
             // table seve offer price
             var tableQuotation = $('#tableQuotation').DataTable({
+                lengthChange: true,
                 paging: false,
                 searching: false,
                 "bDestroy": true,
@@ -629,6 +649,10 @@ function tableQuotation() {
                     {
                         'data': 'departmentId',
                         "sWidth": "13%",
+                         "mRender": function (data,
+                            type, row, index, full) {
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">'+row.departmentId +'</a>';
+                        }
                     },
                     {
                         'data': 'companyId',
