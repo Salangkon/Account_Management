@@ -115,8 +115,8 @@
 						<h4 class="modal-title" id="ReceiptFlg">สร้างใบเสนอราคา</h4>
 						<h4 class="modal-title" id="ReceiptFlgDefault">สร้างใบเสร็จรับเงิน</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<input hidden id="type" value="TaxInvoice">
-						<input hidden id="status" value="รอพิจารณา">
+						<!-- <input hidden id="type" value="TaxInvoice">
+						<input hidden id="status" value="รอพิจารณา"> -->
 					</div>
 
 					<!-- Modal body -->
@@ -180,7 +180,7 @@
 										<div class="col-sm-4"><label>เลขที่เอกสาร</label></div>
 										<div class="col-sm-8">
 											<input class="form-control" style="margin-top: 10px;" id="departmentId"
-												placeholder="เลขที่เอกสาร" disabled>
+												placeholder="เลขที่เอกสาร">
 										</div>
 										<div class="col-sm-4"><label>ครบกำหนด</label></div>
 										<div class="col-sm-8" style="margin-top: 10px;">
@@ -193,9 +193,15 @@
 											<input class="form-control" style="margin-top: 10px;" id=""
 												placeholder="เลขอ้างอิง">
 										</div>
-										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label></div>
+										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>
+										</div>
 										<div class="col-sm-8">
-											<h3 id="priceDisplay" style="margin-top: 40px;"></h3>
+											<!-- <h3 id="priceDisplay" style="margin-top: 40px;"></h3> -->
+											<select class="form-control" id="statusVat" onchange="statusVatFlg(value)"
+												style="margin-top: 42px;">
+												<option value="1">ราคาไม่รวมภาษี</option>
+												<option value="2">ราคารวมภาษี</option>
+											</select>
 										</div>
 									</div>
 								</div>
@@ -241,16 +247,28 @@
 												</div>
 												<div class="col-sm-5"></div>
 												<div class="col-sm-3">
-													<div class="form-group row">
+													<!-- ไม่รวมภาษี -->
+													<div class="form-group row" id="statusVat1">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
 														<div class="col-sm-6">
 															<p id="price">0.00</p>
 														</div>
 
-														<div class="col-sm-6 text-primary">ส่วนลด <input type="text"
-																OnKeyPress="return chkNumber(this)" id="discount"
-																style="width: 63px;text-align: center;"
-																onkeyup="myFunction()"> % </div>
+														<div class="col-sm-6 text-primary">
+															<div class="input-group input-group-sm mb-3">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">ส่วนลด</span>
+																</div>
+																<input type="text" class="form-control" id="discount"
+																	style="width: 40px; text-align: center;"
+																	OnKeyPress="return chkNumber(this)"
+																	onkeyup="myFunction()" maxlength="3">
+																<div class="input-group-append">
+																	<span class="input-group-text">%</span>
+																</div>
+															</div>
+														</div>
+
 														<div class="col-sm-6">
 															<p id="discountPrice">0.00</p>
 														</div>
@@ -260,9 +278,11 @@
 															<p id="discountProductPrice">0.00</p>
 														</div>
 
-														<div class="col-sm-6 text-primary"><input type="checkbox"
-																id="myCheck" onclick="myFunction()">
-															ภาษีมูลค่าเพิ่ม 7%</div>
+														<div class="col-sm-6 text-primary">
+															<input class="form-check-input" type="checkbox"
+																id="myCheck1" onclick="myFunction()">
+															ภาษีมูลค่าเพิ่ม 7%
+														</div>
 														<div class="col-sm-6">
 															<p id="vat">0.00</p>
 														</div>
@@ -270,6 +290,56 @@
 														<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น</div>
 														<div class="col-sm-6">
 															<p id="productPriceAll">0.00</p>
+														</div>
+													</div>
+													<!-- รวมภาษี -->
+													<div class="form-group row" id="statusVat2">
+														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
+														<div class="col-sm-6">
+															<p id="price1">0.00</p>
+														</div>
+
+														<div class="col-sm-6 text-primary">
+															<div class="input-group input-group-sm mb-3">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">ส่วนลด</span>
+																</div>
+																<input type="text" class="form-control" id="discount1"
+																	style="width: 40px; text-align: center;"
+																	OnKeyPress="return chkNumber(this)"
+																	onkeyup="myFunction()" maxlength="3">
+																<div class="input-group-append">
+																	<span class="input-group-text">%</span>
+																</div>
+															</div>
+														</div>
+
+														<div class="col-sm-6">
+															<p id="discountPrice1">0.00</p>
+														</div>
+
+														<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด</div>
+														<div class="col-sm-6" class="form-control">
+															<p id="discountProductPrice1">0.00</p>
+														</div>
+
+														<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น</div>
+														<div class="col-sm-6">
+															<p id="discountProductPriceSum1">0.00</p>
+														</div>
+														<hr size="20" width="100%" color="red" align="center">
+														<div class="col-sm-6 text-primary">
+															<input class="form-check-input" type="checkbox"
+																id="myCheck2" onclick="myFunction()">
+															ภาษีมูลค่าเพิ่ม 7%
+														</div>
+														<div class="col-sm-6">
+															<p id="vat1">0.00</p>
+														</div>
+
+														<div class="col-sm-6 text-primary">ราคาไม่รวมภาษี</div>
+														<div class="col-sm-6">
+															<p id="productPriceAll1">0.00</p>
 														</div>
 													</div>
 												</div>
@@ -285,8 +355,10 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()" id="saveReceiptFlg">บันทึก</button>
-						<button type="button" class="btn btn-success" onclick="saveCreateQuotationReceipt()" id="saveReceiptFlgDefault">บันทึกใบเสร็จรับเงิน</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()"
+							id="saveReceiptFlg">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotationReceipt()"
+							id="saveReceiptFlgDefault">บันทึกใบเสร็จรับเงิน</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>

@@ -196,7 +196,7 @@
 										</div>
 										<div class="col-sm-8">
 											<input class="form-control" style="margin-top: 10px;" id="departmentId"
-												placeholder="เลขที่เอกสาร" disabled>
+												placeholder="เลขที่เอกสาร">
 										</div>
 										<div class="col-sm-4">
 											<label>ครบกำหนด</label>
@@ -267,6 +267,7 @@
 												</div>
 												<div class="col-sm-5"></div>
 												<div class="col-sm-3">
+													<!-- ไม่รวมภาษี -->
 													<div class="form-group row" id="statusVat1">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
 														<div class="col-sm-6">
@@ -311,7 +312,7 @@
 															<p id="productPriceAll">0.00</p>
 														</div>
 													</div>
-
+													<!-- รวมภาษี -->
 													<div class="form-group row" id="statusVat2">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
 														<div class="col-sm-6">

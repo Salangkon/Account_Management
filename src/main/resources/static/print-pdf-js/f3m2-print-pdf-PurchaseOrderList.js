@@ -13,20 +13,46 @@ function printPDF(id) {
         success: function (msg) {
             $('#departmentIdPrint').text(msg.departmentId), //เลขที่เอกสาร
                 $('#status').text(msg.status), //สถานะ
+                $('#notePrint').text(msg.note), //หมาบเหตุ
+                $('#datePrint').text(msg.date), //วันที่
+                $('#dateEndPrint').text(msg.dateEnd), //วันที่_ครบกำหนด
+                $('#statusVatPrint').text(msg.statusVat), //วันที่_ครบกำหนด
+                // ไม่รวมภาษี
                 $('#pricePrint').text(msg.price), //รวมเป็นเงิน
                 $('#priceDisplayPrint').text(parseFloat(msg.price).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //รวมเป็นเงิน
                 $('#productPriceAllPrint').text(parseFloat(msg.productPriceAll).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //ราคาสินค้าทั้งหมด
                 $('#discountPrint').text(msg.discount + " %"), //ส่วนลด
                 $('#discountPricePrint').text(parseFloat(msg.discountPrice).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //ราคาหักส่วนลด
                 $('#discountProductPricePrint').text(parseFloat(msg.discountProductPrice).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //
-                $('#vatPrint').text(parseFloat(msg.vat).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //ภาษีมูลค่าเพิ่ม
-                $('#notePrint').text(msg.note), //หมาบเหตุ
-                $('#datePrint').text(msg.date), //วันที่
-                $('#dateEndPrint').text(msg.dateEnd) //วันที่_ครบกำหนด
-            if (msg.price == 0) {
+                $('#vatPrint').text(parseFloat(msg.vat).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท") //ภาษีมูลค่าเพิ่ม
+            // รวมภาษี
+            $('#pricePrint1').text(msg.price1), //รวมเป็นเงิน
+                $('#priceDisplayPrint1').text(parseFloat(msg.price1).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //รวมเป็นเงิน
+                $('#productPriceAllPrint1').text(parseFloat(msg.productPriceAll1).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //ราคาสินค้าทั้งหมด
+                $('#discountPrint1').text(msg.discount1 + " %"), //ส่วนลด
+                $('#discountPricePrint1').text(parseFloat(msg.discountPrice1).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //ราคาหักส่วนลด
+                $('#discountProductPricePrint1').text(parseFloat(msg.discountProductPrice1).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //
+                $('#vatPrint1').text(parseFloat(msg.vat1).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //ภาษีมูลค่าเพิ่ม
+                $('#sumPricePrint1').text(parseFloat(msg.discountProductPrice1).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท") //ราคาหักส่วนลด
+
+            if (msg.statusVat == 1) {
+                document.getElementById("statusVatPrint1").hidden = false;
+                document.getElementById("statusVatPrint2").hidden = true;
+            } else {
+                document.getElementById("statusVatPrint1").hidden = true;
+                document.getElementById("statusVatPrint2").hidden = false;
+            }
+            if (msg.note == "" || msg.note == null) {
+                document.getElementById("noteFlg").hidden = true;
+            } else {
+                document.getElementById("noteFlg").hidden = false;
+            }
+            if (msg.price == 0 || msg.price == 0) {
                 $('#priceDisplayPrintTh').text("( ศูนย์บาทถ้วน )"); // แปลงไทย
+                $('#priceDisplayPrintTh1').text("( ศูนย์บาทถ้วน )"); // แปลงไทย
             } else {
                 $('#priceDisplayPrintTh').text("( " + ArabicNumberToText(msg.productPriceAll) + " )"); // แปลงไทย
+                $('#priceDisplayPrintTh1').text("( " + ArabicNumberToText(msg.discountProductPrice1) + " )"); // แปลงไทย
             }
             dataCustomer(msg.companyId)
             msg.f2ListModels.forEach(value => {
