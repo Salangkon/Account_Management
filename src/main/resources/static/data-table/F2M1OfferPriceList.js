@@ -188,20 +188,29 @@ function updateQuotation(id, Biiling) {
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
                     $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
-                    $('#statusVat').val(msg.statusVat)
-                    if (msg.statusVat == 1) {
-                        document.getElementById("statusVat1").hidden = false;
-                        document.getElementById("statusVat2").hidden = true;
-                    } else {
-                        document.getElementById("statusVat1").hidden = true;
-                        document.getElementById("statusVat2").hidden = false;
-                    }
-                if (msg.vat == null || msg.vat == 0) {
-                    document.getElementById("myCheck1").checked = false;
-                    document.getElementById("myCheck2").checked = false;
+                $('#statusVat').val(msg.statusVat)
+                if (msg.statusVat == 1) {
+                    document.getElementById("statusVat1").hidden = false;
+                    document.getElementById("statusVat2").hidden = true;
                 } else {
-                    document.getElementById("myCheck1").checked = true;
-                    document.getElementById("myCheck2").checked = true;
+                    document.getElementById("statusVat1").hidden = true;
+                    document.getElementById("statusVat2").hidden = false;
+                }
+                switch (msg.vat) {
+                    case 0:
+                        document.getElementById("myCheck1").checked = false;
+                        break;
+                    default:
+                        document.getElementById("myCheck1").checked = true;
+                        break;
+                }
+                switch (msg.vat1) {
+                    case 0:
+                        document.getElementById("myCheck2").checked = false;
+                        break;
+                    default:
+                        document.getElementById("myCheck2").checked = true;
+                        break;
                 }
                 dataCustomer(msg.companyId)
                 tableCreateQuotationDisplay1(msg.id);
@@ -211,7 +220,7 @@ function updateQuotation(id, Biiling) {
         genDepartment();
         tableCreateQuotationDisplay1(null);
         dataCustomer(null);
-    
+
         $('#id').val(""), //เลขที่เอกสาร
             // $('#departmentId').val(""), //เลขที่เอกสาร
             $('#price').text(""), //รวมเป็นเงิน
@@ -224,27 +233,27 @@ function updateQuotation(id, Biiling) {
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val("") //วันที่_ครบกำหนด
-            $('#statusVat').val("1")
-            document.getElementById("statusVat2").hidden = true;
+        $('#statusVat').val("1")
+        document.getElementById("statusVat2").hidden = true;
 
-            // ไม่รวมภาษี
-            $('#discount').val(), //ส่วนลด
+        // ไม่รวมภาษี
+        $('#discount').val(), //ส่วนลด
             $('#discountPrice').text(parseFloat(0).toFixed(2));
-            $('#discountProductPrice').text(parseFloat(0).toFixed(2));
-            $('#vat').text(parseFloat(0).toFixed(2));
-            $('#price').text(parseFloat(0).toFixed(2));
-            $('#productPriceAll').text(parseFloat(0).toFixed(2));
-            // รวมภาษี
-            $('#discount1').val(), //ส่วนลด
+        $('#discountProductPrice').text(parseFloat(0).toFixed(2));
+        $('#vat').text(parseFloat(0).toFixed(2));
+        $('#price').text(parseFloat(0).toFixed(2));
+        $('#productPriceAll').text(parseFloat(0).toFixed(2));
+        // รวมภาษี
+        $('#discount1').val(), //ส่วนลด
             $('#discountPrice1').text(parseFloat(0).toFixed(2));
-            $('#discountProductPrice1').text(parseFloat(0).toFixed(2));
-            $('#discountProductPriceSum1').text(parseFloat(0).toFixed(2)), //
+        $('#discountProductPrice1').text(parseFloat(0).toFixed(2));
+        $('#discountProductPriceSum1').text(parseFloat(0).toFixed(2)), //
             $('#vat1').text(parseFloat(0).toFixed(2));
-            $('#price1').text(parseFloat(0).toFixed(2));
-            $('#productPriceAll1').text(parseFloat(0).toFixed(2));
+        $('#price1').text(parseFloat(0).toFixed(2));
+        $('#productPriceAll1').text(parseFloat(0).toFixed(2));
 
-            document.getElementById("myCheck1").checked = true;
-            document.getElementById("myCheck2").checked = true;
+        document.getElementById("myCheck1").checked = true;
+        document.getElementById("myCheck2").checked = true;
     }
     $('#myModal').modal('show');
 } // end update Quotation
@@ -597,9 +606,9 @@ function formatDate(date) {
         day = '' + d.getDate(),
         year = d.getFullYear();
 
-    if (month.length < 2) 
+    if (month.length < 2)
         month = '0' + month;
-    if (day.length < 2) 
+    if (day.length < 2)
         day = '0' + day;
 
     return [year, month, day].join('-');
@@ -648,24 +657,20 @@ function tableQuotation() {
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
-                // "order": [
-                //     [0, "desc"]
-                // ],
+                "order": [
+                    [0, "desc"]
+                ],
                 "aoColumns": [{
-                        // 'data': 'updateDate',
+                        'data': 'date',
                         "className": "text-center",
                         "sWidth": "8%",
-                        "mRender": function (data,
-                            type, row, index, full) {
-                            return formatDate(row.data);
-                        }
                     },
                     {
                         'data': 'departmentId',
                         "sWidth": "13%",
-                         "mRender": function (data,
+                        "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">'+row.departmentId +'</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
