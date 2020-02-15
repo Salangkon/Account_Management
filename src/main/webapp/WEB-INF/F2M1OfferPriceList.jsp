@@ -4,27 +4,30 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>Quotation</title>
+	<meta charset="UTF-8">
+	<title>Quotation</title>
 
-<%@include file="/WEB-INF/Extensions/css.jsp"%>
-<style>
-label, textarea, .input-top {
-	margin-top: 10px;
-}
+	<%@include file="/WEB-INF/Extensions/css.jsp"%>
+	<style>
+		label,
+		textarea,
+		.input-top {
+			margin-top: 10px;
+		}
 
-.col-sm-3, .col-sm-4 {
-	text-align: right;
-}
+		.col-sm-3,
+		.col-sm-4 {
+			text-align: right;
+		}
 
-p {
-	color: red;
-}
+		p {
+			color: red;
+		}
 
-.hide {
-	display: none;
-}
-</style>
+		.hide {
+			display: none;
+		}
+	</style>
 
 </head>
 
@@ -58,8 +61,7 @@ p {
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-9"></div>
 										<div class="col-sm-2">
-											<select class="form-control" style="margin-top: 10px;"
-												id="searchStatus">
+											<select class="form-control" style="margin-top: 10px;" id="searchStatus">
 												<option value="" style="color: blue;">ทั้งหมด</option>
 												<option value="1" style="color: black;">รอพิจารณา</option>
 												<option value="2" style="color: green;">ผ่านการตวจสอบ</option>
@@ -67,9 +69,9 @@ p {
 											</select>
 										</div>
 										<div class="col-sm-1">
-											<button type="button" class="btn btn-primary"
-												style="margin-top: 10px" data-toggle="modal"
-												data-target="#myModal" onclick="updateQuotation(null)">สร้างใหม่</button>
+											<button type="button" class="btn btn-primary" style="margin-top: 10px"
+												data-toggle="modal" data-target="#myModal"
+												onclick="updateQuotation(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
@@ -81,8 +83,7 @@ p {
 											<label>ถึง : </label><input id="toDate" />
 										</div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button"
-												onclick="tableQuotation()"
+											<button class="btn btn-primary" type="button" onclick="tableQuotation()"
 												style="margin-top: 42px; width: 87px;">
 												ค้นหา <i class="fas fa-fw fa-search"></i>
 											</button>
@@ -120,8 +121,7 @@ p {
 						<h4 class="modal-title" id="BiilingFlg">สร้างใบเสนอราคา</h4>
 						<h4 class="modal-title" id="BiilingFlgDefault">สร้างใบวางบิล</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<input hidden id="type" value="Quotation"> <input hidden
-							id="status" value="รอพิจารณา">
+						<input hidden id="type" value="Quotation"> <input hidden id="status" value="รอพิจารณา">
 					</div>
 
 					<!-- Modal body -->
@@ -131,9 +131,8 @@ p {
 							<div class="col-sm-1">
 								<div class="p-1">
 									<div class="form-group row">
-										<a href="#"><i class="fas fa-2x fa-print"
-											style="margin-right: 10px;"></i></a> <a href="#"><i
-											class="fas fa-2x fa-download"></i></a>
+										<a href="#"><i class="fas fa-2x fa-print" style="margin-right: 10px;"></i></a>
+										<a href="#"><i class="fas fa-2x fa-download"></i></a>
 									</div>
 								</div>
 							</div>
@@ -146,8 +145,7 @@ p {
 										<div class="col-sm-8">
 											<input id="id" hidden> <select class="form-control"
 												style="margin-top: 10px;"
-												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน"
-												id="customers">
+												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
 												<option value="">
 													ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน</option>
 											</select>
@@ -158,8 +156,8 @@ p {
 											<label>ที่อยู่</label>
 										</div>
 										<div class="col-sm-8">
-											<textarea class="form-control" style="height: 110px"
-												id="address" disabled></textarea>
+											<textarea class="form-control" style="height: 110px" id="address"
+												disabled></textarea>
 										</div>
 										<div class="col-sm-4">
 											<label>เลขประจำตัวผู้เสียภาษี</label>
@@ -173,10 +171,10 @@ p {
 											<label>สำนักงาน / สาขาที่ </label>
 										</div>
 										<div class="col-sm-8" style="margin-top: 6px;">
-											<input style="margin-top: 10px;" type="radio"
-												name="officeType" id="officeType1" disabled>
-											สำนักงานใหญ่ <input style="margin-top: 10px;" type="radio"
-												name="officeType" id="officeType2" disabled> สาขาที่
+											<input style="margin-top: 10px;" type="radio" name="officeType"
+												id="officeType1" disabled>
+											สำนักงานใหญ่ <input style="margin-top: 10px;" type="radio" name="officeType"
+												id="officeType2" disabled> สาขาที่
 											<!-- <input type="text" id="department"> -->
 										</div>
 									</div>
@@ -197,8 +195,8 @@ p {
 											<label>เลขที่เอกสาร</label>
 										</div>
 										<div class="col-sm-8">
-											<input class="form-control" style="margin-top: 10px;"
-												id="departmentId" placeholder="เลขที่เอกสาร" disabled>
+											<input class="form-control" style="margin-top: 10px;" id="departmentId"
+												placeholder="เลขที่เอกสาร" disabled>
 										</div>
 										<div class="col-sm-4">
 											<label>ครบกำหนด</label>
@@ -219,8 +217,8 @@ p {
 										</div>
 										<div class="col-sm-8">
 											<!-- <h3 id="priceDisplay" style="margin-top: 40px;"></h3> -->
-											<select class="form-control" id="statusVat"
-												onchange="statusVatFlg(value)" style="margin-top: 42px;">
+											<select class="form-control" id="statusVat" onchange="statusVatFlg(value)"
+												style="margin-top: 42px;">
 												<option value="1">ราคาไม่รวมภาษี</option>
 												<option value="2">ราคารวมภาษี</option>
 											</select>
@@ -228,8 +226,8 @@ p {
 									</div>
 								</div>
 							</div>
-							<!-- table -->
 
+							<!-- table -->
 							<div class="table-responsive col-sm-12" style="margin-top: 12px;">
 								<div style="margin-left: 2%; width: 97%;">
 									<div class="card">
@@ -261,8 +259,7 @@ p {
 													</tr>
 												</tfoot>
 											</table>
-											<div class="form-group row" id="statusVat1"
-												style="margin-top: 30px;">
+											<div class="form-group row" style="margin-top: 30px;">
 												<div class="col-sm-4">
 													<p style="text-align: left;">หมายเหตุ</p>
 													<textarea class="form-control" style="height: 80px"
@@ -270,7 +267,7 @@ p {
 												</div>
 												<div class="col-sm-5"></div>
 												<div class="col-sm-3">
-													<div class="form-group row">
+													<div class="form-group row" id="statusVat1">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
 														<div class="col-sm-6">
 															<p id="price">0.00</p>
@@ -314,17 +311,8 @@ p {
 															<p id="productPriceAll">0.00</p>
 														</div>
 													</div>
-												</div>
-											</div>
-											<div class="form-group row" id="statusVat2"
-												style="margin-top: 30px;">
-												<div class="col-sm-4">
-													<p style="text-align: left;">หมายเหตุ</p>
-													<textarea class="form-control" style="height: 80px" id=""></textarea>
-												</div>
-												<div class="col-sm-5"></div>
-												<div class="col-sm-3">
-													<div class="form-group row">
+
+													<div class="form-group row" id="statusVat2">
 														<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
 														<div class="col-sm-6">
 															<p id="price1">0.00</p>
@@ -378,6 +366,7 @@ p {
 										</div>
 									</div>
 								</div>
+								<!-- </div> -->
 							</div>
 							<!--end table -->
 
@@ -386,26 +375,24 @@ p {
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success"
-							onclick="saveCreateQuotation()" id="saveBiilingFlg">บันทึก</button>
-						<button type="button" class="btn btn-success"
-							onclick="saveCreateQuotationBilling()" id="saveBiilingFlgDefault">บันทึกใบวางบิล</button>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">ยกเลิก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()"
+							id="saveBiilingFlg">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotationBilling()"
+							id="saveBiilingFlgDefault">บันทึกใบวางบิล</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!--End The Modal -->
 
-		<div id="MyModalPrintPDF" class="modal fade" tabindex="-1"
-			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div id="MyModalPrintPDF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
 			<div class="modal-dialog modal-lg" style="max-width: 1100px;">
 				<div class="modal-content">
 					<div class="modal-footer border border-danger">
 						<button id="btnPrint" type="button" class="btn btn-primary">พิมพ์</button>
-						<button class="btn btn-secondary" data-dismiss="modal"
-							aria-hidden="true">ยกเลิก</button>
+						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
 					</div>
 					<div>
 						<%@include file="/WEB-INF/PrintPDF/PrintPDF.jsp"%>
@@ -418,8 +405,7 @@ p {
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp"%>
 		<script src="/data-table/F2M1OfferPriceList.js" type="text/javascript"></script>
-		<script src="/print-pdf-js/f2m1-print-pdf-Quotation.js"
-			type="text/javascript"></script>
+		<script src="/print-pdf-js/f2m1-print-pdf-Quotation.js" type="text/javascript"></script>
 </body>
 
 </html>
