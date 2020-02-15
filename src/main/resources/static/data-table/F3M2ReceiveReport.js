@@ -260,7 +260,7 @@ function updateStatus(id, status) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            window.location.href = "/product-list";
+            window.location.href = "/receive-report";
         }
     });
 }
@@ -478,7 +478,7 @@ function saveCreateQuotation() {
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-            type: "Biiling", //ประเภท
+            type: "ReceiveReport", //ประเภท
             status: "รอพิจารณา", //สถานะ
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
             // ไม่รวมภาษี
@@ -520,7 +520,7 @@ function saveCreateQuotation() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                window.location.href = "/product-list";
+                window.location.href = "/receive-report";
             }
         });
     }
@@ -655,7 +655,7 @@ function deleteId(id) {
                 type: 'DELETE',
                 success: function (result) {
                     if (result == "Success") {
-                        window.location.href = "/product-list";
+                        window.location.href = "/receive-report";
                     } else {
                         alert("Delete Fail!!!");
                     }

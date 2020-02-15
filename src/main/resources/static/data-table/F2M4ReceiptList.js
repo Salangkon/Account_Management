@@ -475,7 +475,7 @@ function saveCreateQuotation() {
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-            type: "Biiling", //ประเภท
+            type: "Receipt", //ประเภท
             status: "รอพิจารณา", //สถานะ
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
             // ไม่รวมภาษี

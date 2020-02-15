@@ -170,7 +170,7 @@
 					</table>
 				</div>
 				<!-- หมายเหตุ -->
-				<table>
+				<table id="noteFlg">
 					<tr>
 						<td style="width: 50%;"><label style="color: orangered;">หมายเหตุ</label></td>
 						<td style="width: 50%;"><label></label></td>

@@ -496,7 +496,7 @@ function saveCreateQuotation() {
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-            type: "Biiling", //ประเภท
+            type: "PurchaseOrder", //ประเภท
             status: "รอพิจารณา", //สถานะ
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
             // ไม่รวมภาษี
@@ -547,58 +547,64 @@ function saveCreateQuotation() {
 function saveCreateQuotationBilling() {
     var pass = true;
     pass = validateInput();
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/generate-dep/RR",
+        success: function (msg) {
+            if (pass) {
+                var insertQuotation = {
+                    // id: $('#id').val(), //ลูกค้า
+                    companyId: $('#customers').val(), //ลูกค้า
+                    departmentId: msg, //เลขที่เอกสาร
+                    type: "ReceiveReport", //ประเภท
+                    status: "รอพิจารณา", //สถานะ
+                    statusVat: $('#statusVat').val(), //สถานะ ภาษี
+                    // ไม่รวมภาษี
+                    price: $('#price').text(), //รวมเป็นเงิน
+                    productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
+                    discount: $('#discount').val(), //ส่วนลด
+                    discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
+                    discountProductPrice: $('#discountProductPrice').text(), //
+                    vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+                    // รวมภาษี
+                    price1: $('#price1').text(), //รวมเป็นเงิน
+                    productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
+                    discount1: $('#discount1').val(), //ส่วนลด
+                    discountPrice1: $('#discountPrice1').text(), //ราคาหักส่วนลด
+                    discountProductPrice1: $('#discountProductPrice1').text(), //
+                    vat1: $('#vat1').text(), //ภาษีมูลค่าเพิ่ม
+                    note: $('#note').val(), //หมาบเหตุ
+                    date: $('#date').val(), //วันที่
+                    dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+                    f2ListModels: [],
+                }
+                var data = tableCreateQuotation.data();
+                for (let i = 0; i < data.length; i++) {
+                    var d = {};
+                    d.product = $("#product" + i).val(); //สินค้า
+                    d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
+                    d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
+                    d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
+                    d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
+                    insertQuotation.f2ListModels.push(d)
+                }
 
-    if (pass) {
-        var insertQuotation = {
-            // id: $('#id').val(), //ลูกค้า
-            companyId: $('#customers').val(), //ลูกค้า
-            departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-            type: "Biiling", //ประเภท
-            status: "รอพิจารณา", //สถานะ
-            statusVat: $('#statusVat').val(), //สถานะ ภาษี
-            // ไม่รวมภาษี
-            price: $('#price').text(), //รวมเป็นเงิน
-            productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
-            discount: $('#discount').val(), //ส่วนลด
-            discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
-            discountProductPrice: $('#discountProductPrice').text(), //
-            vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
-            // รวมภาษี
-            price1: $('#price1').text(), //รวมเป็นเงิน
-            productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
-            discount1: $('#discount1').val(), //ส่วนลด
-            discountPrice1: $('#discountPrice1').text(), //ราคาหักส่วนลด
-            discountProductPrice1: $('#discountProductPrice1').text(), //
-            vat1: $('#vat1').text(), //ภาษีมูลค่าเพิ่ม
-            note: $('#note').val(), //หมาบเหตุ
-            date: $('#date').val(), //วันที่
-            dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
-            f2ListModels: [],
-        }
-        var data = tableCreateQuotation.data();
-        for (let i = 0; i < data.length; i++) {
-            var d = {};
-            d.product = $("#product" + i).val(); //สินค้า
-            d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
-            d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
-            d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
-            d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
-            insertQuotation.f2ListModels.push(d)
-        }
+                console.log(JSON.stringify(insertQuotation));
 
-        console.log(JSON.stringify(insertQuotation));
-
-        $.ajax({
-            type: 'POST',
-            url: '/api-f2/add-update',
-            data: JSON.stringify(insertQuotation),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                window.location.href = "/product-list";
+                $.ajax({
+                    type: 'POST',
+                    url: '/api-f2/add-update',
+                    data: JSON.stringify(insertQuotation),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        window.location.href = "/receive-report";
+                    }
+                });
             }
-        });
-    }
+        }
+    });
+
 }
 
 function tableQuotation() {

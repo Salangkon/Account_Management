@@ -117,8 +117,8 @@
 					<div class="modal-header">
 						<h4 class="modal-title">สร้างใบรับสินค้า</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<input hidden id="type" value="ReceiveReport">
-						<input hidden id="status" value="รอพิจารณา">
+						<!-- <input hidden id="type" value="ReceiveReport">
+						<input hidden id="status" value="รอพิจารณา"> -->
 					</div>
 
 					<!-- Modal body -->
