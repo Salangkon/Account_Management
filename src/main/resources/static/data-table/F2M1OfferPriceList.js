@@ -228,14 +228,14 @@ function updateQuotation(id, Biiling) {
             document.getElementById("statusVat2").hidden = true;
 
             // ไม่รวมภาษี
-            $('#discount').val(0), //ส่วนลด
+            $('#discount').val(), //ส่วนลด
             $('#discountPrice').text(parseFloat(0).toFixed(2));
             $('#discountProductPrice').text(parseFloat(0).toFixed(2));
             $('#vat').text(parseFloat(0).toFixed(2));
             $('#price').text(parseFloat(0).toFixed(2));
             $('#productPriceAll').text(parseFloat(0).toFixed(2));
             // รวมภาษี
-            $('#discount1').val(0), //ส่วนลด
+            $('#discount1').val(), //ส่วนลด
             $('#discountPrice1').text(parseFloat(0).toFixed(2));
             $('#discountProductPrice1').text(parseFloat(0).toFixed(2));
             $('#discountProductPriceSum1').text(parseFloat(0).toFixed(2)), //
@@ -499,7 +499,7 @@ function saveCreateQuotation() {
             // รวมภาษี
             price1: $('#price1').text(), //รวมเป็นเงิน
             productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
-            discountPrice1: $('#discount1').val(), //ส่วนลด
+            discount1: $('#discount1').val(), //ส่วนลด
             discountPrice1: $('#discountPrice1').text(), //ราคาหักส่วนลด
             discountProductPrice1: $('#discountProductPrice1').text(), //
             vat1: $('#vat1').text(), //ภาษีมูลค่าเพิ่ม
@@ -556,7 +556,7 @@ function saveCreateQuotationBilling() {
             // รวมภาษี
             price1: $('#price1').text(), //รวมเป็นเงิน
             productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
-            discountPrice1: $('#discount1').val(), //ส่วนลด
+            discount1: $('#discount1').val(), //ส่วนลด
             discountPrice1: $('#discountPrice1').text(), //ราคาหักส่วนลด
             discountProductPrice1: $('#discountProductPrice1').text(), //
             vat1: $('#vat1').text(), //ภาษีมูลค่าเพิ่ม
@@ -589,6 +589,20 @@ function saveCreateQuotationBilling() {
             }
         });
     }
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }
 
 function tableQuotation() {
@@ -634,16 +648,16 @@ function tableQuotation() {
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
-                "order": [
-                    [0, "desc"]
-                ],
+                // "order": [
+                //     [0, "desc"]
+                // ],
                 "aoColumns": [{
-                        'data': 'updateDate',
+                        // 'data': 'updateDate',
                         "className": "text-center",
                         "sWidth": "8%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return row.date;
+                            return formatDate(row.data);
                         }
                     },
                     {

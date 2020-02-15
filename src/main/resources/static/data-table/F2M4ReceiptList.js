@@ -469,9 +469,9 @@ function tableReceipt() {
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
-                "order": [
-                    [0, "desc"]
-                ],
+                // "order": [
+                //     [0, "desc"]
+                // ],
                 "aoColumns": [{
                         'data': 'updateDate',
                         "className": "text-center",
