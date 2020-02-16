@@ -61,7 +61,6 @@ $('#tableCreateBiilingDisplay').on('keyup', 'input', function () {
 });
 
 $(document).ready(function () {
-
     tableBiiling();
     dataCustomer(null);
     tableCreateBiiling1(null);
@@ -92,6 +91,7 @@ function myFunction() {
     $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
     $('#discountProductPriceSum1').text(parseFloat(productPriceAll1).toFixed(2));
     $('#discountPrice1').text(parseFloat(discountPrice1 * discount1 / 100).toFixed(2));
+
     var checkBox2 = document.getElementById("myCheck2");
     // Get the output text
     if (checkBox2.checked == true) {
@@ -354,6 +354,7 @@ var tableCreateQuotation
 function tableCreateBiiling1(id) {
     tableCreateBiiling = $('#tableCreateBiilingDisplay').DataTable({
         lengthChange: false,
+        "paging": false,
         searching: false,
         responsive: true,
         "bDestroy": true,
@@ -454,23 +455,38 @@ function tableCreateBiiling1(id) {
                 sum = sum + parseFloat($(sumvalues[i]).val());
             }
         }
-        discountPrice = parseFloat(sum);
-        $('#price').text(parseFloat(sum).toFixed(2));
-        $('#priceDisplay').text(parseFloat(sum).toFixed(2));
+        // ไม่รวมภาษี
         var productPriceAll = 0;
         var discount = document.getElementById("discount").value;
-        $('#discountPrice').text(parseFloat(sum * discount / 100).toFixed(2));
         productPriceAll = discountPrice - (discountPrice * discount / 100)
+        $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
         $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
 
-        var checkBox = document.getElementById("myCheck");
+        var checkBox1 = document.getElementById("myCheck1");
         // Get the output text
-        if (checkBox.checked == true) {
+        if (checkBox1.checked == true) {
             $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
             $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
         } else {
             $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
             $('#vat').text("00.00");
+        }
+
+        // รวมภาษี
+        var productPriceAll1 = 0;
+        var discount1 = document.getElementById("discount1").value;
+        productPriceAll1 = discountPrice1 - (discountPrice1 * discount1 / 100)
+        $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
+        $('#discountProductPriceSum1').text(parseFloat(productPriceAll1).toFixed(2));
+        $('#discountPrice1').text(parseFloat(discountPrice1 * discount1 / 100).toFixed(2));
+        var checkBox2 = document.getElementById("myCheck2");
+        // Get the output text
+        if (checkBox2.checked == true) {
+            $('#productPriceAll1').text(parseFloat(productPriceAll1 - (productPriceAll1 * 7 / 100)).toFixed(2));
+            $('#vat1').text(parseFloat(productPriceAll1 * 7 / 100).toFixed(2));
+        } else {
+            $('#productPriceAll1').text(parseFloat(productPriceAll1).toFixed(2));
+            $('#vat1').text("00.00");
         }
     }); // end table
 }
@@ -648,13 +664,17 @@ function tableBiiling() {
                     [0, "desc"]
                 ],
                 "aoColumns": [{
-                        'data': 'updateDate',
+                        'data': 'date',
                         "className": "text-center",
                         "sWidth": "8%",
                     },
                     {
                         'data': 'departmentId',
                         "sWidth": "13%",
+                        "mRender": function (data,
+                            type, row, index, full) {
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                        }
                     },
                     {
                         'data': 'companyId',
