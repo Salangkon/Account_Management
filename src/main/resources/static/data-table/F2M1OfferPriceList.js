@@ -651,7 +651,7 @@ function saveCreateQuotationTaxInvoice() {
                     companyId: $('#customers').val(), //ลูกค้า
                     departmentId: msg, //เลขที่เอกสาร
                     type: "TaxInvoice", //ประเภท
-                    status: "รอพิจารณา", //สถานะ
+                    status: "รออนุมัติ", //สถานะ
                     statusVat: $('#statusVat').val(), //สถานะ ภาษี
                     // ไม่รวมภาษี
                     price: $('#price').text(), //รวมเป็นเงิน
