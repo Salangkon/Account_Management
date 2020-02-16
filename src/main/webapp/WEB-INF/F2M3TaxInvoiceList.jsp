@@ -61,7 +61,7 @@
 										<div class="col-sm-2">
 											<select class="form-control" style="margin-top: 10px;" id="searchStatus">
 												<option value="" style="color: blue;">ทั้งหมด</option>
-												<option value="1" style="color: black;">รออนุมัติ</option>
+												<option value="1" style="color: black;">รอดำเนินการ</option>
 												<option value="2" style="color: green;">ดำเนินการเเล้ว</option>
 												<option value="3" style="color: red;">ยกเลิก</option>
 											</select>
