@@ -64,9 +64,9 @@
 										<div class="col-sm-2">
 											<select class="form-control" style="margin-top: 10px;" id="searchStatus">
 												<option value="" style="color: blue;">ทั้งหมด</option>
-												<option value="1" style="color: black;">รอพิจารณา</option>
-												<option value="2" style="color: green;">ผ่านการตวจสอบ</option>
-												<option value="3" style="color: red;">ยกเลิก</option>
+												<option value="1" style="color: black;">รออนุมัติ</option>
+												<option value="2" style="color: green;">อนุมัติ</option>
+												<option value="3" style="color: red;">ไม่อนุมัติ</option>
 											</select>
 										</div>
 										<div class="col-sm-1">
@@ -118,8 +118,6 @@
 						<h4 class="modal-title" id="PurchaseOrderFlg">สร้างใบสั่งซื้อ</h4>
 						<h4 class="modal-title" id="PurchaseOrderFlgDefault">สร้างใบรับสินค้า</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<!-- <input hidden id="type" value="PurchaseOrder">
-						<input hidden id="status" value="รอพิจารณา"> -->
 					</div>
 
 					<!-- Modal body -->
@@ -361,7 +359,7 @@
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()"
 							id="savePurchaseOrderFlg">บันทึก</button>
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotationBilling()"
-							id="savePurchaseOrderFlgDefault">บันทึกใบรับสินค้า</button>
+							id="savePurchaseOrderFlgDefault">สร้างใบรับสินค้า</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>
