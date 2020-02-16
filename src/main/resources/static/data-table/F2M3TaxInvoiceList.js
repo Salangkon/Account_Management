@@ -61,7 +61,9 @@ $('#tableCreateTaxInvoiceDisplay').on('keyup', 'input', function () {
 });
 
 $(document).ready(function () {
-
+    $('#myModal').on('hidden.bs.modal', function (e) {
+        tableTaxInvoice();
+    })
     tableTaxInvoice();
     dataCustomer(null);
     tableCreateTaxInvoice1(null);

@@ -61,6 +61,9 @@ $('#tableCreateBiilingDisplay').on('keyup', 'input', function () {
 });
 
 $(document).ready(function () {
+    $('#myModal').on('hidden.bs.modal', function (e) {
+        tableBiiling();
+    })
     tableBiiling();
     dataCustomer(null);
     tableCreateBiiling1(null);
