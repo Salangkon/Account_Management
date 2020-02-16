@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -108,13 +104,13 @@ public class F2Controller {
 
 		switch (status) {
 		case "1":
-			f2Models = searchF2(type, "รอพิจารณา", startDate, endDate);
+			f2Models = searchF2(type, "รออนุมัติ", startDate, endDate);
 			break;
 		case "2":
-			f2Models = searchF2(type, "ผ่านการตวจสอบ", startDate, endDate);
+			f2Models = searchF2(type, "อนุมัติ", startDate, endDate);
 			break;
 		case "3":
-			f2Models = searchF2(type, "ยกเลิก", startDate, endDate);
+			f2Models = searchF2(type, "ไม่อนุมัติ", startDate, endDate);
 			break;
 		default:
 			switch (startDate) {
@@ -201,13 +197,13 @@ public class F2Controller {
 
 		switch (status) {
 		case "0":
-			f2ListModel.setStatus("รอพิจารณา");
+			f2ListModel.setStatus("รออนุมัติ");
 			break;
 		case "2":
-			f2ListModel.setStatus("ผ่านการตวจสอบ");
+			f2ListModel.setStatus("อนุมัติ");
 			break;
 		case "3":
-			f2ListModel.setStatus("ยกเลิก");
+			f2ListModel.setStatus("ไม่อนุมัติ");
 			break;
 		}
 
