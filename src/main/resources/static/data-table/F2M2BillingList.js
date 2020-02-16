@@ -117,6 +117,9 @@ function changeFunc($i) {
         case "3":
             updateStatus(id, "3");
             break;
+        case "5":
+            updateQuotation(id, "true");
+            break;
     }
 } // end update status
 
@@ -509,7 +512,7 @@ function saveCreateQuotation() {
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
             type: "Biiling", //ประเภท
-            status: "รอพิจารณา", //สถานะ
+            status: "รออนุมัติ", //สถานะ
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
             // ไม่รวมภาษี
             price: $('#price').text(), //รวมเป็นเงิน
@@ -569,7 +572,7 @@ function saveCreateQuotationTaxInvoice() {
                     companyId: $('#customers').val(), //ลูกค้า
                     departmentId: msg, //เลขที่เอกสาร
                     type: "TaxInvoice", //ประเภท
-                    status: "รอพิจารณา", //สถานะ
+                    status: "รออนุมัติ", //สถานะ
                     statusVat: $('#statusVat').val(), //สถานะ ภาษี
                     // ไม่รวมภาษี
                     price: $('#price').text(), //รวมเป็นเงิน
@@ -678,7 +681,7 @@ function tableBiiling() {
                     },
                     {
                         'data': 'companyId',
-                        "sWidth": "40%",
+                        "sWidth": "43%",
                     },
                     {
                         'data': '',
@@ -691,42 +694,46 @@ function tableBiiling() {
                     {
                         'data': '',
                         "className": "text-center",
-                        "sWidth": "13%",
+                        "sWidth": "10%",
                         "mRender": function (data, type, row, index, full) {
-                            if (row.status == 'รอพิจารณา') {
+                            if (row.status == 'รออนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
-                                    <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
-                                    <option value="2' + row.id + '" style="color: black">ผ่านการตวจสอบ</option/>\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
+                                    <option value="0' + row.id + '" style="color: black">รอวางบิล</option/>\n\
+                                    <option value="2' + row.id + '" style="color: green">วางบิลแล้ว</option/>\n\
+                                    <option value="5' + row.id + '" style="color: blue">สร้างใบกำกับภาษี</option/>\n\
+                                    <option value="3' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                     </select>';
-                            } else if (row.status == 'ผ่านการตวจสอบ') {
-                                return '<label style="color: green">ผ่านการตวจสอบ</label>';
-                            } else if (row.status == 'ยกเลิก') {
+                            } else if (row.status == 'อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                                    <option style="color: black">ดำเนิการเเล้ว</option/>\n\
+                                    <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
+                                    </select>';
+                            } else if (row.status == 'ไม่อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
-                                    <option value="0' + row.id + '" style="color: black">คืนสภาพ</option/>\n\
+                                    <option value="3' + row.id + '" style="color: red">ไม่อนุมัติ</option/>\n\
+                                    <option value="0' + row.id + '" style="color: green">รีเซต</option/>\n\
                                     </select>';
                             }
                         }
                     },
                     {
                         'data': '',
-                        "className": "text-center",
+                        "className": "text-right",
                         "sWidth": "13%",
                         "mRender": function (data, type, full) {
-                            if (full.status == 'ยกเลิก') {
+                            if (full.status == 'ไม่อนุมัติ') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
                                        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
-                            } else if (full.status == 'ผ่านการตวจสอบ') {
+                            } else if (full.status == 'อนุมัติ') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
-                                <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')">ใบกำกับภาษี</button></div>';
-                            } else if (full.status == 'รอพิจารณา') {
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
+                                // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
+                            } else if (full.status == 'รออนุมัติ') {
                                 return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
-                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             }
                         }
                     }
