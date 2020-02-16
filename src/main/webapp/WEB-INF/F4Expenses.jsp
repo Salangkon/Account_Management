@@ -64,8 +64,8 @@
 										<div class="col-sm-2">
 											<select class="form-control" style="margin-top: 10px;" id="searchStatus">
 												<option value="" style="color: blue;">ทั้งหมด</option>
-												<option value="1" style="color: black;">รอพิจารณา</option>
-												<option value="2" style="color: green;">ผ่านการตวจสอบ</option>
+												<option value="1" style="color: black;">รอดำเนินการ</option>
+												<option value="2" style="color: green;">ดำเนินการแล้ว</option>
 												<option value="3" style="color: red;">ยกเลิก</option>
 											</select>
 										</div>
@@ -117,8 +117,6 @@
 					<div class="modal-header">
 						<h4 class="modal-title">บันทึกค่าใช้จ่าย</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<!-- <input hidden id="type" value="Expenses">
-						<input hidden id="status" value="รอพิจารณา"> -->
 					</div>
 
 						<!-- Modal body -->
