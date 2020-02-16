@@ -33,5 +33,7 @@ public interface F2Repository extends CrudRepository<F2Model, String> {
 
 	@Query(value = "select * from f2_model where type = ?1 and status = ?2 and date between ?3 and ?4", nativeQuery = true)
 	List<F2Model> findByTypeAndStatusAndStartDateAndEndDate(String type, String status, String startDate, String endDate);
-
+	
+	@Query(value = "select max(department_id) from f2_model where department_id like ?1", nativeQuery = true)
+	String findByDepartmentIdLike(String string);
 }

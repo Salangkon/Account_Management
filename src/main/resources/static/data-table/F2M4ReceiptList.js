@@ -27,7 +27,7 @@ function chkNumber(ele) {
 }
 
 var discountPrice = 0;
-$('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
+$('#tableCreateReceiptDisplay').on('keyup', 'input', function () {
     var sum1 = $(this).parent().parent().find('td')[4];
     var number1 = $(this).parent().parent().find('td')[2];
     var number2 = $(this).parent().parent().find('td')[3];
@@ -53,31 +53,53 @@ $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
     discountPrice = parseFloat(sum);
     $('#price').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
     $('#priceDisplay').text(parseFloat(sum).toFixed(2));
+
+    discountPrice1 = parseFloat(sum);
+    $('#price1').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
+    $('#priceDisplay1').text(parseFloat(sum).toFixed(2));
     myFunction();
 });
 
 $(document).ready(function () {
 
-    tableQuotation();
+    tableReceipt();
     dataCustomer(null);
-    tableCreateQuotationDisplay1(null);
+    tableCreateReceipt1(null);
 }); // end document
 
 function myFunction() {
+    // ไม่รวมภาษี
     var productPriceAll = 0;
     var discount = document.getElementById("discount").value;
-    $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
     productPriceAll = discountPrice - (discountPrice * discount / 100)
+    $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
     $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
 
-    var checkBox = document.getElementById("myCheck");
+    var checkBox1 = document.getElementById("myCheck1");
     // Get the output text
-    if (checkBox.checked == true) {
+    if (checkBox1.checked == true) {
         $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
         $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
     } else {
         $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
         $('#vat').text("00.00");
+    }
+
+    // รวมภาษี
+    var productPriceAll1 = 0;
+    var discount1 = document.getElementById("discount1").value;
+    productPriceAll1 = discountPrice1 - (discountPrice1 * discount1 / 100)
+    $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
+    $('#discountProductPriceSum1').text(parseFloat(productPriceAll1).toFixed(2));
+    $('#discountPrice1').text(parseFloat(discountPrice1 * discount1 / 100).toFixed(2));
+    var checkBox2 = document.getElementById("myCheck2");
+    // Get the output text
+    if (checkBox2.checked == true) {
+        $('#productPriceAll1').text(parseFloat(productPriceAll1 - (productPriceAll1 * 7 / 100)).toFixed(2));
+        $('#vat1').text(parseFloat(productPriceAll1 * 7 / 100).toFixed(2));
+    } else {
+        $('#productPriceAll1').text(parseFloat(productPriceAll1).toFixed(2));
+        $('#vat1').text("00.00");
     }
 }
 
@@ -95,11 +117,22 @@ function changeFunc($i) {
         case "3":
             updateStatus(id, "3");
             break;
-            // case "4":
-            //     $('#myModal').modal('show');
-            //     break;
     }
 } // end update status
+
+// update status vat
+function statusVatFlg($i) {
+    switch ($i) {
+        case "1":
+            document.getElementById("statusVat2").hidden = true;
+            document.getElementById("statusVat1").hidden = false;
+            break;
+        case "2":
+            document.getElementById("statusVat1").hidden = true;
+            document.getElementById("statusVat2").hidden = false;
+            break;
+    }
+} // end update status vat
 
 // update Quotation
 function updateQuotation(id) {
@@ -114,31 +147,63 @@ function updateQuotation(id) {
                     $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
                     $('#status').val(msg.type), //สถานะ
                     $('#status').val(msg.status), //สถานะ
-                    $('#price').text(msg.price), //รวมเป็นเงิน
-                    $('#priceDisplay').text(msg.price), //รวมเป็นเงิน
-                    $('#productPriceAll').text(msg.productPriceAll), //ราคาสินค้าทั้งหมด
+                    $('#statusVat').val(msg.statusVat), //สถานะ ภาษี
+                    // ไม่รวมภาษี
                     $('#discount').val(msg.discount), //ส่วนลด
-                    $('#discountPrice').text(msg.discountPrice), //ราคาหักส่วนลด
-                    $('#discountProductPrice').text(msg.discountProductPrice), //
-                    $('#vat').text(msg.vat), //ภาษีมูลค่าเพิ่ม
+                    $('#price').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
+                    $('#priceDisplay').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
+                    $('#productPriceAll').text(parseFloat(msg.productPriceAll).toFixed(2)), //ราคาสินค้าทั้งหมด
+                    $('#discountPrice').text(parseFloat(msg.discountPrice).toFixed(2)), //ราคาหักส่วนลด
+                    $('#discountProductPrice').text(parseFloat(msg.discountProductPrice).toFixed(2)), //
+                    $('#vat').text(parseFloat(msg.vat).toFixed(2)), //ภาษีมูลค่าเพิ่ม
+                    // รวมภาษี
+                    $('#discount1').val(msg.discount1), //ส่วนลด
+                    $('#price1').text(parseFloat(msg.price1).toFixed(2)), //รวมเป็นเงิน
+                    $('#priceDisplay1').text(parseFloat(msg.price1).toFixed(2)), //รวมเป็นเงิน
+                    $('#productPriceAll1').text(parseFloat(msg.productPriceAll1).toFixed(2)), //ราคาสินค้าทั้งหมด
+                    $('#discountPrice1').text(parseFloat(msg.discountPrice1).toFixed(2)), //ราคาหักส่วนลด
+                    $('#discountProductPrice1').text(parseFloat(msg.discountProductPrice1).toFixed(2)), //
+                    $('#discountProductPriceSum1').text(parseFloat(msg.discountProductPrice1).toFixed(2)), //
+                    $('#vat1').text(parseFloat(msg.vat1).toFixed(2)), //ภาษีมูลค่าเพิ่ม
+
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
                     $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
-                if (msg.vat == null || msg.vat == 0) {
-                    document.getElementById("myCheck").checked = false;
+                $('#statusVat').val(msg.statusVat)
+                if (msg.statusVat == 1) {
+                    document.getElementById("statusVat1").hidden = false;
+                    document.getElementById("statusVat2").hidden = true;
                 } else {
-                    document.getElementById("myCheck").checked = true;
+                    document.getElementById("statusVat1").hidden = true;
+                    document.getElementById("statusVat2").hidden = false;
+                }
+                switch (msg.vat) {
+                    case 0:
+                        document.getElementById("myCheck1").checked = false;
+                        break;
+                    default:
+                        document.getElementById("myCheck1").checked = true;
+                        break;
+                }
+                switch (msg.vat1) {
+                    case 0:
+                        document.getElementById("myCheck2").checked = false;
+                        break;
+                    default:
+                        document.getElementById("myCheck2").checked = true;
+                        break;
                 }
                 dataCustomer(msg.companyId)
-                tableCreateQuotationDisplay1(msg.id);
+                tableCreateReceipt1(msg.id);
             }
         })
     } else {
-        tableCreateQuotationDisplay1(null);
-        dataCustomer(null)
+        genDepartment();
+        tableCreateReceipt1(null);
+        dataCustomer(null);
 
         $('#id').val(""), //เลขที่เอกสาร
-            $('#departmentId').val(""), //เลขที่เอกสาร
+            // $('#departmentId').val(""), //เลขที่เอกสาร
             $('#price').text(""), //รวมเป็นเงิน
             $('#priceDisplay').text(""), //รวมเป็นเงิน
             $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
@@ -149,10 +214,41 @@ function updateQuotation(id) {
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val("") //วันที่_ครบกำหนด
-        document.getElementById("myCheck").checked = false;
+        $('#statusVat').val("1")
+        document.getElementById("statusVat2").hidden = true;
+
+        // ไม่รวมภาษี
+        $('#discount').val(), //ส่วนลด
+            $('#discountPrice').text(parseFloat(0).toFixed(2));
+        $('#discountProductPrice').text(parseFloat(0).toFixed(2));
+        $('#vat').text(parseFloat(0).toFixed(2));
+        $('#price').text(parseFloat(0).toFixed(2));
+        $('#productPriceAll').text(parseFloat(0).toFixed(2));
+        // รวมภาษี
+        $('#discount1').val(), //ส่วนลด
+            $('#discountPrice1').text(parseFloat(0).toFixed(2));
+        $('#discountProductPrice1').text(parseFloat(0).toFixed(2));
+        $('#discountProductPriceSum1').text(parseFloat(0).toFixed(2)), //
+            $('#vat1').text(parseFloat(0).toFixed(2));
+        $('#price1').text(parseFloat(0).toFixed(2));
+        $('#productPriceAll1').text(parseFloat(0).toFixed(2));
+
+        document.getElementById("myCheck1").checked = true;
+        document.getElementById("myCheck2").checked = true;
     }
     $('#myModal').modal('show');
 } // end update Quotation
+
+function genDepartment() {
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/generate-dep/R",
+        success: function (msg) {
+            console.log("dd" + msg)
+            $('#departmentId').val(msg) //เลขที่เอกสาร
+        }
+    })
+}
 
 function updateStatus(id, status) {
     $.ajax({
@@ -161,7 +257,7 @@ function updateStatus(id, status) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            window.location.href = "/product-list";
+            window.location.href = "/receipt-list";
         }
     });
 }
@@ -238,8 +334,8 @@ function dataCustomer(companyId) {
 
 var tableCreateQuotation
 
-function tableCreateQuotationDisplay1(id) {
-    tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
+function tableCreateReceipt1(id) {
+    tableCreateReceipt = $('#tableCreateReceiptDisplay').DataTable({
         lengthChange: false,
         searching: false,
         responsive: true,
@@ -331,8 +427,8 @@ function tableCreateQuotationDisplay1(id) {
         ]
     });
 
-    $('#tableCreateQuotationDisplay').on('click', 'a', function () {
-        tableCreateQuotation.row($(this).parents('tr')).remove().draw();
+    $('#tableCreateReceiptDisplay').on('click', 'a', function () {
+        tableCreateReceipt.row($(this).parents('tr')).remove().draw();
 
         var sumvalues = $("[name='rentDateSum']");
         var sum = 0;
@@ -341,33 +437,48 @@ function tableCreateQuotationDisplay1(id) {
                 sum = sum + parseFloat($(sumvalues[i]).val());
             }
         }
-        discountPrice = parseFloat(sum);
-        $('#price').text(parseFloat(sum).toFixed(2));
-        $('#priceDisplay').text(parseFloat(sum).toFixed(2)); //รวมเป็นเงิน
+        // ไม่รวมภาษี
         var productPriceAll = 0;
         var discount = document.getElementById("discount").value;
-        $('#discountPrice').text(parseFloat(sum * discount / 100).toFixed(2));
         productPriceAll = discountPrice - (discountPrice * discount / 100)
+        $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
         $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
 
-        var checkBox = document.getElementById("myCheck");
+        var checkBox1 = document.getElementById("myCheck1");
         // Get the output text
-        if (checkBox.checked == true) {
+        if (checkBox1.checked == true) {
             $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
             $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
         } else {
             $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
             $('#vat').text("00.00");
         }
+
+        // รวมภาษี
+        var productPriceAll1 = 0;
+        var discount1 = document.getElementById("discount1").value;
+        productPriceAll1 = discountPrice1 - (discountPrice1 * discount1 / 100)
+        $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
+        $('#discountProductPriceSum1').text(parseFloat(productPriceAll1).toFixed(2));
+        $('#discountPrice1').text(parseFloat(discountPrice1 * discount1 / 100).toFixed(2));
+        var checkBox2 = document.getElementById("myCheck2");
+        // Get the output text
+        if (checkBox2.checked == true) {
+            $('#productPriceAll1').text(parseFloat(productPriceAll1 - (productPriceAll1 * 7 / 100)).toFixed(2));
+            $('#vat1').text(parseFloat(productPriceAll1 * 7 / 100).toFixed(2));
+        } else {
+            $('#productPriceAll1').text(parseFloat(productPriceAll1).toFixed(2));
+            $('#vat1').text("00.00");
+        }
     }); // end table
 }
 
 function Add() {
-    tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
+    tableCreateReceipt.row.add([tableCreateReceipt.data]).draw(false);
 }
 
 function remove() {
-    tableCreateQuotation.rows('.selected').remove().draw();
+    tableCreateReceipt.rows('.selected').remove().draw();
 }
 
 function saveCreateQuotation() {
@@ -375,24 +486,33 @@ function saveCreateQuotation() {
     pass = validateInput();
 
     if (pass) {
-        var insertQuotation = {
+        var insertReceipt = {
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-            type: $('#type').val(), //ประเภท
-            status: $('#status').val(), //สถานะ
+            type: "Receipt", //ประเภท
+            status: "รออนุมัติ", //สถานะ
+            statusVat: $('#statusVat').val(), //สถานะ ภาษี
+            // ไม่รวมภาษี
             price: $('#price').text(), //รวมเป็นเงิน
             productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
             discount: $('#discount').val(), //ส่วนลด
             discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
             discountProductPrice: $('#discountProductPrice').text(), //
             vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+            // รวมภาษี
+            price1: $('#price1').text(), //รวมเป็นเงิน
+            productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
+            discount1: $('#discount1').val(), //ส่วนลด
+            discountPrice1: $('#discountPrice1').text(), //ราคาหักส่วนลด
+            discountProductPrice1: $('#discountProductPrice1').text(), //
+            vat1: $('#vat1').text(), //ภาษีมูลค่าเพิ่ม
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
             f2ListModels: [],
         }
-        var data = tableCreateQuotation.data();
+        var data = tableCreateReceipt.data();
         for (let i = 0; i < data.length; i++) {
             var d = {};
             d.product = $("#product" + i).val(); //สินค้า
@@ -400,25 +520,25 @@ function saveCreateQuotation() {
             d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
             d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
             d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
-            insertQuotation.f2ListModels.push(d)
+            insertReceipt.f2ListModels.push(d)
         }
 
-        console.log(JSON.stringify(insertQuotation));
+        console.log(JSON.stringify(insertReceipt));
 
         $.ajax({
             type: 'POST',
             url: '/api-f2/add-update',
-            data: JSON.stringify(insertQuotation),
+            data: JSON.stringify(insertReceipt),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                window.location.href = "/product-list";
+                window.location.href = "/receipt-list";
             }
         });
     }
 }
 
-function tableQuotation() {
+function tableReceipt() {
     // วันปัจจุบัน
     var today = new Date();
     var dd = today.getDate();
@@ -448,37 +568,37 @@ function tableQuotation() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/ReceiveReport/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/Receipt/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
             // table seve offer price
-            var tableQuotation = $('#tableQuotation').DataTable({
+            var tableReceipt = $('#tableReceipt').DataTable({
                 paging: false,
                 searching: false,
                 "bDestroy": true,
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
-                "order": [
-                    [0, "desc"]
-                ],
+                // "order": [
+                //     [0, "desc"]
+                // ],
                 "aoColumns": [{
-                        'data': 'updateDate',
+                        'data': 'date',
                         "className": "text-center",
                         "sWidth": "8%",
-                        "mRender": function (data,
-                            type, row, index, full) {
-                            return row.date;
-                        }
                     },
                     {
                         'data': 'departmentId',
                         "sWidth": "13%",
+                        "mRender": function (data,
+                            type, row, index, full) {
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                        }
                     },
                     {
                         'data': 'companyId',
-                        "sWidth": "40%",
+                        "sWidth": "43%",
                     },
                     {
                         'data': '',
@@ -491,17 +611,20 @@ function tableQuotation() {
                     {
                         'data': '',
                         "className": "text-center",
-                        "sWidth": "13%",
+                        "sWidth": "10%",
                         "mRender": function (data, type, row, index, full) {
-                            if (row.status == 'รอพิจารณา') {
+                            if (row.status == 'รออนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
-                                    <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
-                                    <option value="2' + row.id + '" style="color: black">ผ่านการตวจสอบ</option/>\n\
+                                    <option value="0' + row.id + '" style="color: black">รอดำเนินการ</option/>\n\
+                                    <option value="2' + row.id + '" style="color: black">เก็บเงิน</option/>\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     </select>';
-                            } else if (row.status == 'ผ่านการตวจสอบ') {
-                                return '<label style="color: green">ผ่านการตวจสอบ</label>';
-                            } else if (row.status == 'ยกเลิก') {
+                            } else if (row.status == 'อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                                    <option style="color: black">ดำเนิการเเล้ว</option/>\n\
+                                    <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
+                                    </select>';
+                            } else if (row.status == 'ไม่อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     <option value="0' + row.id + '" style="color: black">คืนสภาพ</option/>\n\
@@ -511,21 +634,22 @@ function tableQuotation() {
                     },
                     {
                         'data': '',
-                        "className": "text-center",
+                        "className": "text-right",
                         "sWidth": "13%",
                         "mRender": function (data, type, full) {
-                            if (full.status == 'ยกเลิก') {
+                            if (full.status == 'ไม่อนุมัติ') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
                                        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
-                            } else if (full.status == 'ผ่านการตวจสอบ') {
+                            } else if (full.status == 'อนุมัติ') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
                                 <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
-                            } else if (full.status == 'รอพิจารณา') {
+                                // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
+                            } else if (full.status == 'รออนุมัติ') {
                                 return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
-                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             }
                         }
                     }
@@ -533,7 +657,7 @@ function tableQuotation() {
             });
         }
     });
-}; // END tableQuotation
+}; // END tableReceipt
 
 function deleteId(id) {
     swal({
@@ -551,7 +675,7 @@ function deleteId(id) {
                 type: 'DELETE',
                 success: function (result) {
                     if (result == "Success") {
-                        window.location.href = "/product-list";
+                        window.location.href = "/receipt-list";
                     } else {
                         alert("Delete Fail!!!");
                     }

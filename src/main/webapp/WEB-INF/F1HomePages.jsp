@@ -153,7 +153,7 @@
 											<div class="h5 mb-0 font-weight-bold text-gray-800">ใบรับสินค้า</div>
 										</div>
 										<div class="col-auto">
-											<a href="/product-list"><i
+											<a href="/receive-report"><i
 													class="fas fa-clipboard fa-3x text-gray-500"></i></a>
 										</div>
 									</div>

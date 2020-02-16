@@ -16,9 +16,9 @@
 
 <!-- bootstrap 4 datepicker -->
 <!-- <link href="/data-table/css/gijgo.min.css" rel="stylesheet" type="text/css"> -->
-<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-
-<link rel="stylesheet" href="/css/A4.css">
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/tree/themes/default/style.min.css" rel="stylesheet" type="text/css" >
+<link rel="stylesheet" href="/css/A4.css" rel="stylesheet" type="text/css" >
 
 <style type="text/css">
 	.icon-color {
@@ -51,3 +51,5 @@
 <script src="/data-table/js/buttons.print.min.js" type="text/javascript"></script>
 <script src="/data-table/js/buttons.colVis.min.js" type="text/javascript"></script>
 <script src="/data-table/js/dataTables.select.min.js" type="text/javascript"></script>
+
+<script src="/tree/jstree.min.js" type="text/javascript"></script>
