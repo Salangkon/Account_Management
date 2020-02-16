@@ -53,13 +53,29 @@ public class F2Model implements Serializable {
 	@Column(name = "discount_product_price")
 	private float discountProductPrice;
 
+	private float discount1;
+
+	@Column(name = "discount_price1")
+	private float discountPrice1;
+
+	@Column(name = "discount_product_price1")
+	private float discountProductPrice1;
+
 	@Lob
 	private String note;
 
 	private float price;
 
+	private float price1;
+
+	@Column(name = "status_vat")
+	private String statusVat;
+
 	@Column(name = "product_price_all")
 	private float productPriceAll;
+
+	@Column(name = "product_price_all1")
+	private float productPriceAll1;
 
 	@CreatedBy
 	@Column(name = "create_by")
@@ -78,6 +94,8 @@ public class F2Model implements Serializable {
 	private Timestamp updateDate;
 
 	private float vat;
+	
+	private float vat1;
 
 	// bi-directional many-to-one association to F2ListModel
 	@OneToMany(mappedBy = "f2Model", cascade = CascadeType.MERGE)
@@ -250,6 +268,62 @@ public class F2Model implements Serializable {
 		f2ListModel.setF2Model(null);
 
 		return f2ListModel;
+	}
+
+	public String getStatusVat() {
+		return statusVat;
+	}
+
+	public void setStatusVat(String statusVat) {
+		this.statusVat = statusVat;
+	}
+
+	public float getDiscount1() {
+		return discount1;
+	}
+
+	public void setDiscount1(float discount1) {
+		this.discount1 = discount1;
+	}
+
+	public float getDiscountPrice1() {
+		return discountPrice1;
+	}
+
+	public void setDiscountPrice1(float discountPrice1) {
+		this.discountPrice1 = discountPrice1;
+	}
+
+	public float getDiscountProductPrice1() {
+		return discountProductPrice1;
+	}
+
+	public void setDiscountProductPrice1(float discountProductPrice1) {
+		this.discountProductPrice1 = discountProductPrice1;
+	}
+
+	public float getPrice1() {
+		return price1;
+	}
+
+	public void setPrice1(float price1) {
+		this.price1 = price1;
+	}
+
+	public float getProductPriceAll1() {
+		return productPriceAll1;
+	}
+
+	public void setProductPriceAll1(float productPriceAll1) {
+		this.productPriceAll1 = productPriceAll1;
+	}
+
+	public float getVat1() {
+		return vat1;
+	}
+
+	public void setVat1(float vat1) {
+		this.vat1 = vat1;
 	}
 
 }
