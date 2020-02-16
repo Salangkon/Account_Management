@@ -61,7 +61,9 @@ $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
 });
 
 $(document).ready(function () {
-
+    $('#myModal').on('hidden.bs.modal', function (e) {
+        tableQuotation();
+    })
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);

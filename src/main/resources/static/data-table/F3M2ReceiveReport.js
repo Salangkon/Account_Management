@@ -61,7 +61,10 @@ $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
 });
 
 $(document).ready(function () {
-
+    $('#myModal').on('hidden.bs.modal', function (e) {
+        // do something...
+        tableQuotation();
+    })
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
@@ -494,7 +497,7 @@ function saveCreateQuotation() {
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
             type: "ReceiveReport", //ประเภท
-            status: "รอพิจารณา", //สถานะ
+            status: "รออนุมัติ", //สถานะ
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
             // ไม่รวมภาษี
             price: $('#price').text(), //รวมเป็นเงิน
@@ -614,41 +617,46 @@ function tableQuotation() {
                     {
                         'data': '',
                         "className": "text-center",
-                        "sWidth": "13%",
+                        "sWidth": "10%",
                         "mRender": function (data, type, row, index, full) {
-                            if (row.status == 'รอพิจารณา') {
+                            if (row.status == 'รออนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
-                                    <option value="0' + row.id + '" style="color: black">รอพิจารณา</option/>\n\
-                                    <option value="2' + row.id + '" style="color: black">ผ่านการตวจสอบ</option/>\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
+                                    <option value="0' + row.id + '" style="color: black">รออนุมัติ</option/>\n\
+                                    <option value="2' + row.id + '" style="color: green">อนุมัติ</option/>\n\
+                                    <option value="5' + row.id + '" style="color: blue">ชำระเงิน</option/>\n\
+                                    <option value="3' + row.id + '" style="color: red">ไม่อนุมัติ</option/>\n\
                                     </select>';
-                            } else if (row.status == 'ผ่านการตวจสอบ') {
-                                return '<label style="color: green">ผ่านการตวจสอบ</label>';
-                            } else if (row.status == 'ยกเลิก') {
+                            } else if (row.status == 'อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                                    <option style="color: black">ชำระเงินแล้ว</option/>\n\
+                                    <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
+                                    </select>';
+                            } else if (row.status == 'ไม่อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
-                                    <option value="0' + row.id + '" style="color: black">คืนสภาพ</option/>\n\
+                                    <option value="3' + row.id + '" style="color: black">ไม่อนุมัติ</option/>\n\
+                                    <option value="0' + row.id + '" style="color: red">รีเซ็ต</option/>\n\
                                     </select>';
                             }
                         }
                     },
                     {
                         'data': '',
-                        "className": "text-center",
+                        "className": "text-right",
                         "sWidth": "13%",
                         "mRender": function (data, type, full) {
-                            if (full.status == 'ยกเลิก') {
+                            if (full.status == 'ไม่อนุมัติ') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
                                        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
-                            } else if (full.status == 'ผ่านการตวจสอบ') {
+                            } else if (full.status == 'อนุมัติ') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
                                 <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
-                            } else if (full.status == 'รอพิจารณา') {
+                                // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
+                            } else if (full.status == 'รออนุมัติ') {
                                 return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
-                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             }
                         }
                     }
