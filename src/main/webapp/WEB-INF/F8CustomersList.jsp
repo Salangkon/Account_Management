@@ -115,8 +115,8 @@
 									<div class="col-sm-8">
 										<select class="form-control" id="companyType">
 											<option value="">ประเภท</option>
-											<option value="test01">test01</option>
-											<option value="test02">test02</option>
+											<option value="test01">นิติบุคคล</option>
+											<option value="test02">บุคคลธรรมดา</option>
 										</select>
 										<p class="hide" id="error-companyType">กรุณาเลือก
 											ประเภท</p>

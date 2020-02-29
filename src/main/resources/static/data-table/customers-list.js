@@ -24,12 +24,26 @@ $(document).ready(function () {
 				"sWidth": "60px"
 			}, {
 				"mData": "officeType",
-				"sWidth": "60px"
+				"sWidth": "60px",
+				"mRender": function (data, type, row, index, full) {
+					if (row.officeType == '0') {
+						return '';
+					} else if (row.officeType == '1') {
+						return 'นิติบุุคล';
+					} else if (row.officeType == '2') {
+						return 'บุคคลธรรมดา';
+					}
+				}
 			}, {
 				"mData": "created_date",
-				"sWidth": "60px"
+				"className": "text-center",
+				"sWidth": "60px",
+				"mRender": function (data, type, full) {
+					return '<div align="center"> ' + new Date(full.created_date).toLocaleDateString("en-US") + '</div>'
+				}
 			}, {
 				"sWidth": "60px",
+				"className": "text-center",
 				"mRender": function (data, type, full) {
 					return '<div align="center">' +
 						'<button type="button" class="btn btn-warning btn-sm"data-toggle="modal" data-target="#myModal" onclick="update(' + "'" + full.companyId + "'" + ')"><i class="fas fa-edit"></i></button> ' +
