@@ -21,32 +21,8 @@ function Add() {
 
 $(document).ready(
 
-    function jsonCharAccount() {
-        $.ajax({
-            type: 'GET',
-            url: '/api-chart-account/get-all',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                $('#data').on("changed.jstree", function (e, data) {
-                    console.log(data);
-
-                    if (data.selected.length) {
-                        alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
-                    }
-                }).jstree({
-                    'core': {
-                        "animation": 0,
-                        "check_callback": true,
-                        "themes": {
-                            "stripes": true
-                        },
-                        'data': result
-                    }
-                });
-            }
-        });
-    },
+    jsonCharAccount(),
+    hiddenCondition(),
 
     function () {
         var table = $('#example').DataTable({
@@ -65,3 +41,92 @@ $(document).ready(
         table.buttons().container().appendTo(
             '#example_wrapper .col-md-6:eq(0)');
     });
+
+function jsonCharAccount() {
+    $.ajax({
+        type: 'GET',
+        url: '/api-chart-account/get-all-new',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#data').on("changed.jstree", function (e, data) {
+                console.log(data);
+
+                if (data.selected.length) {
+                    alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
+                }
+            }).jstree({
+                'core': {
+                    "animation": 0,
+                    "check_callback": true,
+                    "themes": {
+                        "stripes": true
+                    },
+                    'data': result
+                }
+            });
+        }
+    });
+}; // jsonCharAccount
+
+function hiddenCondition(Text) {
+    var taxtTitle = "";
+    taxtTitle = Text;
+
+    // Text
+    switch (taxtTitle) {
+        case "สินทรัพย์":
+            document.getElementById("T1").hidden = true;
+            document.getElementById("T2").hidden = false;
+            document.getElementById("T3").hidden = true;
+            document.getElementById("T4").hidden = true;
+            document.getElementById("T5").hidden = true;
+            document.getElementById("T6").hidden = true;
+            $('#taxtTitle').text("ผังบัญชี - สินทรัพย์");
+            break;
+        case "หนี้สิน":
+            document.getElementById("T1").hidden = true;
+            document.getElementById("T2").hidden = true;
+            document.getElementById("T3").hidden = false;
+            document.getElementById("T4").hidden = true;
+            document.getElementById("T6").hidden = true;
+            $('#taxtTitle').text("ผังบัญชี - หนี้สิน");
+            break;
+        case "ส่วนของผู้ถือหุ้น":
+            document.getElementById("T1").hidden = true;
+            document.getElementById("T2").hidden = true;
+            document.getElementById("T3").hidden = true;
+            document.getElementById("T4").hidden = false;
+            document.getElementById("T5").hidden = true;
+            document.getElementById("T6").hidden = true;
+            $('#taxtTitle').text("ผังบัญชี - ส่วนของผู้ถือหุ้น");
+            break;
+        case "รายได้":
+            document.getElementById("T1").hidden = true;
+            document.getElementById("T2").hidden = true;
+            document.getElementById("T3").hidden = true;
+            document.getElementById("T4").hidden = true;
+            document.getElementById("T5").hidden = false;
+            document.getElementById("T6").hidden = true;
+            $('#taxtTitle').text("ผังบัญชี - รายได้");
+            break;
+        case "ค่าใช้จ่าย":
+            document.getElementById("T1").hidden = true;
+            document.getElementById("T2").hidden = true;
+            document.getElementById("T3").hidden = true;
+            document.getElementById("T4").hidden = true;
+            document.getElementById("T5").hidden = true;
+            document.getElementById("T6").hidden = false;
+            $('#taxtTitle').text("ผังบัญชี - ค่าใช้จ่าย");
+            break;
+        default:
+            document.getElementById("T1").hidden = false;
+            document.getElementById("T2").hidden = true;
+            document.getElementById("T3").hidden = true;
+            document.getElementById("T4").hidden = true;
+            document.getElementById("T5").hidden = true;
+            document.getElementById("T6").hidden = true;
+            $('#taxtTitle').text("ผังบัญชี");
+            break;
+    }
+}; // end hiddenCondition
