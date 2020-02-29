@@ -38,6 +38,8 @@ public class ChartAccountsLevel4 implements Serializable {
 	private String passCode;
 
 	private String text;
+	
+	private String detail;
 
 	@Column(name="update_by")
 	private String updateBy;
@@ -55,6 +57,14 @@ public class ChartAccountsLevel4 implements Serializable {
 	//bi-directional many-to-one association to ChartAccountsLevel5
 	@OneToMany(mappedBy="chartAccountsLevel4")
 	private List<ChartAccountsLevel5> chartAccountsLevel5s;
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
 
 	public ChartAccountsLevel4() {
 	}

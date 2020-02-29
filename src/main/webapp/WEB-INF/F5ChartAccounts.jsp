@@ -42,24 +42,28 @@
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
-								<div class="table-responsive col-sm-12">
-									<div class="row" style="margin-bottom: 20px;">
-										<div class="col-sm-9"></div>
-										<div class="col-sm-2"></div>
-										<div class="col-sm-1">
-											<button type="button" class="btn btn-primary" data-toggle="modal"
-												data-target="#myModal">สร้างใหม่</button>
-										</div>
+								<div class="row" style="margin-bottom: 20px;">
+									<div class="col-sm-9"></div>
+									<div class="col-sm-2"></div>
+									<div class="col-sm-1">
+										<button type="button" class="btn btn-primary" data-toggle="modal"
+											data-target="#myModal">ผังบัญชี</button>
 									</div>
 								</div>
 							</div>
 							<div style="margin-bottom: 20px">
-								<button type="button" class="btn btn-outline-primary" onclick="hiddenCondition('')">หมวดหมู่ทั้งหมด</button>
-								<button type="button" class="btn btn-outline-secondary" onclick="hiddenCondition('สินทรัพย์')">สินทรัพย์</button>
-								<button type="button" class="btn btn-outline-success" onclick="hiddenCondition('หนี้สิน')">หนี้สิน</button>
-								<button type="button" class="btn btn-outline-danger" onclick="hiddenCondition('ส่วนของผู้ถือหุ้น')">ส่วนของผู้ถือหุ้น</button>
-								<button type="button" class="btn btn-outline-info" onclick="hiddenCondition('รายได้')">รายได้</button>
-								<button type="button" class="btn btn-outline-dark" onclick="hiddenCondition('ค่าใช้จ่าย')">ค่าใช้จ่าย</button>
+								<button type="button" class="btn btn-outline-primary"
+									onclick="hiddenCondition('')">หมวดหมู่ทั้งหมด</button>
+								<button type="button" class="btn btn-outline-secondary"
+									onclick="hiddenCondition('สินทรัพย์')">สินทรัพย์</button>
+								<button type="button" class="btn btn-outline-success"
+									onclick="hiddenCondition('หนี้สิน')">หนี้สิน</button>
+								<button type="button" class="btn btn-outline-danger"
+									onclick="hiddenCondition('ส่วนของผู้ถือหุ้น')">ส่วนของผู้ถือหุ้น</button>
+								<button type="button" class="btn btn-outline-info"
+									onclick="hiddenCondition('รายได้')">รายได้</button>
+								<button type="button" class="btn btn-outline-dark"
+									onclick="hiddenCondition('ค่าใช้จ่าย')">ค่าใช้จ่าย</button>
 							</div>
 							<div id="T1">
 								<table id="example" class="table table-sm" width="100%">
@@ -158,14 +162,44 @@
 										<div class="row">
 											<div class="col-lg-6 border overflow-auto"
 												style="background-color: aliceblue; height: 700px; padding: 20px">
-												<div id="data" class="demo"></div>
+												<div id="dataJSTree" class="demo"></div>
 											</div>
 											<div class="col-lg-6 overflow-auto" style="height: 700px; padding: 20px">
-												<button type="button" class="btn btn-default btn-sm" onclick="Add()">
-													<i class="fas fa-plus" style="color: red"></i> เพิ่มรายการ
-												</button>
-												<div>
-													<input id="text">
+												<div class="row p-3">
+													<div class="form-group row">
+														<di class="col-sm-12">
+															<h4 style="color: blueviolet;"><b>แก้ไขผังบัญชี</b></h4>
+														</di>
+														<div class="col-sm-3" style="margin-top: 23px"><label>รหัสบัญชี: 
+															</label><label style="color: red;">
+																*</label></div>
+														<div class="col-sm-9">
+															<input type="text" style="max-width: 90%;margin-top: 25px"
+																class="form-control" id="passCode" placeholder="รหัสบัญชี">
+														</div>
+														<div class="col-sm-3" style="margin-top: 23px">
+															<label>ชื่อบัญชี: </label> <label style="color: red;">
+																*</label>
+														</div>
+														<div class="col-sm-9">
+															<input type="text" style="max-width: 90%;margin-top: 25px"
+																class="form-control" id="text" placeholder="ชื่อบัญชี">
+														</div>
+														<div class="col-sm-3" style="margin-top: 23px">
+															<label>คำอธิบายบัญชี: </label></div>
+														<div class="col-sm-9">
+															<textarea class="form-control" id="detail"
+																style="height: 80px;width: 90%;margin-top: 20px;"
+																placeholder="คำอธิบายบัญชี"></textarea>
+														</div>
+													</div>
+												</div>
+
+												<div class="modal-footer">
+													<button type="button" class="btn btn-success"
+														onclick="saveCreateQuotation()" id="">บันทึก</button>
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">ยกเลิก</button>
 												</div>
 											</div>
 										</div>

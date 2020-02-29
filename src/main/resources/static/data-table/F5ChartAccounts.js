@@ -43,18 +43,38 @@ $(document).ready(
     });
 
 function jsonCharAccount() {
+
     $.ajax({
         type: 'GET',
         url: '/api-chart-account/get-all-new',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#data').on("changed.jstree", function (e, data) {
-                console.log(data);
 
-                if (data.selected.length) {
-                    alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
+            $('#dataJSTree').on('changed.jstree', function (e, data) {
+                var i, j, r = [];
+                var id;
+                for (i = 0, j = data.selected.length; i < j; i++) {
+                    r.push(data.instance.get_node(data.selected[i]).text);
+                    $('#id').val(data.instance.get_node(data.selected[i]).id);
+                    id = data.instance.get_node(data.selected[i]).id;
                 }
+
+                if (r.length <= 1) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/api-chart-account/get-by-id/'+ id,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (res) {
+                            $('#id').val(res.id), 
+                            $('#text').val(res.text),
+                            $('#passCode').val(res.passCode),
+                            $('#detail').val(res.detail)
+                        }
+                    })
+                }
+               
             }).jstree({
                 'core': {
                     "animation": 0,

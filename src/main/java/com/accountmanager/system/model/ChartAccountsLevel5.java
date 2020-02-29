@@ -37,6 +37,8 @@ public class ChartAccountsLevel5 implements Serializable {
 	private String passCode;
 
 	private String text;
+	
+	private String detail;
 
 	@Column(name="update_by")
 	private String updateBy;
@@ -50,6 +52,14 @@ public class ChartAccountsLevel5 implements Serializable {
 	@JoinColumn(name = "id_lv", referencedColumnName = "id", insertable = false, updatable = false)
 	@JsonBackReference
 	private ChartAccountsLevel4 chartAccountsLevel4;
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
 
 	public ChartAccountsLevel5() {
 	}
