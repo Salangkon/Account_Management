@@ -18,19 +18,20 @@ $(document).ready(function () {
 			},
 			{
 				"mData": "tel",
+				"className": "text-center",
 				"sWidth": "60px"
 			}, {
 				"mData": "email",
 				"sWidth": "60px"
 			}, {
-				"mData": "officeType",
+				"mData": "",
 				"sWidth": "60px",
 				"mRender": function (data, type, row, index, full) {
-					if (row.officeType == '0') {
+					if (row.companyType == '0') {
 						return '';
-					} else if (row.officeType == '1') {
+					} else if (row.companyType == '1') {
 						return 'นิติบุุคล';
-					} else if (row.officeType == '2') {
+					} else if (row.companyType == '2') {
 						return 'บุคคลธรรมดา';
 					}
 				}
@@ -234,7 +235,7 @@ function update(companyId) {
 		$('#companyId').val("");
 		document.getElementById("companyId").disabled = false;
 		$('#companyName').val("");
-		$('#companyType').val("");
+		$('#companyType').val("0");
 		$('#department').val("");
 		$('#customerName').val("");
 		$('#address').val("");
