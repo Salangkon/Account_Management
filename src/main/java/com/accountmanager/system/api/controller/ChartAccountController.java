@@ -25,6 +25,7 @@ import com.accountmanager.system.pojo.ChartAccountStep2Pojo;
 import com.accountmanager.system.pojo.ChartAccountStep3Pojo;
 import com.accountmanager.system.pojo.ChartAccountStep4Pojo;
 import com.accountmanager.system.pojo.ChartAccountStep5Pojo;
+import com.accountmanager.system.pojo.ChartAccountTablePojo;
 import com.accountmanager.system.pojo.StatePojo;
 import com.accountmanager.system.repository.ChartAccountsLevel1Repository;
 import com.accountmanager.system.repository.ChartAccountsLevel2Repository;
@@ -165,9 +166,6 @@ public class ChartAccountController {
 			List<ChartAccountStep2Pojo> chartAccountStep2Pojos = new ArrayList<ChartAccountStep2Pojo>();
 
 			for (ChartAccountsLevel2 chartAccounts2 : chartAccounts.getChartAccountsLevel2s()) {
-				chartAccountStep2Pojos.sort(
-						(e1, e2) -> new String(e1.getText().toString()).compareTo(new String(e2.getText().toString())));
-
 				ChartAccountStep2Pojo chartAccountStep2Pojo = new ChartAccountStep2Pojo();
 
 				chartAccountStep2Pojo.setId(chartAccounts2.getId());
@@ -179,12 +177,11 @@ public class ChartAccountController {
 				chartAccountStep2Pojo.setIcon(chartAccounts2.getIcon());
 
 				chartAccountStep2Pojos.add(chartAccountStep2Pojo);
+				chartAccountStep2Pojos.sort(
+						(e1, e2) -> new String(e1.getText().toString()).compareTo(new String(e2.getText().toString())));
 				List<ChartAccountStep3Pojo> chartAccountStep3Pojos = new ArrayList<ChartAccountStep3Pojo>();
 
 				for (ChartAccountsLevel3 chartAccounts3 : chartAccounts2.getChartAccountsLevel3s()) {
-					chartAccountStep3Pojos.sort((e1, e2) -> new String(e1.getText().toString())
-							.compareTo(new String(e2.getText().toString())));
-
 					ChartAccountStep3Pojo chartAccountStep3Pojo = new ChartAccountStep3Pojo();
 					chartAccountStep3Pojo.setId(chartAccounts3.getId());
 					chartAccountStep3Pojo.setIcon(chartAccounts3.getIcon());
@@ -195,13 +192,12 @@ public class ChartAccountController {
 					chartAccountStep3Pojo.setIcon(chartAccounts3.getIcon());
 
 					chartAccountStep3Pojos.add(chartAccountStep3Pojo);
+					chartAccountStep3Pojos.sort((e1, e2) -> new String(e1.getText().toString())
+							.compareTo(new String(e2.getText().toString())));
 					chartAccountStep2Pojo.setChildren(chartAccountStep3Pojos);
 
 					List<ChartAccountStep4Pojo> chartAccountStep4Pojos = new ArrayList<ChartAccountStep4Pojo>();
 					for (ChartAccountsLevel4 chartAccounts4 : chartAccounts3.getChartAccountsLevel4s()) {
-						chartAccountStep4Pojos.sort((e1, e2) -> new String(e1.getText().toString())
-								.compareTo(new String(e2.getText().toString())));
-
 						ChartAccountStep4Pojo chartAccountStep4Pojo = new ChartAccountStep4Pojo();
 						chartAccountStep4Pojo.setId(chartAccounts4.getId());
 						chartAccountStep4Pojo.setIcon(chartAccounts4.getIcon());
@@ -212,19 +208,20 @@ public class ChartAccountController {
 						chartAccountStep4Pojo.setIcon(chartAccounts4.getIcon());
 
 						chartAccountStep4Pojos.add(chartAccountStep4Pojo);
+						chartAccountStep4Pojos.sort((e1, e2) -> new String(e1.getText().toString())
+								.compareTo(new String(e2.getText().toString())));
 						chartAccountStep3Pojo.setChildren(chartAccountStep4Pojos);
-						
+
 						List<ChartAccountStep5Pojo> chartAccountStep5Pojos = new ArrayList<ChartAccountStep5Pojo>();
 						for (ChartAccountsLevel5 chartAccounts5 : chartAccounts4.getChartAccountsLevel5s()) {
-							
-
 							ChartAccountStep5Pojo chartAccountStep5Pojo = new ChartAccountStep5Pojo();
 							chartAccountStep5Pojo.setId(chartAccounts5.getId());
 							chartAccountStep5Pojo.setIcon(chartAccounts5.getIcon());
 							chartAccountStep5Pojo.setDetail(chartAccounts5.getDetail());
 							chartAccountStep5Pojo.setTextEdit(chartAccounts5.getText());
 							chartAccountStep5Pojo.setPassCode(chartAccounts5.getPassCode());
-							chartAccountStep5Pojo.setText(chartAccounts5.getPassCode() + " " + chartAccounts5.getText());
+							chartAccountStep5Pojo
+									.setText(chartAccounts5.getPassCode() + " " + chartAccounts5.getText());
 							chartAccountStep5Pojo.setIcon(chartAccounts5.getIcon());
 
 							chartAccountStep5Pojos.add(chartAccountStep5Pojo);
@@ -255,16 +252,16 @@ public class ChartAccountController {
 		chartAccounts.setId(UUID.randomUUID().toString());
 		return chartAccountsRepo.save(chartAccounts);
 	}
-	
+
 	@GetMapping("/get-by-id/{id}")
 	private ChartAccountPojo getChartAccountById(@PathVariable("id") String id) {
 		ChartAccountPojo accountPojo = new ChartAccountPojo();
 		try {
-			ChartAccountsLevel1 level1 =  chartAccountsLv1Repo.findOne(id);
-			ChartAccountsLevel2 level2 =  chartAccountsLv2Repo.findOne(id);
-			ChartAccountsLevel3 level3 =  chartAccountsLv3Repo.findOne(id);
-			ChartAccountsLevel4 level4 =  chartAccountsLv4Repo.findOne(id);
-			ChartAccountsLevel5 level5 =  chartAccountsLv5Repo.findOne(id);
+			ChartAccountsLevel1 level1 = chartAccountsLv1Repo.findOne(id);
+			ChartAccountsLevel2 level2 = chartAccountsLv2Repo.findOne(id);
+			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
+			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
+			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
 			if (level1 != null) {
 				accountPojo.setId(level1.getId());
 				accountPojo.setText(level1.getText());
@@ -300,6 +297,129 @@ public class ChartAccountController {
 	@GetMapping("/get-chartAccount-lv1")
 	private Iterable<ChartAccountsLevel1> getChartAccountLv1() {
 		return chartAccountsLv1Repo.findAll();
+	}
+
+	@GetMapping("/get-chartAccount-lv-all")
+	private List<ChartAccountTablePojo> getChartAccountLvAll() {
+
+		Iterable<ChartAccountsLevel2> accountsLeve2s = chartAccountsLv2Repo.findAll();
+		Iterable<ChartAccountsLevel3> accountsLeve3s = chartAccountsLv3Repo.findAll();
+		Iterable<ChartAccountsLevel4> accountsLeve4s = chartAccountsLv4Repo.findAll();
+		Iterable<ChartAccountsLevel5> accountsLeve5s = chartAccountsLv5Repo.findAll();
+
+		List<ChartAccountTablePojo> accountTablePojos = new ArrayList<ChartAccountTablePojo>();
+
+		for (ChartAccountsLevel2 chartAccountsLevel2 : accountsLeve2s) {
+			if (chartAccountsLevel2.getIcon().equalsIgnoreCase("far fa-file-alt")) {
+				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
+				pojo.setId(chartAccountsLevel2.getId());
+				pojo.setAccountCategory(chartAccountsLevel2.getChartAccountsLevel1().getText());
+				pojo.setPassCode(chartAccountsLevel2.getPassCode());
+				pojo.setText(chartAccountsLevel2.getText());
+				accountTablePojos.add(pojo);
+			}
+		}
+		for (ChartAccountsLevel3 chartAccountsLevel3 : accountsLeve3s) {
+			if (chartAccountsLevel3.getIcon().equalsIgnoreCase("far fa-file-alt")) {
+				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
+				pojo.setId(chartAccountsLevel3.getId());
+				pojo.setAccountCategory(
+						chartAccountsLevel3.getChartAccountsLevel2().getChartAccountsLevel1().getText());
+				pojo.setPassCode(chartAccountsLevel3.getPassCode());
+				pojo.setText(chartAccountsLevel3.getText());
+				accountTablePojos.add(pojo);
+			}
+		}
+		for (ChartAccountsLevel4 chartAccountsLevel4 : accountsLeve4s) {
+			if (chartAccountsLevel4.getIcon().equalsIgnoreCase("far fa-file-alt")) {
+				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
+				pojo.setId(chartAccountsLevel4.getId());
+				pojo.setAccountCategory(chartAccountsLevel4.getChartAccountsLevel3().getChartAccountsLevel2()
+						.getChartAccountsLevel1().getText());
+				pojo.setPassCode(chartAccountsLevel4.getPassCode());
+				pojo.setText(chartAccountsLevel4.getText());
+				accountTablePojos.add(pojo);
+			}
+		}
+		for (ChartAccountsLevel5 chartAccountsLevel5 : accountsLeve5s) {
+			if (chartAccountsLevel5.getIcon().equalsIgnoreCase("far fa-file-alt")) {
+				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
+				pojo.setId(chartAccountsLevel5.getId());
+				pojo.setAccountCategory(chartAccountsLevel5.getChartAccountsLevel4().getChartAccountsLevel3()
+						.getChartAccountsLevel2().getChartAccountsLevel1().getText());
+				pojo.setPassCode(chartAccountsLevel5.getPassCode());
+				pojo.setText(chartAccountsLevel5.getText());
+				accountTablePojos.add(pojo);
+			}
+		}
+		accountTablePojos.sort(
+				(e1, e2) -> new String(e1.getPassCode().toString()).compareTo(new String(e2.getPassCode()).toString()));
+
+		return accountTablePojos;
+	}
+
+	@GetMapping("/get-chartAccount-lv-all-by/{id}")
+	private List<ChartAccountTablePojo> getChartAccountLvAllT1(@PathVariable("id") String id) {
+		String icon = "far fa-file-alt";
+		Iterable<ChartAccountsLevel2> accountsLeve2s = chartAccountsLv2Repo.findAll();
+		Iterable<ChartAccountsLevel3> accountsLeve3s = chartAccountsLv3Repo.findAll();
+		Iterable<ChartAccountsLevel4> accountsLeve4s = chartAccountsLv4Repo.findAll();
+		Iterable<ChartAccountsLevel5> accountsLeve5s = chartAccountsLv5Repo.findAll();
+
+		List<ChartAccountTablePojo> accountTablePojos = new ArrayList<ChartAccountTablePojo>();
+
+		for (ChartAccountsLevel2 chartAccountsLevel2 : accountsLeve2s) {
+			if (chartAccountsLevel2.getIcon().equalsIgnoreCase(icon) && chartAccountsLevel2
+					.getChartAccountsLevel1().getId().equals(id)) {
+				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
+				pojo.setId(chartAccountsLevel2.getId());
+				pojo.setAccountCategory(chartAccountsLevel2.getChartAccountsLevel1().getText());
+				pojo.setPassCode(chartAccountsLevel2.getPassCode());
+				pojo.setText(chartAccountsLevel2.getText());
+				accountTablePojos.add(pojo);
+			}
+		}
+		for (ChartAccountsLevel3 chartAccountsLevel3 : accountsLeve3s) {
+			if (chartAccountsLevel3.getIcon().equalsIgnoreCase(icon)
+					&& chartAccountsLevel3.getChartAccountsLevel2().getChartAccountsLevel1().getId()
+							.equals(id)) {
+				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
+				pojo.setId(chartAccountsLevel3.getId());
+				pojo.setAccountCategory(
+						chartAccountsLevel3.getChartAccountsLevel2().getChartAccountsLevel1().getText());
+				pojo.setPassCode(chartAccountsLevel3.getPassCode());
+				pojo.setText(chartAccountsLevel3.getText());
+				accountTablePojos.add(pojo);
+			}
+		}
+		for (ChartAccountsLevel4 chartAccountsLevel4 : accountsLeve4s) {
+			if (chartAccountsLevel4.getIcon().equalsIgnoreCase(icon) && chartAccountsLevel4.getChartAccountsLevel3().getChartAccountsLevel2()
+					.getChartAccountsLevel1().getId().equals(id)) {
+				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
+				pojo.setId(chartAccountsLevel4.getId());
+				pojo.setAccountCategory(chartAccountsLevel4.getChartAccountsLevel3().getChartAccountsLevel2()
+						.getChartAccountsLevel1().getText());
+				pojo.setPassCode(chartAccountsLevel4.getPassCode());
+				pojo.setText(chartAccountsLevel4.getText());
+				accountTablePojos.add(pojo);
+			}
+		}
+		for (ChartAccountsLevel5 chartAccountsLevel5 : accountsLeve5s) {
+			if (chartAccountsLevel5.getIcon().equalsIgnoreCase(icon) && chartAccountsLevel5.getChartAccountsLevel4().getChartAccountsLevel3()
+					.getChartAccountsLevel2().getChartAccountsLevel1().getId().equals(id)) {
+				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
+				pojo.setId(chartAccountsLevel5.getId());
+				pojo.setAccountCategory(chartAccountsLevel5.getChartAccountsLevel4().getChartAccountsLevel3()
+						.getChartAccountsLevel2().getChartAccountsLevel1().getText());
+				pojo.setPassCode(chartAccountsLevel5.getPassCode());
+				pojo.setText(chartAccountsLevel5.getText());
+				accountTablePojos.add(pojo);
+			}
+		}
+		accountTablePojos.sort(
+				(e1, e2) -> new String(e1.getPassCode().toString()).compareTo(new String(e2.getPassCode()).toString()));
+
+		return accountTablePojos;
 	}
 
 	@PostMapping("/add-updat-lv1")

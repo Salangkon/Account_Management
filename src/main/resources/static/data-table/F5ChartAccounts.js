@@ -20,27 +20,134 @@ function Add() {
 };
 
 $(document).ready(
-
+    tabelAll(),
     jsonCharAccount(),
     hiddenCondition(),
 
-    function () {
-        var table = $('#example').DataTable({
-            lengthChange: true,
-            // dom: 'Bfrtip',
-            buttons: ['copy', 'excel', 'pdf', 'colvis']
-        });
+);
 
-        var table = $('#example1').DataTable({
-            // lengthChange: false,
-            // dom: 'lrtip',
-        });
-
-        var counter = 1;
-
-        table.buttons().container().appendTo(
-            '#example_wrapper .col-md-6:eq(0)');
+function tabelAll () {
+    tabelAll = $('#tabelAll').DataTable({
+        // responsive: true,
+        "bDestroy": true,
+        "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all",
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                "mData": "passCode",
+                "className": "text-center",
+                "sWidth": "15%"
+            },
+            {
+                "mData": "text",
+                "sWidth": "55%"
+            },
+            {
+                "mData": "accountCategory",
+                "sWidth": "30%"
+            }
+        ]
     });
+    tabelAll = $('#tabelAllT2').DataTable({
+        // responsive: true,
+        "bDestroy": true,
+        "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/bc76ab41-13d1-4fd0-8c45-ef0e4ccf2873",
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                "mData": "passCode",
+                "className": "text-center",
+                "sWidth": "15%"
+            },
+            {
+                "mData": "text",
+                "sWidth": "55%"
+            },
+            {
+                "mData": "accountCategory",
+                "sWidth": "30%"
+            }
+        ]
+    });
+    tabelAll = $('#tabelAllT3').DataTable({
+        responsive: true,
+        "bDestroy": true,
+        "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/1677d9a5-5fcd-4a4d-b31f-1ada25d51c83",
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                "mData": "passCode",
+                "className": "text-center",
+                "sWidth": "15%"
+            },
+            {
+                "mData": "text",
+                "sWidth": "55%"
+            },
+            {
+                "mData": "accountCategory",
+                "sWidth": "30%"
+            }
+        ]
+    });
+    tabelAll = $('#tabelAllT4').DataTable({
+        responsive: true,
+        "bDestroy": true,
+        "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/f27a6462-b136-4285-ad06-ce7fd0c1ba27",
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                "mData": "passCode",
+                "className": "text-center",
+                "sWidth": "15%"
+            },
+            {
+                "mData": "text",
+                "sWidth": "55%"
+            },
+            {
+                "mData": "accountCategory",
+                "sWidth": "30%"
+            }
+        ]
+    });
+    tabelAll = $('#tabelAllT5').DataTable({
+        responsive: true,
+        "bDestroy": true,
+        "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/b48f2ebe-1a18-4001-9999-754ffa1171da",
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                "mData": "passCode",
+                "className": "text-center",
+                "sWidth": "15%"
+            },
+            {
+                "mData": "text",
+                "sWidth": "55%"
+            },
+            {
+                "mData": "accountCategory",
+                "sWidth": "30%"
+            }
+        ]
+    });
+    tabelAll = $('#tabelAllT6').DataTable({
+        responsive: true,
+        "bDestroy": true,
+        "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/c6e2cf4a-67bd-420e-a5f8-9d2c0c3a040d",
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                "mData": "passCode",
+                "className": "text-center",
+                "sWidth": "15%"
+            },
+            {
+                "mData": "text",
+                "sWidth": "55%"
+            },
+            {
+                "mData": "accountCategory",
+                "sWidth": "30%"
+            }
+        ]
+    });
+}
 
 function jsonCharAccount() {
 
@@ -60,28 +167,50 @@ function jsonCharAccount() {
                     id = data.instance.get_node(data.selected[i]).id;
                 }
 
+                document.getElementById("save").hidden = true;
+                document.getElementById("edit").hidden = true;
                 if (r.length <= 1) {
                     $.ajax({
                         type: 'GET',
-                        url: '/api-chart-account/get-by-id/'+ id,
+                        url: '/api-chart-account/get-by-id/' + id,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (res) {
-                            $('#id').val(res.id), 
-                            $('#text').val(res.text),
-                            $('#passCode').val(res.passCode),
-                            $('#detail').val(res.detail)
+                            if (res.icon == "fas fa-plus") {
+                                $('#id').val(""),
+                                    $('#passCode').val(""),
+                                    $('#text').val(""),
+                                    $('#detail').val("")
+                                $('#textDisplay').text("")
+
+                                document.getElementById("save").hidden = false;
+                                document.getElementById("edit").hidden = true;
+                                document.getElementById("passCode").disabled = false;
+                                document.getElementById("text").disabled = false;
+                            } else {
+                                $('#id').val(res.id),
+                                    $('#text').val(res.text),
+                                    $('#passCode').val(res.passCode),
+                                    $('#detail').val(res.detail)
+                                $('#textDisplay').text(res.text)
+
+                                document.getElementById("save").hidden = true;
+                                document.getElementById("edit").hidden = false;
+                                document.getElementById("passCode").disabled = true;
+                                document.getElementById("text").disabled = true;
+                            }
                         }
                     })
                 }
-               
+
             }).jstree({
                 'core': {
-                    "animation": 0,
+                    'multiple': false,
+                    // "animation": 0,
                     "check_callback": true,
-                    "themes": {
-                        "stripes": true
-                    },
+                    // "themes": {
+                    //     "stripes": true
+                    // },
                     'data': result
                 }
             });

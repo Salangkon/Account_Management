@@ -43,113 +43,93 @@
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
 								<div class="row" style="margin-bottom: 20px;">
-									<div class="col-sm-9"></div>
-									<div class="col-sm-2"></div>
-									<div class="col-sm-1">
+									<div class="col-sm-10">
+										<button type="button" class="btn btn-outline-primary"
+											onclick="hiddenCondition('')">หมวดหมู่ทั้งหมด</button>
+										<button type="button" class="btn btn-outline-secondary"
+											onclick="hiddenCondition('สินทรัพย์')">สินทรัพย์</button>
+										<button type="button" class="btn btn-outline-success"
+											onclick="hiddenCondition('หนี้สิน')">หนี้สิน</button>
+										<button type="button" class="btn btn-outline-danger"
+											onclick="hiddenCondition('ส่วนของผู้ถือหุ้น')">ส่วนของผู้ถือหุ้น</button>
+										<button type="button" class="btn btn-outline-info"
+											onclick="hiddenCondition('รายได้')">รายได้</button>
+										<button type="button" class="btn btn-outline-dark"
+											onclick="hiddenCondition('ค่าใช้จ่าย')">ค่าใช้จ่าย</button>
+									</div>
+									<div class="col-sm-2" style="text-align: right;">
 										<button type="button" class="btn btn-primary" data-toggle="modal"
-											data-target="#myModal">ผังบัญชี</button>
+											data-target="#myModal">บริหารผังบัญชี</button>
 									</div>
 								</div>
 							</div>
-							<div style="margin-bottom: 20px">
-								<button type="button" class="btn btn-outline-primary"
-									onclick="hiddenCondition('')">หมวดหมู่ทั้งหมด</button>
-								<button type="button" class="btn btn-outline-secondary"
-									onclick="hiddenCondition('สินทรัพย์')">สินทรัพย์</button>
-								<button type="button" class="btn btn-outline-success"
-									onclick="hiddenCondition('หนี้สิน')">หนี้สิน</button>
-								<button type="button" class="btn btn-outline-danger"
-									onclick="hiddenCondition('ส่วนของผู้ถือหุ้น')">ส่วนของผู้ถือหุ้น</button>
-								<button type="button" class="btn btn-outline-info"
-									onclick="hiddenCondition('รายได้')">รายได้</button>
-								<button type="button" class="btn btn-outline-dark"
-									onclick="hiddenCondition('ค่าใช้จ่าย')">ค่าใช้จ่าย</button>
-							</div>
+
 							<div id="T1">
-								<table id="example" class="table table-sm" width="100%">
+								<table id="tabelAll" class="table table-sm dataTable no-footer" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
-											<th style="text-align: center;">วันที่1</th>
-											<th>เลขที่เอกสาร</th>
-											<th>ชื่อลูกค้า</th>
-											<th>จำนวนเงิน</th>
-											<th style="text-align: center;">สถานะ</th>
-											<th style="text-align: center;">ตัวเลือก</th>
+											<th>รหัสบัญชี</th>
+											<th>ชื่อบัญชี</th>
+											<th>หมวดหมู่</th>
 										</tr>
 									</thead>
 								</table>
 							</div>
 							<div id="T2">
-								<table id="example" class="table table-sm" width="100%">
+								<table id="tabelAllT2" class="table table-sm dataTable no-footer" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
-											<th style="text-align: center;">วันที่2</th>
-											<th>เลขที่เอกสาร</th>
-											<th>ชื่อลูกค้า</th>
-											<th>จำนวนเงิน</th>
-											<th style="text-align: center;">สถานะ</th>
-											<th style="text-align: center;">ตัวเลือก</th>
+											<th>รหัสบัญชี</th>
+											<th>ชื่อบัญชี</th>
+											<th>หมวดหมู่</th>
 										</tr>
 									</thead>
 								</table>
 							</div>
 							<div id="T3">
-								<table id="example" class="table table-sm" width="100%">
+								<table id="tabelAllT3" class="table table-sm dataTable no-footer" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
-											<th style="text-align: center;">วันที่3</th>
-											<th>เลขที่เอกสาร</th>
-											<th>ชื่อลูกค้า</th>
-											<th>จำนวนเงิน</th>
-											<th style="text-align: center;">สถานะ</th>
-											<th style="text-align: center;">ตัวเลือก</th>
+											<th>รหัสบัญชี</th>
+											<th>ชื่อบัญชี</th>
+											<th>หมวดหมู่</th>
 										</tr>
 									</thead>
 								</table>
 							</div>
 							<div id="T4">
-								<table id="example" class="table table-sm" width="100%">
+								<table id="tabelAllT4" class="table table-sm dataTable no-footer" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
-											<th style="text-align: center;">วันที่4</th>
-											<th>เลขที่เอกสาร</th>
-											<th>ชื่อลูกค้า</th>
-											<th>จำนวนเงิน</th>
-											<th style="text-align: center;">สถานะ</th>
-											<th style="text-align: center;">ตัวเลือก</th>
+											<th>รหัสบัญชี</th>
+											<th>ชื่อบัญชี</th>
+											<th>หมวดหมู่</th>
 										</tr>
 									</thead>
 								</table>
 							</div>
 							<div id="T5">
-								<table id="example" class="table table-sm" width="100%">
+								<table id="tabelAllT5" class="table table-sm dataTable no-footer" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
-											<th style="text-align: center;">วันที่5</th>
-											<th>เลขที่เอกสาร</th>
-											<th>ชื่อลูกค้า</th>
-											<th>จำนวนเงิน</th>
-											<th style="text-align: center;">สถานะ</th>
-											<th style="text-align: center;">ตัวเลือก</th>
+											<th>รหัสบัญชี</th>
+											<th>ชื่อบัญชี</th>
+											<th>หมวดหมู่</th>
 										</tr>
 									</thead>
 								</table>
 							</div>
 							<div id="T6">
-								<table id="example" class="table table-sm" width="100%">
+								<table id="tabelAllT6" class="table table-sm dataTable no-footer" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
-											<th style="text-align: center;">วันที่6</th>
-											<th>เลขที่เอกสาร</th>
-											<th>ชื่อลูกค้า</th>
-											<th>จำนวนเงิน</th>
-											<th style="text-align: center;">สถานะ</th>
-											<th style="text-align: center;">ตัวเลือก</th>
+											<th>รหัสบัญชี</th>
+											<th>ชื่อบัญชี</th>
+											<th>หมวดหมู่</th>
 										</tr>
 									</thead>
 								</table>
 							</div>
-
 						</div>
 					</div>
 
@@ -167,17 +147,22 @@
 											<div class="col-lg-6 overflow-auto" style="height: 700px; padding: 20px">
 												<div class="row p-3">
 													<div class="form-group row">
-														<di class="col-sm-12">
+														<div class="col-sm-12" ma>
 															<h4 style="color: blueviolet;"><b>แก้ไขผังบัญชี</b></h4>
-														</di>
-														<div class="col-sm-3" style="margin-top: 23px"><label>รหัสบัญชี: 
+															<label id="textDisplay"></label>
+														</div>
+														<div class="col-sm-3"
+															style="margin-top: 23px;text-align: right;">
+															<label>รหัสบัญชี:
 															</label><label style="color: red;">
 																*</label></div>
 														<div class="col-sm-9">
 															<input type="text" style="max-width: 90%;margin-top: 25px"
-																class="form-control" id="passCode" placeholder="รหัสบัญชี">
+																class="form-control" id="passCode"
+																placeholder="รหัสบัญชี">
 														</div>
-														<div class="col-sm-3" style="margin-top: 23px">
+														<div class="col-sm-3"
+															style="margin-top: 23px;text-align: right;">
 															<label>ชื่อบัญชี: </label> <label style="color: red;">
 																*</label>
 														</div>
@@ -185,7 +170,8 @@
 															<input type="text" style="max-width: 90%;margin-top: 25px"
 																class="form-control" id="text" placeholder="ชื่อบัญชี">
 														</div>
-														<div class="col-sm-3" style="margin-top: 23px">
+														<div class="col-sm-3"
+															style="margin-top: 23px;text-align: right;">
 															<label>คำอธิบายบัญชี: </label></div>
 														<div class="col-sm-9">
 															<textarea class="form-control" id="detail"
@@ -197,7 +183,9 @@
 
 												<div class="modal-footer">
 													<button type="button" class="btn btn-success"
-														onclick="saveCreateQuotation()" id="">บันทึก</button>
+														onclick="saveCreateQuotation()" id="save">บันทึก</button>
+													<button type="button" class="btn btn-success"
+														onclick="saveCreateQuotation()" id="edit">แก้ไข</button>
 													<button type="button" class="btn btn-secondary"
 														data-dismiss="modal">ยกเลิก</button>
 												</div>
