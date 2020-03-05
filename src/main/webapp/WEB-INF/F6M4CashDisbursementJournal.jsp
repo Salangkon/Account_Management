@@ -33,7 +33,7 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวัน</h4>
+							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวันจ่าย</h4>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
@@ -61,9 +61,10 @@
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
 												<th>วันที่</th>
-												<th>รายละเอียด</th>
-												<th>ประเภทสมุดรายวัน</th>
+												<th>เลขที่เอกสาร</th>
+												<th>คำอธิบาย</th>
 												<th>จำนวนเงิน</th>
+												<th>สถานะ</th>
 												<th>ตัวเลือก</th>
 											</tr>
 										</thead>
@@ -183,34 +184,7 @@
 
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
-		<script>
-			$('#datepicker').datepicker({
-				uiLibrary: 'bootstrap4'
-			});
-			$('#datepicker1').datepicker({
-				uiLibrary: 'bootstrap4'
-			});
-
-			$(document).ready(function () {
-				var table = $('#example').DataTable({
-					lengthChange: true,
-					// dom: 'Bfrtip',
-					buttons: ['copy', 'excel', 'pdf', 'colvis']
-				});
-
-				var table = $('#example1').DataTable({
-					// lengthChange: false,
-					// dom: 'lrtip',
-				});
-
-				var counter = 1;
-
-				table.buttons().container()
-					.appendTo('#example_wrapper .col-md-6:eq(0)');
-			});
-		</script>
-
-
+		<script src="\data-table\F6M4CashDisbursementJournal.js" type="text/javascript"></script>
 
 </body>
 

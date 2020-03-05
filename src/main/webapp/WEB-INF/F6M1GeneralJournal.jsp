@@ -8,7 +8,13 @@
 	<title>Report Quotidia</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
-
+	<style>
+		.col-sm-4,
+		.col-sm-8{
+			text-align: right;
+			margin-top: 20px;
+		}
+	</style>
 </head>
 
 <body>
@@ -33,7 +39,7 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวัน</h4>
+							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวันทั่วไป</h4>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
@@ -61,9 +67,10 @@
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
 												<th>วันที่</th>
-												<th>รายละเอียด</th>
-												<th>ประเภทสมุดรายวัน</th>
+												<th>เลขที่เอกสาร</th>
+												<th>คำอธิบาย</th>
 												<th>จำนวนเงิน</th>
+												<th>สถานะ</th>
 												<th>ตัวเลือก</th>
 											</tr>
 										</thead>
@@ -79,7 +86,7 @@
 
 		<!-- The Modal -->
 		<div class="modal fade" id="myModal">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog modal-lg" style="max-width: 1400px;">
 				<div class="modal-content">
 
 					<!-- Modal Header -->
@@ -93,46 +100,59 @@
 						<!-- Nested Row within Card Body -->
 						<div class="row">
 							<div class="col-lg-12">
-								<div class="p-3">
+								<div class="p-3" style="margin-right: 30px">
 									<form class="user">
 										<div class="form-group row">
-											<div class="col-sm-12" style="text-align: right;">
+											<div class="col-sm-12" style="text-align: right;margin-bottom: 20px;">
 												<a href="#"><i class="fas fa-2x fa-print"
 														style="margin-right: 10px;"></i></a>
 												<a href="#"><i class="fas fa-2x fa-download"></i></a>
 											</div>
-											<div class="col-sm-12">
+											<!-- <div class="col-sm-12">
 												<label>สมุดรายวัน</label>
 												<select class="form-control" id="companyType" style="width: 200px;">
 													<option value="สมุดรายวันขาย">สมุดรายวันขาย</option>
 													<option value="สมุดรายวันซื้อ">สมุดรายวันซื้อ</option>
 												</select>
-											</div>
+											</div> -->
 
-											<div class="col-sm-7 mb-3 mb-sm-0">
-												<div>
-													<label>ชื่อลูกค้า</label><input class="form-control" id=""
-														placeholder="ชื่อลูกค้า">
-												</div>
-												<div>
-													<label>คำอธิบาย</label>
-													<textarea class="form-control" style="height: 110px"></textarea>
-												</div>
-											</div>
-											<div class="col-sm-5">
+											<div class="col-sm-5 mb-3 mb-sm-0">
+												<div class="form-group row">
+													<div class="col-sm-4">
+														<label>ชื่อลูกค้า : </label>
+													</div>
+													<div class="col-sm-8">
+														<select class="form-control" placeholder="ใส่ชื่อลูกค้า"
+															id="customers">
+															<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
+															</option>
+														</select>
+													</div>
+													<div class="col-sm-4">
+														<label>คำอธิบาย : </label>
+													</div>
+													<div class="col-sm-8">
+														<textarea class="form-control" style="height: 110px"></textarea>
 
-												<div>
-													<label>เลขประจำตัวผู้เสียภาษี</label><input type="password"
-														class="form-control form-control" id="taxId"
-														placeholder="เลขประจำตัวผู้เสียภาษี">
+													</div>
 												</div>
-												<div>
-													<label>เลขที่เอกสาร</label><input class="form-control" id=""
-														placeholder="เลขที่เอกสาร">
-												</div>
-												<div>
-													<label>เอกสารอ้างอิง</label><input class="form-control" id=""
-														placeholder="เอกสารอ้างอิง">
+
+											</div>
+											<div class="col-sm-3"></div>
+											<div class="col-sm-4">
+												<div class="form-group row">
+													<div class="col-sm-4">
+														<label>วันที่ : </label>
+													</div>
+													<div class="col-sm-8">
+														<input id="date" />
+													</div>
+													<div class="col-sm-4">
+														<label>เลขที่เอกสาร : </label>
+													</div>
+													<div class="col-sm-8">
+														<input class="form-control" id="" placeholder="เลขที่เอกสาร">
+													</div>
 												</div>
 											</div>
 
@@ -183,34 +203,7 @@
 
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
-		<script>
-			$('#datepicker').datepicker({
-				uiLibrary: 'bootstrap4'
-			});
-			$('#datepicker1').datepicker({
-				uiLibrary: 'bootstrap4'
-			});
-
-			$(document).ready(function () {
-				var table = $('#example').DataTable({
-					lengthChange: true,
-					// dom: 'Bfrtip',
-					buttons: ['copy', 'excel', 'pdf', 'colvis']
-				});
-
-				var table = $('#example1').DataTable({
-					// lengthChange: false,
-					// dom: 'lrtip',
-				});
-
-				var counter = 1;
-
-				table.buttons().container()
-					.appendTo('#example_wrapper .col-md-6:eq(0)');
-			});
-		</script>
-
-
+		<script src="\data-table\F6M1GeneralJournal.js" type="text/javascript"></script>
 
 </body>
 
