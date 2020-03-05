@@ -70,6 +70,31 @@ public class HomePageController {
 	public String reportQuotidia() {
 		return "F6ReportQuotidia";
 	}
+	/* สมุดรายวัน สมุดรายวันทั่วไป */
+	@RequestMapping("/general-journal")
+	public String generalJournal() {
+		return "F6M1GeneralJournal";
+	}
+	/* สมุดรายวัน  สมุดรายวันซื้อ*/
+	@RequestMapping("/bought-day-book")
+	public String boughtDayBook() {
+		return "F6M2BoughtDayBook";
+	}
+	/* สมุดรายวัน สมุดรายวันขาย */
+	@RequestMapping("/sales-journal")
+	public String salesJournal() {
+		return "F6M3SalesJournal";
+	}
+	/* สมุดรายวัน สมุดรายวันจ่าย */
+	@RequestMapping("/cash-disbursement-journal")
+	public String cashDisbursementJournal() {
+		return "F6M4CashDisbursementJournal";
+	}
+	/* สมุดรายวัน สมุดรายวันรับ */
+	@RequestMapping("/cash-receipts-journal")
+	public String cashReceiptsJournal() {
+		return "F6M5CashReceiptsJournal";
+	}
 	
 	/* รายงานภาษี */
 	@RequestMapping("/report-buy-tax")
