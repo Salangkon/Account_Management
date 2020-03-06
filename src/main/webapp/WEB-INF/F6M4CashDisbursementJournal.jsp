@@ -28,9 +28,7 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<!-- <p>สมุดรายวัน</p> -->
-					<!-- Content Row -->
-					<div class="row"></div>
-
+					<div class="row" style="margin-bottom: 10px;margin-left: 3px;">สมุดรายวัน / สมุดรายวันจ่าย</div>
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวันจ่าย</h4>

@@ -10,9 +10,17 @@ $('#date').datepicker({
     startDate: '-3d'
 });
 
+//กรอกได้เฉพราะ ตัวเลข
+function chkNumber(ele) {
+    var vchar = String.fromCharCode(event.keyCode);
+    if ((vchar < '0' || vchar > '9') && (vchar != '.')) return false;
+    ele.onKeyPress = vchar;
+}
+
 $(document).ready(function () {
 
     dataCustomer(null);
+    tableCreateQuotationDisplay1(null);
 
     var table = $('#example').DataTable({
         lengthChange: true,
@@ -49,16 +57,81 @@ $(document).ready(function () {
         ],
     });
 
-    var table = $('#example1').DataTable({
-        // lengthChange: false,
-        // dom: 'lrtip',
+}); // end Document
+
+var tablegeneraJournal
+
+function tableCreateQuotationDisplay1(id) {
+    tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
+        lengthChange: false,
+        "paging": false,
+        searching: false,
+        responsive: true,
+        "bDestroy": true,
+        // "sAjaxSource": "/api-f2/get-f2ListRepo-by-id/" + id,
+        "bAutoWidth": false,
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                'data': '',
+                "sWidth": "20%",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" name="" id="' +
+                        index.row +
+                        '" value=""/>';
+                }
+            },
+            {
+                'data': '',
+                "sWidth": "50%",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<input class="form-control" style="width: 100%;height: 7mm" type="text" name="" id=" value="">'
+                }
+            },
+            {
+                'data': '',
+                "sWidth": "13%",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="" id="' +
+                        index.row +
+                        '" value=""/>';
+                }
+            },
+            {
+                'data': '',
+                "sWidth": "13%",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="" id="' +
+                        index.row +
+                        '" value=""/>';
+                }
+            },
+            {
+                "mData": "",
+                "sWidth": "4px",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                }
+            }
+        ],
     });
 
-    var counter = 1;
+    $('#tablegeneraJournalDisplay').on('click', 'a', function () {
+        tablegeneraJournal.row($(this).parents('tr')).remove().draw();
+    }); // end table
+}
 
-    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+function Add() {
+    tablegeneraJournal.row.add([tablegeneraJournal.data]).draw(false);
+}
 
-}); // end Document
+function remove() {
+    tablegeneraJournal.rows('.selected').remove().draw();
+}
 
 function dataCustomer(companyId) {
     $.ajax({

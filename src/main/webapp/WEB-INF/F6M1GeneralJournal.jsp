@@ -10,7 +10,7 @@
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<style>
 		.col-sm-4,
-		.col-sm-8{
+		.col-sm-8 {
 			text-align: right;
 			margin-top: 20px;
 		}
@@ -34,9 +34,7 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<!-- <p>สมุดรายวัน</p> -->
-					<!-- Content Row -->
-					<div class="row"></div>
-
+					<div class="row" style="margin-bottom: 10px;margin-left: 3px;">สมุดรายวัน / สมุดรายชื่อทั่วไป</div>
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวันทั่วไป</h4>
@@ -157,28 +155,25 @@
 											</div>
 
 											<div class="table-responsive col-sm-12" style="margin-top: 12px;">
-												<table id="example1" class="table table-sm table-striped table-bordered"
+												<table id="tablegeneraJournalDisplay" class="table table-sm table-striped table-bordered"
 													width="100%">
 													<thead class="bg-gradient-primary" style="color: white;">
 														<tr>
-															<th style="text-align: center;"><input type="checkbox"></th>
-															<th>รหัสบัญชี</th>
-															<th>ชื่อบัญชี</th>
+															<th>รหัสบัญชี / ชื่อบัญชี</th>
 															<th>รายละเอียด</th>
 															<th>เดบิต</th>
 															<th>เครดิต</th>
+															<th></th>
 														</tr>
 													</thead>
 													<tfoot>
 														<tr>
-															<th style="text-align: center;"><a href="#"><i
-																		class="fas fa-trash"></i></a></th>
-															<th colspan="2"><i class="fas fa-plus"
-																	style="color: red;"></i> <a href="#">เพิ่มรายการ</a>
+															<th colspan="4">
+																<button type="button" class="btn btn-default btn-sm" onclick="Add()">
+																	<i class="fas fa-plus" style="color: red"></i>
+																	เพิ่มรายการ
+																</button>
 															</th>
-															<th style="text-align: right;"><label>รวม</label></th>
-															<th>00.00</th>
-															<th>00.00</th>
 														</tr>
 													</tfoot>
 												</table>
