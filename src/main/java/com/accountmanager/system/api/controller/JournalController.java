@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,6 +62,23 @@ public class JournalController {
 			errorMessage = ex + " <== error";
 			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 		}
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public Boolean delete(@PathVariable("id") String id) {
+		Boolean result = false;
+		try {
+			System.err.println(id);
+			Journal journal = journalRepo.findOne(id);
+			for (JournalList journalList : journal.getJournalLists()) {
+				journalListRepo.delete(journalList);
+			}
+			journalRepo.delete(journal);
+			result = true;
+		} catch (Exception e) {
+			result = false;
+		}
+		return result;
 	}
 
 	// generate department code

@@ -78,7 +78,7 @@ $(document).ready(function () {
                             <option value="0' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
                             <option value="1' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                             <option value="2' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
-                            <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
+                            <option value="5' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                             </select>';
                     } else {
                         return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
@@ -110,8 +110,11 @@ function changeFunc($i) {
         case "0":
             updateStatus(id, "0");
             break;
+        case "5":
+            deleteId(id);
+            break;
     }
-} 
+}
 
 function updateStatus(id, status) {
     $.ajax({
@@ -123,7 +126,7 @@ function updateStatus(id, status) {
             window.location.href = "/general-journal";
         }
     });
-}// end update status
+} // end update status
 
 var tablegeneraJournal
 
@@ -190,7 +193,7 @@ function tableCreateQuotationDisplay1(id) {
 
     $('#tablegeneraJournalDisplay').on('click', 'a', function () {
         tablegeneraJournal.row($(this).parents('tr')).remove().draw();
-        
+
         var sumvalues = $("[name='credit']");
         var sum = 0;
         for (var i = 0; i < sumvalues.length; i++) {
@@ -199,7 +202,7 @@ function tableCreateQuotationDisplay1(id) {
             }
         }
         $('#credit').text(parseFloat(sum).toFixed(2));
-    
+
         var sumvalues = $("[name='debit']");
         var sum = 0;
         for (var i = 0; i < sumvalues.length; i++) {
@@ -239,6 +242,31 @@ function Add() {
 function remove() {
     tablegeneraJournal.rows('.selected').remove().draw();
 }
+
+function deleteId(id) {
+    swal({
+            title: "Are you sure?",
+            text: "Your will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
+        function () {
+            $.ajax({
+                url: '/api-journal/delete/' + id,
+                type: 'DELETE',
+                success: function (result) {
+                    if (result) {
+                        window.location.href = "/general-journal";
+                    } else {
+                        alert("Delete Fail!!!");
+                    }
+                }
+            });
+        });
+} //end delete
 
 function dataCustomer(companyId) {
     $.ajax({
