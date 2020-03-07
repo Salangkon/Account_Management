@@ -106,13 +106,6 @@
 														style="margin-right: 10px;"></i></a>
 												<a href="#"><i class="fas fa-2x fa-download"></i></a>
 											</div>
-											<!-- <div class="col-sm-12">
-												<label>สมุดรายวัน</label>
-												<select class="form-control" id="companyType" style="width: 200px;">
-													<option value="สมุดรายวันขาย">สมุดรายวันขาย</option>
-													<option value="สมุดรายวันซื้อ">สมุดรายวันซื้อ</option>
-												</select>
-											</div> -->
 
 											<div class="col-sm-5 mb-3 mb-sm-0">
 												<div class="form-group row">

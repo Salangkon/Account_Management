@@ -1,5 +1,6 @@
 package com.accountmanager.system.api.controller;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,17 +31,21 @@ public class JournalController {
 	JournalRepository journalRepo;
 	@Autowired
 	JournalListRepository journalListRepo;
-	
+
 	@GetMapping("/get-all")
 	public List<Journal> getAll() {
-		return (List<Journal>) journalRepo.findAll();
+		List<Journal> journals = (List<Journal>) journalRepo.findAll();
+		journals.sort(
+				(e2, e1) -> new Long(e1.getCreateDate().getTime()).compareTo(new Long(e2.getCreateDate().getTime())));
+		return journals;
 	}
-	
+
 	@PostMapping("/add-update")
 	public ResponseEntity<?> addUpdate(@RequestBody Journal journal) {
 		try {
 			List<JournalList> journalLists = new ArrayList<JournalList>();
 			journal.setId(UUID.randomUUID().toString());
+			journal.setCreateDate(new Timestamp(new Date().getTime()));
 			if (journal.getJournalLists() != null) {
 				for (JournalList list : journal.getJournalLists()) {
 					list.setId(UUID.randomUUID().toString());
@@ -57,7 +62,7 @@ public class JournalController {
 			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	// generate department code
 	@GetMapping("/generate-dep/{type}")
 	public String getGenerateDepartmentCode(@PathVariable("type") String type) {
@@ -84,4 +89,24 @@ public class JournalController {
 		return gen;
 	}
 
-}
+	@PostMapping("/update-status/{id}/{status}")
+	public Journal updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
+		Journal journal = journalRepo.findOne(id);
+
+		journal.setUpdateDate(new Timestamp(new Date().getTime()));
+		switch (status) {
+		case "0":
+			journal.setStatus("0");
+			break;
+		case "1":
+			journal.setStatus("1");
+			break;
+		case "2":
+			journal.setStatus("2");
+			break;
+		}
+
+		return journalRepo.save(journal);
+	}
+
+}// end class

@@ -22,51 +22,108 @@ $(document).ready(function () {
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
 
-    $.ajax({
-        type: "GET",
-        url: "/api-journal/get-all",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            var table = $('#example').DataTable({
-                lengthChange: true,
-                buttons: ['copy', 'excel', 'pdf', 'colvis'],
-                data: jQuery.parseJSON(JSON.stringify(msg)),
-                "sAjaxDataProp": "",
-                "aoColumns": [{
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                    },
-                    {
-                        'data': 'documentCode',
-                        "sWidth": "15%",
-                    },
-                    {
-                        'data': 'description',
-                        "sWidth": "35%",
-                    },
-                    {
-                        'data': 'referenceDocument',
-                        "sWidth": "15%",
-                    },
-                    {
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "15%",
-                    },
-                    {
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "15%",
+    var table = $('#example').DataTable({
+        // lengthChange: true,
+        buttons: ['copy', 'excel', 'pdf', 'colvis'],
+        "sAjaxSource": "/api-journal/get-all",
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                'data': 'date',
+                "className": "text-center",
+                "sWidth": "10%",
+            },
+            {
+                'data': 'documentCode',
+                "className": "text-center",
+                "sWidth": "15%",
+            },
+            {
+                'data': 'description',
+                "sWidth": "45%",
+            },
+            {
+                'data': 'referenceDocument',
+                "sWidth": "10%",
+            },
+            {
+                'data': 'date',
+                "className": "text-center",
+                "sWidth": "10%",
+                "mRender": function (data, type, row, index, full) {
+                    if (row.status == '0') {
+                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                            <option value="" style="color: black">รอดำเนินการ</option/>\n\
+                            <option value="1' + row.id + '" style="color: green">อนุมัติ</option/>\n\
+                            </select>';
+                    } else if (row.status == '1') {
+                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
+                            <option style="color: green">อนุมัติเเล้ว</option/>\n\
+                            <option value="2' + row.id + '" style="color: red">ยกเลิก</option/>\n\
+                            </select>';
+                    } else if (row.status == '2') {
+                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
+                            <option value=:"" style="color: red">ยกเลิก</option/>\n\
+                            </select>';
                     }
-                ],
-            });
-        }
-    })
-    
+                }
+            },
+            {
+                'data': 'date',
+                "className": "text-center",
+                "sWidth": "10%",
+                "mRender": function (data, type, row, index, full) {
+                    if (row.status == '0') {
+                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                            <option value="0' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
+                            <option value="1' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                            <option value="2' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
+                            <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
+                            </select>';
+                    } else {
+                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                            <option value="1' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                            <option value="2' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
+                            </select>';
+                    }
+                }
+            },
+        ],
+    });
 
 }); // end Document
+
+// update status
+function changeFunc($i) {
+    var type = $i.slice(0, 1);
+    var id = $i.substr(1, 100);
+    console.log(type, id);
+
+    switch (type) {
+        case "1":
+            updateStatus(id, "1");
+            break;
+        case "2":
+            updateStatus(id, "2");
+            break;
+        case "0":
+            updateStatus(id, "0");
+            break;
+    }
+} 
+
+function updateStatus(id, status) {
+    $.ajax({
+        type: 'POST',
+        url: '/api-journal/update-status/' + id + "/" + status,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            window.location.href = "/general-journal";
+        }
+    });
+}// end update status
 
 var tablegeneraJournal
 
@@ -178,7 +235,7 @@ function saveCreate() {
                     companyId: $('#customers').val(), //ลูกค้า
                     documentCode: msg, //เลขที่เอกสาร
                     type: $('#type').val(), //ประเภท
-                    status: 0, //สถานะ
+                    status: "0", //สถานะ
                     date: $('#date').val(), //วันที่
                     description: $('#description').val(), // คำอธิบาย
                     referenceDocument: $('#referenceDocument').val(), //เอกสารอ้างอิง

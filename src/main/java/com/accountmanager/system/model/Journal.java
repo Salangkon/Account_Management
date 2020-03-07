@@ -2,6 +2,10 @@ package com.accountmanager.system.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +28,7 @@ public class Journal implements Serializable {
 	@Column(name = "create_by")
 	private String createBy;
 
+	@CreatedDate
 	@Column(name = "create_date")
 	private Timestamp createDate;
 
@@ -34,7 +39,7 @@ public class Journal implements Serializable {
 	@Column(name = "date")
 	private Date date;
 
-	private String starus;
+	private String status;
 
 	@Lob
 	private String description;
@@ -53,6 +58,7 @@ public class Journal implements Serializable {
 	@Column(name = "update_by")
 	private String updateBy;
 
+	@LastModifiedDate
 	@Column(name = "update_date")
 	private Timestamp updateDate;
 
@@ -79,12 +85,12 @@ public class Journal implements Serializable {
 		this.companyId = companyId;
 	}
 
-	public String getStarus() {
-		return starus;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setStarus(String starus) {
-		this.starus = starus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getDocumentCode() {
