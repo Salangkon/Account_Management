@@ -130,7 +130,7 @@
 														<label>คำอธิบาย : </label>
 													</div>
 													<div class="col-sm-8">
-														<textarea class="form-control" style="height: 110px"></textarea>
+														<textarea class="form-control" id="description" style="height: 110px"></textarea>
 
 													</div>
 												</div>
@@ -149,7 +149,7 @@
 														<label>เลขที่เอกสาร : </label>
 													</div>
 													<div class="col-sm-8">
-														<input class="form-control" id="" placeholder="เลขที่เอกสาร">
+														<input class="form-control" id="referenceDocument" placeholder="เลขที่เอกสาร">
 													</div>
 												</div>
 											</div>
@@ -187,7 +187,7 @@
 					</div>
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" id="save">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreate()">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 
