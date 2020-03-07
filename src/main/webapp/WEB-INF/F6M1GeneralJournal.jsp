@@ -123,7 +123,8 @@
 														<label>คำอธิบาย : </label>
 													</div>
 													<div class="col-sm-8">
-														<textarea class="form-control" id="description" style="height: 110px"></textarea>
+														<textarea class="form-control" id="description"
+															style="height: 110px"></textarea>
 
 													</div>
 												</div>
@@ -142,14 +143,15 @@
 														<label>เลขที่เอกสาร : </label>
 													</div>
 													<div class="col-sm-8">
-														<input class="form-control" id="referenceDocument" placeholder="เลขที่เอกสาร">
+														<input class="form-control" id="referenceDocument"
+															placeholder="เลขที่เอกสาร">
 													</div>
 												</div>
 											</div>
 
 											<div class="table-responsive col-sm-12" style="margin-top: 12px;">
-												<table id="tablegeneraJournalDisplay" class="table table-sm table-striped table-bordered"
-													width="100%">
+												<table id="tablegeneraJournalDisplay"
+													class="table table-sm table-striped" width="100%">
 													<thead class="bg-gradient-primary" style="color: white;">
 														<tr>
 															<th>รหัสบัญชี / ชื่อบัญชี</th>
@@ -161,12 +163,17 @@
 													</thead>
 													<tfoot>
 														<tr>
-															<th colspan="4">
-																<button type="button" class="btn btn-default btn-sm" onclick="Add()">
+															<th>
+																<button type="button" class="btn btn-default btn-sm"
+																	onclick="Add()">
 																	<i class="fas fa-plus" style="color: red"></i>
 																	เพิ่มรายการ
 																</button>
 															</th>
+															<th style="text-align: right;">รวม</th>
+															<th><label id="credit">00.00</label></th>
+															<th><label id="debit">00.00</label></th>
+															<th></th>
 														</tr>
 													</tfoot>
 												</table>

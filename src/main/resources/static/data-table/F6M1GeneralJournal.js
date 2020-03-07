@@ -162,7 +162,7 @@ function tableCreateQuotationDisplay1(id) {
                 "sWidth": "13%",
                 "mRender": function (data,
                     type, row, index) {
-                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" id="credit' +
+                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="height: 7mm" type="text" name="credit" id="credit' +
                         index.row +
                         '" value=""/>';
                 }
@@ -172,7 +172,7 @@ function tableCreateQuotationDisplay1(id) {
                 "sWidth": "13%",
                 "mRender": function (data,
                     type, row, index) {
-                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" id="debit' +
+                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="height: 7mm" type="text" name="debit" id="debit' +
                         index.row +
                         '" value=""/>';
                 }
@@ -190,8 +190,47 @@ function tableCreateQuotationDisplay1(id) {
 
     $('#tablegeneraJournalDisplay').on('click', 'a', function () {
         tablegeneraJournal.row($(this).parents('tr')).remove().draw();
+        
+        var sumvalues = $("[name='credit']");
+        var sum = 0;
+        for (var i = 0; i < sumvalues.length; i++) {
+            if ($(sumvalues[i]).val() != "") {
+                sum = sum + parseFloat($(sumvalues[i]).val());
+            }
+        }
+        $('#credit').text(parseFloat(sum).toFixed(2));
+    
+        var sumvalues = $("[name='debit']");
+        var sum = 0;
+        for (var i = 0; i < sumvalues.length; i++) {
+            if ($(sumvalues[i]).val() != "") {
+                sum = sum + parseFloat($(sumvalues[i]).val());
+            }
+        }
+        $('#debit').text(parseFloat(sum).toFixed(2));
     }); // end table
 }
+
+$('#tablegeneraJournalDisplay').on('keyup', 'input', function () {
+    var sumvalues = $("[name='credit']");
+    var sum = 0;
+    for (var i = 0; i < sumvalues.length; i++) {
+        if ($(sumvalues[i]).val() != "") {
+            sum = sum + parseFloat($(sumvalues[i]).val());
+        }
+    }
+    $('#credit').text(parseFloat(sum).toFixed(2));
+
+    var sumvalues = $("[name='debit']");
+    var sum = 0;
+    for (var i = 0; i < sumvalues.length; i++) {
+        if ($(sumvalues[i]).val() != "") {
+            sum = sum + parseFloat($(sumvalues[i]).val());
+        }
+    }
+    $('#debit').text(parseFloat(sum).toFixed(2));
+
+});
 
 function Add() {
     tablegeneraJournal.row.add([tablegeneraJournal.data]).draw(false);
