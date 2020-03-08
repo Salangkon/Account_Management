@@ -19,6 +19,10 @@ function chkNumber(ele) {
 
 $(document).ready(function () {
 
+    $('#myModal').on('hidden.bs.modal', function (e) {
+        // $('#myModal').modal('show');
+    })
+
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
 
@@ -75,16 +79,16 @@ $(document).ready(function () {
                     if (row.status == '0') {
                         return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
-                            <option value="0' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
-                            <option value="1' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
-                            <option value="2' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
+                            <option value="9' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
+                            <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                            <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             <option value="5' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                             </select>';
                     } else {
                         return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
-                            <option value="1' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
-                            <option value="2' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
+                            <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                            <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             </select>';
                     }
                 }
@@ -110,10 +114,17 @@ function changeFunc($i) {
         case "0":
             updateStatus(id, "0");
             break;
+        case "9":
+            updateJournal(id, "true");
+            break;
         case "5":
             deleteId(id);
             break;
-    }
+    }    
+}
+
+function updateJournal() {
+    $('#myModal').modal('show');
 }
 
 function updateStatus(id, status) {

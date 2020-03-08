@@ -20,7 +20,6 @@
 <body>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
 		<!-- Sidebar -->
 		<%@include file="TabBar.jsp"%>
 		<!-- End of Sidebar -->
