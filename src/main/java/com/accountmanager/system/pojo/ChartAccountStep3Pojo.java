@@ -5,11 +5,47 @@ import java.util.List;
 
 public class ChartAccountStep3Pojo {
 
+	private String id;
+	private String passCode;
+	private String textEdit;
+	private String detail;
 	private String step;
 	private String text;
 	private String icon;
 	private Date date;
 	private List<ChartAccountStep4Pojo> children;
+
+	public String getTextEdit() {
+		return textEdit;
+	}
+
+	public void setTextEdit(String textEdit) {
+		this.textEdit = textEdit;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPassCode() {
+		return passCode;
+	}
+
+	public void setPassCode(String passCode) {
+		this.passCode = passCode;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
 
 	public String getStep() {
 		return step;
