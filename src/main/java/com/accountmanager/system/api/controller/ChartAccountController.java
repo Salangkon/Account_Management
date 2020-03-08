@@ -50,6 +50,37 @@ public class ChartAccountController {
 	ChartAccountsLevel4Repository chartAccountsLv4Repo;
 	@Autowired
 	ChartAccountsLevel5Repository chartAccountsLv5Repo;
+	
+	@PostMapping("/update/{id}/{detail}")
+	public String update(@PathVariable("id") String id, @PathVariable("detail") String detail) {
+		System.out.println(id+detail);
+		try {
+			ChartAccountsLevel1 level1 = chartAccountsLv1Repo.findOne(id);
+			ChartAccountsLevel2 level2 = chartAccountsLv2Repo.findOne(id);
+			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
+			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
+			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
+			if (level1 != null) {
+				level1.setDetail(detail);
+				chartAccountsLv1Repo.save(level1);
+			} else if (level2 != null) {
+				level2.setDetail(detail);
+				chartAccountsLv2Repo.save(level2);
+			} else if (level3 != null) {
+				level3.setDetail(detail);
+				chartAccountsLv3Repo.save(level3);
+			} else if (level4 != null) {
+				level4.setDetail(detail);
+				chartAccountsLv4Repo.save(level4);
+			} else if (level5 != null) {
+				level5.setDetail(detail);
+				chartAccountsLv5Repo.save(level5);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Success";
+	}
 
 	@GetMapping("/get-all")
 	private Iterable<ChartAccountPojo> getAll() {

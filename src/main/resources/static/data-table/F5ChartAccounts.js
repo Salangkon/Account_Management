@@ -26,7 +26,20 @@ $(document).ready(
 
 );
 
-function tabelAll () {
+function saveUpdate() {
+    console.log($('#id').val());
+    $.ajax({
+        type: 'POST',
+        url: '/api-chart-account/update/'+ $('#id').val() +"/" + $('#detail').val(),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            alert("เรียบร้อย")
+        }
+    });
+}
+
+function tabelAll() {
     tabelAll = $('#tabelAll').DataTable({
         // responsive: true,
         "bDestroy": true,
@@ -187,6 +200,7 @@ function jsonCharAccount() {
                                 document.getElementById("edit").hidden = true;
                                 document.getElementById("passCode").disabled = false;
                                 document.getElementById("text").disabled = false;
+                                document.getElementById("detail").disabled = false;
                             } else {
                                 $('#id').val(res.id),
                                     $('#text').val(res.text),
@@ -198,9 +212,21 @@ function jsonCharAccount() {
                                 document.getElementById("edit").hidden = false;
                                 document.getElementById("passCode").disabled = true;
                                 document.getElementById("text").disabled = true;
+                                document.getElementById("detail").disabled = false;
                             }
                         }
                     })
+                } else {
+                    $('#id').val(""),
+                        $('#passCode').val(""),
+                        $('#text').val(""),
+                        $('#detail').val("")
+                    $('#textDisplay').text("")
+                    document.getElementById("save").hidden = true;
+                    document.getElementById("edit").hidden = true;
+                    document.getElementById("passCode").disabled = true;
+                    document.getElementById("text").disabled = true;
+                    document.getElementById("detail").disabled = true;
                 }
 
             }).jstree({
