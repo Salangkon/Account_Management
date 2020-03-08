@@ -2,55 +2,68 @@ package com.accountmanager.system.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The persistent class for the journal database table.
  * 
  */
 @Entity
-@NamedQuery(name="Journal.findAll", query="SELECT j FROM Journal j")
+@NamedQuery(name = "Journal.findAll", query = "SELECT j FROM Journal j")
 public class Journal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
 
-	@Column(name="company_id")
+	@Column(name = "company_id")
 	private String companyId;
 
-	@Column(name="create_by")
+	@Column(name = "create_by")
 	private String createBy;
 
-	@Column(name="create_date")
+	@CreatedDate
+	@Column(name = "create_date")
 	private Timestamp createDate;
 
-	private Timestamp date;
+	@Column(name = "document_code")
+	private String documentCode;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date")
+	private Date date;
+
+	private String status;
 
 	@Lob
 	private String description;
 
-	@Column(name="reference_document")
+	@Column(name = "reference_document")
 	private String referenceDocument;
 
-	@Column(name="sum_credit")
+	@Column(name = "sum_credit")
 	private float sumCredit;
 
-	@Column(name="sum_debit")
+	@Column(name = "sum_debit")
 	private float sumDebit;
 
 	private String type;
 
-	@Column(name="update_by")
+	@Column(name = "update_by")
 	private String updateBy;
 
-	@Column(name="update_date")
+	@LastModifiedDate
+	@Column(name = "update_date")
 	private Timestamp updateDate;
 
-	//bi-directional many-to-one association to JournalList
-	@OneToMany(mappedBy="journal", cascade = CascadeType.MERGE)
+	// bi-directional many-to-one association to JournalList
+	@OneToMany(mappedBy = "journal", cascade = CascadeType.MERGE)
 	private List<JournalList> journalLists;
 
 	public Journal() {
@@ -72,6 +85,22 @@ public class Journal implements Serializable {
 		this.companyId = companyId;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getDocumentCode() {
+		return documentCode;
+	}
+
+	public void setDocumentCode(String documentCode) {
+		this.documentCode = documentCode;
+	}
+
 	public String getCreateBy() {
 		return this.createBy;
 	}
@@ -88,11 +117,11 @@ public class Journal implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public Timestamp getDate() {
-		return this.date;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setDate(Timestamp date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

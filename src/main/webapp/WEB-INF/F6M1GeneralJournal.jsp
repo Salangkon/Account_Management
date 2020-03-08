@@ -20,7 +20,6 @@
 <body>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
 		<!-- Sidebar -->
 		<%@include file="TabBar.jsp"%>
 		<!-- End of Sidebar -->
@@ -106,13 +105,6 @@
 														style="margin-right: 10px;"></i></a>
 												<a href="#"><i class="fas fa-2x fa-download"></i></a>
 											</div>
-											<!-- <div class="col-sm-12">
-												<label>สมุดรายวัน</label>
-												<select class="form-control" id="companyType" style="width: 200px;">
-													<option value="สมุดรายวันขาย">สมุดรายวันขาย</option>
-													<option value="สมุดรายวันซื้อ">สมุดรายวันซื้อ</option>
-												</select>
-											</div> -->
 
 											<div class="col-sm-5 mb-3 mb-sm-0">
 												<div class="form-group row">
@@ -130,7 +122,8 @@
 														<label>คำอธิบาย : </label>
 													</div>
 													<div class="col-sm-8">
-														<textarea class="form-control" style="height: 110px"></textarea>
+														<textarea class="form-control" id="description"
+															style="height: 110px"></textarea>
 
 													</div>
 												</div>
@@ -149,14 +142,15 @@
 														<label>เลขที่เอกสาร : </label>
 													</div>
 													<div class="col-sm-8">
-														<input class="form-control" id="" placeholder="เลขที่เอกสาร">
+														<input class="form-control" id="referenceDocument"
+															placeholder="เลขที่เอกสาร">
 													</div>
 												</div>
 											</div>
 
 											<div class="table-responsive col-sm-12" style="margin-top: 12px;">
-												<table id="tablegeneraJournalDisplay" class="table table-sm table-striped table-bordered"
-													width="100%">
+												<table id="tablegeneraJournalDisplay"
+													class="table table-sm table-striped" width="100%">
 													<thead class="bg-gradient-primary" style="color: white;">
 														<tr>
 															<th>รหัสบัญชี / ชื่อบัญชี</th>
@@ -168,12 +162,17 @@
 													</thead>
 													<tfoot>
 														<tr>
-															<th colspan="4">
-																<button type="button" class="btn btn-default btn-sm" onclick="Add()">
+															<th>
+																<button type="button" class="btn btn-default btn-sm"
+																	onclick="Add()">
 																	<i class="fas fa-plus" style="color: red"></i>
 																	เพิ่มรายการ
 																</button>
 															</th>
+															<th style="text-align: right;">รวม</th>
+															<th><label id="credit">00.00</label></th>
+															<th><label id="debit">00.00</label></th>
+															<th></th>
 														</tr>
 													</tfoot>
 												</table>
@@ -187,7 +186,7 @@
 					</div>
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" id="save">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreate()">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 
