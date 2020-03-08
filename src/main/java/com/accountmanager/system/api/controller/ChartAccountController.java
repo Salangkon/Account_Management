@@ -3,6 +3,7 @@ package com.accountmanager.system.api.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,13 +54,15 @@ public class ChartAccountController {
 	
 	@PostMapping("/update/{id}/{detail}")
 	public String update(@PathVariable("id") String id, @PathVariable("detail") String detail) {
-		System.out.println(id+detail);
 		try {
 			ChartAccountsLevel1 level1 = chartAccountsLv1Repo.findOne(id);
 			ChartAccountsLevel2 level2 = chartAccountsLv2Repo.findOne(id);
 			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
 			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
 			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
+			if (detail.equalsIgnoreCase("ZEROOFNULL")) {
+				detail = "";
+			}
 			if (level1 != null) {
 				level1.setDetail(detail);
 				chartAccountsLv1Repo.save(level1);
@@ -80,6 +83,62 @@ public class ChartAccountController {
 			e.printStackTrace();
 		}
 		return "Success";
+	}
+	
+	@PostMapping("/create-file")
+	public ChartAccountPojo createFile(@RequestBody HashMap<String, String> data) {
+		try {
+			String id = data.get("id");
+			ChartAccountsLevel2 level2 = chartAccountsLv2Repo.findOne(id);
+			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
+			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
+			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
+			if (level2 != null) {
+				ChartAccountsLevel2 accountsLevel2 = new ChartAccountsLevel2();
+				accountsLevel2.setId(UUID.randomUUID().toString());
+				accountsLevel2.setPassCode(data.get("passCode"));
+				accountsLevel2.setText(data.get("text"));
+				accountsLevel2.setIcon("far fa-file-alt");
+				accountsLevel2.setDetail(data.get("detail"));
+				accountsLevel2.setIdlv(level2.getIdlv());
+				accountsLevel2.setCreateDate(new Timestamp(new Date().getTime()));
+				chartAccountsLv2Repo.save(accountsLevel2);
+			} else if (level3 != null) {
+				ChartAccountsLevel3 accountsLevel3 = new ChartAccountsLevel3();
+				accountsLevel3.setId(UUID.randomUUID().toString());
+				accountsLevel3.setPassCode(data.get("passCode"));
+				accountsLevel3.setText(data.get("text"));
+				accountsLevel3.setIcon("far fa-file-alt");
+				accountsLevel3.setDetail(data.get("detail"));
+				accountsLevel3.setIdlv(level3.getIdlv());
+				accountsLevel3.setCreateDate(new Timestamp(new Date().getTime()));
+				chartAccountsLv3Repo.save(accountsLevel3);
+			} else if (level4 != null) {
+				ChartAccountsLevel4 accountsLevel4 = new ChartAccountsLevel4();
+				accountsLevel4.setId(UUID.randomUUID().toString());
+				accountsLevel4.setPassCode(data.get("passCode"));
+				accountsLevel4.setText(data.get("text"));
+				accountsLevel4.setIcon("far fa-file-alt");
+				accountsLevel4.setDetail(data.get("detail"));
+				accountsLevel4.setIdlv(level4.getIdlv());
+				accountsLevel4.setCreateDate(new Timestamp(new Date().getTime()));
+				chartAccountsLv4Repo.save(accountsLevel4);
+			} else if (level5 != null) {
+				ChartAccountsLevel5 accountsLevel5 = new ChartAccountsLevel5();
+				accountsLevel5.setId(UUID.randomUUID().toString());
+				accountsLevel5.setPassCode(data.get("passCode"));
+				accountsLevel5.setText(data.get("text"));
+				accountsLevel5.setIcon("far fa-file-alt");
+				accountsLevel5.setDetail(data.get("detail"));
+				accountsLevel5.setIdlv(level5.getIdlv());
+				accountsLevel5.setCreateDate(new Timestamp(new Date().getTime()));
+				chartAccountsLv5Repo.save(accountsLevel5);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ChartAccountPojo accountPojo = new ChartAccountPojo();
+		return accountPojo;
 	}
 
 	@GetMapping("/get-all")
@@ -297,26 +356,31 @@ public class ChartAccountController {
 				accountPojo.setId(level1.getId());
 				accountPojo.setText(level1.getText());
 				accountPojo.setIcon(level1.getIcon());
+				accountPojo.setDetail(level1.getDetail());
 				accountPojo.setPassCode(level1.getPassCode());
 			} else if (level2 != null) {
 				accountPojo.setId(level2.getId());
 				accountPojo.setText(level2.getText());
 				accountPojo.setIcon(level2.getIcon());
+				accountPojo.setDetail(level2.getDetail());
 				accountPojo.setPassCode(level2.getPassCode());
 			} else if (level3 != null) {
 				accountPojo.setId(level3.getId());
 				accountPojo.setText(level3.getText());
 				accountPojo.setIcon(level3.getIcon());
+				accountPojo.setDetail(level3.getDetail());
 				accountPojo.setPassCode(level3.getPassCode());
 			} else if (level4 != null) {
 				accountPojo.setId(level4.getId());
 				accountPojo.setText(level4.getText());
 				accountPojo.setIcon(level4.getIcon());
+				accountPojo.setDetail(level4.getDetail());
 				accountPojo.setPassCode(level4.getPassCode());
 			} else if (level5 != null) {
 				accountPojo.setId(level5.getId());
 				accountPojo.setText(level5.getText());
 				accountPojo.setIcon(level5.getIcon());
+				accountPojo.setDetail(level5.getDetail());
 				accountPojo.setPassCode(level5.getPassCode());
 			}
 		} catch (Exception e) {

@@ -184,7 +184,7 @@
 
 												<div class="modal-footer">
 													<button type="button" class="btn btn-success"
-														onclick="saveCreateQuotation()" id="save">บันทึก</button>
+														onclick="saveCreate()" id="save">บันทึก</button>
 													<button type="button" class="btn btn-success"
 														onclick="saveUpdate()" id="edit">แก้ไข</button>
 													<button type="button" class="btn btn-secondary"

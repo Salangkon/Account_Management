@@ -27,16 +27,56 @@ $(document).ready(
 );
 
 function saveUpdate() {
-    console.log($('#id').val());
+    console.log($('#id').val(), $('#detail').val());
+    var id = $('#id').val()
+    var detail;
+    if ($('#detail').val() == "") {
+        detail = "ZEROOFNULL";
+    } else {
+        detail = $('#detail').val();
+    }
     $.ajax({
         type: 'POST',
-        url: '/api-chart-account/update/'+ $('#id').val() +"/" + $('#detail').val(),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        url: '/api-chart-account/update/' + id + "/" + detail,
         success: function (result) {
-            alert("เรียบร้อย")
+            if (result == "Success") {
+                swal("บันทึก!", "สำเร็จ!", "success")
+            }
         }
     });
+}
+
+function saveCreate() {
+    console.log($('#id').val());
+
+    var insert = {
+        id: $('#id').val(),
+        passCode: $('#passCode').val(),
+        text: $('#text').val(),
+        detail: $('#detail').val(),
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/api-chart-account/create-file',
+        data: JSON.stringify(insert),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            swal({
+                title: "บันทึก สำเร็จ",
+                type: "success",
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "ตกลง",
+            },
+            function () {
+                window.location.href = "/chart-accounts";
+            });
+        },
+        failure: function (errMsg) {
+            alert(errMsg);
+        }
+    });
+    
 }
 
 function tabelAll() {
@@ -170,7 +210,6 @@ function jsonCharAccount() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-
             $('#dataJSTree').on('changed.jstree', function (e, data) {
                 var i, j, r = [];
                 var id;
@@ -190,7 +229,7 @@ function jsonCharAccount() {
                         dataType: "json",
                         success: function (res) {
                             if (res.icon == "fas fa-plus") {
-                                $('#id').val(""),
+                                $('#id').val(res.id),
                                     $('#passCode').val(""),
                                     $('#text').val(""),
                                     $('#detail').val("")
