@@ -44,16 +44,18 @@
 												data-target="#myModal">สร้างใหม่</button>
 										</div>
 									</div>
+									<form name="form_search" id="form_search"  onsubmit="return check()">
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-7"></div>
 										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
 										<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button"
+											<button id="save" type="submit" class="btn btn-primary" type="button"
 												style="margin-top: 32px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
+									</form>
 									<table id="example" class="table table-sm table-striped table-bordered"
 										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
@@ -83,7 +85,7 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title">สร้างสมุดรายวัน</h4>
+						<h4 class="modal-title">สร้างสมุดรายวันซื้อ</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -97,16 +99,16 @@
 										<div class="form-group row">
 											<div class="col-sm-12" style="text-align: right;">
 												<a href="#"><i class="fas fa-2x fa-print"
-														style="margin-right: 10px;"></i></a>
-												<a href="#"><i class="fas fa-2x fa-download"></i></a>
+														style="margin-right: 10px;"></i>พิมพ์เอกสาร</a>
+												<!-- <a href="#"><i class="fas fa-2x fa-download"></i></a> -->
 											</div>
-											<div class="col-sm-12">
+											<!-- <div class="col-sm-12">
 												<label>สมุดรายวัน</label>
 												<select class="form-control" id="companyType" style="width: 200px;">
 													<option value="สมุดรายวันขาย">สมุดรายวันขาย</option>
 													<option value="สมุดรายวันซื้อ">สมุดรายวันซื้อ</option>
 												</select>
-											</div>
+											</div> -->
 
 											<div class="col-sm-7 mb-3 mb-sm-0">
 												<div>
@@ -185,5 +187,7 @@
 		<script src="\data-table\F6M2BoughtDayBook.js" type="text/javascript"></script>
 
 </body>
-
+<script>
+	
+</script>
 </html>
