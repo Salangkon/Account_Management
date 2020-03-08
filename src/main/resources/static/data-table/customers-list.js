@@ -18,18 +18,33 @@ $(document).ready(function () {
 			},
 			{
 				"mData": "tel",
+				"className": "text-center",
 				"sWidth": "60px"
 			}, {
 				"mData": "email",
 				"sWidth": "60px"
 			}, {
-				"mData": "officeType",
-				"sWidth": "60px"
+				"mData": "",
+				"sWidth": "60px",
+				"mRender": function (data, type, row, index, full) {
+					if (row.companyType == '0') {
+						return '';
+					} else if (row.companyType == '1') {
+						return 'นิติบุุคล';
+					} else if (row.companyType == '2') {
+						return 'บุคคลธรรมดา';
+					}
+				}
 			}, {
 				"mData": "created_date",
-				"sWidth": "60px"
+				"className": "text-center",
+				"sWidth": "60px",
+				"mRender": function (data, type, full) {
+					return '<div align="center"> ' + new Date(full.created_date).toLocaleDateString("en-US") + '</div>'
+				}
 			}, {
 				"sWidth": "60px",
+				"className": "text-center",
 				"mRender": function (data, type, full) {
 					return '<div align="center">' +
 						'<button type="button" class="btn btn-warning btn-sm"data-toggle="modal" data-target="#myModal" onclick="update(' + "'" + full.companyId + "'" + ')"><i class="fas fa-edit"></i></button> ' +
@@ -159,7 +174,7 @@ $(document).ready(function () {
 			$('#error-companyId').addClass("hide")
 		}
 
-		if ('' == $('#companyType').val()) {
+		if ('0' == $('#companyType').val()) {
 			companyType.focus()
 			$('#error-companyType').removeClass("hide")
 			pass = false;
@@ -220,7 +235,7 @@ function update(companyId) {
 		$('#companyId').val("");
 		document.getElementById("companyId").disabled = false;
 		$('#companyName').val("");
-		$('#companyType').val("");
+		$('#companyType').val("0");
 		$('#department').val("");
 		$('#customerName').val("");
 		$('#address').val("");
