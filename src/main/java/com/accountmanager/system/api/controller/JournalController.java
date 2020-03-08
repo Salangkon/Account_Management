@@ -141,7 +141,7 @@ public class JournalController {
 
 	@GetMapping(value = "/journalSearch/namejournal/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public List<GroupJounalModel> getjournalSearch(@PathVariable final String name)
+	public List<GroupJounalModel> getjournalSearch(@PathVariable String name)
 			throws IllegalAccessException, InvocationTargetException {
 
 		final List<JournalSearchPojo> data = journalSearchService.searchJournal(name);
@@ -155,7 +155,6 @@ public class JournalController {
 		}
 		for (Map.Entry me: mapValues.entrySet()) {
 			GroupJounalModel groupJounal =new GroupJounalModel();
-			System.out.println(me);
 			groupJounal.setKey((String) me.getKey());
 			groupJounal.setValue((List) me.getValue());
 		dataSearch.add(groupJounal);
