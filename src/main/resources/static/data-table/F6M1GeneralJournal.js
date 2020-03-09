@@ -191,153 +191,90 @@ var tablegeneraJournal
 
 function tableCreateJournal(data) {
     console.log(JSON.stringify(data));
-    if (data != null) {
-        tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
-            lengthChange: false,
-            "paging": false,
-            searching: false,
-            responsive: true,
-            "bDestroy": true,
-            data: jQuery.parseJSON(JSON.stringify(data)),
-            "bAutoWidth": false,
-            "sAjaxDataProp": "",
-            "aoColumns": [{
-                    'data': '',
-                    "sWidth": "20%",
-                    "mRender": function (data,
-                        type, row, index) {
-                        if (row.chartAccountId == null) {
-                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                                index.row +
-                                '" value=""/>';
-                        } else {
-                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                                index.row +
-                                '" value="' + row.chartAccountId + '"/>';
-                        }
-
-                    }
-                },
-                {
-                    'data': '',
-                    "sWidth": "50%",
-                    "mRender": function (data,
-                        type, row, index) {
-                        if (row.detail == null) {
-                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                                index.row +
-                                '" value=""/>';
-                        } else {
-                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                                index.row +
-                                '" value="' + row.detail + '"/>';
-                        }
-                    }
-                },
-                {
-                    'data': '',
-                    "sWidth": "13%",
-                    "mRender": function (data,
-                        type, row, index) {
-                        if (row.credit == null) {
-                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                                index.row +
-                                '" value=""/>';
-                        } else {
-                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                                index.row +
-                                '" value="' + row.credit + '"/>';
-                        }
-                    }
-                },
-                {
-                    'data': '',
-                    "sWidth": "13%",
-                    "mRender": function (data,
-                        type, row, index) {
-                        if (row.debit == null) {
-                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                                index.row +
-                                '" value=""/>';
-                        } else {
-                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                                index.row +
-                                '" value="' + row.debit + '"/>';
-                        }
-                    }
-                },
-                {
-                    "mData": "",
-                    "sWidth": "4px",
-                    "mRender": function (data,
-                        type, row, index) {
-                        return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
-                    }
-                }
-            ],
-        });
-    } else {
-        tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
-            lengthChange: false,
-            "paging": false,
-            searching: false,
-            responsive: true,
-            "bDestroy": true,
-            // data: jQuery.parseJSON(JSON.stringify(data)),
-            "bAutoWidth": false,
-            "sAjaxDataProp": "",
-            "aoColumns": [{
-                    'data': '',
-                    "sWidth": "20%",
-                    "mRender": function (data,
-                        type, row, index) {
+    tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
+        lengthChange: false,
+        "paging": false,
+        searching: false,
+        responsive: true,
+        "bDestroy": true,
+        data: jQuery.parseJSON(JSON.stringify(data)),
+        "bAutoWidth": false,
+        "sAjaxDataProp": "",
+        "aoColumns": [{
+                'data': '',
+                "sWidth": "20%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.chartAccountId == null) {
                         return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
                             index.row +
                             '" value=""/>';
+                    } else {
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                            index.row +
+                            '" value="' + row.chartAccountId + '"/>';
                     }
-                },
-                {
-                    'data': '',
-                    "sWidth": "50%",
-                    "mRender": function (data,
-                        type, row, index) {
-                        return '<input class="form-control" style="width: 100%;height: 7mm" type="text" id="detail' +
+
+                }
+            },
+            {
+                'data': '',
+                "sWidth": "50%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.detail == null) {
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
                             index.row +
                             '" value=""/>';
-                    }
-                },
-                {
-                    'data': '',
-                    "sWidth": "13%",
-                    "mRender": function (data,
-                        type, row, index) {
-                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="height: 7mm" type="text" name="credit" id="credit' +
+                    } else {
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
                             index.row +
-                            '" value=""/>';
-                    }
-                },
-                {
-                    'data': '',
-                    "sWidth": "13%",
-                    "mRender": function (data,
-                        type, row, index) {
-                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="height: 7mm" type="text" name="debit" id="debit' +
-                            index.row +
-                            '" value=""/>';
-                    }
-                },
-                {
-                    "mData": "",
-                    "sWidth": "4px",
-                    "mRender": function (data,
-                        type, row, index) {
-                        return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                            '" value="' + row.detail + '"/>';
                     }
                 }
-            ],
-        });
-    }
-
+            },
+            {
+                'data': '',
+                "sWidth": "13%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.credit == null) {
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" OnKeyPress="return chkNumber(this)" type="text" name="credit" id="credit' +
+                            index.row +
+                            '" value=""/>';
+                    } else {
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" OnKeyPress="return chkNumber(this)" type="text" name="credit" id="credit' +
+                            index.row +
+                            '" value="' + row.credit + '"/>';
+                    }
+                }
+            },
+            {
+                'data': '',
+                "sWidth": "13%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.debit == null) {
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" OnKeyPress="return chkNumber(this)" type="text" name="debit" id="debit' +
+                            index.row +
+                            '" value=""/>';
+                    } else {
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" OnKeyPress="return chkNumber(this)" type="text" name="debit" id="debit' +
+                            index.row +
+                            '" value="' + row.debit + '"/>';
+                    }
+                }
+            },
+            {
+                "mData": "",
+                "sWidth": "4px",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                }
+            }
+        ],
+    });
 
     $('#tablegeneraJournalDisplay').on('click', 'a', function () {
         tablegeneraJournal.row($(this).parents('tr')).remove().draw();
@@ -359,7 +296,7 @@ function tableCreateJournal(data) {
             }
         }
         $('#debit').text(parseFloat(sum).toFixed(2));
-    }); // end table
+    }); 
 }
 
 $('#tablegeneraJournalDisplay').on('keyup', 'input', function () {
@@ -380,7 +317,6 @@ $('#tablegeneraJournalDisplay').on('keyup', 'input', function () {
         }
     }
     $('#sumDebit').text(parseFloat(sum).toFixed(2));
-
 });
 
 function Add() {

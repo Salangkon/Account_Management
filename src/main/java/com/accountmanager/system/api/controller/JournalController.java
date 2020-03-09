@@ -43,9 +43,21 @@ public class JournalController {
 
 	@PostMapping("/add-update")
 	public ResponseEntity<?> addUpdate(@RequestBody Journal journal) {
+		List<JournalList> journalLists = new ArrayList<JournalList>();
 		try {
-			List<JournalList> journalLists = new ArrayList<JournalList>();
-			journal.setId(UUID.randomUUID().toString());
+			System.err.println(journal.getId());
+			if (journal.getId() == null || journal.getId().equals("")) {
+				journal.setId(UUID.randomUUID().toString());
+			} else {
+				List<JournalList> list = journalListRepo.findByJournalId(journal.getId());
+				if (list != null) {
+					if (!list.isEmpty()) {
+						for (JournalList journalList : list) {
+							journalListRepo.delete(journalList);
+						}
+					}
+				}
+			}
 			journal.setCreateDate(new Timestamp(new Date().getTime()));
 			if (journal.getJournalLists() != null) {
 				for (JournalList list : journal.getJournalLists()) {
@@ -126,7 +138,7 @@ public class JournalController {
 
 		return journalRepo.save(journal);
 	}
-	
+
 	@GetMapping("/get-by/{id}")
 	private Journal geyBy(@PathVariable("id") String id) {
 		return journalRepo.findOne(id);

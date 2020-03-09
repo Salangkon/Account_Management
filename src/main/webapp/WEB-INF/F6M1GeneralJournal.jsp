@@ -105,7 +105,7 @@
 														style="margin-right: 10px;"></i></a>
 												<a href="#"><i class="fas fa-2x fa-download"></i></a>
 											</div>
-
+											<input id="id" hidden>
 											<div class="col-sm-5 mb-3 mb-sm-0">
 												<div class="form-group row">
 													<div class="col-sm-4">
