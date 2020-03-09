@@ -22,7 +22,7 @@ $(document).ready(function () {
         exampleTable();
     });
     dataCustomer(null);
-    tableCreateQuotationDisplay1(null);
+    tableCreateJournal(null);
     exampleTable();
 
 
@@ -153,8 +153,9 @@ function createUpdate(id) {
                     $('#date').val(msg.date),
                     $('#description').val(msg.description),
                     $('#referenceDocument').val(msg.referenceDocument),
-                    $('#sumDebit').val(msg.sumDebit),
-                    $('#sumCredit').val(msg.sumCredit)
+                    $('#sumDebit').text(parseFloat(msg.sumDebit).toFixed(2)),
+                    $('#sumCredit').text(parseFloat(msg.sumCredit).toFixed(2))
+                tableCreateJournal(msg.journalLists);
             }
         })
     } else {
@@ -164,8 +165,10 @@ function createUpdate(id) {
         $('#date').val("")
         $('#description').val("")
         $('#referenceDocument').val("")
-        $('#sumDebit').val("")
-        $('#sumCredit').val("")
+        $('#sumDebit').text("00.00")
+        $('#sumCredit').text("00.00")
+        tableCreateJournal(null);
+
     }
 
     $('#myModal').modal('show');
@@ -186,66 +189,155 @@ function updateStatus(id, status) {
 
 var tablegeneraJournal
 
-function tableCreateQuotationDisplay1(id) {
-    tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
-        lengthChange: false,
-        "paging": false,
-        searching: false,
-        responsive: true,
-        "bDestroy": true,
-        // "sAjaxSource": "/api-f2/get-f2ListRepo-by-id/" + id,
-        "bAutoWidth": false,
-        "sAjaxDataProp": "",
-        "aoColumns": [{
-                'data': '',
-                "sWidth": "20%",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                        index.row +
-                        '" value=""/>';
+function tableCreateJournal(data) {
+    console.log(JSON.stringify(data));
+    if (data != null) {
+        tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
+            lengthChange: false,
+            "paging": false,
+            searching: false,
+            responsive: true,
+            "bDestroy": true,
+            data: jQuery.parseJSON(JSON.stringify(data)),
+            "bAutoWidth": false,
+            "sAjaxDataProp": "",
+            "aoColumns": [{
+                    'data': '',
+                    "sWidth": "20%",
+                    "mRender": function (data,
+                        type, row, index) {
+                        if (row.chartAccountId == null) {
+                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                                index.row +
+                                '" value=""/>';
+                        } else {
+                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                                index.row +
+                                '" value="' + row.chartAccountId + '"/>';
+                        }
+
+                    }
+                },
+                {
+                    'data': '',
+                    "sWidth": "50%",
+                    "mRender": function (data,
+                        type, row, index) {
+                        if (row.detail == null) {
+                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                                index.row +
+                                '" value=""/>';
+                        } else {
+                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                                index.row +
+                                '" value="' + row.detail + '"/>';
+                        }
+                    }
+                },
+                {
+                    'data': '',
+                    "sWidth": "13%",
+                    "mRender": function (data,
+                        type, row, index) {
+                        if (row.credit == null) {
+                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                                index.row +
+                                '" value=""/>';
+                        } else {
+                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                                index.row +
+                                '" value="' + row.credit + '"/>';
+                        }
+                    }
+                },
+                {
+                    'data': '',
+                    "sWidth": "13%",
+                    "mRender": function (data,
+                        type, row, index) {
+                        if (row.debit == null) {
+                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                                index.row +
+                                '" value=""/>';
+                        } else {
+                            return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                                index.row +
+                                '" value="' + row.debit + '"/>';
+                        }
+                    }
+                },
+                {
+                    "mData": "",
+                    "sWidth": "4px",
+                    "mRender": function (data,
+                        type, row, index) {
+                        return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                    }
                 }
-            },
-            {
-                'data': '',
-                "sWidth": "50%",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<input class="form-control" style="width: 100%;height: 7mm" type="text" id="datail' +
-                        index.row +
-                        '" value=""/>';
+            ],
+        });
+    } else {
+        tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
+            lengthChange: false,
+            "paging": false,
+            searching: false,
+            responsive: true,
+            "bDestroy": true,
+            // data: jQuery.parseJSON(JSON.stringify(data)),
+            "bAutoWidth": false,
+            "sAjaxDataProp": "",
+            "aoColumns": [{
+                    'data': '',
+                    "sWidth": "20%",
+                    "mRender": function (data,
+                        type, row, index) {
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                            index.row +
+                            '" value=""/>';
+                    }
+                },
+                {
+                    'data': '',
+                    "sWidth": "50%",
+                    "mRender": function (data,
+                        type, row, index) {
+                        return '<input class="form-control" style="width: 100%;height: 7mm" type="text" id="detail' +
+                            index.row +
+                            '" value=""/>';
+                    }
+                },
+                {
+                    'data': '',
+                    "sWidth": "13%",
+                    "mRender": function (data,
+                        type, row, index) {
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="height: 7mm" type="text" name="credit" id="credit' +
+                            index.row +
+                            '" value=""/>';
+                    }
+                },
+                {
+                    'data': '',
+                    "sWidth": "13%",
+                    "mRender": function (data,
+                        type, row, index) {
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="height: 7mm" type="text" name="debit" id="debit' +
+                            index.row +
+                            '" value=""/>';
+                    }
+                },
+                {
+                    "mData": "",
+                    "sWidth": "4px",
+                    "mRender": function (data,
+                        type, row, index) {
+                        return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                    }
                 }
-            },
-            {
-                'data': '',
-                "sWidth": "13%",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="height: 7mm" type="text" name="credit" id="credit' +
-                        index.row +
-                        '" value=""/>';
-                }
-            },
-            {
-                'data': '',
-                "sWidth": "13%",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="height: 7mm" type="text" name="debit" id="debit' +
-                        index.row +
-                        '" value=""/>';
-                }
-            },
-            {
-                "mData": "",
-                "sWidth": "4px",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
-                }
-            }
-        ],
-    });
+            ],
+        });
+    }
+
 
     $('#tablegeneraJournalDisplay').on('click', 'a', function () {
         tablegeneraJournal.row($(this).parents('tr')).remove().draw();
@@ -371,7 +463,7 @@ function saveCreate() {
                 for (let i = 0; i < data.length; i++) {
                     var d = {};
                     d.chartAccountId = $("#chartAccountId" + i).val(); //แผนบัญชี
-                    d.datail = $("#datail" + i).val(); //รายละเอียด
+                    d.detail = $("#detail" + i).val(); //รายละเอียด
                     d.debit = $("#debit" + i).val(); //เดบิต
                     d.credit = $("#credit" + i).val(); //เครดิต
                     insert.journalLists.push(d)
