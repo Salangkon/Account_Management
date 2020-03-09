@@ -46,7 +46,7 @@
 										<div class="col-sm-1"></div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" data-toggle="modal"
-												data-target="#myModal">สร้างใหม่</button>
+												data-target="#myModal" onclick="createUpdate(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
@@ -170,8 +170,8 @@
 																</button>
 															</th>
 															<th style="text-align: right;">รวม</th>
-															<th><label id="credit">00.00</label></th>
-															<th><label id="debit">00.00</label></th>
+															<th><label id="sumCredit">00.00</label></th>
+															<th><label id="sumDebit">00.00</label></th>
 															<th></th>
 														</tr>
 													</tfoot>

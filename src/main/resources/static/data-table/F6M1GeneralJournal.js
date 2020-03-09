@@ -18,85 +18,101 @@ function chkNumber(ele) {
 }
 
 $(document).ready(function () {
-
     $('#myModal').on('hidden.bs.modal', function (e) {
-        // $('#myModal').modal('show');
-    })
-
+        exampleTable();
+    });
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
+    exampleTable();
 
-    var table = $('#example').DataTable({
-        // lengthChange: true,
-        buttons: ['copy', 'excel', 'pdf', 'colvis'],
-        "sAjaxSource": "/api-journal/get-all",
-        "sAjaxDataProp": "",
-        "aoColumns": [{
-                'data': 'date',
-                "className": "text-center",
-                "sWidth": "10%",
-            },
-            {
-                'data': 'documentCode',
-                "className": "text-center",
-                "sWidth": "15%",
-            },
-            {
-                'data': 'description',
-                "sWidth": "45%",
-            },
-            {
-                'data': 'referenceDocument',
-                "sWidth": "10%",
-            },
-            {
-                'data': 'date',
-                "className": "text-center",
-                "sWidth": "10%",
-                "mRender": function (data, type, row, index, full) {
-                    if (row.status == '0') {
-                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+
+}); // end Document
+
+
+function exampleTable() {
+    $.ajax({
+        type: "GET",
+        url: "/api-journal/get-all",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            // table seve offer price
+            var tableQuotation = $('#example').DataTable({
+                lengthChange: true,
+                paging: false,
+                searching: false,
+                "bDestroy": true,
+                // "sAjaxSource": searchDate(),
+                data: jQuery.parseJSON(JSON.stringify(msg)),
+                "sAjaxDataProp": "",
+
+                "aoColumns": [{
+                        'data': 'date',
+                        "className": "text-center",
+                        "sWidth": "10%",
+                    },
+                    {
+                        'data': 'documentCode',
+                        "className": "text-center",
+                        "sWidth": "15%",
+                    },
+                    {
+                        'data': 'description',
+                        "sWidth": "45%",
+                    },
+                    {
+                        'data': 'referenceDocument',
+                        "sWidth": "10%",
+                    },
+                    {
+                        'data': 'date',
+                        "className": "text-center",
+                        "sWidth": "10%",
+                        "mRender": function (data, type, row, index, full) {
+                            if (row.status == '0') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">รอดำเนินการ</option/>\n\
                             <option value="1' + row.id + '" style="color: green">อนุมัติ</option/>\n\
                             </select>';
-                    } else if (row.status == '1') {
-                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
+                            } else if (row.status == '1') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
                             <option style="color: green">อนุมัติเเล้ว</option/>\n\
                             <option value="2' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                             </select>';
-                    } else if (row.status == '2') {
-                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
+                            } else if (row.status == '2') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                             <option value=:"" style="color: red">ยกเลิก</option/>\n\
                             </select>';
-                    }
-                }
-            },
-            {
-                'data': 'date',
-                "className": "text-center",
-                "sWidth": "10%",
-                "mRender": function (data, type, row, index, full) {
-                    if (row.status == '0') {
-                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                            }
+                        }
+                    },
+                    {
+                        'data': 'date',
+                        "className": "text-center",
+                        "sWidth": "10%",
+                        "mRender": function (data, type, row, index, full) {
+                            if (row.status == '0') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
                             <option value="9' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
                             <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                             <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             <option value="5' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                             </select>';
-                    } else {
-                        return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                            } else {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
                             <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                             <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             </select>';
-                    }
-                }
-            },
-        ],
+                            }
+                        }
+                    },
+                ],
+            });
+        }
     });
-
-}); // end Document
+}
 
 // update status
 function changeFunc($i) {
@@ -115,16 +131,45 @@ function changeFunc($i) {
             updateStatus(id, "0");
             break;
         case "9":
-            updateJournal(id, "true");
+            createUpdate(id);
             break;
         case "5":
             deleteId(id);
             break;
-    }    
+    }
 }
 
-function updateJournal() {
+function createUpdate(id) {
+    if (id != null) {
+        $.ajax({
+            type: "GET",
+            url: "/api-journal/get-by/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                $('#id').val(msg.id),
+                    $('#customers').val(msg.companyId),
+                    $('#type').val(msg.documentCode),
+                    $('#date').val(msg.date),
+                    $('#description').val(msg.description),
+                    $('#referenceDocument').val(msg.referenceDocument),
+                    $('#sumDebit').val(msg.sumDebit),
+                    $('#sumCredit').val(msg.sumCredit)
+            }
+        })
+    } else {
+        $('#id').val("")
+        $('#customers').val("")
+        $('#type').val("")
+        $('#date').val("")
+        $('#description').val("")
+        $('#referenceDocument').val("")
+        $('#sumDebit').val("")
+        $('#sumCredit').val("")
+    }
+
     $('#myModal').modal('show');
+
 }
 
 function updateStatus(id, status) {
@@ -233,7 +278,7 @@ $('#tablegeneraJournalDisplay').on('keyup', 'input', function () {
             sum = sum + parseFloat($(sumvalues[i]).val());
         }
     }
-    $('#credit').text(parseFloat(sum).toFixed(2));
+    $('#sumCredit').text(parseFloat(sum).toFixed(2));
 
     var sumvalues = $("[name='debit']");
     var sum = 0;
@@ -242,7 +287,7 @@ $('#tablegeneraJournalDisplay').on('keyup', 'input', function () {
             sum = sum + parseFloat($(sumvalues[i]).val());
         }
     }
-    $('#debit').text(parseFloat(sum).toFixed(2));
+    $('#sumDebit').text(parseFloat(sum).toFixed(2));
 
 });
 
@@ -312,16 +357,14 @@ function saveCreate() {
                     id: $('#id').val(), //ลูกค้า
                     companyId: $('#customers').val(), //ลูกค้า
                     documentCode: msg, //เลขที่เอกสาร
-                    type: $('#type').val(), //ประเภท
+                    type: "JV", //ประเภท
                     status: "0", //สถานะ
                     date: $('#date').val(), //วันที่
                     description: $('#description').val(), // คำอธิบาย
                     referenceDocument: $('#referenceDocument').val(), //เอกสารอ้างอิง
                     // เดบิต เครดิต
-                    // sumDebit: $('#productPriceAll').val(), //เดบิต
-                    // sumCredit: $('#price').val(), //เครดิต
-                    sumDebit: 0, //เดบิต
-                    sumCredit: 0, //เครดิต
+                    sumDebit: $('#sumDebit').text(), //เดบิต
+                    sumCredit: $('#sumCredit').text(), //เครดิต
                     journalLists: [],
                 }
                 var data = tablegeneraJournal.data();

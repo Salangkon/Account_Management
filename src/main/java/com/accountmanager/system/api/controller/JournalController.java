@@ -126,5 +126,10 @@ public class JournalController {
 
 		return journalRepo.save(journal);
 	}
+	
+	@GetMapping("/get-by/{id}")
+	private Journal geyBy(@PathVariable("id") String id) {
+		return journalRepo.findOne(id);
+	}
 
 }// end class
