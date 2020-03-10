@@ -190,6 +190,7 @@ function updateStatus(id, status) {
 var tablegeneraJournal
 
 function tableCreateJournal(data) {
+
     console.log(JSON.stringify(data));
     tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
         lengthChange: false,
@@ -206,9 +207,18 @@ function tableCreateJournal(data) {
                 "mRender": function (data,
                     type, row, index) {
                     if (row.chartAccountId == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                            index.row +
-                            '" value=""/>';
+                        return '<select class="form-control select2">\n\
+                        <optgroup label="Fruit">\n\
+									<option>Apple</option>\n\
+									<option>Orange</option>\n\
+								</optgroup>\n\
+                                   <option>Select</option> \n\
+                                   <option>Car</option> \n\
+                                   <option>Bike</option> \n\
+                                   <option>Scooter</option> \n\
+                                   <option>Cycle</option> \n\
+                                   <option>Horse</option> \n\
+                                </select>';
                     } else {
                         return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
                             index.row +
@@ -296,7 +306,7 @@ function tableCreateJournal(data) {
             }
         }
         $('#debit').text(parseFloat(sum).toFixed(2));
-    }); 
+    });
 }
 
 $('#tablegeneraJournalDisplay').on('keyup', 'input', function () {

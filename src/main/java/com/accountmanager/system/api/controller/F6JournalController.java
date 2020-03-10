@@ -26,7 +26,7 @@ import com.accountmanager.system.repository.JournalRepository;
 
 @RestController
 @RequestMapping("/api-journal")
-public class JournalController {
+public class F6JournalController {
 
 	@Autowired
 	JournalRepository journalRepo;

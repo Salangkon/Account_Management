@@ -37,7 +37,7 @@ import com.accountmanager.system.repository.ChartAccountsRepository;
 
 @RestController
 @RequestMapping("/api-chart-account")
-public class ChartAccountController {
+public class F5ChartAccountController {
 
 	@Autowired
 	ChartAccountsRepository chartAccountsRepo;

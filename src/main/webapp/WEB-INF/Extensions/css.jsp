@@ -52,4 +52,9 @@
 <script src="/data-table/js/buttons.colVis.min.js" type="text/javascript"></script>
 <script src="/data-table/js/dataTables.select.min.js" type="text/javascript"></script>
 
+<!-- select -->
+<link rel="stylesheet" href="/bootstrap-4.3.1-dist/css/bootstrap-select.css">
+<script src="/bootstrap-4.3.1-dist/js/bootstrap-select.js" type="text/javascript"></script>
+
+
 <script src="/tree/jstree.min.js" type="text/javascript"></script>
