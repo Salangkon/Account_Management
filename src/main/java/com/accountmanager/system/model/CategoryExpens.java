@@ -13,12 +13,12 @@ import javax.persistence.*;
 @NamedQuery(name="CategoryExpens.findAll", query="SELECT c FROM CategoryExpens c")
 public class CategoryExpens implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Id
+	private int row;
 
 	private String icon;
 
 	private String name;
-
-	private int row;
 
 	private String status;
 

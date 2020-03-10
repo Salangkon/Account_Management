@@ -7,44 +7,46 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.sql.Timestamp;
 
-
 /**
  * The persistent class for the f2_list_model database table.
  * 
  */
 @Entity
-@Table(name="f2_list_model")
-@NamedQuery(name="F2ListModel.findAll", query="SELECT f FROM F2ListModel f")
+@Table(name = "f2_list_model")
+@NamedQuery(name = "F2ListModel.findAll", query = "SELECT f FROM F2ListModel f")
 public class F2ListModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
 
-	@Column(name="create_date")
+	@Column(name = "create_date")
 	private Timestamp createDate;
 
 	private String product;
 
-	@Column(name="product_detail")
+	@Column(name = "product_detail")
 	private String productDetail;
 
-	@Column(name="product_number")
+	@Column(name = "product_number")
 	private int productNumber;
 
-	@Column(name="product_price")
+	@Column(name = "product_price")
 	private float productPrice;
 
-	@Column(name="product_sum_price")
+	@Column(name = "product_sum_price")
 	private float productSumPrice;
 
-	@Column(name="update_date")
+	@Column(name = "update_date")
 	private Timestamp updateDate;
-	
-	@Column(name="f2_id")
+
+	@Column(name = "group_expense")
+	private String groupExpense;
+
+	@Column(name = "f2_id")
 	private String f2Id;
 
-	//bi-directional many-to-one association to F2Model
+	// bi-directional many-to-one association to F2Model
 	@ManyToOne
 	@JoinColumn(name = "f2_id", referencedColumnName = "id", insertable = false, updatable = false)
 	@JsonBackReference
@@ -59,6 +61,14 @@ public class F2ListModel implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getGroupExpense() {
+		return groupExpense;
+	}
+
+	public void setGroupExpense(String groupExpense) {
+		this.groupExpense = groupExpense;
 	}
 
 	public Timestamp getCreateDate() {
