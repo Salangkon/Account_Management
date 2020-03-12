@@ -26,7 +26,7 @@ public class JournalList implements Serializable {
 
 	private float credit;
 
-	private String datail;
+	private String detail;
 
 	private float debit;
 
@@ -71,12 +71,12 @@ public class JournalList implements Serializable {
 		this.credit = credit;
 	}
 
-	public String getDatail() {
-		return this.datail;
+	public String getDetail() {
+		return detail;
 	}
 
-	public void setDatail(String datail) {
-		this.datail = datail;
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 
 	public float getDebit() {

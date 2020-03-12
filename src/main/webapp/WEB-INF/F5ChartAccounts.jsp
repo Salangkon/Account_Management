@@ -150,6 +150,7 @@
 														<div class="col-sm-12" ma>
 															<h4 style="color: blueviolet;"><b>แก้ไขผังบัญชี</b></h4>
 															<label id="textDisplay"></label>
+															<input id="id" hidden>
 														</div>
 														<div class="col-sm-3"
 															style="margin-top: 23px;text-align: right;">
@@ -182,10 +183,11 @@
 												</div>
 
 												<div class="modal-footer">
+													<button type="button" id="statusDelete" onclick="deleteId()" class="btn btn-danger"><i class="fas fa-trash"></i></button>
 													<button type="button" class="btn btn-success"
-														onclick="saveCreateQuotation()" id="save">บันทึก</button>
+														onclick="saveCreate()" id="save">บันทึก</button>
 													<button type="button" class="btn btn-success"
-														onclick="saveCreateQuotation()" id="edit">แก้ไข</button>
+														onclick="saveUpdate()" id="edit">แก้ไข</button>
 													<button type="button" class="btn btn-secondary"
 														data-dismiss="modal">ยกเลิก</button>
 												</div>

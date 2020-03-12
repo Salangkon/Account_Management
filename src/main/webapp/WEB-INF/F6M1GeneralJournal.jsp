@@ -37,6 +37,62 @@
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวันทั่วไป</h4>
+
+
+							<table class="table table-sm table-striped table-bordered">
+								<tr>
+									<th>sssss</th>
+								</tr>
+								<tr>
+								  <th>
+									<select id="first-disabled" class="selectpicker" data-hide-disabled="true" data-live-search="true">
+									  <optgroup disabled="disabled" label="disabled">
+										<option>Hidden</option>
+									  </optgroup>
+									  <optgroup label="Fruit">
+										<option>Apple</option>
+										<option>Orange</option>
+									  </optgroup>
+									  <optgroup label="Vegetable">
+										<option>Corn</option>
+										<option>Carrot</option>
+									  </optgroup>
+									</select>
+								  </th>
+								</tr>
+								<tr>
+								  <th>
+									<select id="first-disabled" class="selectpicker" data-hide-disabled="true" data-live-search="true">
+									  <optgroup disabled="disabled" label="disabled">
+										<option>Hidden</option>
+									  </optgroup>
+									  <optgroup label="Fruit">
+										<option>Apple</option>
+										<option>Orange</option>
+									  </optgroup>
+									  <optgroup label="Vegetable">
+										<option>Corn</option>
+										<option>Carrot</option>
+									  </optgroup>
+									</select>
+								  </th>
+								</tr>
+							  </table>
+							<select id="first-disabled" class="selectpicker" data-hide-disabled="true"
+								data-live-search="true">
+								<optgroup disabled="disabled" label="disabled">
+									<option>Hidden</option>
+								</optgroup>
+								<optgroup label="Fruit">
+									<option>Apple</option>
+									<option>Orange</option>
+								</optgroup>
+								<optgroup label="Vegetable">
+									<option>Corn</option>
+									<option>Carrot</option>
+								</optgroup>
+							</select>
+
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
@@ -46,7 +102,7 @@
 										<div class="col-sm-1"></div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" data-toggle="modal"
-												data-target="#myModal">สร้างใหม่</button>
+												data-target="#myModal" onclick="createUpdate(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
@@ -105,7 +161,7 @@
 														style="margin-right: 10px;"></i></a>
 												<a href="#"><i class="fas fa-2x fa-download"></i></a>
 											</div>
-
+											<input id="id" hidden>
 											<div class="col-sm-5 mb-3 mb-sm-0">
 												<div class="form-group row">
 													<div class="col-sm-4">
@@ -170,8 +226,8 @@
 																</button>
 															</th>
 															<th style="text-align: right;">รวม</th>
-															<th><label id="credit">00.00</label></th>
-															<th><label id="debit">00.00</label></th>
+															<th><label id="sumCredit">00.00</label></th>
+															<th><label id="sumDebit">00.00</label></th>
 															<th></th>
 														</tr>
 													</tfoot>
@@ -198,6 +254,9 @@
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="\data-table\F6M1GeneralJournal.js" type="text/javascript"></script>
+		<!-- select -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 </body>
 

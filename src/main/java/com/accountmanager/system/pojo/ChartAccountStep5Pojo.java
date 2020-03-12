@@ -12,6 +12,7 @@ public class ChartAccountStep5Pojo {
 	private String text;
 	private String icon;
 	private Date date;
+	private String stutusDelete;
 
 	public String getTextEdit() {
 		return textEdit;
@@ -23,6 +24,14 @@ public class ChartAccountStep5Pojo {
 
 	public String getId() {
 		return id;
+	}
+
+	public String getStutusDelete() {
+		return stutusDelete;
+	}
+
+	public void setStutusDelete(String stutusDelete) {
+		this.stutusDelete = stutusDelete;
 	}
 
 	public void setId(String id) {

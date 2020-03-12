@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ChartAccountStep2Pojo {
-	
+
 	private String id;
 	private String passCode;
 	private String textEdit;
@@ -13,6 +13,8 @@ public class ChartAccountStep2Pojo {
 	private String text;
 	private String icon;
 	private Date date;
+	private String statusDelete;
+
 	private List<ChartAccountStep3Pojo> children;
 
 	public String getTextEdit() {
@@ -21,6 +23,14 @@ public class ChartAccountStep2Pojo {
 
 	public void setTextEdit(String textEdit) {
 		this.textEdit = textEdit;
+	}
+
+	public String getStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(String statusDelete) {
+		this.statusDelete = statusDelete;
 	}
 
 	public String getId() {

@@ -174,7 +174,7 @@ $(document).ready(function () {
 			$('#error-companyId').addClass("hide")
 		}
 
-		if ('' == $('#companyType').val()) {
+		if ('0' == $('#companyType').val()) {
 			companyType.focus()
 			$('#error-companyType').removeClass("hide")
 			pass = false;

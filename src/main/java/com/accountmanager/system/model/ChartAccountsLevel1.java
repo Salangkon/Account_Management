@@ -5,49 +5,59 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the chart_accounts_level1 database table.
  * 
  */
 @Entity
-@Table(name="chart_accounts_level1")
-@NamedQuery(name="ChartAccountsLevel1.findAll", query="SELECT c FROM ChartAccountsLevel1 c")
+@Table(name = "chart_accounts_level1")
+@NamedQuery(name = "ChartAccountsLevel1.findAll", query = "SELECT c FROM ChartAccountsLevel1 c")
 public class ChartAccountsLevel1 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
 
-	@Column(name="create_by")
+	@Column(name = "create_by")
 	private String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_date")
+	@Column(name = "create_date")
 	private Date createDate;
 
 	private String icon;
 
-	@Column(name="pass_code")
+	@Column(name = "pass_code")
 	private String passCode;
 
 	private String text;
-	
+
 	private String detail;
 
-	@Column(name="update_by")
+	@Column(name = "update_by")
 	private String updateBy;
 
+	@Column(name = "status_delete")
+	private String statusDelete;
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_date")
+	@Column(name = "update_date")
 	private Date updateDate;
 
-	//bi-directional many-to-one association to ChartAccountsLevel2
-	@OneToMany(mappedBy="chartAccountsLevel1")
+	// bi-directional many-to-one association to ChartAccountsLevel2
+	@OneToMany(mappedBy = "chartAccountsLevel1")
 	private List<ChartAccountsLevel2> chartAccountsLevel2s;
 
 	public String getDetail() {
 		return detail;
+	}
+
+	public String getStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(String statusDelete) {
+		this.statusDelete = statusDelete;
 	}
 
 	public void setDetail(String detail) {

@@ -26,7 +26,61 @@ $(document).ready(
 
 );
 
-function tabelAll () {
+function saveUpdate() {
+    console.log($('#id').val(), $('#detail').val());
+    var id = $('#id').val()
+    var detail;
+    if ($('#detail').val() == "") {
+        detail = "ZEROOFNULL";
+    } else {
+        detail = $('#detail').val();
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/api-chart-account/update/' + id + "/" + detail,
+        success: function (result) {
+            if (result == "Success") {
+                swal("บันทึก!", "สำเร็จ!", "success")
+            }
+        }
+    });
+}
+
+function saveCreate() {
+    console.log($('#id').val());
+
+    var insert = {
+        id: $('#id').val(),
+        passCode: $('#passCode').val(),
+        text: $('#text').val(),
+        detail: $('#detail').val(),
+        statusDelete: "1",
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/api-chart-account/create-file',
+        data: JSON.stringify(insert),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            swal({
+                title: "บันทึก สำเร็จ",
+                type: "success",
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "ตกลง",
+            },
+            function () {
+                window.location.href = "/chart-accounts";
+            });
+        },
+        failure: function (errMsg) {
+            alert(errMsg);
+        }
+    });
+    
+}
+
+function tabelAll() {
     tabelAll = $('#tabelAll').DataTable({
         // responsive: true,
         "bDestroy": true,
@@ -150,14 +204,12 @@ function tabelAll () {
 }
 
 function jsonCharAccount() {
-
     $.ajax({
         type: 'GET',
         url: '/api-chart-account/get-all-new',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-
             $('#dataJSTree').on('changed.jstree', function (e, data) {
                 var i, j, r = [];
                 var id;
@@ -177,30 +229,51 @@ function jsonCharAccount() {
                         dataType: "json",
                         success: function (res) {
                             if (res.icon == "fas fa-plus") {
-                                $('#id').val(""),
+                                $('#id').val(res.id),
                                     $('#passCode').val(""),
                                     $('#text').val(""),
-                                    $('#detail').val("")
-                                $('#textDisplay').text("")
+                                    $('#detail').val(""),
+                                $('#textDisplay').text(""),
+                                document.getElementById("statusDelete").hidden = true;
 
                                 document.getElementById("save").hidden = false;
                                 document.getElementById("edit").hidden = true;
                                 document.getElementById("passCode").disabled = false;
                                 document.getElementById("text").disabled = false;
-                            } else {
+                                document.getElementById("detail").disabled = false;
+                            } else {                
                                 $('#id').val(res.id),
                                     $('#text').val(res.text),
                                     $('#passCode').val(res.passCode),
                                     $('#detail').val(res.detail)
                                 $('#textDisplay').text(res.text)
-
+                                console.log(res.statusDelete);
+                                if (res.statusDelete == "0" || res.statusDelete == null || res.statusDelete == "") {
+                                    document.getElementById("statusDelete").hidden = true;
+                                } else {
+                                    document.getElementById("statusDelete").hidden = false;
+                                }
                                 document.getElementById("save").hidden = true;
                                 document.getElementById("edit").hidden = false;
                                 document.getElementById("passCode").disabled = true;
                                 document.getElementById("text").disabled = true;
+                                document.getElementById("detail").disabled = false;
                             }
                         }
                     })
+                } else {
+                    $('#id').val(""),
+                        $('#passCode').val(""),
+                        $('#text').val(""),
+                        $('#detail').val(""),
+                    $('#textDisplay').text(""),
+                    document.getElementById("statusDelete").hidden = true;
+
+                    document.getElementById("save").hidden = true;
+                    document.getElementById("edit").hidden = true;
+                    document.getElementById("passCode").disabled = true;
+                    document.getElementById("text").disabled = true;
+                    document.getElementById("detail").disabled = true;
                 }
 
             }).jstree({
@@ -279,3 +352,29 @@ function hiddenCondition(Text) {
             break;
     }
 }; // end hiddenCondition
+
+function deleteId() {
+    console.log("dalete :: " + $('#id').val(),);
+    swal({
+            title: "Are you sure?",
+            text: "Your will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
+        function () {
+            $.ajax({
+                url: '/api-chart-account/delete-by-id/' + $('#id').val(),
+                type: 'DELETE',
+                success: function (result) {
+                    if (result == "delete") {
+                        window.location.href = "/chart-accounts";
+                    } else {
+                        alert("Delete Fail!!!");
+                    }
+                }
+            });
+        });
+} //end delete

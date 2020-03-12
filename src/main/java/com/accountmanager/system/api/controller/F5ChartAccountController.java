@@ -3,10 +3,12 @@ package com.accountmanager.system.api.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,7 @@ import com.accountmanager.system.repository.ChartAccountsRepository;
 
 @RestController
 @RequestMapping("/api-chart-account")
-public class ChartAccountController {
+public class F5ChartAccountController {
 
 	@Autowired
 	ChartAccountsRepository chartAccountsRepo;
@@ -50,6 +52,99 @@ public class ChartAccountController {
 	ChartAccountsLevel4Repository chartAccountsLv4Repo;
 	@Autowired
 	ChartAccountsLevel5Repository chartAccountsLv5Repo;
+	
+	@PostMapping("/update/{id}/{detail}")
+	public String update(@PathVariable("id") String id, @PathVariable("detail") String detail) {
+		try {
+			ChartAccountsLevel1 level1 = chartAccountsLv1Repo.findOne(id);
+			ChartAccountsLevel2 level2 = chartAccountsLv2Repo.findOne(id);
+			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
+			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
+			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
+			if (detail.equalsIgnoreCase("ZEROOFNULL")) {
+				detail = "";
+			}
+			if (level1 != null) {
+				level1.setDetail(detail);
+				chartAccountsLv1Repo.save(level1);
+			} else if (level2 != null) {
+				level2.setDetail(detail);
+				chartAccountsLv2Repo.save(level2);
+			} else if (level3 != null) {
+				level3.setDetail(detail);
+				chartAccountsLv3Repo.save(level3);
+			} else if (level4 != null) {
+				level4.setDetail(detail);
+				chartAccountsLv4Repo.save(level4);
+			} else if (level5 != null) {
+				level5.setDetail(detail);
+				chartAccountsLv5Repo.save(level5);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Success";
+	}
+	
+	@PostMapping("/create-file")
+	public ChartAccountPojo createFile(@RequestBody HashMap<String, String> data) {
+		try {
+			String id = data.get("id");
+			ChartAccountsLevel2 level2 = chartAccountsLv2Repo.findOne(id);
+			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
+			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
+			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
+			if (level2 != null) {
+				ChartAccountsLevel2 accountsLevel2 = new ChartAccountsLevel2();
+				accountsLevel2.setId(UUID.randomUUID().toString());
+				accountsLevel2.setPassCode(data.get("passCode"));
+				accountsLevel2.setText(data.get("text"));
+				accountsLevel2.setIcon("far fa-file-alt");
+				accountsLevel2.setDetail(data.get("detail"));
+				accountsLevel2.setIdlv(level2.getIdlv());
+				accountsLevel2.setStatusDelete("1");
+				accountsLevel2.setCreateDate(new Timestamp(new Date().getTime()));
+				chartAccountsLv2Repo.save(accountsLevel2);
+			} else if (level3 != null) {
+				ChartAccountsLevel3 accountsLevel3 = new ChartAccountsLevel3();
+				accountsLevel3.setId(UUID.randomUUID().toString());
+				accountsLevel3.setPassCode(data.get("passCode"));
+				accountsLevel3.setText(data.get("text"));
+				accountsLevel3.setIcon("far fa-file-alt");
+				accountsLevel3.setDetail(data.get("detail"));
+				accountsLevel3.setIdlv(level3.getIdlv());
+				accountsLevel3.setStatusDelete("1");
+				accountsLevel3.setCreateDate(new Timestamp(new Date().getTime()));
+				chartAccountsLv3Repo.save(accountsLevel3);
+			} else if (level4 != null) {
+				ChartAccountsLevel4 accountsLevel4 = new ChartAccountsLevel4();
+				accountsLevel4.setId(UUID.randomUUID().toString());
+				accountsLevel4.setPassCode(data.get("passCode"));
+				accountsLevel4.setText(data.get("text"));
+				accountsLevel4.setIcon("far fa-file-alt");
+				accountsLevel4.setDetail(data.get("detail"));
+				accountsLevel4.setIdlv(level4.getIdlv());
+				accountsLevel4.setStatusDelete("1");
+				accountsLevel4.setCreateDate(new Timestamp(new Date().getTime()));
+				chartAccountsLv4Repo.save(accountsLevel4);
+			} else if (level5 != null) {
+				ChartAccountsLevel5 accountsLevel5 = new ChartAccountsLevel5();
+				accountsLevel5.setId(UUID.randomUUID().toString());
+				accountsLevel5.setPassCode(data.get("passCode"));
+				accountsLevel5.setText(data.get("text"));
+				accountsLevel5.setIcon("far fa-file-alt");
+				accountsLevel5.setDetail(data.get("detail"));
+				accountsLevel5.setIdlv(level5.getIdlv());
+				accountsLevel5.setStatusDelete("1");
+				accountsLevel5.setCreateDate(new Timestamp(new Date().getTime()));
+				chartAccountsLv5Repo.save(accountsLevel5);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ChartAccountPojo accountPojo = new ChartAccountPojo();
+		return accountPojo;
+	}
 
 	@GetMapping("/get-all")
 	private Iterable<ChartAccountPojo> getAll() {
@@ -156,6 +251,7 @@ public class ChartAccountController {
 			chartAccountsPojo.setPassCode(chartAccounts.getPassCode());
 			chartAccountsPojo.setText(chartAccounts.getPassCode() + " " + chartAccounts.getText());
 			chartAccountsPojo.setIcon(chartAccounts.getIcon());
+			chartAccountsPojo.setStatusDelete(chartAccounts.getStatusDelete());
 
 			StatePojo statePojos = new StatePojo();
 			statePojos.setOpened(true);
@@ -175,6 +271,7 @@ public class ChartAccountController {
 				chartAccountStep2Pojo.setPassCode(chartAccounts2.getPassCode());
 				chartAccountStep2Pojo.setText(chartAccounts2.getPassCode() + " " + chartAccounts2.getText());
 				chartAccountStep2Pojo.setIcon(chartAccounts2.getIcon());
+				chartAccountStep2Pojo.setStatusDelete(chartAccounts2.getStatusDelete());
 
 				chartAccountStep2Pojos.add(chartAccountStep2Pojo);
 				chartAccountStep2Pojos.sort(
@@ -190,6 +287,7 @@ public class ChartAccountController {
 					chartAccountStep3Pojo.setPassCode(chartAccounts3.getPassCode());
 					chartAccountStep3Pojo.setText(chartAccounts3.getPassCode() + " " + chartAccounts3.getText());
 					chartAccountStep3Pojo.setIcon(chartAccounts3.getIcon());
+					chartAccountStep3Pojo.setStatusDelete(chartAccounts3.getStatusDelete());
 
 					chartAccountStep3Pojos.add(chartAccountStep3Pojo);
 					chartAccountStep3Pojos.sort((e1, e2) -> new String(e1.getText().toString())
@@ -206,6 +304,7 @@ public class ChartAccountController {
 						chartAccountStep4Pojo.setPassCode(chartAccounts4.getPassCode());
 						chartAccountStep4Pojo.setText(chartAccounts4.getPassCode() + " " + chartAccounts4.getText());
 						chartAccountStep4Pojo.setIcon(chartAccounts4.getIcon());
+						chartAccountStep4Pojo.setStatusDelete(chartAccounts4.getStatusDelete());
 
 						chartAccountStep4Pojos.add(chartAccountStep4Pojo);
 						chartAccountStep4Pojos.sort((e1, e2) -> new String(e1.getText().toString())
@@ -220,6 +319,8 @@ public class ChartAccountController {
 							chartAccountStep5Pojo.setDetail(chartAccounts5.getDetail());
 							chartAccountStep5Pojo.setTextEdit(chartAccounts5.getText());
 							chartAccountStep5Pojo.setPassCode(chartAccounts5.getPassCode());
+							chartAccountStep5Pojo.setStutusDelete(chartAccounts5.getStatusDelete());
+
 							chartAccountStep5Pojo
 									.setText(chartAccounts5.getPassCode() + " " + chartAccounts5.getText());
 							chartAccountStep5Pojo.setIcon(chartAccounts5.getIcon());
@@ -266,27 +367,37 @@ public class ChartAccountController {
 				accountPojo.setId(level1.getId());
 				accountPojo.setText(level1.getText());
 				accountPojo.setIcon(level1.getIcon());
+				accountPojo.setDetail(level1.getDetail());
 				accountPojo.setPassCode(level1.getPassCode());
+				accountPojo.setStatusDelete(level1.getStatusDelete());
 			} else if (level2 != null) {
 				accountPojo.setId(level2.getId());
 				accountPojo.setText(level2.getText());
 				accountPojo.setIcon(level2.getIcon());
+				accountPojo.setDetail(level2.getDetail());
 				accountPojo.setPassCode(level2.getPassCode());
+				accountPojo.setStatusDelete(level2.getStatusDelete());
 			} else if (level3 != null) {
 				accountPojo.setId(level3.getId());
 				accountPojo.setText(level3.getText());
 				accountPojo.setIcon(level3.getIcon());
+				accountPojo.setDetail(level3.getDetail());
 				accountPojo.setPassCode(level3.getPassCode());
+				accountPojo.setStatusDelete(level3.getStatusDelete());
 			} else if (level4 != null) {
 				accountPojo.setId(level4.getId());
 				accountPojo.setText(level4.getText());
 				accountPojo.setIcon(level4.getIcon());
+				accountPojo.setDetail(level4.getDetail());
 				accountPojo.setPassCode(level4.getPassCode());
+				accountPojo.setStatusDelete(level4.getStatusDelete());
 			} else if (level5 != null) {
 				accountPojo.setId(level5.getId());
 				accountPojo.setText(level5.getText());
 				accountPojo.setIcon(level5.getIcon());
+				accountPojo.setDetail(level5.getDetail());
 				accountPojo.setPassCode(level5.getPassCode());
+				accountPojo.setStatusDelete(level5.getStatusDelete());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -455,6 +566,29 @@ public class ChartAccountController {
 		chartAccounts.setId(UUID.randomUUID().toString());
 		chartAccounts.setCreateDate(ts);
 		return chartAccountsLv5Repo.save(chartAccounts);
+	}
+	
+	@DeleteMapping("/delete-by-id/{id}")
+	public String datele(@PathVariable("id") String id) {
+		try {
+			ChartAccountsLevel2 level2 = chartAccountsLv2Repo.findOne(id);
+			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
+			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
+			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
+			
+			 if (level2 != null) {
+				chartAccountsLv2Repo.delete(level2);
+			} else if (level3 != null) {
+				chartAccountsLv3Repo.delete(level3);
+			} else if (level4 != null) {
+				chartAccountsLv4Repo.delete(level4);
+			} else if (level5 != null) {
+				chartAccountsLv5Repo.delete(level5);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "delete";
 	}
 
 }

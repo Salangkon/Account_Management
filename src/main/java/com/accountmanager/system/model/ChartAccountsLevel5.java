@@ -7,47 +7,49 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.Date;
 
-
 /**
  * The persistent class for the chart_accounts_level5 database table.
  * 
  */
 @Entity
-@Table(name="chart_accounts_level5")
-@NamedQuery(name="ChartAccountsLevel5.findAll", query="SELECT c FROM ChartAccountsLevel5 c")
+@Table(name = "chart_accounts_level5")
+@NamedQuery(name = "ChartAccountsLevel5.findAll", query = "SELECT c FROM ChartAccountsLevel5 c")
 public class ChartAccountsLevel5 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
-	
+
 	@Column(name = "id_lv")
 	private String idlv;
 
-	@Column(name="create_by")
+	@Column(name = "create_by")
 	private String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_date")
+	@Column(name = "create_date")
 	private Date createDate;
 
 	private String icon;
 
-	@Column(name="pass_code")
+	@Column(name = "pass_code")
 	private String passCode;
 
 	private String text;
-	
+
 	private String detail;
 
-	@Column(name="update_by")
+	@Column(name = "update_by")
 	private String updateBy;
 
+	@Column(name = "status_delete")
+	private String statusDelete;
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_date")
+	@Column(name = "update_date")
 	private Date updateDate;
 
-	//bi-directional many-to-one association to ChartAccountsLevel4
+	// bi-directional many-to-one association to ChartAccountsLevel4
 	@ManyToOne
 	@JoinColumn(name = "id_lv", referencedColumnName = "id", insertable = false, updatable = false)
 	@JsonBackReference
@@ -62,6 +64,14 @@ public class ChartAccountsLevel5 implements Serializable {
 	}
 
 	public ChartAccountsLevel5() {
+	}
+
+	public String getStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(String statusDelete) {
+		this.statusDelete = statusDelete;
 	}
 
 	public String getId() {

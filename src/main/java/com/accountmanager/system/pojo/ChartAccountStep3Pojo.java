@@ -13,6 +13,8 @@ public class ChartAccountStep3Pojo {
 	private String text;
 	private String icon;
 	private Date date;
+	private String statusDelete;
+
 	private List<ChartAccountStep4Pojo> children;
 
 	public String getTextEdit() {
@@ -21,6 +23,14 @@ public class ChartAccountStep3Pojo {
 
 	public void setTextEdit(String textEdit) {
 		this.textEdit = textEdit;
+	}
+
+	public String getStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(String statusDelete) {
+		this.statusDelete = statusDelete;
 	}
 
 	public String getId() {
