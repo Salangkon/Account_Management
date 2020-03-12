@@ -183,6 +183,7 @@
 												</div>
 
 												<div class="modal-footer">
+													<button type="button" id="statusDelete" onclick="deleteId()" class="btn btn-danger"><i class="fas fa-trash"></i></button>
 													<button type="button" class="btn btn-success"
 														onclick="saveCreate()" id="save">บันทึก</button>
 													<button type="button" class="btn btn-success"

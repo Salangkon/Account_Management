@@ -37,6 +37,47 @@
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวันทั่วไป</h4>
+
+
+							<table class="table table-sm table-striped table-bordered">
+								<tr>
+									<th>sssss</th>
+								</tr>
+								<tr>
+								  <th>
+									<select id="first-disabled" class="selectpicker" data-hide-disabled="true" data-live-search="true">
+									  <optgroup disabled="disabled" label="disabled">
+										<option>Hidden</option>
+									  </optgroup>
+									  <optgroup label="Fruit">
+										<option>Apple</option>
+										<option>Orange</option>
+									  </optgroup>
+									  <optgroup label="Vegetable">
+										<option>Corn</option>
+										<option>Carrot</option>
+									  </optgroup>
+									</select>
+								  </th>
+								</tr>
+								<tr>
+								  <th>
+									<select id="first-disabled" class="selectpicker" data-hide-disabled="true" data-live-search="true">
+									  <optgroup disabled="disabled" label="disabled">
+										<option>Hidden</option>
+									  </optgroup>
+									  <optgroup label="Fruit">
+										<option>Apple</option>
+										<option>Orange</option>
+									  </optgroup>
+									  <optgroup label="Vegetable">
+										<option>Corn</option>
+										<option>Carrot</option>
+									  </optgroup>
+									</select>
+								  </th>
+								</tr>
+							  </table>
 							<select id="first-disabled" class="selectpicker" data-hide-disabled="true"
 								data-live-search="true">
 								<optgroup disabled="disabled" label="disabled">
@@ -51,27 +92,7 @@
 									<option>Carrot</option>
 								</optgroup>
 							</select>
-							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-								  Dropdown
-								  <span class="caret"></span>
-								</button>
-								<ul id="dropselect-demo1" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-								  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-								  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-								  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-								  <li role="presentation" class="divider"></li>
-								  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-								</ul>
-							  </div>
-							<select class="form-control select2">
-								<option>Select</option>
-								<option>Car</option>
-								<option>Bike</option>
-								<option>Scooter</option>
-								<option>Cycle</option>
-								<option>Horse</option>
-							</select>
+
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
@@ -236,9 +257,6 @@
 		<!-- select -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-		<script>
-			$('.select2').select2();
-		</script>
 
 </body>
 

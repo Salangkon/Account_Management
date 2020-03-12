@@ -65,7 +65,7 @@ $(document).ready(function () {
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
-    expense(null, null, null);
+    expense(null, null, null);        
 }); // end document
 
 function myFunction() {
@@ -340,6 +340,7 @@ var tableCreateQuotation;
 
 function expense(expenseValue, row, groupExpense) {
     var expenseDropdown = [];
+    var expenseDropdown1 = [];
 
     if (expenseValue != null) {
         $.ajax({
@@ -376,6 +377,8 @@ function expense(expenseValue, row, groupExpense) {
     }
     console.log(JSON.stringify(expenseDropdown));
     console.log(expenseDropdown);
+
+
 
     return expenseDropdown;
 }

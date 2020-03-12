@@ -21,10 +21,12 @@ $(document).ready(function () {
     $('#myModal').on('hidden.bs.modal', function (e) {
         exampleTable();
     });
+
     dataCustomer(null);
     tableCreateJournal(null);
     exampleTable();
 
+    $('#select1').selectpicker();
 
 }); // end Document
 
@@ -206,24 +208,25 @@ function tableCreateJournal(data) {
                 "sWidth": "20%",
                 "mRender": function (data,
                     type, row, index) {
-                    if (row.chartAccountId == null) {
-                        return '<select class="form-control select2">\n\
+                    // if (row.chartAccountId == null) {
+                        return '<select id="select'+ index.row +'" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                        <optgroup disabled="disabled" label="disabled">\n\
+                          <option>Hidden</option>\n\
+                        </optgroup>\n\
                         <optgroup label="Fruit">\n\
-									<option>Apple</option>\n\
-									<option>Orange</option>\n\
-								</optgroup>\n\
-                                   <option>Select</option> \n\
-                                   <option>Car</option> \n\
-                                   <option>Bike</option> \n\
-                                   <option>Scooter</option> \n\
-                                   <option>Cycle</option> \n\
-                                   <option>Horse</option> \n\
-                                </select>';
-                    } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                            index.row +
-                            '" value="' + row.chartAccountId + '"/>';
-                    }
+                          <option>Apple</option>\n\
+                          <option>Orange</option>\n\
+                        </optgroup>\n\
+                        <optgroup label="Vegetable">\n\
+                          <option>Corn</option>\n\
+                          <option>Carrot</option>\n\
+                        </optgroup>\n\
+                      </select>';
+                    // } else {
+                    //     return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
+                    //         index.row +
+                    //         '" value="' + row.chartAccountId + '"/>';
+                    // }
 
                 }
             },

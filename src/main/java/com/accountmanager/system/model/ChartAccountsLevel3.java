@@ -8,54 +8,56 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the chart_accounts_level3 database table.
  * 
  */
 @Entity
-@Table(name="chart_accounts_level3")
-@NamedQuery(name="ChartAccountsLevel3.findAll", query="SELECT c FROM ChartAccountsLevel3 c")
+@Table(name = "chart_accounts_level3")
+@NamedQuery(name = "ChartAccountsLevel3.findAll", query = "SELECT c FROM ChartAccountsLevel3 c")
 public class ChartAccountsLevel3 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
 
-	@Column(name="create_by")
+	@Column(name = "create_by")
 	private String createBy;
-	
+
 	@Column(name = "id_lv")
 	private String idlv;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_date")
+	@Column(name = "create_date")
 	private Date createDate;
 
 	private String icon;
 
-	@Column(name="pass_code")
+	@Column(name = "pass_code")
 	private String passCode;
 
 	private String text;
-	
+
 	private String detail;
 
-	@Column(name="update_by")
+	@Column(name = "update_by")
 	private String updateBy;
 
+	@Column(name = "status_delete")
+	private String statusDelete;
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_date")
+	@Column(name = "update_date")
 	private Date updateDate;
 
-	//bi-directional many-to-one association to ChartAccountsLevel2
+	// bi-directional many-to-one association to ChartAccountsLevel2
 	@ManyToOne
 	@JoinColumn(name = "id_lv", referencedColumnName = "id", insertable = false, updatable = false)
 	@JsonBackReference
 	private ChartAccountsLevel2 chartAccountsLevel2;
 
-	//bi-directional many-to-one association to ChartAccountsLevel4
-	@OneToMany(mappedBy="chartAccountsLevel3")
+	// bi-directional many-to-one association to ChartAccountsLevel4
+	@OneToMany(mappedBy = "chartAccountsLevel3")
 	private List<ChartAccountsLevel4> chartAccountsLevel4s;
 
 	public String getDetail() {
@@ -64,6 +66,14 @@ public class ChartAccountsLevel3 implements Serializable {
 
 	public void setDetail(String detail) {
 		this.detail = detail;
+	}
+
+	public String getStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(String statusDelete) {
+		this.statusDelete = statusDelete;
 	}
 
 	public ChartAccountsLevel3() {

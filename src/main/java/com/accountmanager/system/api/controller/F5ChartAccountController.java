@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -101,6 +102,7 @@ public class F5ChartAccountController {
 				accountsLevel2.setIcon("far fa-file-alt");
 				accountsLevel2.setDetail(data.get("detail"));
 				accountsLevel2.setIdlv(level2.getIdlv());
+				accountsLevel2.setStatusDelete("1");
 				accountsLevel2.setCreateDate(new Timestamp(new Date().getTime()));
 				chartAccountsLv2Repo.save(accountsLevel2);
 			} else if (level3 != null) {
@@ -111,6 +113,7 @@ public class F5ChartAccountController {
 				accountsLevel3.setIcon("far fa-file-alt");
 				accountsLevel3.setDetail(data.get("detail"));
 				accountsLevel3.setIdlv(level3.getIdlv());
+				accountsLevel3.setStatusDelete("1");
 				accountsLevel3.setCreateDate(new Timestamp(new Date().getTime()));
 				chartAccountsLv3Repo.save(accountsLevel3);
 			} else if (level4 != null) {
@@ -121,6 +124,7 @@ public class F5ChartAccountController {
 				accountsLevel4.setIcon("far fa-file-alt");
 				accountsLevel4.setDetail(data.get("detail"));
 				accountsLevel4.setIdlv(level4.getIdlv());
+				accountsLevel4.setStatusDelete("1");
 				accountsLevel4.setCreateDate(new Timestamp(new Date().getTime()));
 				chartAccountsLv4Repo.save(accountsLevel4);
 			} else if (level5 != null) {
@@ -131,6 +135,7 @@ public class F5ChartAccountController {
 				accountsLevel5.setIcon("far fa-file-alt");
 				accountsLevel5.setDetail(data.get("detail"));
 				accountsLevel5.setIdlv(level5.getIdlv());
+				accountsLevel5.setStatusDelete("1");
 				accountsLevel5.setCreateDate(new Timestamp(new Date().getTime()));
 				chartAccountsLv5Repo.save(accountsLevel5);
 			}
@@ -246,6 +251,7 @@ public class F5ChartAccountController {
 			chartAccountsPojo.setPassCode(chartAccounts.getPassCode());
 			chartAccountsPojo.setText(chartAccounts.getPassCode() + " " + chartAccounts.getText());
 			chartAccountsPojo.setIcon(chartAccounts.getIcon());
+			chartAccountsPojo.setStatusDelete(chartAccounts.getStatusDelete());
 
 			StatePojo statePojos = new StatePojo();
 			statePojos.setOpened(true);
@@ -265,6 +271,7 @@ public class F5ChartAccountController {
 				chartAccountStep2Pojo.setPassCode(chartAccounts2.getPassCode());
 				chartAccountStep2Pojo.setText(chartAccounts2.getPassCode() + " " + chartAccounts2.getText());
 				chartAccountStep2Pojo.setIcon(chartAccounts2.getIcon());
+				chartAccountStep2Pojo.setStatusDelete(chartAccounts2.getStatusDelete());
 
 				chartAccountStep2Pojos.add(chartAccountStep2Pojo);
 				chartAccountStep2Pojos.sort(
@@ -280,6 +287,7 @@ public class F5ChartAccountController {
 					chartAccountStep3Pojo.setPassCode(chartAccounts3.getPassCode());
 					chartAccountStep3Pojo.setText(chartAccounts3.getPassCode() + " " + chartAccounts3.getText());
 					chartAccountStep3Pojo.setIcon(chartAccounts3.getIcon());
+					chartAccountStep3Pojo.setStatusDelete(chartAccounts3.getStatusDelete());
 
 					chartAccountStep3Pojos.add(chartAccountStep3Pojo);
 					chartAccountStep3Pojos.sort((e1, e2) -> new String(e1.getText().toString())
@@ -296,6 +304,7 @@ public class F5ChartAccountController {
 						chartAccountStep4Pojo.setPassCode(chartAccounts4.getPassCode());
 						chartAccountStep4Pojo.setText(chartAccounts4.getPassCode() + " " + chartAccounts4.getText());
 						chartAccountStep4Pojo.setIcon(chartAccounts4.getIcon());
+						chartAccountStep4Pojo.setStatusDelete(chartAccounts4.getStatusDelete());
 
 						chartAccountStep4Pojos.add(chartAccountStep4Pojo);
 						chartAccountStep4Pojos.sort((e1, e2) -> new String(e1.getText().toString())
@@ -310,6 +319,8 @@ public class F5ChartAccountController {
 							chartAccountStep5Pojo.setDetail(chartAccounts5.getDetail());
 							chartAccountStep5Pojo.setTextEdit(chartAccounts5.getText());
 							chartAccountStep5Pojo.setPassCode(chartAccounts5.getPassCode());
+							chartAccountStep5Pojo.setStutusDelete(chartAccounts5.getStatusDelete());
+
 							chartAccountStep5Pojo
 									.setText(chartAccounts5.getPassCode() + " " + chartAccounts5.getText());
 							chartAccountStep5Pojo.setIcon(chartAccounts5.getIcon());
@@ -358,30 +369,35 @@ public class F5ChartAccountController {
 				accountPojo.setIcon(level1.getIcon());
 				accountPojo.setDetail(level1.getDetail());
 				accountPojo.setPassCode(level1.getPassCode());
+				accountPojo.setStatusDelete(level1.getStatusDelete());
 			} else if (level2 != null) {
 				accountPojo.setId(level2.getId());
 				accountPojo.setText(level2.getText());
 				accountPojo.setIcon(level2.getIcon());
 				accountPojo.setDetail(level2.getDetail());
 				accountPojo.setPassCode(level2.getPassCode());
+				accountPojo.setStatusDelete(level2.getStatusDelete());
 			} else if (level3 != null) {
 				accountPojo.setId(level3.getId());
 				accountPojo.setText(level3.getText());
 				accountPojo.setIcon(level3.getIcon());
 				accountPojo.setDetail(level3.getDetail());
 				accountPojo.setPassCode(level3.getPassCode());
+				accountPojo.setStatusDelete(level3.getStatusDelete());
 			} else if (level4 != null) {
 				accountPojo.setId(level4.getId());
 				accountPojo.setText(level4.getText());
 				accountPojo.setIcon(level4.getIcon());
 				accountPojo.setDetail(level4.getDetail());
 				accountPojo.setPassCode(level4.getPassCode());
+				accountPojo.setStatusDelete(level4.getStatusDelete());
 			} else if (level5 != null) {
 				accountPojo.setId(level5.getId());
 				accountPojo.setText(level5.getText());
 				accountPojo.setIcon(level5.getIcon());
 				accountPojo.setDetail(level5.getDetail());
 				accountPojo.setPassCode(level5.getPassCode());
+				accountPojo.setStatusDelete(level5.getStatusDelete());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -550,6 +566,29 @@ public class F5ChartAccountController {
 		chartAccounts.setId(UUID.randomUUID().toString());
 		chartAccounts.setCreateDate(ts);
 		return chartAccountsLv5Repo.save(chartAccounts);
+	}
+	
+	@DeleteMapping("/delete-by-id/{id}")
+	public String datele(@PathVariable("id") String id) {
+		try {
+			ChartAccountsLevel2 level2 = chartAccountsLv2Repo.findOne(id);
+			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
+			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
+			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
+			
+			 if (level2 != null) {
+				chartAccountsLv2Repo.delete(level2);
+			} else if (level3 != null) {
+				chartAccountsLv3Repo.delete(level3);
+			} else if (level4 != null) {
+				chartAccountsLv4Repo.delete(level4);
+			} else if (level5 != null) {
+				chartAccountsLv5Repo.delete(level5);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "delete";
 	}
 
 }
