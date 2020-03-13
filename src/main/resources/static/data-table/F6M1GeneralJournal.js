@@ -334,6 +334,7 @@ $('#tablegeneraJournalDisplay').on('keyup', 'input', function () {
 
 function Add() {
     tablegeneraJournal.row.add([tablegeneraJournal.data]).draw(false);
+    $('.selectpicker').selectpicker();
 }
 
 function remove() {
