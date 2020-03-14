@@ -200,6 +200,8 @@ function createUpdate(id) {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
+                console.log('msg',msg);
+                console.log('msg.companyId',msg.companyId);
                 $('#id').val(msg.id),
                     $('#customers').val(msg.companyId),
                     $('#type').val(msg.documentCode),
@@ -209,6 +211,11 @@ function createUpdate(id) {
                     $('#sumDebit').text(parseFloat(msg.sumDebit).toFixed(2)),
                     $('#sumCredit').text(parseFloat(msg.sumCredit).toFixed(2))
                 tableCreateJournal(msg.journalLists);
+                $('.selectpicker').selectpicker();
+                for (let index = 0; index < msg.journalLists.length; index++) {
+                    $('#chartAccountId' + index).val(msg.journalLists[index].chartAccountId);
+                    $('#chartAccountId' + index).selectpicker('refresh');
+                }
             }
         })
     } else {
@@ -223,7 +230,8 @@ function createUpdate(id) {
         tableCreateJournal(null);
 
     }
-
+    $('.selectpicker').selectpicker();
+    console.log('selectpicker');
     $('#myModal').modal('show');
 
 }
@@ -244,7 +252,7 @@ var tablegeneraJournal
 
 function tableCreateJournal(data) {
 
-    console.log(JSON.stringify(data));
+    console.log(data);
     tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
         lengthChange: false,
         "paging": false,
@@ -268,7 +276,7 @@ function tableCreateJournal(data) {
                     });
                     selectItem += '</optgroup>';
                 })
-                return '<select id="select' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                return '<select id="chartAccountId' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
                        '+ selectItem + '\n\
                       </select>';
             }
@@ -463,7 +471,7 @@ function validateSave() {
 function saveCreate() {
     var pass = true;
     // pass = validateInput();
-
+    $('#customers').val('20190905')
     var validate = validateSave();
     if (!validate) {
         return;
