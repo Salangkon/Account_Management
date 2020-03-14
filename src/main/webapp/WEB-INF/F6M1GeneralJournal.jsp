@@ -14,6 +14,9 @@
 			text-align: right;
 			margin-top: 20px;
 		}
+		.invalid{
+			color: red;
+		}
 	</style>
 </head>
 
@@ -101,15 +104,15 @@
 									<form class="user">
 										<div class="form-group row">
 											<div class="col-sm-12" style="text-align: right;margin-bottom: 20px;">
-												<a href="#"><i class="fas fa-2x fa-print"
+												<a href="#" onclick="saveCreate()"><i class="fas fa-2x fa-print"
 														style="margin-right: 10px;"></i></a>
-												<a href="#"><i class="fas fa-2x fa-download"></i></a>
+												<a href="#" onclick="saveCreate()"><i class="fas fa-2x fa-download"></i></a>
 											</div>
 											<input id="id" hidden>
 											<div class="col-sm-5 mb-3 mb-sm-0">
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label>ชื่อลูกค้า : </label>
+														<label>ชื่อลูกค้า* : </label>
 													</div>
 													<div class="col-sm-8">
 														<select class="form-control" placeholder="ใส่ชื่อลูกค้า"
@@ -117,6 +120,9 @@
 															<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
 															</option>
 														</select>
+														<div hidden class="invalid" id="invalid-customers">
+															กรุณาระบุเลขที่เอกสาร
+														</div>
 													</div>
 													<div class="col-sm-4">
 														<label>คำอธิบาย : </label>
@@ -133,17 +139,23 @@
 											<div class="col-sm-4">
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label>วันที่ : </label>
+														<label>วันที่* : </label>
 													</div>
 													<div class="col-sm-8">
 														<input id="date" />
+														<div hidden class="invalid" id="invalid-date">
+															กรุณาระบุวันที่
+														</div>
 													</div>
 													<div class="col-sm-4">
-														<label>เลขที่เอกสาร : </label>
+														<label>เลขที่เอกสาร* : </label>
 													</div>
 													<div class="col-sm-8">
 														<input class="form-control" id="referenceDocument"
 															placeholder="เลขที่เอกสาร">
+															<div hidden class="invalid" id="invalid-referenceDocument">
+																กรุณาระบุเลขที่เอกสาร
+															</div>
 													</div>
 												</div>
 											</div>
@@ -169,9 +181,11 @@
 																	เพิ่มรายการ
 																</button>
 															</th>
-															<th style="text-align: right;">รวม</th>
-															<th><label id="sumCredit">00.00</label></th>
+															<th style="text-align: right;"><span hidden class="invalid" id="invalid-sumDebitCredit">
+																กรุณาตรวจสอบยอดเคดิต และเดบิต
+															</span> รวม </th>
 															<th><label id="sumDebit">00.00</label></th>
+															<th><label id="sumCredit">00.00</label></th>
 															<th></th>
 														</tr>
 													</tfoot>

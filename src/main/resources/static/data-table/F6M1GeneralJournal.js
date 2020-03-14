@@ -21,6 +21,31 @@ function chkNumber(ele) {
     ele.onKeyPress = vchar;
 }
 
+function disabledInput(event)
+{
+    var row = event.target.getAttribute('rownumber');
+    row += '';
+    if(event.target.name == 'debit')
+    {
+        $('#credit' + row ).attr('disabled','disabled');
+        $('#debit' + row ).removeAttr('disabled');
+        $('#credit' + row ).val(null);
+    }
+    else
+    {
+        $('#debit' + row ).attr('disabled','disabled');
+        $('#credit' + row ).removeAttr('disabled');
+        $('#debit' + row ).val(null);
+    }
+    if(event.target.value == 0)
+    {
+        $('#debit' + row ).removeAttr('disabled');
+        $('#credit' + row ).val(null);
+        $('#credit' + row ).removeAttr('disabled');
+        $('#debit' + row ).val(null);
+    }
+}
+
 $(document).ready(function () {
     $('#myModal').on('hidden.bs.modal', function (e) {
         tableJournal();
@@ -32,7 +57,26 @@ $(document).ready(function () {
     tableJournal
     $('#select1').selectpicker();
 
+    getSeleteChartAccountItem();
+
 }); // end Document
+
+//selete-chart-account API
+var SeleteChartAccountItem = [];
+function getSeleteChartAccountItem()
+{
+    $.ajax({
+        type: "GET",
+        url: "/api-chart-account/selete-chart-account",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg){
+            SeleteChartAccountItem = msg;
+            console.log('getSeleteChartAccountItem',msg);
+        }
+    });
+}
+//End
 
 
 function tableJournal() {
@@ -220,26 +264,18 @@ function tableCreateJournal(data) {
                 "sWidth": "20%",
                 "mRender": function (data,
                     type, row, index) {
-                    // if (row.chartAccountId == null) {
-                        return '<select id="select'+ index.row +'" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
-                        <optgroup disabled="disabled" label="disabled">\n\
-                          <option>Hidden</option>\n\
-                        </optgroup>\n\
-                        <optgroup label="Fruit">\n\
-                          <option>Apple</option>\n\
-                          <option>Orange</option>\n\
-                        </optgroup>\n\
-                        <optgroup label="Vegetable">\n\
-                          <option>Corn</option>\n\
-                          <option>Carrot</option>\n\
-                        </optgroup>\n\
-                      </select>';
-                    // } else {
-                    //     return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="chartAccountId' +
-                    //         index.row +
-                    //         '" value="' + row.chartAccountId + '"/>';
-                    // }
+                        var selectItem = '';
 
+                        SeleteChartAccountItem.forEach(item => {
+                            selectItem +=  '<optgroup label="'+item.title+'">';
+                            item.seleteChartAccountList.forEach(item2 => {
+                                selectItem += '<option value="'+item2.id+'">'+item2.name+'</option>';
+                            });
+                            selectItem += '</optgroup>';
+                        })
+                        return '<select id="select'+ index.row +'" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                       '+ selectItem +'\n\
+                      </select>';
                 }
             },
             {
@@ -264,11 +300,11 @@ function tableCreateJournal(data) {
                 "mRender": function (data,
                     type, row, index) {
                     if (row.credit == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" OnKeyPress="return chkNumber(this)" type="text" name="credit" id="credit' +
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)" name="debit" type="number" rownumber="'+index.row+'" id="debit' +
                             index.row +
                             '" value=""/>';
                     } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" OnKeyPress="return chkNumber(this)" type="text" name="credit" id="credit' +
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)"  name="debit" type="number" rownumber="'+index.row+'" id="debit' +
                             index.row +
                             '" value="' + row.credit + '"/>';
                     }
@@ -280,11 +316,11 @@ function tableCreateJournal(data) {
                 "mRender": function (data,
                     type, row, index) {
                     if (row.debit == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" OnKeyPress="return chkNumber(this)" type="text" name="debit" id="debit' +
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="'+index.row+'" id="credit' +
                             index.row +
                             '" value=""/>';
                     } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" OnKeyPress="return chkNumber(this)" type="text" name="debit" id="debit' +
+                        return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="'+index.row+'" id="credit' +
                             index.row +
                             '" value="' + row.debit + '"/>';
                     }
@@ -397,12 +433,46 @@ function dataCustomer(companyId) {
         }
     });
 }
+function validateSave()
+{
+    var validateStatus = false;
+    var validateStatusCustomers = false;
+    var validateStatusDate = false;
+    var validateStatusReferenceDocument = false;
+    var validateStatusSum = false;
+    var sumCredit = $('#sumCredit').text();
+    var sumDebit = $('#sumDebit').text();
+    var customers = $('#customers').val();
+    var date = $('#date').val();
+    var referenceDocument = $('#referenceDocument').val();
+    customers == '' ? ($('#invalid-customers').removeAttr('hidden'), validateStatusCustomers = true) : ($('#invalid-customers').hide(), validateStatusCustomers = false);
+    date == '' ?  ($('#invalid-date').removeAttr('hidden'), validateStatusDate = true): ($('#invalid-date').hide(), validateStatusDate = false);
+    referenceDocument == '' ? ($('#invalid-referenceDocument').removeAttr('hidden'), validateStatusReferenceDocument = true ) : ($('#invalid-referenceDocument').hide(), validateStatusReferenceDocument = false );
+    sumDebit != sumCredit ? ($('#invalid-sumDebitCredit').removeAttr('hidden'), validateStatusSum = false) :  ($('#invalid-sumDebitCredit').hide(),validateStatusSum = true);
+
+    !validateStatusCustomers || !validateStatusDate || !validateStatusReferenceDocument || !validateStatusSum ? validateStatus = false : validateStatus = false;
+
+    console.log(validateStatus);
+    console.log(sumCredit);
+    console.log(sumDebit);
+    console.log(validateStatusSum);
+    if(!validateStatus)
+    {
+        alert("ไม่สามารถบันทึกได้ เนื่องจากข้อมูลไม่ถูกต้องไม่ครบถ้วน \n"+
+        "1.กรุณาระบุคำอธบิายรายการ\n" +
+        "2.กรุณาตรวจสอบยอดเคดิต และเดบิต")
+        return false;
+    }
+    return true;
+}
 
 function saveCreate() {
     var pass = true;
     // pass = validateInput();
-
-    $.ajax({
+    var validate = validateSave();
+    if(!validate)
+        return
+   $.ajax({
         type: "GET",
         url: "/api-journal/generate-dep/JV",
         success: function (msg) {
@@ -446,4 +516,5 @@ function saveCreate() {
             }
         }
     })
+
 }
