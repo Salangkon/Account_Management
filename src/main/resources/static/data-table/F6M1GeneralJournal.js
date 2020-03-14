@@ -1,8 +1,12 @@
-$('#datepicker').datepicker({
-    uiLibrary: 'bootstrap4'
+$('#fromDate').datepicker({
+    uiLibrary: 'bootstrap4',
+    format: 'yyyy-mm-dd',
+    startDate: '-3d'
 });
-$('#datepicker1').datepicker({
-    uiLibrary: 'bootstrap4'
+$('#toDate').datepicker({
+    uiLibrary: 'bootstrap4',
+    format: 'yyyy-mm-dd',
+    startDate: '-3d'
 });
 $('#date').datepicker({
     uiLibrary: 'bootstrap4',
@@ -19,27 +23,35 @@ function chkNumber(ele) {
 
 $(document).ready(function () {
     $('#myModal').on('hidden.bs.modal', function (e) {
-        exampleTable();
+        tableJournal();
     });
 
     dataCustomer(null);
     tableCreateJournal(null);
-    exampleTable();
-
+    tableJournal();
+    tableJournal
     $('#select1').selectpicker();
 
 }); // end Document
 
 
-function exampleTable() {
+function tableJournal() {
+    var fromDate = 0;
+    var toDate = 0;
+    if (document.getElementById('fromDate').value != '') {
+        fromDate = document.getElementById('fromDate').value
+    }
+    if (document.getElementById('toDate').value != '') {
+        toDate = document.getElementById('toDate').value;
+    }
     $.ajax({
         type: "GET",
-        url: "/api-journal/get-all",
+        url: "/api-journal/get-all/ " + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
             // table seve offer price
-            var tableQuotation = $('#example').DataTable({
+            var tableJournal = $('#tableJournal').DataTable({
                 lengthChange: true,
                 paging: false,
                 searching: false,

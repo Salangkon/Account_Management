@@ -45,9 +45,32 @@ public class F6JournalController {
 	@Autowired
 	JournalSearchService journalSearchService;
 
-	@GetMapping("/get-all")
-	public List<Journal> getAll() {
-		List<Journal> journals = (List<Journal>) journalRepo.findAll();
+	@GetMapping("/get-all/{startDate}/{endDate}")
+	public List<Journal> getAll(@PathVariable("startDate") String formDate, @PathVariable("endDate") String toDate) {
+		List<Journal> journals = new ArrayList<Journal>();
+		System.err.println(formDate + " :: " + toDate);
+		switch (formDate) {
+		case "0":
+			switch (toDate) {
+			case "0":
+				journals = (List<Journal>) journalRepo.findAll();
+				break;
+			default:
+				journals = journalRepo.findByEndDate(toDate);
+				break;
+			}
+			break;
+		default:
+			switch (toDate) {
+			case "0":
+				journals = journalRepo.findByStartDate(formDate);
+				break;
+			default:
+				journals = journalRepo.findByStartDateAndEndDate(formDate, toDate);
+				break;
+			}
+			break;
+		}
 		journals.sort(
 				(e2, e1) -> new Long(e1.getCreateDate().getTime()).compareTo(new Long(e2.getCreateDate().getTime())));
 		return journals;
@@ -137,15 +160,15 @@ public class F6JournalController {
 
 		journal.setUpdateDate(new Timestamp(new Date().getTime()));
 		switch (status) {
-			case "0":
-				journal.setStatus("0");
-				break;
-			case "1":
-				journal.setStatus("1");
-				break;
-			case "2":
-				journal.setStatus("2");
-				break;
+		case "0":
+			journal.setStatus("0");
+			break;
+		case "1":
+			journal.setStatus("1");
+			break;
+		case "2":
+			journal.setStatus("2");
+			break;
 		}
 
 		return journalRepo.save(journal);

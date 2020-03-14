@@ -37,62 +37,6 @@
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h4 class="m-0 font-weight-bold text-primary">สมุดรายวันทั่วไป</h4>
-
-
-							<table class="table table-sm table-striped table-bordered">
-								<tr>
-									<th>sssss</th>
-								</tr>
-								<tr>
-								  <th>
-									<select id="first-disabled" class="selectpicker" data-hide-disabled="true" data-live-search="true">
-									  <optgroup disabled="disabled" label="disabled">
-										<option>Hidden</option>
-									  </optgroup>
-									  <optgroup label="Fruit">
-										<option>Apple</option>
-										<option>Orange</option>
-									  </optgroup>
-									  <optgroup label="Vegetable">
-										<option>Corn</option>
-										<option>Carrot</option>
-									  </optgroup>
-									</select>
-								  </th>
-								</tr>
-								<tr>
-								  <th>
-									<select id="first-disabled" class="selectpicker" data-hide-disabled="true" data-live-search="true">
-									  <optgroup disabled="disabled" label="disabled">
-										<option>Hidden</option>
-									  </optgroup>
-									  <optgroup label="Fruit">
-										<option>Apple</option>
-										<option>Orange</option>
-									  </optgroup>
-									  <optgroup label="Vegetable">
-										<option>Corn</option>
-										<option>Carrot</option>
-									  </optgroup>
-									</select>
-								  </th>
-								</tr>
-							  </table>
-							<select id="first-disabled" class="selectpicker" data-hide-disabled="true"
-								data-live-search="true">
-								<optgroup disabled="disabled" label="disabled">
-									<option>Hidden</option>
-								</optgroup>
-								<optgroup label="Fruit">
-									<option>Apple</option>
-									<option>Orange</option>
-								</optgroup>
-								<optgroup label="Vegetable">
-									<option>Corn</option>
-									<option>Carrot</option>
-								</optgroup>
-							</select>
-
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
@@ -107,15 +51,15 @@
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-7"></div>
-										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
-										<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
+										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" /> </div>
+										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /> </div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button"
+											<button class="btn btn-primary" type="button" onclick="tableJournal()"
 												style="margin-top: 32px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="example" class="table table-sm table-striped table-bordered"
+									<table id="tableJournal" class="table table-sm table-striped table-bordered"
 										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
