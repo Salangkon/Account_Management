@@ -21,28 +21,24 @@ function chkNumber(ele) {
     ele.onKeyPress = vchar;
 }
 
-function disabledInput(event)
-{
+function disabledInput(event) {
     var row = event.target.getAttribute('rownumber');
     row += '';
-    if(event.target.name == 'debit')
-    {
-        $('#credit' + row ).attr('disabled','disabled');
-        $('#debit' + row ).removeAttr('disabled');
-        $('#credit' + row ).val(null);
+    if (event.target.name == 'debit') {
+        $('#credit' + row).attr('disabled', 'disabled');
+        $('#debit' + row).removeAttr('disabled');
+        $('#credit' + row).val(null);
     }
-    else
-    {
-        $('#debit' + row ).attr('disabled','disabled');
-        $('#credit' + row ).removeAttr('disabled');
-        $('#debit' + row ).val(null);
+    else {
+        $('#debit' + row).attr('disabled', 'disabled');
+        $('#credit' + row).removeAttr('disabled');
+        $('#debit' + row).val(null);
     }
-    if(event.target.value == 0)
-    {
-        $('#debit' + row ).removeAttr('disabled');
-        $('#credit' + row ).val(null);
-        $('#credit' + row ).removeAttr('disabled');
-        $('#debit' + row ).val(null);
+    if (event.target.value == 0) {
+        $('#debit' + row).removeAttr('disabled');
+        $('#credit' + row).val(null);
+        $('#credit' + row).removeAttr('disabled');
+        $('#debit' + row).val(null);
     }
 }
 
@@ -63,16 +59,15 @@ $(document).ready(function () {
 
 //selete-chart-account API
 var SeleteChartAccountItem = [];
-function getSeleteChartAccountItem()
-{
+function getSeleteChartAccountItem() {
     $.ajax({
         type: "GET",
         url: "/api-chart-account/selete-chart-account",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function (msg){
+        success: function (msg) {
             SeleteChartAccountItem = msg;
-            console.log('getSeleteChartAccountItem',msg);
+            console.log('getSeleteChartAccountItem', msg);
         }
     });
 }
@@ -105,67 +100,67 @@ function tableJournal() {
                 "sAjaxDataProp": "",
 
                 "aoColumns": [{
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                    },
-                    {
-                        'data': 'documentCode',
-                        "className": "text-center",
-                        "sWidth": "15%",
-                    },
-                    {
-                        'data': 'description',
-                        "sWidth": "45%",
-                    },
-                    {
-                        'data': 'referenceDocument',
-                        "sWidth": "10%",
-                    },
-                    {
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                        "mRender": function (data, type, row, index, full) {
-                            if (row.status == '0') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                    'data': 'date',
+                    "className": "text-center",
+                    "sWidth": "10%",
+                },
+                {
+                    'data': 'documentCode',
+                    "className": "text-center",
+                    "sWidth": "15%",
+                },
+                {
+                    'data': 'description',
+                    "sWidth": "45%",
+                },
+                {
+                    'data': 'referenceDocument',
+                    "sWidth": "10%",
+                },
+                {
+                    'data': 'date',
+                    "className": "text-center",
+                    "sWidth": "10%",
+                    "mRender": function (data, type, row, index, full) {
+                        if (row.status == '0') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">รอดำเนินการ</option/>\n\
                             <option value="1' + row.id + '" style="color: green">อนุมัติ</option/>\n\
                             </select>';
-                            } else if (row.status == '1') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
+                        } else if (row.status == '1') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
                             <option style="color: green">อนุมัติเเล้ว</option/>\n\
                             <option value="2' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                             </select>';
-                            } else if (row.status == '2') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
+                        } else if (row.status == '2') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                             <option value=:"" style="color: red">ยกเลิก</option/>\n\
                             </select>';
-                            }
                         }
-                    },
-                    {
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                        "mRender": function (data, type, row, index, full) {
-                            if (row.status == '0') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                    }
+                },
+                {
+                    'data': 'date',
+                    "className": "text-center",
+                    "sWidth": "10%",
+                    "mRender": function (data, type, row, index, full) {
+                        if (row.status == '0') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
                             <option value="9' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
                             <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                             <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             <option value="5' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                             </select>';
-                            } else {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                        } else {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
                             <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                             <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             </select>';
-                            }
                         }
-                    },
+                    }
+                },
                 ],
             });
         }
@@ -260,85 +255,85 @@ function tableCreateJournal(data) {
         "bAutoWidth": false,
         "sAjaxDataProp": "",
         "aoColumns": [{
-                'data': '',
-                "sWidth": "20%",
-                "mRender": function (data,
-                    type, row, index) {
-                        var selectItem = '';
+            'data': '',
+            "sWidth": "20%",
+            "mRender": function (data,
+                type, row, index) {
+                var selectItem = '';
 
-                        SeleteChartAccountItem.forEach(item => {
-                            selectItem +=  '<optgroup label="'+item.title+'">';
-                            item.seleteChartAccountList.forEach(item2 => {
-                                selectItem += '<option value="'+item2.id+'">'+item2.name+'</option>';
-                            });
-                            selectItem += '</optgroup>';
-                        })
-                        return '<select id="select'+ index.row +'" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
-                       '+ selectItem +'\n\
+                SeleteChartAccountItem.forEach(item => {
+                    selectItem += '<optgroup label="' + item.title + '">';
+                    item.seleteChartAccountList.forEach(item2 => {
+                        selectItem += '<option value="' + item2.id + '">' + item2.name + '</option>';
+                    });
+                    selectItem += '</optgroup>';
+                })
+                return '<select id="select' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                       '+ selectItem + '\n\
                       </select>';
-                }
-            },
-            {
-                'data': '',
-                "sWidth": "50%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.detail == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
-                            index.row +
-                            '" value=""/>';
-                    } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
-                            index.row +
-                            '" value="' + row.detail + '"/>';
-                    }
-                }
-            },
-            {
-                'data': '',
-                "sWidth": "13%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.credit == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)" name="debit" type="number" rownumber="'+index.row+'" id="debit' +
-                            index.row +
-                            '" value=""/>';
-                    } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)"  name="debit" type="number" rownumber="'+index.row+'" id="debit' +
-                            index.row +
-                            '" value="' + row.credit + '"/>';
-                    }
-                }
-            },
-            {
-                'data': '',
-                "sWidth": "13%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.debit == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="'+index.row+'" id="credit' +
-                            index.row +
-                            '" value=""/>';
-                    } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="'+index.row+'" id="credit' +
-                            index.row +
-                            '" value="' + row.debit + '"/>';
-                    }
-                }
-            },
-            {
-                "mData": "",
-                "sWidth": "4px",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+            }
+        },
+        {
+            'data': '',
+            "sWidth": "50%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.detail == null) {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
+                        index.row +
+                        '" value=""/>';
+                } else {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
+                        index.row +
+                        '" value="' + row.detail + '"/>';
                 }
             }
+        },
+        {
+            'data': '',
+            "sWidth": "13%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.credit == null) {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)" name="debit" type="number" rownumber="' + index.row + '" id="debit' +
+                        index.row +
+                        '" value=""/>';
+                } else {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)"  name="debit" type="number" rownumber="' + index.row + '" id="debit' +
+                        index.row +
+                        '" value="' + row.credit + '"/>';
+                }
+            }
+        },
+        {
+            'data': '',
+            "sWidth": "13%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.debit == null) {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="' + index.row + '" id="credit' +
+                        index.row +
+                        '" value=""/>';
+                } else {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="' + index.row + '" id="credit' +
+                        index.row +
+                        '" value="' + row.debit + '"/>';
+                }
+            }
+        },
+        {
+            "mData": "",
+            "sWidth": "4px",
+            "mRender": function (data,
+                type, row, index) {
+                return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+            }
+        }
         ],
     });
 
     $('#tablegeneraJournalDisplay').on('click', 'a', function () {
-        tablegeneraJournal.row($(this).parents('tr')).remove().draw();
+        // tablegeneraJournal.row($(this).parents('tr')).remove().draw();
 
         var sumvalues = $("[name='credit']");
         var sum = 0;
@@ -383,22 +378,24 @@ $('#tablegeneraJournalDisplay').on('keyup', 'input', function () {
 function Add() {
     tablegeneraJournal.row.add([tablegeneraJournal.data]).draw(false);
     $('.selectpicker').selectpicker();
+
 }
 
 function remove() {
     tablegeneraJournal.rows('.selected').remove().draw();
+    console.log('remove');
 }
 
 function deleteId(id) {
     swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this imaginary file!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        },
+        title: "Are you sure?",
+        text: "Your will not be able to recover this imaginary file!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    },
         function () {
             $.ajax({
                 url: '/api-journal/delete/' + id,
@@ -433,8 +430,7 @@ function dataCustomer(companyId) {
         }
     });
 }
-function validateSave()
-{
+function validateSave() {
     var validateStatus = false;
     var validateStatusCustomers = false;
     var validateStatusDate = false;
@@ -445,22 +441,20 @@ function validateSave()
     var customers = $('#customers').val();
     var date = $('#date').val();
     var referenceDocument = $('#referenceDocument').val();
-    customers == '' ? ($('#invalid-customers').removeAttr('hidden'), validateStatusCustomers = true) : ($('#invalid-customers').hide(), validateStatusCustomers = false);
-    date == '' ?  ($('#invalid-date').removeAttr('hidden'), validateStatusDate = true): ($('#invalid-date').hide(), validateStatusDate = false);
-    referenceDocument == '' ? ($('#invalid-referenceDocument').removeAttr('hidden'), validateStatusReferenceDocument = true ) : ($('#invalid-referenceDocument').hide(), validateStatusReferenceDocument = false );
-    sumDebit != sumCredit ? ($('#invalid-sumDebitCredit').removeAttr('hidden'), validateStatusSum = false) :  ($('#invalid-sumDebitCredit').hide(),validateStatusSum = true);
+    customers == '' ? ($('#invalid-customers').removeAttr('hidden'), validateStatusCustomers = false) : ($('#invalid-customers').hide(), validateStatusCustomers = true);
+    date == '' ? ($('#invalid-date').removeAttr('hidden'), validateStatusDate = false) : ($('#invalid-date').hide(), validateStatusDate = true);
+    referenceDocument == '' ? ($('#invalid-referenceDocument').removeAttr('hidden'), validateStatusReferenceDocument = false) : ($('#invalid-referenceDocument').hide(), validateStatusReferenceDocument = true);
+    sumDebit != sumCredit ? ($('#invalid-sumDebitCredit').removeAttr('hidden'), validateStatusSum = false) : ($('#invalid-sumDebitCredit').hide(), validateStatusSum = true);
 
-    !validateStatusCustomers || !validateStatusDate || !validateStatusReferenceDocument || !validateStatusSum ? validateStatus = false : validateStatus = false;
+    // !validateStatusCustomers || !validateStatusDate || !validateStatusReferenceDocument || validateStatusSum ? (validateStatus = false, alert("false")) : (validateStatus = true, alert("true"));
 
-    console.log(validateStatus);
-    console.log(sumCredit);
-    console.log(sumDebit);
-    console.log(validateStatusSum);
-    if(!validateStatus)
-    {
-        alert("ไม่สามารถบันทึกได้ เนื่องจากข้อมูลไม่ถูกต้องไม่ครบถ้วน \n"+
-        "1.กรุณาระบุคำอธบิายรายการ\n" +
-        "2.กรุณาตรวจสอบยอดเคดิต และเดบิต")
+    validateStatus = validateStatusCustomers || validateStatusDate || validateStatusReferenceDocument || validateStatusSum;
+
+
+    if (!validateStatus) {
+        alert("ไม่สามารถบันทึกได้ เนื่องจากข้อมูลไม่ถูกต้องไม่ครบถ้วน \n" +
+            "1.กรุณาระบุคำอธบิายรายการ\n" +
+            "2.กรุณาตรวจสอบยอดเคดิต และเดบิต")
         return false;
     }
     return true;
@@ -469,10 +463,12 @@ function validateSave()
 function saveCreate() {
     var pass = true;
     // pass = validateInput();
+
     var validate = validateSave();
-    if(!validate)
-        return
-   $.ajax({
+    if (!validate) {
+        return;
+    }
+    $.ajax({
         type: "GET",
         url: "/api-journal/generate-dep/JV",
         success: function (msg) {
