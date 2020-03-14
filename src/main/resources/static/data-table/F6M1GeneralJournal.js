@@ -268,7 +268,7 @@ function tableCreateJournal(data) {
                     });
                     selectItem += '</optgroup>';
                 })
-                return '<select id="select' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                return '<select id="chartAccountId' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
                        '+ selectItem + '\n\
                       </select>';
             }
