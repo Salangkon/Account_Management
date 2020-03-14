@@ -65,7 +65,6 @@ $(document).ready(function () {
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
-    expense(null, null, null);
     getSeleteChartAccountItem();
 }); // end document
 
@@ -354,55 +353,7 @@ function dataCustomer(companyId) {
 
 var tableCreateQuotation;
 
-function expense(expenseValue, row, groupExpense) {
-    var expenseDropdown = [];
-    var expenseDropdown1 = [];
-
-    if (expenseValue != null) {
-        $.ajax({
-            type: "GET",
-            url: "/api-expense/get-dropdown",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                expenseDropdown.push('<select class="form-control form-control-sm" style="height: 8 mm" placeholder="กรุณากรอก" id="' + groupExpense + '" value="' + groupExpense + '">')
-                expenseDropdown.push("<option>กรุณากรอก</option>");
-                for (const iterator of msg) {
-                    $('#expenseDropdown').append('<option value="' + expenseValue + '">' + expenseValue + '</option>');
-                    expenseDropdown.push("<option value=" + iterator.name + ">" + iterator.name + "</option>")
-                }
-                expenseDropdown.push("</select>")
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "/api-expense/get-dropdown",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                expenseDropdown.push('<select class="form-control form-control-sm" style="height: 8 mm" placeholder="กรุณากรอก" id="groupExpense' + row + '">')
-                expenseDropdown.push("<option>กรุณากรอก</option>");
-                for (const iterator of msg) {
-                    expenseDropdown.push('<option value="' + iterator.name + '">' + iterator.name + '</option>')
-                    // $('#expenseDropdown').append('<option value="' + iterator.name + '">' + iterator.name + '</option>');
-                }
-                expenseDropdown.push('</select>')
-            }
-        });
-    }
-    console.log(JSON.stringify(expenseDropdown));
-    console.log(expenseDropdown);
-
-
-
-    return expenseDropdown;
-}
-
-
 function tableCreateQuotationDisplay1(id) {
-
-    // console.log(expenseDropdown);
 
     tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
@@ -437,34 +388,11 @@ function tableCreateQuotationDisplay1(id) {
 
                 var selectItem = '';
                 expense_dropdownItem.forEach(item => {
-                    selectItem += '<option value="' + row.id + '">' + item.name + '</option>';
+                    selectItem += '<option value="' + item.name + '">' + item.name + '</option>';
                 })
-                return '<select id="select' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                return '<select id="groupExpense' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
                            '+ selectItem + '\n\
                           </select>';
-
-
-                return '<select class="form-control form-control-sm" style="height: 8 mm" placeholder="กรุณากรอก" id="' + row.groupExpense + '" value="' + row.groupExpense + '">"\n\
-                 "<option>กรุณากรอก</option>"\n\
-                     "<option value="การตลาดและโฆษณา"><iclass="fas fa-file-alt fa-3x text-gray-500"></i>การตลาดและโฆษณา</option>"\n\
-                     "<option value="ส่งเสริมการขาย">ส่งเสริมการขาย</option>"\n\
-                     "<option value=" รับรอง/เลี้ยงลกูค้า"> รับรอง/เลี้ยงลกูค้า</option>"\n\
-                     "<option value="ค่าเดินทางและที่พัก">ค่าเดินทางและที่พัก</option>"\n\
-                     "<option value="ค่าน้ำมนั/แก๊ส/รถยนต์ ">ค่าน้ำมนั/แก๊ส/รถยนต์ </option>"\n\
-                     "<option value="ค่าขนส่งสินค้า/ลอจิสติกส์ ">ค่าขนส่งสินค้า/ลอจิสติกส์ </option>"\n\
-                     "<option value="สิ้นค้า/วัตถุดิบ/แพคเกจจิ้ง">สิ้นค้า/วัตถุดิบ/แพคเกจจิ้ง</option>"\n\
-                     "<option value="ซื้อสินค้าไว้ขาย">ซื้อสินค้าไว้ขาย</option>"\n\
-                     "<option value="ซือ้ของ/วัสดุไว้ให้บริการ">ซือ้ของ/วัสดุไว้ให้บริการ</option>"\n\
-                     "<option value="สินค้าตวัอย่าง/ของแจกแถม ">สินค้าตวัอย่าง/ของแจกแถม </option>"\n\
-                     "<option value="ออฟฟิศ ">ออฟฟิศ </option>"\n\
-                     "<option value="คอมพิวเตอร์/อุปกรณ์ไอที ">คอมพิวเตอร์/อุปกรณ์ไอที </option>"\n\
-                     "<option value="ค่าส่งเอกสาร/เมสเซนเจอร์/ไปรษณีย์ ">ค่าส่งเอกสาร/เมสเซนเจอร์/ไปรษณีย์ </option>"\n\
-                     "<option value="ค่าส่งเอกสาร/เมสเซนเจอร์/ไปรษณีย์ ">ค่าส่งเอกสาร/เมสเซนเจอร์/ไปรษณีย์ </option>"\n\
-                     "<option value="โปรแกรม/ซอฟท์แวร์/แอพลิเคชั่น">โปรแกรม/ซอฟท์แวร์/แอพลิเคชั่น </option>"\n\
-                     "<option value="วสัดุสำนักงาน/เครื่องเขียน">วสัดุสำนักงาน/เครื่องเขียน </option>"\n\
-                     "<option value="ค่าเช่าออฟฟิศ">ค่าเช่าออฟฟิศ </option>"\n\
-                     "<option value="โทรศพัท์">โทรศพัท์ </option>"\n\
-                    "</select>'
             }
         }, {
             "sWidth": "7%",
@@ -517,10 +445,13 @@ function tableCreateQuotationDisplay1(id) {
             "sWidth": "3px",
             "mRender": function (data,
                 type, row, index) {
-                return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                return '<div style="text-align:center"><i class="fas fa-trash" style="cursor: pointer;color: red"></i></div>';
             }
         }
         ]
+    });
+    $('#tableCreateQuotationDisplay').on('click', 'i', function () {
+        tableCreateQuotation.row($(this).parents('tr')).remove().draw();
     });
     $('#tableCreateQuotationDisplay').on('click', 'a', function () {
         //   tableCreateQuotation.row($(this).parents('tr')).remove().draw();

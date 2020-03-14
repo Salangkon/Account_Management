@@ -63,14 +63,16 @@ public class F5ChartAccountController {
 			for (ChartAccountsLevel1 chartAccountsLevel1 : accounts) {
 				SeleteChartAccount account = new SeleteChartAccount();
 				account.setTitle(chartAccountsLevel1.getText());
+				account.setPassCode(chartAccountsLevel1.getPassCode());
 				List<ChartAccountTablePojo> accountPojo = getChartAccountLvAllT1(chartAccountsLevel1.getId());
-				
 				List<seleteChartAccountList> accountLists = new ArrayList<seleteChartAccountList>();
 				for (ChartAccountTablePojo accountPojo2 : accountPojo) {
 					seleteChartAccountList accountList = new seleteChartAccountList();
 					accountList.setId(accountPojo2.getId());
 					accountList.setName(accountPojo2.getPassCode() + " / " + accountPojo2.getText());
 					accountLists.add(accountList);
+					accountLists.sort((e1, e2) -> new String(e1.getName().toString())
+							.compareTo(new String(e2.getName().toString())));
 					account.setSeleteChartAccountList(accountLists);
 				}
 				setAccounts.add(account);
@@ -78,7 +80,8 @@ public class F5ChartAccountController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		setAccounts.sort((e1, e2) -> new String(e1.getPassCode().toString())
+				.compareTo(new String(e2.getPassCode().toString())));
 		return setAccounts;
 	}
 
