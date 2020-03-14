@@ -29,6 +29,11 @@
 		.hide {
 			display: none;
 		}
+
+		.dropdown-menu.show {
+			position: inherit !important;
+			top: -83px !important;
+		}
 	</style>
 
 </head>
@@ -55,9 +60,10 @@
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h4 class="m-0 font-weight-bold text-primary">ค่าใช้จ่าย (Expenses)</h4>
-							
+
 							<div class="dropdown bootstrap-select show">
-								<select id="expenseDropdown" class="selectpicker" data-hide-disabled="true" data-live-search="true">
+								<select id="expenseDropdown" class="selectpicker" data-hide-disabled="true"
+									data-live-search="true">
 									<optgroup disabled="disabled" label="disabled">
 										<option>Hidden</option>
 									</optgroup>
@@ -71,7 +77,7 @@
 									</optgroup>
 								</select>
 							</div>
-						
+
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
