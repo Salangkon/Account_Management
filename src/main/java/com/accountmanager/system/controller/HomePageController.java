@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomePageController {
 
-	@RequestMapping("/")
+	@RequestMapping("/home-pages")
 	public String HomePages() {
 		return "F1HomePages";
 	}
 
-	@RequestMapping("/login")
+	@RequestMapping("/")
 	public String login() {
 		return "login";
 	}

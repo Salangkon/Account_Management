@@ -12,7 +12,7 @@ function login() {
         dataType: "json",
         success: function (result) {
             if (result.res === "pass") {
-                window.location.href = "/";
+                window.location.href = "/home-pages";
             } else {
                 alert("กรุณา login")
             }

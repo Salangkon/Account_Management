@@ -2,7 +2,10 @@ package com.accountmanager.system.api.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +23,7 @@ public class LoginController {
 	UserRepository userRepo;
 
 	@PostMapping("/login")
-	private HashMap<String, String> loginUser(@RequestBody HashMap<String, String> user) {
+	private HashMap<String, String> loginUser(@RequestBody HashMap<String, String> user, Model model, HttpServletRequest request) {
 		HashMap<String, String> res = new HashMap<String, String>();
 		res.put("res", "false");
 		System.err.println(user.get("id") + " :: " + user.get("password"));
@@ -28,9 +31,12 @@ public class LoginController {
 			User checkUser = userRepo.findByIdAndPassword(user.get("id"), user.get("password"));
 			if (checkUser != null) {
 				res.put("res", "pass");
+				request.getSession().setAttribute("user",checkUser);
+				model.addAttribute("messessError", "S");
 			}
 		} catch (Exception e) {
 			res.put("res", "false");
+			model.addAttribute("messessError", "โ");
 			e.printStackTrace();
 		}
 		return res;
