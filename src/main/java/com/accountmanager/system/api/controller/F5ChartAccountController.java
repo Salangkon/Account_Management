@@ -69,7 +69,7 @@ public class F5ChartAccountController {
 				for (ChartAccountTablePojo accountPojo2 : accountPojo) {
 					seleteChartAccountList accountList = new seleteChartAccountList();
 					accountList.setId(accountPojo2.getId());
-					accountList.setName(accountPojo2.getText());
+					accountList.setName(accountPojo2.getPassCode() + " / " + accountPojo2.getText());
 					accountLists.add(accountList);
 					account.setSeleteChartAccountList(accountLists);
 				}
