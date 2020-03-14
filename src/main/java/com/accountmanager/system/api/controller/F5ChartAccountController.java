@@ -28,7 +28,9 @@ import com.accountmanager.system.pojo.ChartAccountStep3Pojo;
 import com.accountmanager.system.pojo.ChartAccountStep4Pojo;
 import com.accountmanager.system.pojo.ChartAccountStep5Pojo;
 import com.accountmanager.system.pojo.ChartAccountTablePojo;
+import com.accountmanager.system.pojo.SeleteChartAccount;
 import com.accountmanager.system.pojo.StatePojo;
+import com.accountmanager.system.pojo.seleteChartAccountList;
 import com.accountmanager.system.repository.ChartAccountsLevel1Repository;
 import com.accountmanager.system.repository.ChartAccountsLevel2Repository;
 import com.accountmanager.system.repository.ChartAccountsLevel3Repository;
@@ -52,7 +54,34 @@ public class F5ChartAccountController {
 	ChartAccountsLevel4Repository chartAccountsLv4Repo;
 	@Autowired
 	ChartAccountsLevel5Repository chartAccountsLv5Repo;
-	
+
+	@GetMapping("selete-chart-account")
+	public List<SeleteChartAccount> SeleteChart() {
+		List<SeleteChartAccount> setAccounts = new ArrayList<SeleteChartAccount>();
+		try {
+			Iterable<ChartAccountsLevel1> accounts = chartAccountsLv1Repo.findAll();
+			for (ChartAccountsLevel1 chartAccountsLevel1 : accounts) {
+				SeleteChartAccount account = new SeleteChartAccount();
+				account.setTitle(chartAccountsLevel1.getText());
+				List<ChartAccountTablePojo> accountPojo = getChartAccountLvAllT1(chartAccountsLevel1.getId());
+				
+				List<seleteChartAccountList> accountLists = new ArrayList<seleteChartAccountList>();
+				for (ChartAccountTablePojo accountPojo2 : accountPojo) {
+					seleteChartAccountList accountList = new seleteChartAccountList();
+					accountList.setId(accountPojo2.getId());
+					accountList.setName(accountPojo2.getText());
+					accountLists.add(accountList);
+					account.setSeleteChartAccountList(accountLists);
+				}
+				setAccounts.add(account);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return setAccounts;
+	}
+
 	@PostMapping("/update/{id}/{detail}")
 	public String update(@PathVariable("id") String id, @PathVariable("detail") String detail) {
 		try {
@@ -85,7 +114,7 @@ public class F5ChartAccountController {
 		}
 		return "Success";
 	}
-	
+
 	@PostMapping("/create-file")
 	public ChartAccountPojo createFile(@RequestBody HashMap<String, String> data) {
 		try {
@@ -480,8 +509,8 @@ public class F5ChartAccountController {
 		List<ChartAccountTablePojo> accountTablePojos = new ArrayList<ChartAccountTablePojo>();
 
 		for (ChartAccountsLevel2 chartAccountsLevel2 : accountsLeve2s) {
-			if (chartAccountsLevel2.getIcon().equalsIgnoreCase(icon) && chartAccountsLevel2
-					.getChartAccountsLevel1().getId().equals(id)) {
+			if (chartAccountsLevel2.getIcon().equalsIgnoreCase(icon)
+					&& chartAccountsLevel2.getChartAccountsLevel1().getId().equals(id)) {
 				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
 				pojo.setId(chartAccountsLevel2.getId());
 				pojo.setAccountCategory(chartAccountsLevel2.getChartAccountsLevel1().getText());
@@ -492,8 +521,7 @@ public class F5ChartAccountController {
 		}
 		for (ChartAccountsLevel3 chartAccountsLevel3 : accountsLeve3s) {
 			if (chartAccountsLevel3.getIcon().equalsIgnoreCase(icon)
-					&& chartAccountsLevel3.getChartAccountsLevel2().getChartAccountsLevel1().getId()
-							.equals(id)) {
+					&& chartAccountsLevel3.getChartAccountsLevel2().getChartAccountsLevel1().getId().equals(id)) {
 				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
 				pojo.setId(chartAccountsLevel3.getId());
 				pojo.setAccountCategory(
@@ -504,8 +532,8 @@ public class F5ChartAccountController {
 			}
 		}
 		for (ChartAccountsLevel4 chartAccountsLevel4 : accountsLeve4s) {
-			if (chartAccountsLevel4.getIcon().equalsIgnoreCase(icon) && chartAccountsLevel4.getChartAccountsLevel3().getChartAccountsLevel2()
-					.getChartAccountsLevel1().getId().equals(id)) {
+			if (chartAccountsLevel4.getIcon().equalsIgnoreCase(icon) && chartAccountsLevel4.getChartAccountsLevel3()
+					.getChartAccountsLevel2().getChartAccountsLevel1().getId().equals(id)) {
 				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
 				pojo.setId(chartAccountsLevel4.getId());
 				pojo.setAccountCategory(chartAccountsLevel4.getChartAccountsLevel3().getChartAccountsLevel2()
@@ -516,8 +544,8 @@ public class F5ChartAccountController {
 			}
 		}
 		for (ChartAccountsLevel5 chartAccountsLevel5 : accountsLeve5s) {
-			if (chartAccountsLevel5.getIcon().equalsIgnoreCase(icon) && chartAccountsLevel5.getChartAccountsLevel4().getChartAccountsLevel3()
-					.getChartAccountsLevel2().getChartAccountsLevel1().getId().equals(id)) {
+			if (chartAccountsLevel5.getIcon().equalsIgnoreCase(icon) && chartAccountsLevel5.getChartAccountsLevel4()
+					.getChartAccountsLevel3().getChartAccountsLevel2().getChartAccountsLevel1().getId().equals(id)) {
 				ChartAccountTablePojo pojo = new ChartAccountTablePojo();
 				pojo.setId(chartAccountsLevel5.getId());
 				pojo.setAccountCategory(chartAccountsLevel5.getChartAccountsLevel4().getChartAccountsLevel3()
@@ -567,7 +595,7 @@ public class F5ChartAccountController {
 		chartAccounts.setCreateDate(ts);
 		return chartAccountsLv5Repo.save(chartAccounts);
 	}
-	
+
 	@DeleteMapping("/delete-by-id/{id}")
 	public String datele(@PathVariable("id") String id) {
 		try {
@@ -575,8 +603,8 @@ public class F5ChartAccountController {
 			ChartAccountsLevel3 level3 = chartAccountsLv3Repo.findOne(id);
 			ChartAccountsLevel4 level4 = chartAccountsLv4Repo.findOne(id);
 			ChartAccountsLevel5 level5 = chartAccountsLv5Repo.findOne(id);
-			
-			 if (level2 != null) {
+
+			if (level2 != null) {
 				chartAccountsLv2Repo.delete(level2);
 			} else if (level3 != null) {
 				chartAccountsLv3Repo.delete(level3);
