@@ -17,6 +17,10 @@
 		.invalid{
 			color: red;
 		}
+		.dropdown-menu.show {
+			position: inherit !important;
+			top: -83px !important;
+		}
 	</style>
 </head>
 
