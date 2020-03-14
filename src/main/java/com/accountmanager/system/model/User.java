@@ -4,36 +4,26 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
 /**
  * The persistent class for the user database table.
  * 
  */
 @Entity
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	private String id;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="birth_day")
-	private Date birthDay;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name="create_date")
-	private Date createDate;
+	private String password;
 
 	private String email;
 
-	@Column(name="f_name")
+	@Column(name = "f_name")
 	private String fName;
 
-	@Column(name="l_name")
+	@Column(name = "l_name")
 	private String lName;
-
-	private String password;
 
 	private String role;
 
@@ -42,7 +32,15 @@ public class User implements Serializable {
 	private Integer tel;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="update_date")
+	@Column(name = "birth_day")
+	private Date birthDay;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "create_date")
+	private Date createDate;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "update_date")
 	private Date updateDate;
 
 	public User() {
