@@ -222,7 +222,6 @@ function updateQuotation(id) {
     } else {
         genDepartment();
         tableCreateQuotationDisplay1(null);
-        alert('Up2');
         dataCustomer(null);
 
         $('#id').val(""), //เลขที่เอกสาร
