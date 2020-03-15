@@ -5,7 +5,7 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Report Quotidia</title>
+	<title>Genera Journal </title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<style>
