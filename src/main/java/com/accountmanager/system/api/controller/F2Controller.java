@@ -22,9 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accountmanager.system.model.CustomersList;
 import com.accountmanager.system.model.F2ListModel;
 import com.accountmanager.system.model.F2Model;
+import com.accountmanager.system.model.Journal;
+import com.accountmanager.system.model.JournalList;
 import com.accountmanager.system.repository.CustomersListRepository;
 import com.accountmanager.system.repository.F2ListRepository;
 import com.accountmanager.system.repository.F2Repository;
+import com.accountmanager.system.repository.JournalListRepository;
+import com.accountmanager.system.repository.JournalRepository;
 
 @RestController
 @RequestMapping("/api-f2")
@@ -36,6 +40,12 @@ public class F2Controller {
 	F2ListRepository f2ListRepo;
 	@Autowired
 	CustomersListRepository customersListRepo;
+	@Autowired
+	JournalRepository journalRepo;
+	@Autowired
+	JournalListRepository journalListRepo;
+	@Autowired
+	F6JournalController journalController;
 
 	@GetMapping("/get-f2ListRepo-by-id/{id}")
 	public List<F2ListModel> getByIdF2ListRepo(@PathVariable("id") String id) {
@@ -205,6 +215,9 @@ public class F2Controller {
 		case "3":
 			f2ListModel.setStatus("ไม่อนุมัติ");
 			break;
+		case "5":
+			f2ListModel.setStatus("ชำระเงินแล้ว");
+			break;
 		}
 
 		return f2Repo.save(f2ListModel);
@@ -239,6 +252,21 @@ public class F2Controller {
 				f2ListModels.add(f2ListModel);
 			}
 			f2Model.setF2ListModels(f2ListModels);
+
+			if (f2Repo.findOne(f2Model.getId()) == null) {
+				switch (f2Model.getType()) {
+				case "ReceiveReport":
+					ReceiveReport(f2Model);
+					break;
+				case "Expenses":
+
+					break;
+
+				default:
+					break;
+				}
+			}
+
 			return new ResponseEntity<>(f2Repo.save(f2Model), HttpStatus.OK);
 		} catch (Exception ex) {
 			String errorMessage;
@@ -247,4 +275,79 @@ public class F2Controller {
 		}
 	}
 
-}
+	public void ReceiveReport(F2Model f2Model) {
+		Journal journal = new Journal();
+		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+		journal.setDescription(
+				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+		journal.setReferenceDocument("");
+		journal.setType("UV");
+		journal.setStatus("1");
+		journal.setCompanyId(f2Model.getCompanyId());
+		journal.setDate(f2Model.getDateEnd());
+		journal.setF2Id(f2Model.getId());
+		journal.setCreateDate(new Timestamp(new Date().getTime()));
+		journal.setDocumentCode(journalController.getGenerateDepartmentCode("UV"));
+		journal.setSumCredit(f2Model.getPrice());
+		journal.setSumDebit(f2Model.getPrice());
+		if (f2Model.getPrice() != 0) {
+			if (f2Model.getVat() != 0) {
+				List<JournalList> journalLists = new ArrayList<JournalList>();
+				List<String> ChartAccountId = new ArrayList<String>();
+				ChartAccountId.add("d1d70beb-41c0-4f7b-9949-ef8a2574672e");
+				ChartAccountId.add("530e91d5-46ab-4cc4-9452-0787f688879b");
+				ChartAccountId.add("6ffc89bc-48bc-4d5e-b8f2-65c88a10429b");
+				for (String string : ChartAccountId) {
+					JournalList journalList = new JournalList();
+					
+					journalList.setChartAccountId(string);
+					switch (string) {
+					case "d1d70beb-41c0-4f7b-9949-ef8a2574672e":
+						journalList.setCredit(0);
+						journalList.setDebit(f2Model.getProductPriceAll());
+						journalList.setDetail(journal.getDescription());
+						break;
+					case "530e91d5-46ab-4cc4-9452-0787f688879b":
+						journalList.setCredit(0);
+						journalList.setDebit(f2Model.getVat());
+						journalList.setDetail(journal.getDescription());
+						break;
+					case "6ffc89bc-48bc-4d5e-b8f2-65c88a10429b":
+						journalList.setCredit(f2Model.getPrice());
+						journalList.setDebit(0);
+						journalList.setDetail(journal.getDescription());
+						break;
+					}
+					journalLists.add(journalList);
+				}
+				journal.setJournalLists(journalLists);
+			} else {
+				List<JournalList> journalLists = new ArrayList<JournalList>();
+				List<String> ChartAccountId = new ArrayList<String>();
+				ChartAccountId.add("d1d70beb-41c0-4f7b-9949-ef8a2574672e");
+				ChartAccountId.add("6ffc89bc-48bc-4d5e-b8f2-65c88a10429b");
+				for (String string : ChartAccountId) {
+					JournalList journalList = new JournalList();
+					journalList.setChartAccountId(string);
+					switch (string) {
+					case "d1d70beb-41c0-4f7b-9949-ef8a2574672e":
+						journalList.setCredit(0);
+						journalList.setDebit(f2Model.getPrice());
+						journalList.setDetail(journal.getDescription());
+						break;
+					case "6ffc89bc-48bc-4d5e-b8f2-65c88a10429b":
+						journalList.setCredit(f2Model.getPrice());
+						journalList.setDebit(0);
+						journalList.setDetail(journal.getDescription());
+						break;
+					}
+					journalLists.add(journalList);
+				}
+				journal.setJournalLists(journalLists);
+			}
+		}
+		
+		journalController.addUpdate(journal);
+	}
+
+} // end class
