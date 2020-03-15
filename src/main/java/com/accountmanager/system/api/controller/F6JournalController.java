@@ -45,28 +45,28 @@ public class F6JournalController {
 	@Autowired
 	JournalSearchService journalSearchService;
 
-	@GetMapping("/get-all/{startDate}/{endDate}")
-	public List<Journal> getAll(@PathVariable("startDate") String formDate, @PathVariable("endDate") String toDate) {
+	@GetMapping("/get-all/{type}/{startDate}/{endDate}")
+	public List<Journal> getAll(@PathVariable("type") String type, @PathVariable("startDate") String formDate, @PathVariable("endDate") String toDate) {
 		List<Journal> journals = new ArrayList<Journal>();
 		System.err.println(formDate + " :: " + toDate);
 		switch (formDate) {
 		case "0":
 			switch (toDate) {
 			case "0":
-				journals = (List<Journal>) journalRepo.findAll();
+				journals = (List<Journal>) journalRepo.findByType(type);
 				break;
 			default:
-				journals = journalRepo.findByEndDate(toDate);
+				journals = journalRepo.findByEndDate(toDate, type);
 				break;
 			}
 			break;
 		default:
 			switch (toDate) {
 			case "0":
-				journals = journalRepo.findByStartDate(formDate);
+				journals = journalRepo.findByStartDate(formDate, type);
 				break;
 			default:
-				journals = journalRepo.findByStartDateAndEndDate(formDate, toDate);
+				journals = journalRepo.findByStartDateAndEndDate(formDate, toDate, type);
 				break;
 			}
 			break;
