@@ -215,6 +215,9 @@ public class F2Controller {
 		case "3":
 			f2ListModel.setStatus("ไม่อนุมัติ");
 			break;
+		case "5":
+			f2ListModel.setStatus("ชำระเงินแล้ว");
+			break;
 		}
 
 		return f2Repo.save(f2ListModel);
@@ -279,7 +282,7 @@ public class F2Controller {
 				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
 		journal.setReferenceDocument("");
 		journal.setType("UV");
-		journal.setStatus("0");
+		journal.setStatus("1");
 		journal.setCompanyId(f2Model.getCompanyId());
 		journal.setDate(f2Model.getDateEnd());
 		journal.setF2Id(f2Model.getId());
@@ -288,7 +291,7 @@ public class F2Controller {
 		journal.setSumCredit(f2Model.getPrice());
 		journal.setSumDebit(f2Model.getPrice());
 		if (f2Model.getPrice() != 0) {
-			if (f2Model.getStatusVat() == "1") {
+			if (f2Model.getVat() != 0) {
 				List<JournalList> journalLists = new ArrayList<JournalList>();
 				List<String> ChartAccountId = new ArrayList<String>();
 				ChartAccountId.add("d1d70beb-41c0-4f7b-9949-ef8a2574672e");
