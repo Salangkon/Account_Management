@@ -388,7 +388,7 @@ function tableCreateQuotationDisplay1(id) {
 
                 var selectItem = '';
                 expense_dropdownItem.forEach(item => {
-                    selectItem += '<option value="' + item.name + '">' + item.name + '</option>';
+                    selectItem += '<option value="' + item.row + '">' + item.name + '</option>';
                 })
                 return '<select id="groupExpense' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
                            '+ selectItem + '\n\
