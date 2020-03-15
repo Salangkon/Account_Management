@@ -65,7 +65,6 @@ $(document).ready(function () {
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
-    expense(null, null, null);
     getSeleteChartAccountItem();
 }); // end document
 
@@ -416,8 +415,6 @@ function expense(expenseValue, row, groupExpense) {
 
 function tableCreateQuotationDisplay1(id) {
 
-    // console.log(expenseDropdown);
-
     tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
         searching: false,
@@ -451,7 +448,7 @@ function tableCreateQuotationDisplay1(id) {
 
                 var selectItem = '';
                 expense_dropdownItem.forEach(item => {
-                    selectItem += '<option value="' + row.id + '">' + item.name + '</option>';
+                    selectItem += '<option value="' + item.name + '">' + item.name + '</option>';
                 })
                 return '<select id="groupExpense' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
                            '+ selectItem + '\n\
@@ -531,10 +528,13 @@ function tableCreateQuotationDisplay1(id) {
             "sWidth": "3px",
             "mRender": function (data,
                 type, row, index) {
-                return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                return '<div style="text-align:center"><i class="fas fa-trash" style="cursor: pointer;color: red"></i></div>';
             }
         }
         ]
+    });
+    $('#tableCreateQuotationDisplay').on('click', 'i', function () {
+        tableCreateQuotation.row($(this).parents('tr')).remove().draw();
     });
     $('#tableCreateQuotationDisplay').on('click', 'a', function () {
         //   tableCreateQuotation.row($(this).parents('tr')).remove().draw();

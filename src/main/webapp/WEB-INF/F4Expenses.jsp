@@ -62,24 +62,6 @@
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h4 class="m-0 font-weight-bold text-primary">ค่าใช้จ่าย (Expenses)</h4>
-
-							<div class="dropdown bootstrap-select show">
-								<select id="expenseDropdown" class="selectpicker" data-hide-disabled="true"
-									data-live-search="true">
-									<optgroup disabled="disabled" label="disabled">
-										<option>Hidden</option>
-									</optgroup>
-									<optgroup label="Fruit">
-										<option>Apple</option>
-										<option>Orange</option>
-									</optgroup>
-									<optgroup label="Vegetable">
-										<option>Corn</option>
-										<option>Carrot</option>
-									</optgroup>
-								</select>
-							</div>
-
 						</div>
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
