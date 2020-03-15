@@ -460,8 +460,12 @@ function validateSave() {
 
     // !validateStatusCustomers || !validateStatusDate || !validateStatusReferenceDocument || validateStatusSum ? (validateStatus = false, alert("false")) : (validateStatus = true, alert("true"));
 
-    validateStatus = validateStatusCustomers || validateStatusDate || validateStatusReferenceDocument || validateStatusSum;
-
+    !validateStatusCustomers || !validateStatusDate || !validateStatusReferenceDocument || !validateStatusSum ? validateStatus = false : validateStatus = true;
+    console.log(validateStatusCustomers);
+    console.log(validateStatusDate);
+    console.log(validateStatusReferenceDocument);
+    console.log(validateStatusSum);
+    console.log(validateStatus);
 
     if (!validateStatus) {
         alert("ไม่สามารถบันทึกได้ เนื่องจากข้อมูลไม่ถูกต้องไม่ครบถ้วน \n" +
