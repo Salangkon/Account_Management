@@ -17,10 +17,20 @@
 		.invalid{
 			color: red;
 		}
-		.dropdown-menu.show {
-			margin-top: -80px;
-			position: inherit !important;
-    		z-index: 10000 !important;
+		[x-placement=bottom-start] {
+			position: relative !important;
+			top: -37px !important; 
+			margin-top: -40px !important;
+		}
+		/* .dropdown-menu.show:first-of-type {
+			position: relative !important;
+			top: 2.5rem !important; 
+			margin-top: -40px !important;
+		} */
+		[x-placement=top-start] {
+			position: relative !important;
+			top: 2.5rem !important; 
+			margin-top: -40px !important;
 		}
 	</style>
 </head>
