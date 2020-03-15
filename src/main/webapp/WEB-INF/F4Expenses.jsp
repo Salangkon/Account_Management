@@ -31,8 +31,10 @@
 		}
 
 		.dropdown-menu.show {
-			position: inherit !important;
-			top: -83px !important;
+			/* position: inherit !important;*/
+			top: 111px !important;
+			left: -11px !important;
+			z-index: 1000;
 		}
 	</style>
 

@@ -18,8 +18,9 @@
 			color: red;
 		}
 		.dropdown-menu.show {
+			margin-top: -80px;
 			position: inherit !important;
-			top: -83px !important;
+    		z-index: 10000 !important;
 		}
 	</style>
 </head>

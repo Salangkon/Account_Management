@@ -214,12 +214,25 @@ function updateQuotation(id) {
                         break;
                 }
                 dataCustomer(msg.companyId)
+                console.log('msg',msg);
                 tableCreateQuotationDisplay1(msg.id);
+                console.log('tableCreateQuotation',tableCreateQuotation.data);
+                tableCreateQuotation.data = jQuery.parseJSON(JSON.stringify(msg.f2ListModels));
+                console.log('tableCreateQuotation',tableCreateQuotation.data);
+               
+                $('.selectpicker').selectpicker();
+                for (let index = 0; index < msg.f2ListModels.length; index++) {
+                    $('#groupExpense' + index).selectpicker();
+                    $('#groupExpense' + index).val(msg.f2ListModels[index].chartAccountId);
+                    $('#groupExpense' + index).selectpicker('refresh');
+                }
             }
         })
     } else {
         genDepartment();
         tableCreateQuotationDisplay1(null);
+        alert('Up2');
+        $('.selectpicker').selectpicker();
         dataCustomer(null);
 
         $('#id').val(""), //เลขที่เอกสาร
@@ -256,6 +269,7 @@ function updateQuotation(id) {
         document.getElementById("myCheck1").checked = true;
         document.getElementById("myCheck2").checked = true;
     }
+    $('.selectpicker').selectpicker();
     $('#myModal').modal('show');
 } // end update Quotation
 
@@ -357,7 +371,7 @@ var tableCreateQuotation;
 function expense(expenseValue, row, groupExpense) {
     var expenseDropdown = [];
     var expenseDropdown1 = [];
-
+    alert('expense');
     if (expenseValue != null) {
         $.ajax({
             type: "GET",
@@ -439,12 +453,12 @@ function tableCreateQuotationDisplay1(id) {
                 expense_dropdownItem.forEach(item => {
                     selectItem += '<option value="' + row.id + '">' + item.name + '</option>';
                 })
-                return '<select id="select' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                return '<select id="groupExpense' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
                            '+ selectItem + '\n\
                           </select>';
 
 
-                return '<select class="form-control form-control-sm" style="height: 8 mm" placeholder="กรุณากรอก" id="' + row.groupExpense + '" value="' + row.groupExpense + '">"\n\
+              /*  return '<select class="form-control form-control-sm" style="height: 8 mm" placeholder="กรุณากรอก" id="' + row.groupExpense + '" value="' + row.groupExpense + '">"\n\
                  "<option>กรุณากรอก</option>"\n\
                      "<option value="การตลาดและโฆษณา"><iclass="fas fa-file-alt fa-3x text-gray-500"></i>การตลาดและโฆษณา</option>"\n\
                      "<option value="ส่งเสริมการขาย">ส่งเสริมการขาย</option>"\n\
@@ -464,7 +478,7 @@ function tableCreateQuotationDisplay1(id) {
                      "<option value="วสัดุสำนักงาน/เครื่องเขียน">วสัดุสำนักงาน/เครื่องเขียน </option>"\n\
                      "<option value="ค่าเช่าออฟฟิศ">ค่าเช่าออฟฟิศ </option>"\n\
                      "<option value="โทรศพัท์">โทรศพัท์ </option>"\n\
-                    "</select>'
+                    "</select>'*/
             }
         }, {
             "sWidth": "7%",
@@ -566,11 +580,12 @@ function tableCreateQuotationDisplay1(id) {
             $('#vat1').text("00.00");
         }
     }); // end table
-
+    $('.selectpicker').selectpicker();
 }
 
 function Add() {
     tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
+    console.log('tableCreateQuotation.data',tableCreateQuotation);
     $('.selectpicker').selectpicker();
 }
 
@@ -580,6 +595,8 @@ function remove() {
 
 function saveCreateQuotation() {
     var pass = true;
+
+    $('#customers').val('20190905')
     pass = validateInput();
 
     if (pass) {
