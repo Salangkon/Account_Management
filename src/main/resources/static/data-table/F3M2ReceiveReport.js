@@ -120,6 +120,9 @@ function changeFunc($i) {
         case "3":
             updateStatus(id, "3");
             break;
+        case "5":
+            updateStatus(id, "5");
+            break;
             // case "4":
             //     $('#myModal').modal('show');
             //     break;
@@ -631,6 +634,11 @@ function tableQuotation() {
                                     <option style="color: black">ชำระเงินแล้ว</option/>\n\
                                     <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                     </select>';
+                            }  else if (row.status == 'ชำระเงินแล้ว') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                                    <option style="color: black">ชำระเงินแล้ว</option/>\n\
+                                    <option value="0' + row.id + '" style="color: red">รีเซต</option/>\n\
+                                    </select>';
                             } else if (row.status == 'ไม่อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: black">ไม่อนุมัติ</option/>\n\
@@ -649,6 +657,11 @@ function tableQuotation() {
                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
                                        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
                             } else if (full.status == 'อนุมัติ') {
+                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
+                                // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
+                            } else if (full.status == 'ชำระเงินแล้ว') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
                                 <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
