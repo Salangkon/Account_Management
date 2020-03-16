@@ -259,8 +259,11 @@ public class F2Controller {
 				case "ReceiveReport":
 					ReceiveReport(f2Model, "UV");
 					break;
-				case "Expenses":
-
+				case "TaxInvoice":
+					TaxInvoice(f2Model, "UV");
+					break;
+				case "Receipt":
+					Receipt(f2Model, "RV");
 					break;
 
 				default:
@@ -376,6 +379,103 @@ public class F2Controller {
 			}
 		}
 
+		journalController.addUpdate(journal);
+	}
+
+	public void TaxInvoice(F2Model f2Model, String passId) {
+		System.err.println(passId);
+		Journal journal = new Journal();
+		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+		journal.setDescription(
+				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+		journal.setReferenceDocument("");
+		journal.setType(passId);
+		journal.setStatus("1");
+		journal.setCompanyId(f2Model.getCompanyId());
+		journal.setDate(f2Model.getDateEnd());
+		journal.setF2Id(f2Model.getId());
+		journal.setCreateDate(new Timestamp(new Date().getTime()));
+		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
+		journal.setSumCredit(f2Model.getPrice());
+		journal.setSumDebit(f2Model.getPrice());
+		if (passId.equals("UV")) {
+			if (f2Model.getPrice() != 0) {
+				List<JournalList> journalLists = new ArrayList<JournalList>();
+				List<String> ChartAccountId = new ArrayList<String>();
+				ChartAccountId.add("70cb28eb-6ae8-40d2-9e30-a8487617eef9");
+				ChartAccountId.add("93fc6b4d-46a5-456c-8816-926857976c6c");
+				ChartAccountId.add("628014ce-763d-4ed1-88f5-878180c8f7e8");
+				for (String string : ChartAccountId) {
+					JournalList journalList = new JournalList();
+					journalList.setChartAccountId(string);
+					switch (string) {
+					case "70cb28eb-6ae8-40d2-9e30-a8487617eef9":
+						journalList.setCredit(0);
+						journalList.setDebit(f2Model.getProductPriceAll());
+						journalList.setDetail(journal.getDescription());
+						break;
+					case "93fc6b4d-46a5-456c-8816-926857976c6c":
+						journalList.setCredit(f2Model.getPrice());
+						journalList.setDebit(0);
+						journalList.setDetail(journal.getDescription());
+						break;
+					case "628014ce-763d-4ed1-88f5-878180c8f7e8":
+						journalList.setCredit(f2Model.getVat());
+						journalList.setDebit(0);
+						journalList.setDetail(journal.getDescription());
+						break;
+					}
+					journalLists.add(journalList);
+				}
+				journal.setJournalLists(journalLists);
+			}
+		}
+
+		journalController.addUpdate(journal);
+	}
+
+	public void Receipt(F2Model f2Model, String passId) {
+		System.err.println(passId);
+		Journal journal = new Journal();
+		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+		journal.setDescription(
+				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+		journal.setReferenceDocument("");
+		journal.setType(passId);
+		journal.setStatus("1");
+		journal.setCompanyId(f2Model.getCompanyId());
+		journal.setDate(f2Model.getDateEnd());
+		journal.setF2Id(f2Model.getId());
+		journal.setCreateDate(new Timestamp(new Date().getTime()));
+		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
+		journal.setSumCredit(f2Model.getPrice());
+		journal.setSumDebit(f2Model.getPrice());
+		if (passId.equals("RV")) {
+			if (f2Model.getPrice() != 0) {
+				List<JournalList> journalLists = new ArrayList<JournalList>();
+				List<String> ChartAccountId = new ArrayList<String>();
+				ChartAccountId.add("f4220d85-32f3-47b0-9b7f-3475618a29ca");
+				ChartAccountId.add("8a5e1e08-7c35-4d00-b932-cf487e64961c");
+				for (String string : ChartAccountId) {
+					JournalList journalList = new JournalList();
+					journalList.setChartAccountId(string);
+					switch (string) {
+					case "f4220d85-32f3-47b0-9b7f-3475618a29ca":
+						journalList.setCredit(0);
+						journalList.setDebit(f2Model.getPrice());
+						journalList.setDetail(journal.getDescription());
+						break;
+					case "8a5e1e08-7c35-4d00-b932-cf487e64961c":
+						journalList.setCredit(f2Model.getPrice());
+						journalList.setDebit(0);
+						journalList.setDetail(journal.getDescription());
+						break;
+					}
+					journalLists.add(journalList);
+				}
+				journal.setJournalLists(journalLists);
+			}
+		}
 		journalController.addUpdate(journal);
 	}
 
