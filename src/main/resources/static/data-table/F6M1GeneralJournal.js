@@ -98,7 +98,6 @@ function tableJournal() {
                 // "sAjaxSource": searchDate(),
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
-
                 "aoColumns": [{
                         'data': 'date',
                         "className": "text-center",
@@ -108,6 +107,10 @@ function tableJournal() {
                         'data': 'documentCode',
                         "className": "text-center",
                         "sWidth": "15%",
+                        "mRender": function (data,
+                            type, row, index, full) {
+                            return '<a style="cursor: pointer;color: blue;" onclick="createUpdate(' + "'" + row.id + "','" + true + "'" + ')">' + row.documentCode + '</a>';
+                        }
                     },
                     {
                         'data': 'description',
@@ -308,7 +311,7 @@ function tableCreateJournal(data) {
                     } else {
                         return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)"  name="debit" type="number" rownumber="' + index.row + '" id="debit' +
                             index.row +
-                            '" value="' + row.credit + '"/>';
+                            '" value="' + row.debit  + '"/>';
                     }
                 }
             },
@@ -324,7 +327,7 @@ function tableCreateJournal(data) {
                     } else {
                         return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="' + index.row + '" id="credit' +
                             index.row +
-                            '" value="' + row.debit + '"/>';
+                            '" value="' + row.credit + '"/>';
                     }
                 }
             },
