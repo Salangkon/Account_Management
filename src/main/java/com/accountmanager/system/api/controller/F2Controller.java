@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accountmanager.system.model.CategoryExpensesMapping;
 import com.accountmanager.system.model.CustomersList;
 import com.accountmanager.system.model.F2ListModel;
 import com.accountmanager.system.model.F2Model;
@@ -29,6 +30,7 @@ import com.accountmanager.system.repository.F2ListRepository;
 import com.accountmanager.system.repository.F2Repository;
 import com.accountmanager.system.repository.JournalListRepository;
 import com.accountmanager.system.repository.JournalRepository;
+import com.accountmanager.system.repository.CategoryExpensesMappingRepository;
 
 @RestController
 @RequestMapping("/api-f2")
@@ -46,6 +48,8 @@ public class F2Controller {
 	JournalListRepository journalListRepo;
 	@Autowired
 	F6JournalController journalController;
+	@Autowired
+	CategoryExpensesMappingRepository categoryExpensesMappingRepo;
 
 	@GetMapping("/get-f2ListRepo-by-id/{id}")
 	public List<F2ListModel> getByIdF2ListRepo(@PathVariable("id") String id) {
@@ -477,6 +481,12 @@ public class F2Controller {
 			}
 		}
 		journalController.addUpdate(journal);
+	}
+	
+	@GetMapping("/categoryExpensesMappingRopo")
+	public Iterable<CategoryExpensesMapping> categoryExpensesMappingRopo() {
+		
+		return categoryExpensesMappingRepo.findAll();
 	}
 
 } // end class
