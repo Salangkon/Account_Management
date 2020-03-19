@@ -478,8 +478,6 @@ function validateSave() {
 
 function saveCreate() {
     var pass = true;
-    // pass = validateInput();
-    $('#customers').val('20190905')
     var validate = validateSave();
     if (!validate) {
         return;

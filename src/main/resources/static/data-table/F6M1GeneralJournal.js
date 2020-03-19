@@ -99,71 +99,71 @@ function tableJournal() {
                 data: jQuery.parseJSON(JSON.stringify(msg)),
                 "sAjaxDataProp": "",
                 "aoColumns": [{
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                    },
-                    {
-                        'data': 'documentCode',
-                        "className": "text-center",
-                        "sWidth": "15%",
-                        "mRender": function (data,
-                            type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="createUpdate(' + "'" + row.id + "','" + true + "'" + ')">' + row.documentCode + '</a>';
-                        }
-                    },
-                    {
-                        'data': 'description',
-                        "sWidth": "45%",
-                    },
-                    {
-                        'data': 'referenceDocument',
-                        "sWidth": "10%",
-                    },
-                    {
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                        "mRender": function (data, type, row, index, full) {
-                            if (row.status == '0') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                    'data': 'date',
+                    "className": "text-center",
+                    "sWidth": "10%",
+                },
+                {
+                    'data': 'documentCode',
+                    "className": "text-center",
+                    "sWidth": "15%",
+                    "mRender": function (data,
+                        type, row, index, full) {
+                        return '<a style="cursor: pointer;color: blue;" onclick="createUpdate(' + "'" + row.id + "','" + true + "'" + ')">' + row.documentCode + '</a>';
+                    }
+                },
+                {
+                    'data': 'description',
+                    "sWidth": "45%",
+                },
+                {
+                    'data': 'referenceDocument',
+                    "sWidth": "10%",
+                },
+                {
+                    'data': 'date',
+                    "className": "text-center",
+                    "sWidth": "10%",
+                    "mRender": function (data, type, row, index, full) {
+                        if (row.status == '0') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">รอดำเนินการ</option/>\n\
                             <option value="1' + row.id + '" style="color: green">อนุมัติ</option/>\n\
                             </select>';
-                            } else if (row.status == '1') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
+                        } else if (row.status == '1') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
                             <option style="color: green">อนุมัติเเล้ว</option/>\n\
                             <option value="2' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                             </select>';
-                            } else if (row.status == '2') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
+                        } else if (row.status == '2') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                             <option value=:"" style="color: red">ยกเลิก</option/>\n\
                             </select>';
-                            }
                         }
-                    },
-                    {
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                        "mRender": function (data, type, row, index, full) {
-                            if (row.status == '0') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                    }
+                },
+                {
+                    'data': 'date',
+                    "className": "text-center",
+                    "sWidth": "10%",
+                    "mRender": function (data, type, row, index, full) {
+                        if (row.status == '0') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
                             <option value="9' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
                             <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                             <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             <option value="5' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                             </select>';
-                            } else {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                        } else {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
                             <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                             <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             </select>';
-                            }
                         }
-                    },
+                    }
+                },
                 ],
             });
         }
@@ -265,80 +265,80 @@ function tableCreateJournal(data) {
         "bAutoWidth": false,
         "sAjaxDataProp": "",
         "aoColumns": [{
-                'data': '',
-                "sWidth": "20%",
-                "mRender": function (data,
-                    type, row, index) {
-                    var selectItem = '';
+            'data': '',
+            "sWidth": "20%",
+            "mRender": function (data,
+                type, row, index) {
+                var selectItem = '';
 
-                    SeleteChartAccountItem.forEach(item => {
-                        selectItem += '<optgroup label="' + item.title + '">';
-                        item.seleteChartAccountList.forEach(item2 => {
-                            selectItem += '<option value="' + item2.id + '">' + item2.name + '</option>';
-                        });
-                        selectItem += '</optgroup>';
-                    })
-                    return '<select id="chartAccountId' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                SeleteChartAccountItem.forEach(item => {
+                    selectItem += '<optgroup label="' + item.title + '">';
+                    item.seleteChartAccountList.forEach(item2 => {
+                        selectItem += '<option value="' + item2.id + '">' + item2.name + '</option>';
+                    });
+                    selectItem += '</optgroup>';
+                })
+                return '<select id="chartAccountId' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
                        ' + selectItem + '\n\
                       </select>';
-                }
-            },
-            {
-                'data': '',
-                "sWidth": "50%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.detail == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
-                            index.row +
-                            '" value=""/>';
-                    } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
-                            index.row +
-                            '" value="' + row.detail + '"/>';
-                    }
-                }
-            },
-            {
-                'data': '',
-                "sWidth": "13%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.credit == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)" name="debit" type="number" rownumber="' + index.row + '" id="debit' +
-                            index.row +
-                            '" value=""/>';
-                    } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)"  name="debit" type="number" rownumber="' + index.row + '" id="debit' +
-                            index.row +
-                            '" value="' + row.debit  + '"/>';
-                    }
-                }
-            },
-            {
-                'data': '',
-                "sWidth": "13%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.debit == null) {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="' + index.row + '" id="credit' +
-                            index.row +
-                            '" value=""/>';
-                    } else {
-                        return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="' + index.row + '" id="credit' +
-                            index.row +
-                            '" value="' + row.credit + '"/>';
-                    }
-                }
-            },
-            {
-                "mData": "",
-                "sWidth": "4px",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<div style="text-align:center"><i class="fas fa-trash" style="cursor: pointer;color: red"></i></div>';
+            }
+        },
+        {
+            'data': '',
+            "sWidth": "50%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.detail == null) {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
+                        index.row +
+                        '" value=""/>';
+                } else {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" type="text" id="detail' +
+                        index.row +
+                        '" value="' + row.detail + '"/>';
                 }
             }
+        },
+        {
+            'data': '',
+            "sWidth": "13%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.credit == null) {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)" name="debit" type="number" rownumber="' + index.row + '" id="debit' +
+                        index.row +
+                        '" value=""/>';
+                } else {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm" onkeyup="disabledInput(event)"  name="debit" type="number" rownumber="' + index.row + '" id="debit' +
+                        index.row +
+                        '" value="' + row.debit + '"/>';
+                }
+            }
+        },
+        {
+            'data': '',
+            "sWidth": "13%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.debit == null) {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="' + index.row + '" id="credit' +
+                        index.row +
+                        '" value=""/>';
+                } else {
+                    return '<input class="form-control number2" style="width: 100%;height: 7mm"  onkeyup="disabledInput(event)" name="credit" type="number" rownumber="' + index.row + '" id="credit' +
+                        index.row +
+                        '" value="' + row.credit + '"/>';
+                }
+            }
+        },
+        {
+            "mData": "",
+            "sWidth": "4px",
+            "mRender": function (data,
+                type, row, index) {
+                return '<div style="text-align:center"><i class="fas fa-trash" style="cursor: pointer;color: red"></i></div>';
+            }
+        }
         ],
     });
 
@@ -402,14 +402,14 @@ function remove() {
 
 function deleteId(id) {
     swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this imaginary file!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        },
+        title: "Are you sure?",
+        text: "Your will not be able to recover this imaginary file!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    },
         function () {
             $.ajax({
                 url: '/api-journal/delete/' + id,
@@ -481,8 +481,7 @@ function validateSave() {
 
 function saveCreate() {
     var pass = true;
-    // pass = validateInput();
-    $('#customers').val('20190905')
+
     var validate = validateSave();
     if (!validate) {
         return;

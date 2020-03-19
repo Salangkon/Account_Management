@@ -32,7 +32,7 @@
 
 		.dropdown-menu.show {
 			position: relative !important;
-			top: -37px !important; 
+			top: -37px !important;
 			margin-top: -40px !important;
 		}
 	</style>
