@@ -1,5 +1,3 @@
-
-
 $('#fromDate').datepicker({
     uiLibrary: 'bootstrap4',
     format: 'yyyy-mm-dd',
@@ -53,11 +51,11 @@ $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
         }
     }
     discountPrice = parseFloat(sum);
-    $('#price').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/);
+    $('#price').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
     $('#priceDisplay').text(parseFloat(sum).toFixed(2));
 
     discountPrice1 = parseFloat(sum);
-    $('#price1').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/);
+    $('#price1').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
     $('#priceDisplay1').text(parseFloat(sum).toFixed(2));
     myFunction();
 });
@@ -73,6 +71,7 @@ $(document).ready(function () {
 
 
 var expense_dropdownItem = [];
+
 function getSeleteChartAccountItem() {
     $.ajax({
         type: "GET",
@@ -135,9 +134,9 @@ function changeFunc($i) {
         case "3":
             updateStatus(id, "3");
             break;
-        // case "4":
-        //     $('#myModal').modal('show');
-        //     break;
+            // case "4":
+            //     $('#myModal').modal('show');
+            //     break;
     }
 } // end update status
 
@@ -434,91 +433,91 @@ function tableCreateQuotationDisplay1_UpdateByKO(msg) {
         "bAutoWidth": false,
         "sAjaxDataProp": "",
         "aoColumns": [{
-            "sWidth": "5%",
-            "mRender": function (data,
-                type, row, index) {
-                index.row++;
-                return '<div style="text-align: center"> ' + index.row + '</div>';
-            }
-        }, {
-            "sWidth": "50%",
-            "mRender": function (data,
-                type, row, index) {
-                if (row.product != null) {
-                    return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value="' + row.product + '"/> \n\
+                "sWidth": "5%",
+                "mRender": function (data,
+                    type, row, index) {
+                    index.row++;
+                    return '<div style="text-align: center"> ' + index.row + '</div>';
+                }
+            }, {
+                "sWidth": "50%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.product != null) {
+                        return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value="' + row.product + '"/> \n\
                      <p class="hide error-product" id="error-product' + index.row + '">กรุณากรอกรายละเอียด</p>';
-                } else {
-                    return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value=""/> \n\
+                    } else {
+                        return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value=""/> \n\
                         	<p class="hide error-product"  id="error-product' + index.row + '">กรุณากรอกรายละเอียด</p>';
+                    }
                 }
-            }
-        },
-        {
-            "sWidth": "20%",
-            "mRender": function (data,
-                type, row, index) {
-                var selectItem = '';
-                expense_dropdownItem.forEach(item => {
-                    selectItem += '<option value="' + item.row + '">' + item.name + '</option>';
-                })
-                return '<select id="groupExpense' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
-                           '+ selectItem + '\n\
+            },
+            {
+                "sWidth": "20%",
+                "mRender": function (data,
+                    type, row, index) {
+                    var selectItem = '';
+                    expense_dropdownItem.forEach(item => {
+                        selectItem += '<option value="' + item.row + '">' + item.name + '</option>';
+                    })
+                    return '<select id="groupExpense' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                           ' + selectItem + '\n\
                           </select>';
-            }
-        }, {
-            "sWidth": "7%",
-            "mRender": function (data,
-                type, row, index) {
-                if (row.productNumber != null) {
-                    return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productNumber' +
-                        index.row +
-                        '" value="' + row.productNumber + '"/>';
-                } else {
-                    return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productNumber' +
-                        index.row +
-                        '" value="1"/>';
+                }
+            }, {
+                "sWidth": "7%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.productNumber != null) {
+                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productNumber' +
+                            index.row +
+                            '" value="' + row.productNumber + '"/>';
+                    } else {
+                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productNumber' +
+                            index.row +
+                            '" value="1"/>';
+                    }
+                }
+            },
+            {
+                "sWidth": "7%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.productPrice != null) {
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productPrice' +
+                            index.row +
+                            '" value="' + row.productPrice + '"/>';
+                    } else {
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productPrice' +
+                            index.row +
+                            '" value=""/>';
+                    }
+                }
+            },
+            {
+                "mData": "",
+                "sWidth": "8%",
+                "mRender": function (data,
+                    type, row, index) {
+                    if (row.productSumPrice != null) {
+                        return '<input class="form-control sum1" style="width: 120px;height: 8mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                            index.row +
+                            '" value="' + row.productSumPrice + '" disabled/>';
+                    } else {
+                        return '<input class="form-control sum1" style="width: 120px;height: 8mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                            index.row +
+                            '" value="" disabled/>';
+                    }
+                }
+            },
+            {
+                "mData": "",
+                "sWidth": "3px",
+                "mRender": function (data,
+                    type, row, index) {
+                    return '<div style="text-align:center"><i class="fas fa-trash" style="cursor: pointer;color: red"></i></div>';
                 }
             }
-        },
-        {
-            "sWidth": "7%",
-            "mRender": function (data,
-                type, row, index) {
-                if (row.productPrice != null) {
-                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productPrice' +
-                        index.row +
-                        '" value="' + row.productPrice + '"/>';
-                } else {
-                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productPrice' +
-                        index.row +
-                        '" value=""/>';
-                }
-            }
-        },
-        {
-            "mData": "",
-            "sWidth": "8%",
-            "mRender": function (data,
-                type, row, index) {
-                if (row.productSumPrice != null) {
-                    return '<input class="form-control sum1" style="width: 120px;height: 8mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
-                        index.row +
-                        '" value="' + row.productSumPrice + '" disabled/>';
-                } else {
-                    return '<input class="form-control sum1" style="width: 120px;height: 8mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
-                        index.row +
-                        '" value="" disabled/>';
-                }
-            }
-        },
-        {
-            "mData": "",
-            "sWidth": "3px",
-            "mRender": function (data,
-                type, row, index) {
-                return '<div style="text-align:center"><i class="fas fa-trash" style="cursor: pointer;color: red"></i></div>';
-            }
-        }
         ]
     });
     $('#tableCreateQuotationDisplay').on('click', 'i', function () {
@@ -583,7 +582,7 @@ function saveCreateQuotation() {
     var pass = true;
 
     pass = validateInput();
-alert(pass);
+    // alert(pass);
     if (pass) {
         var insertQuotation = {
             id: $('#id').val(), //ลูกค้า
@@ -684,75 +683,75 @@ function tableQuotation() {
                 //     [0, "desc"]
                 // ],
                 "aoColumns": [{
-                    'data': 'date',
-                    "className": "text-center",
-                    "sWidth": "8%",
-                },
-                {
-                    'data': 'departmentId',
-                    "sWidth": "13%",
-                    "mRender": function (data,
-                        type, row, index, full) {
-                        return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
-                    }
-                },
-                {
-                    'data': 'companyId',
-                    "sWidth": "43%",
-                },
-                {
-                    'data': '',
-                    "sWidth": "13%",
-                    "mRender": function (data,
-                        type, row, index, full) {
-                        return row.productPriceAll.toFixed(2);
-                    }
-                },
-                {
-                    'data': '',
-                    "className": "text-center",
-                    "sWidth": "10%",
-                    "mRender": function (data, type, row, index, full) {
-                        if (row.status == 'รออนุมัติ') {
-                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                        'data': 'date',
+                        "className": "text-center",
+                        "sWidth": "8%",
+                    },
+                    {
+                        'data': 'departmentId',
+                        "sWidth": "13%",
+                        "mRender": function (data,
+                            type, row, index, full) {
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                        }
+                    },
+                    {
+                        'data': 'companyId',
+                        "sWidth": "43%",
+                    },
+                    {
+                        'data': '',
+                        "sWidth": "13%",
+                        "mRender": function (data,
+                            type, row, index, full) {
+                            return row.productPriceAll.toFixed(2);
+                        }
+                    },
+                    {
+                        'data': '',
+                        "className": "text-center",
+                        "sWidth": "10%",
+                        "mRender": function (data, type, row, index, full) {
+                            if (row.status == 'รออนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                                     <option value="0' + row.id + '" style="color: black">รอดำเนินการ</option/>\n\
                                     <option value="2' + row.id + '" style="color: black">ชำระเงินแล้ว</option/>\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     </select>';
-                        } else if (row.status == 'อนุมัติ') {
-                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                            } else if (row.status == 'อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                                     <option style="color: black">ดำเนิการเเล้ว</option/>\n\
                                     <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                     </select>';
-                        } else if (row.status == 'ไม่อนุมัติ') {
-                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
+                            } else if (row.status == 'ไม่อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     <option value="0' + row.id + '" style="color: black">คืนสภาพ</option/>\n\
                                     </select>';
+                            }
                         }
-                    }
-                },
-                {
-                    'data': '',
-                    "className": "text-right",
-                    "sWidth": "13%",
-                    "mRender": function (data, type, full) {
-                        if (full.status == 'ไม่อนุมัติ') {
-                            return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
+                    },
+                    {
+                        'data': '',
+                        "className": "text-right",
+                        "sWidth": "13%",
+                        "mRender": function (data, type, full) {
+                            if (full.status == 'ไม่อนุมัติ') {
+                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
                                        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
-                        } else if (full.status == 'อนุมัติ') {
-                            return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                            } else if (full.status == 'อนุมัติ') {
+                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
                                 <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
-                            // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
-                        } else if (full.status == 'รออนุมัติ') {
-                            return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
+                                // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
+                            } else if (full.status == 'รออนุมัติ') {
+                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
                                 <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
                                 <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
+                            }
                         }
                     }
-                }
                 ]
             });
         }
@@ -761,14 +760,14 @@ function tableQuotation() {
 
 function deleteId(id) {
     swal({
-        title: "Are you sure?",
-        text: "Your will not be able to recover this imaginary file!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, delete it!",
-        closeOnConfirm: false
-    },
+            title: "Are you sure?",
+            text: "Your will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
         function () {
             $.ajax({
                 url: '/api-f2/delete-f2/' + id,
@@ -819,7 +818,7 @@ function validateInput() {
         console.log('value' + value);
         if ('' == value) {
             //customers.focus()
-          //  alert('true' + '#product' + index)
+            //  alert('true' + '#product' + index)
             $('#error-product' + index).removeClass("hide")
             pass = false;
         } else {
