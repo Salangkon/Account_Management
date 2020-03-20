@@ -269,6 +269,9 @@ public class F2Controller {
 				case "Receipt":
 					Receipt(f2Model, "RV");
 					break;
+				case "Expenses":
+					Expenses(f2Model, "UV");
+					break;
 
 				default:
 					break;
@@ -386,6 +389,62 @@ public class F2Controller {
 		journalController.addUpdate(journal);
 	}
 
+	public void Expenses(F2Model f2Model, String passId) {
+		System.err.println(passId);
+		Journal journal = new Journal();
+		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+		journal.setDescription(
+				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+		journal.setReferenceDocument("");
+		journal.setType(passId);
+		journal.setStatus("1");
+		journal.setCompanyId(f2Model.getCompanyId());
+		journal.setDate(f2Model.getDateEnd());
+		journal.setF2Id(f2Model.getId());
+		journal.setCreateDate(new Timestamp(new Date().getTime()));
+		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
+		journal.setSumCredit(f2Model.getPrice());
+		journal.setSumDebit(f2Model.getPrice());
+		if (passId.equals("UV")) {
+			if (f2Model.getPrice() != 0) {
+				List<JournalList> journalLists = new ArrayList<JournalList>();
+				List<String> ChartAccountId = new ArrayList<String>();
+				for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
+					List<CategoryExpensesMapping> categoryExpensesMappings = categoryExpensesMappingRepo.findByMapping(f2ListModel.getGroupExpense());
+
+				}
+				ChartAccountId.add("70cb28eb-6ae8-40d2-9e30-a8487617eef9");
+				ChartAccountId.add("93fc6b4d-46a5-456c-8816-926857976c6c");
+				ChartAccountId.add("628014ce-763d-4ed1-88f5-878180c8f7e8");
+				for (String string : ChartAccountId) {
+					JournalList journalList = new JournalList();
+					journalList.setChartAccountId(string);
+					switch (string) {
+					case "70cb28eb-6ae8-40d2-9e30-a8487617eef9":
+						journalList.setCredit(0);
+						journalList.setDebit(f2Model.getProductPriceAll());
+						journalList.setDetail(journal.getDescription());
+						break;
+					case "93fc6b4d-46a5-456c-8816-926857976c6c":
+						journalList.setCredit(f2Model.getPrice());
+						journalList.setDebit(0);
+						journalList.setDetail(journal.getDescription());
+						break;
+					case "628014ce-763d-4ed1-88f5-878180c8f7e8":
+						journalList.setCredit(f2Model.getVat());
+						journalList.setDebit(0);
+						journalList.setDetail(journal.getDescription());
+						break;
+					}
+					journalLists.add(journalList);
+				}
+				journal.setJournalLists(journalLists);
+			}
+		}
+
+		journalController.addUpdate(journal);
+	}
+
 	public void TaxInvoice(F2Model f2Model, String passId) {
 		System.err.println(passId);
 		Journal journal = new Journal();
@@ -482,11 +541,11 @@ public class F2Controller {
 		}
 		journalController.addUpdate(journal);
 	}
-	
-	@GetMapping("/categoryExpensesMappingRopo")
-	public Iterable<CategoryExpensesMapping> categoryExpensesMappingRopo() {
-		
-		return categoryExpensesMappingRepo.findAll();
+
+	@GetMapping("/categoryExpensesMappingRopo/{mapping}")
+	public Iterable<CategoryExpensesMapping> categoryExpensesMappingRopo(@PathVariable("mapping") String mapping) {
+
+		return categoryExpensesMappingRepo.findByMapping(mapping);
 	}
 
 } // end class
