@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -440,7 +441,7 @@ public class F2Controller {
 
 		journalController.addUpdate(journal);
 	}
-	
+
 	public void Receipt(F2Model f2Model, String passId) {
 		System.err.println(passId);
 		Journal journal = new Journal();
@@ -485,7 +486,7 @@ public class F2Controller {
 		}
 		journalController.addUpdate(journal);
 	}
-	
+
 	public void Expenses(F2Model f2Model, String passId) {
 		System.err.println(passId);
 		Journal journal = new Journal();
@@ -500,34 +501,37 @@ public class F2Controller {
 		journal.setF2Id(f2Model.getId());
 		journal.setCreateDate(new Timestamp(new Date().getTime()));
 		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
-		journal.setSumCredit(f2Model.getPrice());
-		journal.setSumDebit(f2Model.getPrice());
+		journal.setSumCredit(f2Model.getProductPriceAll());
+		journal.setSumDebit(f2Model.getProductPriceAll());
 		if (passId.equals("UV")) {
 			if (f2Model.getPrice() != 0) {
 				List<JournalList> journalLists = new ArrayList<JournalList>();
-				List<CategoryExpensesMapping> ChartAccountId = new ArrayList<CategoryExpensesMapping>();
-				List<String> mappings = new ArrayList<String>();
+				List<HashMap<String, String>> ChartAccountId = new ArrayList<HashMap<String, String>>();
+				List<HashMap<String, String>> mappings = new ArrayList<HashMap<String, String>>();
 				for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
-					mappings.add(f2ListModel.getGroupExpense());
+					HashMap<String, String> data = new HashMap<String, String>();
+					data.put("id", f2ListModel.getGroupExpense());
+					data.put("pice", String.valueOf(f2ListModel.getProductSumPrice()));
+					mappings.add(data);
 				}
 				ChartAccountId = categoryExpensesMappingRopo(mappings);
-				
-				for (CategoryExpensesMapping mapping : ChartAccountId) {
+
+				for (HashMap<String, String> mapping : ChartAccountId) {
 					JournalList journalList = new JournalList();
-					journalList.setChartAccountId(mapping.getId());
-					switch (mapping.getLevel()) {
-					case 1:
+					journalList.setChartAccountId(mapping.get("id"));
+					switch (mapping.get("level")) {
+					case "1":
 						journalList.setCredit(0);
-						journalList.setDebit(f2Model.getPrice());
+						journalList.setDebit(Float.parseFloat(mapping.get("pice")));
 						journalList.setDetail(journal.getDescription());
 						break;
-					case 2:
+					case "2":
 						journalList.setCredit(0);
 						journalList.setDebit(f2Model.getVat());
 						journalList.setDetail(journal.getDescription());
 						break;
-					case 3:
-						journalList.setCredit(f2Model.getPrice());
+					case "3":
+						journalList.setCredit(Float.parseFloat(mapping.get("pice")) + f2Model.getVat() / f2Model.getF2ListModels().size());
 						journalList.setDebit(0);
 						journalList.setDetail(journal.getDescription());
 						break;
@@ -540,28 +544,36 @@ public class F2Controller {
 
 		journalController.addUpdate(journal);
 	}
-	
-//	@GetMapping("/categoryExpensesMappingRopo")
-	public List<CategoryExpensesMapping> categoryExpensesMappingRopo(List<String> mappings) {
 
-		List<CategoryExpensesMapping> expenses = new ArrayList<CategoryExpensesMapping>();
-		CategoryExpensesMapping setMapping = new CategoryExpensesMapping();
-		setMapping.setId("530e91d5-46ab-4cc4-9452-0787f688879b");
-		setMapping.setLevel(2);
-		expenses.add(setMapping);
+	@GetMapping("/categoryExpensesMappingRopo")
+	public List<HashMap<String, String>> categoryExpensesMappingRopo(List<HashMap<String, String>> mappings) {
+//		public List<HashMap<String, String>> categoryExpensesMappingRopo() {
+//		List<HashMap<String, String>> mappings = new ArrayList<HashMap<String,String>>();
+//		HashMap<String, String> hashMap = new HashMap<String, String>();
+//		hashMap.put("id", "1");
+//		hashMap.put("id", "2");
+//		mappings.add(hashMap);
 
-		for (String mapping : mappings) {
-			List<CategoryExpensesMapping> expensesMapping = categoryExpensesMappingRepo.findByMapping(mapping);
+		List<HashMap<String, String>> expenses = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> data = new HashMap<String, String>();
+		data.put("id", "530e91d5-46ab-4cc4-9452-0787f688879b");
+		data.put("level", "2");
+		expenses.add(data);
+
+		for (HashMap<String, String> mapping : mappings) {
+			List<CategoryExpensesMapping> expensesMapping = categoryExpensesMappingRepo
+					.findByMapping(mapping.get("id"));
 			for (CategoryExpensesMapping categoryExpensesMapping : expensesMapping) {
-				List<Integer> list = new ArrayList<Integer>();
 				if (categoryExpensesMapping.getLevel() != 2) {
-					list.add(2);
-					System.err.println(list.get(0) + " :: " + categoryExpensesMapping.getLevel());
-					expenses.add(categoryExpensesMapping);
+					HashMap<String, String> data1 = new HashMap<String, String>();
+					data1.put("id", categoryExpensesMapping.getId());
+					data1.put("pice", mapping.get("pice"));
+					data1.put("level", String.valueOf(categoryExpensesMapping.getLevel()));
+					expenses.add(data1);
 				}
 			}
 		}
-		expenses.sort((e1, e2) -> new Integer(e1.getLevel()).compareTo(new Integer(e2.getLevel())));
+		expenses.sort((e1, e2) -> new String(e1.get("level")).compareTo(new String(e2.get("level"))));
 		return expenses;
 	}
 
