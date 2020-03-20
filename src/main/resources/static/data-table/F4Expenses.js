@@ -583,7 +583,7 @@ function saveCreateQuotation() {
     var pass = true;
 
     pass = validateInput();
-
+alert(pass);
     if (pass) {
         var insertQuotation = {
             id: $('#id').val(), //ลูกค้า
@@ -819,12 +819,11 @@ function validateInput() {
         console.log('value' + value);
         if ('' == value) {
             //customers.focus()
-            alert('true' + '#product' + index)
+          //  alert('true' + '#product' + index)
             $('#error-product' + index).removeClass("hide")
             pass = false;
         } else {
-            alert('flase')
-
+            //alert('flase')
             $('#error-product' + index).addClass("hide")
         }
     }

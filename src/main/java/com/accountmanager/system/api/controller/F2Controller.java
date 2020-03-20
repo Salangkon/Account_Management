@@ -25,12 +25,12 @@ import com.accountmanager.system.model.F2ListModel;
 import com.accountmanager.system.model.F2Model;
 import com.accountmanager.system.model.Journal;
 import com.accountmanager.system.model.JournalList;
+import com.accountmanager.system.repository.CategoryExpensesMappingRepository;
 import com.accountmanager.system.repository.CustomersListRepository;
 import com.accountmanager.system.repository.F2ListRepository;
 import com.accountmanager.system.repository.F2Repository;
 import com.accountmanager.system.repository.JournalListRepository;
 import com.accountmanager.system.repository.JournalRepository;
-import com.accountmanager.system.repository.CategoryExpensesMappingRepository;
 
 @RestController
 @RequestMapping("/api-f2")
@@ -389,62 +389,6 @@ public class F2Controller {
 		journalController.addUpdate(journal);
 	}
 
-	public void Expenses(F2Model f2Model, String passId) {
-		System.err.println(passId);
-		Journal journal = new Journal();
-		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-		journal.setDescription(
-				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
-		journal.setReferenceDocument("");
-		journal.setType(passId);
-		journal.setStatus("1");
-		journal.setCompanyId(f2Model.getCompanyId());
-		journal.setDate(f2Model.getDateEnd());
-		journal.setF2Id(f2Model.getId());
-		journal.setCreateDate(new Timestamp(new Date().getTime()));
-		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
-		journal.setSumCredit(f2Model.getPrice());
-		journal.setSumDebit(f2Model.getPrice());
-		if (passId.equals("UV")) {
-			if (f2Model.getPrice() != 0) {
-				List<JournalList> journalLists = new ArrayList<JournalList>();
-				List<String> ChartAccountId = new ArrayList<String>();
-				for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
-					List<CategoryExpensesMapping> categoryExpensesMappings = categoryExpensesMappingRepo.findByMapping(f2ListModel.getGroupExpense());
-
-				}
-				ChartAccountId.add("70cb28eb-6ae8-40d2-9e30-a8487617eef9");
-				ChartAccountId.add("93fc6b4d-46a5-456c-8816-926857976c6c");
-				ChartAccountId.add("628014ce-763d-4ed1-88f5-878180c8f7e8");
-				for (String string : ChartAccountId) {
-					JournalList journalList = new JournalList();
-					journalList.setChartAccountId(string);
-					switch (string) {
-					case "70cb28eb-6ae8-40d2-9e30-a8487617eef9":
-						journalList.setCredit(0);
-						journalList.setDebit(f2Model.getProductPriceAll());
-						journalList.setDetail(journal.getDescription());
-						break;
-					case "93fc6b4d-46a5-456c-8816-926857976c6c":
-						journalList.setCredit(f2Model.getPrice());
-						journalList.setDebit(0);
-						journalList.setDetail(journal.getDescription());
-						break;
-					case "628014ce-763d-4ed1-88f5-878180c8f7e8":
-						journalList.setCredit(f2Model.getVat());
-						journalList.setDebit(0);
-						journalList.setDetail(journal.getDescription());
-						break;
-					}
-					journalLists.add(journalList);
-				}
-				journal.setJournalLists(journalLists);
-			}
-		}
-
-		journalController.addUpdate(journal);
-	}
-
 	public void TaxInvoice(F2Model f2Model, String passId) {
 		System.err.println(passId);
 		Journal journal = new Journal();
@@ -496,7 +440,7 @@ public class F2Controller {
 
 		journalController.addUpdate(journal);
 	}
-
+	
 	public void Receipt(F2Model f2Model, String passId) {
 		System.err.println(passId);
 		Journal journal = new Journal();
@@ -541,11 +485,84 @@ public class F2Controller {
 		}
 		journalController.addUpdate(journal);
 	}
+	
+	public void Expenses(F2Model f2Model, String passId) {
+		System.err.println(passId);
+		Journal journal = new Journal();
+		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+		journal.setDescription(
+				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+		journal.setReferenceDocument("");
+		journal.setType(passId);
+		journal.setStatus("1");
+		journal.setCompanyId(f2Model.getCompanyId());
+		journal.setDate(f2Model.getDateEnd());
+		journal.setF2Id(f2Model.getId());
+		journal.setCreateDate(new Timestamp(new Date().getTime()));
+		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
+		journal.setSumCredit(f2Model.getPrice());
+		journal.setSumDebit(f2Model.getPrice());
+		if (passId.equals("UV")) {
+			if (f2Model.getPrice() != 0) {
+				List<JournalList> journalLists = new ArrayList<JournalList>();
+				List<CategoryExpensesMapping> ChartAccountId = new ArrayList<CategoryExpensesMapping>();
+				List<String> mappings = new ArrayList<String>();
+				for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
+					mappings.add(f2ListModel.getGroupExpense());
+				}
+				ChartAccountId = categoryExpensesMappingRopo(mappings);
+				
+				for (CategoryExpensesMapping mapping : ChartAccountId) {
+					JournalList journalList = new JournalList();
+					journalList.setChartAccountId(mapping.getId());
+					switch (mapping.getLevel()) {
+					case 1:
+						journalList.setCredit(0);
+						journalList.setDebit(f2Model.getPrice());
+						journalList.setDetail(journal.getDescription());
+						break;
+					case 2:
+						journalList.setCredit(0);
+						journalList.setDebit(f2Model.getVat());
+						journalList.setDetail(journal.getDescription());
+						break;
+					case 3:
+						journalList.setCredit(f2Model.getPrice());
+						journalList.setDebit(0);
+						journalList.setDetail(journal.getDescription());
+						break;
+					}
+					journalLists.add(journalList);
+				}
+				journal.setJournalLists(journalLists);
+			}
+		}
 
-	@GetMapping("/categoryExpensesMappingRopo/{mapping}")
-	public Iterable<CategoryExpensesMapping> categoryExpensesMappingRopo(@PathVariable("mapping") String mapping) {
+		journalController.addUpdate(journal);
+	}
+	
+//	@GetMapping("/categoryExpensesMappingRopo")
+	public List<CategoryExpensesMapping> categoryExpensesMappingRopo(List<String> mappings) {
 
-		return categoryExpensesMappingRepo.findByMapping(mapping);
+		List<CategoryExpensesMapping> expenses = new ArrayList<CategoryExpensesMapping>();
+		CategoryExpensesMapping setMapping = new CategoryExpensesMapping();
+		setMapping.setId("530e91d5-46ab-4cc4-9452-0787f688879b");
+		setMapping.setLevel(2);
+		expenses.add(setMapping);
+
+		for (String mapping : mappings) {
+			List<CategoryExpensesMapping> expensesMapping = categoryExpensesMappingRepo.findByMapping(mapping);
+			for (CategoryExpensesMapping categoryExpensesMapping : expensesMapping) {
+				List<Integer> list = new ArrayList<Integer>();
+				if (categoryExpensesMapping.getLevel() != 2) {
+					list.add(2);
+					System.err.println(list.get(0) + " :: " + categoryExpensesMapping.getLevel());
+					expenses.add(categoryExpensesMapping);
+				}
+			}
+		}
+		expenses.sort((e1, e2) -> new Integer(e1.getLevel()).compareTo(new Integer(e2.getLevel())));
+		return expenses;
 	}
 
 } // end class
