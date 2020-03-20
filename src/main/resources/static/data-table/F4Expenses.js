@@ -216,7 +216,7 @@ function updateQuotation(id) {
                 }
                 dataCustomer(msg.companyId)
                 tableCreateQuotationDisplay1(msg.id);
-               
+
             }
         })
     } else {
@@ -261,8 +261,7 @@ function updateQuotation(id) {
     $('#myModal').modal('show');
 } // end update Quotation
 
-function setSelectpicker(msg)
-{
+function setSelectpicker(msg) {
     $('.selectpicker').selectpicker();
     for (let index = 0; index < msg.length; index++) {
         $('#groupExpense' + index).val(msg[index].groupExpense);
@@ -410,8 +409,7 @@ function expense(expenseValue, row, groupExpense) {
     return expenseDropdown;
 }
 
-function tableCreateQuotationDisplay1(id)
-{
+function tableCreateQuotationDisplay1(id) {
     $.ajax({
         type: "GET",
         url: "/api-f2/get-f2ListRepo-by-id/" + id,
@@ -431,7 +429,7 @@ function tableCreateQuotationDisplay1_UpdateByKO(msg) {
         searching: false,
         responsive: true,
         "bDestroy": true,
-        data:msg,
+        data: msg,
         //"sAjaxSource": "/api-f2/get-f2ListRepo-by-id/" + id,
         "bAutoWidth": false,
         "sAjaxDataProp": "",
@@ -447,9 +445,11 @@ function tableCreateQuotationDisplay1_UpdateByKO(msg) {
             "mRender": function (data,
                 type, row, index) {
                 if (row.product != null) {
-                    return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value="' + row.product + '"/>';
+                    return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value="' + row.product + '"/> \n\
+                     <p class="hide error-product" id="error-product' + index.row + '">กรุณากรอกรายละเอียด</p>';
                 } else {
-                    return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value=""/>';
+                    return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value=""/> \n\
+                        	<p class="hide error-product"  id="error-product' + index.row + '">กรุณากรอกรายละเอียด</p>';
                 }
             }
         },
@@ -572,7 +572,6 @@ function tableCreateQuotationDisplay1_UpdateByKO(msg) {
 
 function Add() {
     tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
-    console.log('tableCreateQuotation.data',tableCreateQuotation);
     $('.selectpicker').selectpicker();
 }
 
@@ -583,7 +582,6 @@ function remove() {
 function saveCreateQuotation() {
     var pass = true;
 
-    $('#customers').val('20190905')
     pass = validateInput();
 
     if (pass) {
@@ -812,6 +810,23 @@ function validateInput() {
         pass = false;
     } else {
         $('#error-customers').addClass("hide")
+    }
+
+    var table = $('#tableCreateQuotationDisplay').DataTable();
+    console.log('table.row', table.rows().count())
+    for (let index = 0; index < table.rows().count(); index++) {
+        const value = $('#product' + index).val();
+        console.log('value' + value);
+        if ('' == value) {
+            //customers.focus()
+            alert('true' + '#product' + index)
+            $('#error-product' + index).removeClass("hide")
+            pass = false;
+        } else {
+            alert('flase')
+
+            $('#error-product' + index).addClass("hide")
+        }
     }
 
     return pass;
