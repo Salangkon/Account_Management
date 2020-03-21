@@ -194,7 +194,12 @@ function changeFunc($i) {
     }
 }
 
-function createUpdate(id) {
+function createUpdate(id, checkSaveFlg) {
+    if (checkSaveFlg) {
+        document.getElementById("checkSaveFlg").hidden = true;
+    } else {
+        document.getElementById("checkSaveFlg").hidden = false;
+    }
     if (id != null) {
         $.ajax({
             type: "GET",

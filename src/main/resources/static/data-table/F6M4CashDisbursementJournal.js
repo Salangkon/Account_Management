@@ -186,7 +186,7 @@ function changeFunc($i) {
             updateStatus(id, "0");
             break;
         case "9":
-            createUpdate(id);
+            createUpdate(id, false);
             break;
         case "5":
             deleteId(id);
@@ -194,7 +194,13 @@ function changeFunc($i) {
     }
 }
 
-function createUpdate(id) {
+
+function createUpdate(id, checkSaveFlg) {
+    if (checkSaveFlg) {
+        document.getElementById("checkSaveFlg").hidden = true;
+    } else {
+        document.getElementById("checkSaveFlg").hidden = false;
+    }
     if (id != null) {
         $.ajax({
             type: "GET",
