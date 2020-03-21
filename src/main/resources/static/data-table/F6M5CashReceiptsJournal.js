@@ -117,7 +117,7 @@ function tableJournal() {
                     "sWidth": "45%",
                 },
                 {
-                    'data': 'referenceDocument',
+                    'data': 'sumCredit',
                     "sWidth": "10%",
                 },
                 {
@@ -133,9 +133,10 @@ function tableJournal() {
                         } else if (row.status == '1') {
                             return '<div class="form-control form-control-sm" style="background-color: greenyellow;color: green;text-align: center;">อนุมัติเเล้ว</div>';
                         } else if (row.status == '2') {
-                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
-                            <option value=:"" style="color: red">ยกเลิก</option/>\n\
-                            </select>';
+                            return '<div class="form-control form-control-sm" style="background-color: red;color: white;text-align: center;">ยกเลิก</div>';
+                            // return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
+                            // <option value=:"" style="color: red">ยกเลิก</option/>\n\
+                            // </select>';
                         }
                     }
                 },
