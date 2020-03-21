@@ -224,6 +224,10 @@ public class F2Controller {
 			f2ListModel.setStatus("ชำระเงินแล้ว");
 			ReceiveReport(f2ListModel, "PV");
 			break;
+		case "6":
+			f2ListModel.setStatus("ชำระเงินแล้ว");
+			Expenses(f2ListModel, "PV");
+			break;
 		}
 
 		return f2Repo.save(f2ListModel);
@@ -273,7 +277,6 @@ public class F2Controller {
 				case "Expenses":
 					Expenses(f2Model, "UV");
 					break;
-
 				default:
 					break;
 				}
@@ -511,10 +514,11 @@ public class F2Controller {
 				for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
 					HashMap<String, String> data = new HashMap<String, String>();
 					data.put("id", f2ListModel.getGroupExpense());
+					data.put("detail", f2ListModel.getProduct());
 					data.put("pice", String.valueOf(f2ListModel.getProductSumPrice()));
 					mappings.add(data);
 				}
-				ChartAccountId = categoryExpensesMappingRopo(mappings);
+				ChartAccountId = categoryExpensesMappingRopo(mappings, customersList.getCompanyName(), f2Model.getDepartmentId());
 
 				for (HashMap<String, String> mapping : ChartAccountId) {
 					JournalList journalList = new JournalList();
@@ -523,17 +527,51 @@ public class F2Controller {
 					case "1":
 						journalList.setCredit(0);
 						journalList.setDebit(Float.parseFloat(mapping.get("pice")));
-						journalList.setDetail(journal.getDescription());
+						journalList.setDetail(mapping.get("detail"));
 						break;
 					case "2":
 						journalList.setCredit(0);
 						journalList.setDebit(f2Model.getVat());
-						journalList.setDetail(journal.getDescription());
+						journalList.setDetail(mapping.get("detail"));
 						break;
 					case "3":
-						journalList.setCredit(Float.parseFloat(mapping.get("pice")) + f2Model.getVat() / f2Model.getF2ListModels().size());
+						journalList.setCredit(Float.parseFloat(mapping.get("pice"))
+								+ f2Model.getVat() / f2Model.getF2ListModels().size());
 						journalList.setDebit(0);
-						journalList.setDetail(journal.getDescription());
+						journalList.setDetail(mapping.get("detail"));
+						break;
+					}
+					journalLists.add(journalList);
+				}
+				journal.setJournalLists(journalLists);
+			}
+		} else if (passId.equals("PV")) {
+			if (f2Model.getPrice() != 0) {
+				List<JournalList> journalLists = new ArrayList<JournalList>();
+				List<HashMap<String, String>> ChartAccountId = new ArrayList<HashMap<String, String>>();
+				List<HashMap<String, String>> mappings = new ArrayList<HashMap<String, String>>();
+				for (F2ListModel f2ListModel : f2Model.getF2ListModels()) {
+					HashMap<String, String> data = new HashMap<String, String>();
+					data.put("id", f2ListModel.getGroupExpense());
+//					data.put("detail", f2ListModel.getProduct());
+					data.put("pice", String.valueOf(f2ListModel.getProductSumPrice()));
+					mappings.add(data);
+				}
+				ChartAccountId = categoryExpensesMappingRopoPV(mappings, customersList.getCompanyName(), f2Model.getDepartmentId());
+
+				for (HashMap<String, String> mapping : ChartAccountId) {
+					JournalList journalList = new JournalList();
+					journalList.setChartAccountId(mapping.get("id"));
+					switch (mapping.get("level")) {
+					case "1":
+						journalList.setCredit(0);
+						journalList.setDebit(Float.parseFloat(mapping.get("pice")));
+						journalList.setDetail("ชำระค่า ส่งเสริมการขาย ให้แก่ " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+						break;
+					case "2":
+						journalList.setCredit(f2Model.getProductPriceAll());
+						journalList.setDebit(0);
+						journalList.setDetail(mapping.get("detail"));
 						break;
 					}
 					journalLists.add(journalList);
@@ -546,17 +584,11 @@ public class F2Controller {
 	}
 
 	@GetMapping("/categoryExpensesMappingRopo")
-	public List<HashMap<String, String>> categoryExpensesMappingRopo(List<HashMap<String, String>> mappings) {
-//		public List<HashMap<String, String>> categoryExpensesMappingRopo() {
-//		List<HashMap<String, String>> mappings = new ArrayList<HashMap<String,String>>();
-//		HashMap<String, String> hashMap = new HashMap<String, String>();
-//		hashMap.put("id", "1");
-//		hashMap.put("id", "2");
-//		mappings.add(hashMap);
-
+	public List<HashMap<String, String>> categoryExpensesMappingRopo(List<HashMap<String, String>> mappings, String name, String department) {
 		List<HashMap<String, String>> expenses = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> data = new HashMap<String, String>();
 		data.put("id", "530e91d5-46ab-4cc4-9452-0787f688879b");
+		data.put("detail", "ชำระค่า ส่งเสริมการขาย ให้แก่ "+ name + " #" + department);
 		data.put("level", "2");
 		expenses.add(data);
 
@@ -568,7 +600,36 @@ public class F2Controller {
 					HashMap<String, String> data1 = new HashMap<String, String>();
 					data1.put("id", categoryExpensesMapping.getId());
 					data1.put("pice", mapping.get("pice"));
+					data1.put("detail", mapping.get("detail"));
 					data1.put("level", String.valueOf(categoryExpensesMapping.getLevel()));
+					expenses.add(data1);
+				}
+			}
+		}
+		expenses.sort((e1, e2) -> new String(e1.get("level")).compareTo(new String(e2.get("level"))));
+		return expenses;
+	}
+	
+	public List<HashMap<String, String>> categoryExpensesMappingRopoPV(List<HashMap<String, String>> mappings, String name, String department) {
+		List<HashMap<String, String>> expenses = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> data = new HashMap<String, String>();
+		data.put("id", "f4220d85-32f3-47b0-9b7f-3475618a29ca");
+		data.put("level", "2");
+		data.put("detail", "ชำระค่า ส่งเสริมการขาย ให้แก่ "+ name + " #" + department);
+		expenses.add(data);
+
+		for (HashMap<String, String> mapping : mappings) {
+			List<CategoryExpensesMapping> expensesMapping = categoryExpensesMappingRepo
+					.findByMapping(mapping.get("id"));
+			for (CategoryExpensesMapping categoryExpensesMapping : expensesMapping) {
+				if (categoryExpensesMapping.getLevel() == 3) {
+					HashMap<String, String> data1 = new HashMap<String, String>();
+					data1.put("id", categoryExpensesMapping.getId());
+//					data1.put("detail", mapping.get("detail"));
+					float price = Float.parseFloat(mapping.get("pice"));
+					float priceCal = (price * 7 /100) + price;
+					data1.put("pice",  String.valueOf(priceCal));
+					data1.put("level", "1");
 					expenses.add(data1);
 				}
 			}

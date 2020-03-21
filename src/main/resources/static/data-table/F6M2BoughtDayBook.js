@@ -132,10 +132,7 @@ function tableJournal() {
                             <option value="1' + row.id + '" style="color: green">อนุมัติ</option/>\n\
                             </select>';
                         } else if (row.status == '1') {
-                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: green">\n\
-                            <option style="color: green">อนุมัติเเล้ว</option/>\n\
-                            <option value="2' + row.id + '" style="color: red">ยกเลิก</option/>\n\
-                            </select>';
+                            return '<div class="form-control form-control-sm" style="background-color: greenyellow;color: green;text-align: center;">อนุมัติเเล้ว</div>';
                         } else if (row.status == '2') {
                             return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                             <option value=:"" style="color: red">ยกเลิก</option/>\n\
