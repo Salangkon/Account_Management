@@ -41,7 +41,8 @@ public class UpdoadAndDownloadFileController {
 	}
 
 	@RequestMapping(value = "/uploadFile/{dir}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String fileUpload(@PathVariable("dir") String dir, @RequestParam("file") MultipartFile file) throws IOException {
+	public String fileUpload(@PathVariable("dir") String dir, @RequestParam("file") MultipartFile file)
+			throws IOException {
 		String path = pathNas + "\\" + dir + "\\" + file.getOriginalFilename();
 		File convertFile = new File(path);
 
@@ -59,9 +60,10 @@ public class UpdoadAndDownloadFileController {
 		return "File has uploaded successfully";
 	}
 
-	@RequestMapping(value = "/download", method = RequestMethod.GET)
-	public ResponseEntity<Object> downloadFile() throws IOException {
-		String filename = "D:/work/IMG_20181229_154743.jpg";
+	@RequestMapping(value = "/download/{dir}/{name}/{type}", method = RequestMethod.GET)
+	public ResponseEntity<Object> downloadFile(@PathVariable("dir") String dir, @PathVariable("name") String name, @PathVariable("type") String type) throws IOException {
+		System.err.println(name);
+		String filename = pathNas + "\\" + dir + "\\" + name + "." + type;
 		File file = new File(filename);
 		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
@@ -81,14 +83,14 @@ public class UpdoadAndDownloadFileController {
 	private String createDirectory(@PathVariable("name") String name) {
 		String res = "false";
 		Path path = Paths.get(pathNas + "\\" + name);
-		
+
 		try {
 			Directory directory = directoryRepo.findByName(name);
 			if (directory == null) {
 				Directory dir = new Directory();
 				dir.setName(name);
 				directoryRepo.save(dir);
-				
+
 				Files.createDirectories(path);
 				res = "success";
 			}
