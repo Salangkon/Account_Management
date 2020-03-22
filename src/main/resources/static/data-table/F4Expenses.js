@@ -131,8 +131,8 @@ function changeFunc($i) {
         case "6":
             updateStatus(id, "6");
             break;
-        case "3":
-            updateStatus(id, "3");
+        case "7":
+            updateStatus(id, "7");
             break;
             // case "4":
             //     $('#myModal').modal('show');
@@ -716,7 +716,7 @@ function tableQuotation() {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                                     <option value="0' + row.id + '" style="color: black">รอดำเนินการ</option/>\n\
                                     <option value="6' + row.id + '" style="color: black">ชำระเงินแล้ว</option/>\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
+                                    <option value="7' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     </select>';
                             } else if (row.status == 'อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\

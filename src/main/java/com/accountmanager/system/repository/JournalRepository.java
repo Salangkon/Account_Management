@@ -24,4 +24,10 @@ public interface JournalRepository extends CrudRepository<Journal, String> {
 	@Query(value = "select * from journal where `type` = ?1", nativeQuery = true)
 	List<Journal> findByType(String type);
 
+	@Query(value = "select * from journal where f2_id = ?1 and type = ?2", nativeQuery = true)
+	Journal findByF2IdAndType(String id, String type);
+
+	@Query(value = "select * from journal where f2_id = ?1", nativeQuery = true)
+	List<Journal> findByF2Id(String id);
+
 }

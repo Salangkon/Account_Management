@@ -157,7 +157,7 @@ public class F6JournalController {
 	@PostMapping("/update-status/{id}/{status}")
 	public Journal updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
 		Journal journal = journalRepo.findOne(id);
-
+		System.err.println("Status F6 :: " + status);
 		journal.setUpdateDate(new Timestamp(new Date().getTime()));
 		switch (status) {
 		case "0":
