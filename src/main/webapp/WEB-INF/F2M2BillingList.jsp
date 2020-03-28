@@ -83,7 +83,7 @@
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="tableBiiling" class="table table-sm" width="100%">
+									<table id="tableBiiling" class="table table-sm table-hover" width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
 												<th style="text-align: center;">วันที่</th>
@@ -210,7 +210,7 @@
 								<div style="margin-left: 2%;width: 97%;">
 									<div class="card">
 										<div class="card-body">
-											<table id="tableCreateBiilingDisplay" class="table table-sm table-bordered">
+											<table id="tableCreateBiilingDisplay" class="table table-sm table-hover">
 												<thead style="color: white;background-color: purple;">
 													<tr>
 														<th>ลำดับ</th>

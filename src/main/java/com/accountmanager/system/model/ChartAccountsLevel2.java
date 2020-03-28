@@ -37,11 +37,14 @@ public class ChartAccountsLevel2 implements Serializable {
 	private String passCode;
 
 	private String text;
-	
+
 	private String detail;
 
 	@Column(name = "update_by")
 	private String updateBy;
+
+	@Column(name = "status_delete")
+	private String statusDelete;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "update_date")
@@ -59,6 +62,14 @@ public class ChartAccountsLevel2 implements Serializable {
 
 	public String getDetail() {
 		return detail;
+	}
+
+	public String getStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(String statusDelete) {
+		this.statusDelete = statusDelete;
 	}
 
 	public void setDetail(String detail) {

@@ -3,6 +3,8 @@ package com.accountmanager.system.pojo;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+
 public class ChartAccountPojo {
 
 	private String id;
@@ -14,10 +16,19 @@ public class ChartAccountPojo {
 	private Date date;
 	private String text;
 	private StatePojo state;
+	private String statusDelete;
 	private List<ChartAccountStep2Pojo> children;
 
 	public String getTextEdit() {
 		return textEdit;
+	}
+
+	public String getStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(String statusDelete) {
+		this.statusDelete = statusDelete;
 	}
 
 	public void setTextEdit(String textEdit) {

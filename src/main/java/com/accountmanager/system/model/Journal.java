@@ -53,6 +53,9 @@ public class Journal implements Serializable {
 	@Column(name = "sum_debit")
 	private float sumDebit;
 
+	@Column(name = "f2_id")
+	private String f2Id;
+
 	private String type;
 
 	@Column(name = "update_by")
@@ -83,6 +86,14 @@ public class Journal implements Serializable {
 
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
+	}
+
+	public String getF2Id() {
+		return f2Id;
+	}
+
+	public void setF2Id(String f2Id) {
+		this.f2Id = f2Id;
 	}
 
 	public String getStatus() {
