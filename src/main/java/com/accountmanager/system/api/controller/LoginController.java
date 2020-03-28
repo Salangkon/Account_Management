@@ -41,6 +41,11 @@ public class LoginController {
 		}
 		return res;
 	}
+	
+	@PostMapping("/seting")
+	private User seting(@RequestBody HashMap<String, String> user, Model model, HttpServletRequest request) {
+		return userRepo.findByIdAndPassword(user.get("id"), user.get("password"));
+	}
 
 	@PostMapping("save-update")
 	private String loginUsaveUpdate(@RequestBody User user) {

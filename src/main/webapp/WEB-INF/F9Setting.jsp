@@ -45,6 +45,8 @@
 					</div>
 					<!-- Content Row -->
 					<div class="row" style="margin-top: 10px;">
+						<input id="id" value="<%=user.getId() %>" hidden>
+						<input id="password" value="<%=user.getPassword() %>" hidden>
 						<div class="col-lg-5">
 							<div class="p-3">
 								<div class="form-group row">
@@ -98,7 +100,7 @@
 									<div class="col-sm-4"><label>เบอร์ติดต่อ : </label></div>
 									<div class="col-sm-8">
 										<input type="text" OnKeyPress="return chkNumber(this)" class="form-control form-con
-											trol" id="tel" maxlength="10" placeholder="เบอร์ติดต่อ">
+											trol" id="tel" maxlength="10" value="<%=user.getTel() %>" placeholder="เบอร์ติดต่อ">
 										<p class="hide" id="error-tel"></p>
 									</div>
 									<div class="col-sm-4"><label>โลโก้บริษัท : </label></div>

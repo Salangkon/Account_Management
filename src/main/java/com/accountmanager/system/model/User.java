@@ -2,7 +2,6 @@ package com.accountmanager.system.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * The persistent class for the user database table.
@@ -12,10 +11,15 @@ import java.util.Date;
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	private String id;
+	
+	private String address;
 
-	private String password;
+	private String company;
+
+	private String department;
 
 	private String email;
 
@@ -25,49 +29,44 @@ public class User implements Serializable {
 	@Column(name = "l_name")
 	private String lName;
 
-	private String role;
+	@Lob
+	private byte[] logo;
 
-	private Integer status;
+	private String password;
 
-	private Integer tel;
+	private String position;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "birth_day")
-	private Date birthDay;
+	private int status;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "create_date")
-	private Date createDate;
+	private String tel;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "update_date")
-	private Date updateDate;
+	private String type;
 
 	public User() {
 	}
 
-	public String getId() {
-		return this.id;
+	public String getAddress() {
+		return this.address;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public Date getBirthDay() {
-		return this.birthDay;
+	public String getCompany() {
+		return this.company;
 	}
 
-	public void setBirthDay(Date birthDay) {
-		this.birthDay = birthDay;
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
-	public Date getCreateDate() {
-		return this.createDate;
+	public String getDepartment() {
+		return this.department;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
 	public String getEmail() {
@@ -86,12 +85,28 @@ public class User implements Serializable {
 		this.fName = fName;
 	}
 
+	public String getId() {
+		return this.id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getLName() {
 		return this.lName;
 	}
 
 	public void setLName(String lName) {
 		this.lName = lName;
+	}
+
+	public byte[] getLogo() {
+		return this.logo;
+	}
+
+	public void setLogo(byte[] logo) {
+		this.logo = logo;
 	}
 
 	public String getPassword() {
@@ -102,36 +117,36 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return this.role;
+	public String getPosition() {
+		return this.position;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
-	public Integer getStatus() {
+	public int getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
-	public Integer getTel() {
+	public String getTel() {
 		return this.tel;
 	}
 
-	public void setTel(Integer tel) {
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
 
-	public Date getUpdateDate() {
-		return this.updateDate;
+	public String getType() {
+		return this.type;
 	}
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

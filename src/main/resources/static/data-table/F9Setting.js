@@ -14,6 +14,31 @@ $('input[type="file"]').change(function (e) {
     // read the image file as a data URL.
     reader.readAsDataURL(this.files[0]);
 });
+
+
+$(document).ready(function () {
+    login();
+});
+
+function login() {
+    var login = {
+        id: $('#id').val(),
+        password: $('#password').val(),
+    }
+    console.log(JSON.stringify(login))
+    $.ajax({
+        type: 'POST',
+        url: '/api-login/seting',
+        data: JSON.stringify(login),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            console.log(JSON.stringify(result));
+        }
+    });
+
+}
+
 // validate
 function validateInput() {
     var pass = true;
@@ -43,7 +68,6 @@ function validateInput() {
             $('#error-department').addClass("hide")
         }
     }
-
     if ('' == $('#taxId').val()) {
         taxId.focus()
         $('#error-taxId').removeClass("hide")

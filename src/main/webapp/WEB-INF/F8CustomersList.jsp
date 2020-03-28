@@ -198,8 +198,7 @@
 										<input type="text" style="max-width: 90%;" OnKeyPress="return chkNumber(this)"
 											class="form-control form-con
 											trol" id="tel" maxlength="10" placeholder="เบอร์ติดต่อ">
-										<p class="hide" id="error-tel">กรุณากรอก
-											เบอร์ติดต่อ</p>
+										<p class="hide" id="error-tel"></p>
 									</div>
 								</div>
 							</div>
