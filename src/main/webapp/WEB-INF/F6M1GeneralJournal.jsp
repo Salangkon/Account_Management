@@ -5,7 +5,7 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Report Quotidia</title>
+	<title>Genera Journal </title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
 	<style>
@@ -13,6 +13,24 @@
 		.col-sm-8 {
 			text-align: right;
 			margin-top: 20px;
+		}
+		.invalid{
+			color: red;
+		}
+		[x-placement=bottom-start] {
+			position: relative !important;
+			top: -37px !important; 
+			margin-top: -40px !important;
+		}
+		/* .dropdown-menu.show:first-of-type {
+			position: relative !important;
+			top: 2.5rem !important; 
+			margin-top: -40px !important;
+		} */
+		[x-placement=top-start] {
+			position: relative !important;
+			top: 2.5rem !important; 
+			margin-top: -40px !important;
 		}
 	</style>
 </head>
@@ -46,15 +64,15 @@
 										<div class="col-sm-1"></div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" data-toggle="modal"
-												data-target="#myModal">สร้างใหม่</button>
+												data-target="#myModal" onclick="createUpdate(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-7"></div>
-										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
-										<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
+										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" /> </div>
+										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /> </div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button"
+											<button class="btn btn-primary" type="button" onclick="tableJournal()"
 												style="margin-top: 32px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
@@ -83,7 +101,7 @@
 
 		<!-- The Modal -->
 		<div class="modal fade" id="myModal">
-			<div class="modal-dialog modal-lg" style="max-width: 1400px;">
+			<div class="modal-dialog modal-lg" style="max-width: 1600px;">
 				<div class="modal-content">
 
 					<!-- Modal Header -->
@@ -101,15 +119,15 @@
 									<form class="user">
 										<div class="form-group row">
 											<div class="col-sm-12" style="text-align: right;margin-bottom: 20px;">
-												<a href="#"><i class="fas fa-2x fa-print"
+												<a href="#" onclick="saveCreate()"><i class="fas fa-2x fa-print"
 														style="margin-right: 10px;"></i></a>
-												<a href="#"><i class="fas fa-2x fa-download"></i></a>
+												<a href="#" onclick="saveCreate()"><i class="fas fa-2x fa-download"></i></a>
 											</div>
-
+											<input id="id" hidden>
 											<div class="col-sm-5 mb-3 mb-sm-0">
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label>ชื่อลูกค้า : </label>
+														<label>ชื่อลูกค้า* : </label>
 													</div>
 													<div class="col-sm-8">
 														<select class="form-control" placeholder="ใส่ชื่อลูกค้า"
@@ -117,6 +135,9 @@
 															<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
 															</option>
 														</select>
+														<div hidden class="invalid" id="invalid-customers">
+															กรุณาระบุเลขที่เอกสาร
+														</div>
 													</div>
 													<div class="col-sm-4">
 														<label>คำอธิบาย : </label>
@@ -133,17 +154,23 @@
 											<div class="col-sm-4">
 												<div class="form-group row">
 													<div class="col-sm-4">
-														<label>วันที่ : </label>
+														<label>วันที่* : </label>
 													</div>
 													<div class="col-sm-8">
 														<input id="date" />
+														<div hidden class="invalid" id="invalid-date">
+															กรุณาระบุวันที่
+														</div>
 													</div>
 													<div class="col-sm-4">
-														<label>เลขที่เอกสาร : </label>
+														<label>เลขที่เอกสาร* : </label>
 													</div>
 													<div class="col-sm-8">
 														<input class="form-control" id="referenceDocument"
 															placeholder="เลขที่เอกสาร">
+															<div hidden class="invalid" id="invalid-referenceDocument">
+																กรุณาระบุเลขที่เอกสาร
+															</div>
 													</div>
 												</div>
 											</div>
@@ -169,9 +196,11 @@
 																	เพิ่มรายการ
 																</button>
 															</th>
-															<th style="text-align: right;">รวม</th>
-															<th><label id="credit">00.00</label></th>
-															<th><label id="debit">00.00</label></th>
+															<th style="text-align: right;"><span hidden class="invalid" id="invalid-sumDebitCredit">
+																กรุณาตรวจสอบยอดเคดิต และเดบิต
+															</span> รวม </th>
+															<th><label id="sumDebit">00.00</label></th>
+															<th><label id="sumCredit">00.00</label></th>
 															<th></th>
 														</tr>
 													</tfoot>
@@ -186,7 +215,7 @@
 					</div>
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" onclick="saveCreate()">บันทึก</button>
+						<button type="button" class="btn btn-success" id="checkSaveFlg" onclick="saveCreate()">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 
@@ -198,6 +227,9 @@
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="\data-table\F6M1GeneralJournal.js" type="text/javascript"></script>
+		<!-- select -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 </body>
 

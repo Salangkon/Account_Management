@@ -5,16 +5,39 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Report Quotidia</title>
+	<title>Sales Journal</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
-
+	<style>
+		.col-sm-4,
+		.col-sm-8 {
+			text-align: right;
+			margin-top: 20px;
+		}
+		.invalid{
+			color: red;
+		}
+		[x-placement=bottom-start] {
+			position: relative !important;
+			top: -37px !important; 
+			margin-top: -40px !important;
+		}
+		/* .dropdown-menu.show:first-of-type {
+			position: relative !important;
+			top: 2.5rem !important; 
+			margin-top: -40px !important;
+		} */
+		[x-placement=top-start] {
+			position: relative !important;
+			top: 2.5rem !important; 
+			margin-top: -40px !important;
+		}
+	</style>
 </head>
 
 <body>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
 		<!-- Sidebar -->
 		<%@include file="TabBar.jsp"%>
 		<!-- End of Sidebar -->
@@ -41,15 +64,15 @@
 										<div class="col-sm-1"></div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" data-toggle="modal"
-												data-target="#myModal">สร้างใหม่</button>
+												data-target="#myModal" onclick="createUpdate(null)">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
 										<div class="col-sm-7"></div>
-										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
-										<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
+										<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" /> </div>
+										<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /> </div>
 										<div class="col-sm-1">
-											<button class="btn btn-primary" type="button"
+											<button class="btn btn-primary" type="button" onclick="tableJournal()"
 												style="margin-top: 32px;width: 87px;"> ค้นหา <i
 													class="fas fa-fw fa-search"></i></button>
 										</div>
@@ -78,7 +101,7 @@
 
 		<!-- The Modal -->
 		<div class="modal fade" id="myModal">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog modal-lg" style="max-width: 1600px;">
 				<div class="modal-content">
 
 					<!-- Modal Header -->
@@ -92,46 +115,63 @@
 						<!-- Nested Row within Card Body -->
 						<div class="row">
 							<div class="col-lg-12">
-								<div class="p-3">
+								<div class="p-3" style="margin-right: 30px">
 									<form class="user">
 										<div class="form-group row">
-											<div class="col-sm-12" style="text-align: right;">
-												<a href="#"><i class="fas fa-2x fa-print"
+											<div class="col-sm-12" style="text-align: right;margin-bottom: 20px;">
+												<a href="#" onclick="saveCreate()"><i class="fas fa-2x fa-print"
 														style="margin-right: 10px;"></i></a>
-												<a href="#"><i class="fas fa-2x fa-download"></i></a>
+												<a href="#" onclick="saveCreate()"><i class="fas fa-2x fa-download"></i></a>
 											</div>
-											<div class="col-sm-12">
-												<label>สมุดรายวัน</label>
-												<select class="form-control" id="companyType" style="width: 200px;">
-													<option value="สมุดรายวันขาย">สมุดรายวันขาย</option>
-													<option value="สมุดรายวันซื้อ">สมุดรายวันซื้อ</option>
-												</select>
-											</div>
+											<input id="id" hidden>
+											<div class="col-sm-5 mb-3 mb-sm-0">
+												<div class="form-group row">
+													<div class="col-sm-4">
+														<label>ชื่อลูกค้า* : </label>
+													</div>
+													<div class="col-sm-8">
+														<select class="form-control" placeholder="ใส่ชื่อลูกค้า"
+															id="customers">
+															<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
+															</option>
+														</select>
+														<div hidden class="invalid" id="invalid-customers">
+															กรุณาระบุเลขที่เอกสาร
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<label>คำอธิบาย : </label>
+													</div>
+													<div class="col-sm-8">
+														<textarea class="form-control" id="description"
+															style="height: 110px"></textarea>
 
-											<div class="col-sm-7 mb-3 mb-sm-0">
-												<div>
-													<label>ชื่อลูกค้า</label><input class="form-control" id=""
-														placeholder="ชื่อลูกค้า">
+													</div>
 												</div>
-												<div>
-													<label>คำอธิบาย</label>
-													<textarea class="form-control" style="height: 110px"></textarea>
-												</div>
-											</div>
-											<div class="col-sm-5">
 
-												<div>
-													<label>เลขประจำตัวผู้เสียภาษี</label><input type="password"
-														class="form-control form-control" id="taxId"
-														placeholder="เลขประจำตัวผู้เสียภาษี">
-												</div>
-												<div>
-													<label>เลขที่เอกสาร</label><input class="form-control" id=""
-														placeholder="เลขที่เอกสาร">
-												</div>
-												<div>
-													<label>เอกสารอ้างอิง</label><input class="form-control" id=""
-														placeholder="เอกสารอ้างอิง">
+											</div>
+											<div class="col-sm-3"></div>
+											<div class="col-sm-4">
+												<div class="form-group row">
+													<div class="col-sm-4">
+														<label>วันที่* : </label>
+													</div>
+													<div class="col-sm-8">
+														<input id="date" />
+														<div hidden class="invalid" id="invalid-date">
+															กรุณาระบุวันที่
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<label>เลขที่เอกสาร* : </label>
+													</div>
+													<div class="col-sm-8">
+														<input class="form-control" id="referenceDocument"
+															placeholder="เลขที่เอกสาร">
+															<div hidden class="invalid" id="invalid-referenceDocument">
+																กรุณาระบุเลขที่เอกสาร
+															</div>
+													</div>
 												</div>
 											</div>
 
@@ -140,24 +180,28 @@
 													width="100%">
 													<thead class="bg-gradient-primary" style="color: white;">
 														<tr>
-															<th style="text-align: center;"><input type="checkbox"></th>
-															<th>รหัสบัญชี</th>
-															<th>ชื่อบัญชี</th>
+															<th>รหัสบัญชี / ชื่อบัญชี</th>
 															<th>รายละเอียด</th>
 															<th>เดบิต</th>
 															<th>เครดิต</th>
+															<th></th>
 														</tr>
 													</thead>
 													<tfoot>
 														<tr>
-															<th style="text-align: center;"><a href="#"><i
-																		class="fas fa-trash"></i></a></th>
-															<th colspan="2"><i class="fas fa-plus"
-																	style="color: red;"></i> <a href="#">เพิ่มรายการ</a>
+															<th>
+																<button type="button" class="btn btn-default btn-sm"
+																	onclick="Add()">
+																	<i class="fas fa-plus" style="color: red"></i>
+																	เพิ่มรายการ
+																</button>
 															</th>
-															<th style="text-align: right;"><label>รวม</label></th>
-															<th>00.00</th>
-															<th>00.00</th>
+															<th style="text-align: right;"><span hidden class="invalid" id="invalid-sumDebitCredit">
+																กรุณาตรวจสอบยอดเคดิต และเดบิต
+															</span> รวม </th>
+															<th><label id="sumDebit">00.00</label></th>
+															<th><label id="sumCredit">00.00</label></th>
+															<th></th>
 														</tr>
 													</tfoot>
 												</table>
@@ -171,7 +215,7 @@
 					</div>
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" id="save">บันทึก</button>
+						<button type="button" class="btn btn-success" id="checkSaveFlg" onclick="saveCreate()">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 
@@ -183,6 +227,9 @@
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="\data-table\F6M4CashDisbursementJournal.js" type="text/javascript"></script>
+		<!-- select -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 </body>
 

@@ -1,15 +1,21 @@
 package com.accountmanager.system.api.controller;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,25 +23,54 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accountmanager.system.model.Journal;
 import com.accountmanager.system.model.JournalList;
+import com.accountmanager.system.pojo.GroupJounalModel;
+import com.accountmanager.system.pojo.JournalSearchPojo;
 import com.accountmanager.system.repository.JournalListRepository;
 import com.accountmanager.system.repository.JournalRepository;
+import com.accountmanager.system.service.JournalSearchService;
 
 @RestController
 @RequestMapping("/api-journal")
-public class JournalController {
+public class F6JournalController {
 
 	@Autowired
 	JournalRepository journalRepo;
 	@Autowired
 	JournalListRepository journalListRepo;
+	@Autowired
+	JournalSearchService journalSearchService;
 
-	@GetMapping("/get-all")
-	public List<Journal> getAll() {
-		List<Journal> journals = (List<Journal>) journalRepo.findAll();
+	@GetMapping("/get-all/{type}/{startDate}/{endDate}")
+	public List<Journal> getAll(@PathVariable("type") String type, @PathVariable("startDate") String formDate, @PathVariable("endDate") String toDate) {
+		List<Journal> journals = new ArrayList<Journal>();
+		System.err.println(formDate + " :: " + toDate);
+		switch (formDate) {
+		case "0":
+			switch (toDate) {
+			case "0":
+				journals = (List<Journal>) journalRepo.findByType(type);
+				break;
+			default:
+				journals = journalRepo.findByEndDate(toDate, type);
+				break;
+			}
+			break;
+		default:
+			switch (toDate) {
+			case "0":
+				journals = journalRepo.findByStartDate(formDate, type);
+				break;
+			default:
+				journals = journalRepo.findByStartDateAndEndDate(formDate, toDate, type);
+				break;
+			}
+			break;
+		}
 		journals.sort(
 				(e2, e1) -> new Long(e1.getCreateDate().getTime()).compareTo(new Long(e2.getCreateDate().getTime())));
 		return journals;
@@ -43,9 +78,21 @@ public class JournalController {
 
 	@PostMapping("/add-update")
 	public ResponseEntity<?> addUpdate(@RequestBody Journal journal) {
+		List<JournalList> journalLists = new ArrayList<JournalList>();
 		try {
-			List<JournalList> journalLists = new ArrayList<JournalList>();
-			journal.setId(UUID.randomUUID().toString());
+			System.err.println(journal.getId());
+			if (journal.getId() == null || journal.getId().equals("")) {
+				journal.setId(UUID.randomUUID().toString());
+			} else {
+				List<JournalList> list = journalListRepo.findByJournalId(journal.getId());
+				if (list != null) {
+					if (!list.isEmpty()) {
+						for (JournalList journalList : list) {
+							journalListRepo.delete(journalList);
+						}
+					}
+				}
+			}
 			journal.setCreateDate(new Timestamp(new Date().getTime()));
 			if (journal.getJournalLists() != null) {
 				for (JournalList list : journal.getJournalLists()) {
@@ -110,7 +157,7 @@ public class JournalController {
 	@PostMapping("/update-status/{id}/{status}")
 	public Journal updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
 		Journal journal = journalRepo.findOne(id);
-
+		System.err.println("Status F6 :: " + status);
 		journal.setUpdateDate(new Timestamp(new Date().getTime()));
 		switch (status) {
 		case "0":
@@ -125,6 +172,34 @@ public class JournalController {
 		}
 
 		return journalRepo.save(journal);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@GetMapping(value = "/journalSearch/namejournal/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public List<GroupJounalModel> getjournalSearch(@PathVariable String name)
+			throws IllegalAccessException, InvocationTargetException {
+
+		final List<JournalSearchPojo> data = journalSearchService.searchJournal(name);
+		Map<Object, Collection<JournalSearchPojo>> mapValues = new HashMap<>();
+		final List<GroupJounalModel> dataSearch = new ArrayList<>();
+
+		if (data.size() > 0) {
+			mapValues = data.stream().collect(
+					Collectors.groupingBy(x -> x.getText(), HashMap::new, Collectors.toCollection(ArrayList::new)));
+		}
+		for (Map.Entry me : mapValues.entrySet()) {
+			GroupJounalModel groupJounal = new GroupJounalModel();
+			groupJounal.setKey((String) me.getKey());
+			groupJounal.setValue((List) me.getValue());
+			dataSearch.add(groupJounal);
+		}
+		return dataSearch;
+	}
+
+	@GetMapping("/get-by/{id}")
+	private Journal geyBy(@PathVariable("id") String id) {
+		return journalRepo.findOne(id);
 	}
 
 }// end class

@@ -14,7 +14,7 @@ import com.accountmanager.system.repository.CustomersListRepository;
 
 @RestController
 @RequestMapping("/api")
-public class CustomersController {
+public class F8CustomersController {
 	@Autowired
 	CustomersListRepository customersListRepo;
 

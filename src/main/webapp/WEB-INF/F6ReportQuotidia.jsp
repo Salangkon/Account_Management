@@ -56,7 +56,7 @@
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="example" class="table table-sm table-hover"
+									<table id="example" class="table table-sm table-striped table-bordered"
 										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
@@ -137,7 +137,7 @@
 											</div>
 
 											<div class="table-responsive col-sm-12" style="margin-top: 12px;">
-												<table id="example1" class="table table-sm table-hover"
+												<table id="example1" class="table table-sm table-striped table-bordered"
 													width="100%">
 													<thead class="bg-gradient-primary" style="color: white;">
 														<tr>

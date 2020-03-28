@@ -54,6 +54,7 @@ function saveCreate() {
         passCode: $('#passCode').val(),
         text: $('#text').val(),
         detail: $('#detail').val(),
+        statusDelete: "1",
     }
     $.ajax({
         type: 'POST',
@@ -203,7 +204,6 @@ function tabelAll() {
 }
 
 function jsonCharAccount() {
-
     $.ajax({
         type: 'GET',
         url: '/api-chart-account/get-all-new',
@@ -232,21 +232,27 @@ function jsonCharAccount() {
                                 $('#id').val(res.id),
                                     $('#passCode').val(""),
                                     $('#text').val(""),
-                                    $('#detail').val("")
-                                $('#textDisplay').text("")
+                                    $('#detail').val(""),
+                                $('#textDisplay').text(""),
+                                document.getElementById("statusDelete").hidden = true;
 
                                 document.getElementById("save").hidden = false;
                                 document.getElementById("edit").hidden = true;
                                 document.getElementById("passCode").disabled = false;
                                 document.getElementById("text").disabled = false;
                                 document.getElementById("detail").disabled = false;
-                            } else {
+                            } else {                
                                 $('#id').val(res.id),
                                     $('#text').val(res.text),
                                     $('#passCode').val(res.passCode),
                                     $('#detail').val(res.detail)
                                 $('#textDisplay').text(res.text)
-
+                                console.log(res.statusDelete);
+                                if (res.statusDelete == "0" || res.statusDelete == null || res.statusDelete == "") {
+                                    document.getElementById("statusDelete").hidden = true;
+                                } else {
+                                    document.getElementById("statusDelete").hidden = false;
+                                }
                                 document.getElementById("save").hidden = true;
                                 document.getElementById("edit").hidden = false;
                                 document.getElementById("passCode").disabled = true;
@@ -259,8 +265,10 @@ function jsonCharAccount() {
                     $('#id').val(""),
                         $('#passCode').val(""),
                         $('#text').val(""),
-                        $('#detail').val("")
-                    $('#textDisplay').text("")
+                        $('#detail').val(""),
+                    $('#textDisplay').text(""),
+                    document.getElementById("statusDelete").hidden = true;
+
                     document.getElementById("save").hidden = true;
                     document.getElementById("edit").hidden = true;
                     document.getElementById("passCode").disabled = true;
@@ -344,3 +352,29 @@ function hiddenCondition(Text) {
             break;
     }
 }; // end hiddenCondition
+
+function deleteId() {
+    console.log("dalete :: " + $('#id').val(),);
+    swal({
+            title: "Are you sure?",
+            text: "Your will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
+        function () {
+            $.ajax({
+                url: '/api-chart-account/delete-by-id/' + $('#id').val(),
+                type: 'DELETE',
+                success: function (result) {
+                    if (result == "delete") {
+                        window.location.href = "/chart-accounts";
+                    } else {
+                        alert("Delete Fail!!!");
+                    }
+                }
+            });
+        });
+} //end delete
