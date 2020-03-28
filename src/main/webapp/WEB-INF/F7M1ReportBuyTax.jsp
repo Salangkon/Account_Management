@@ -45,16 +45,16 @@
 											style="margin-top: 32px"> ค้นหา <i class="fas fa-fw fa-search"></i>
 										</button></div>
 								</div>
-								<table id="example" class="table table-sm table-striped table-bordered" width="100%">
+								<table id="example" class="table table-sm table-hover" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>วันที่</th>
+											<th>เลขที่ใบกำกับภาษี</th>
 											<th>เลขที่เอกสาร</th>
 											<th>ชื่อลูกค้า</th>
-											<th>จำนวนเงิน</th>
-											<th>ภาษี</th>
+											<th>มูลค่าสินค้า/บริการ</th>
+											<th>ภาษีมูลค่าเพิ่ม</th>
 											<th>รวม</th>
-											<th>ตัวเลือก</th>
 										</tr>
 									</thead>
 								</table>

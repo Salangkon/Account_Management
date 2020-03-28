@@ -65,7 +65,7 @@
 							</div>
 
 							<div id="T1">
-								<table id="tabelAll" class="table table-sm dataTable no-footer" width="100%">
+								<table id="tabelAll" class="table table-sm table-hover" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>รหัสบัญชี</th>
@@ -76,7 +76,7 @@
 								</table>
 							</div>
 							<div id="T2">
-								<table id="tabelAllT2" class="table table-sm dataTable no-footer" width="100%">
+								<table id="tabelAllT2" class="table table-sm table-hover" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>รหัสบัญชี</th>
@@ -87,7 +87,7 @@
 								</table>
 							</div>
 							<div id="T3">
-								<table id="tabelAllT3" class="table table-sm dataTable no-footer" width="100%">
+								<table id="tabelAllT3" class="table table-sm table-hover" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>รหัสบัญชี</th>
@@ -98,7 +98,7 @@
 								</table>
 							</div>
 							<div id="T4">
-								<table id="tabelAllT4" class="table table-sm dataTable no-footer" width="100%">
+								<table id="tabelAllT4" class="table table-sm table-hover" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>รหัสบัญชี</th>
@@ -109,7 +109,7 @@
 								</table>
 							</div>
 							<div id="T5">
-								<table id="tabelAllT5" class="table table-sm dataTable no-footer" width="100%">
+								<table id="tabelAllT5" class="table table-sm table-hover" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>รหัสบัญชี</th>
@@ -120,7 +120,7 @@
 								</table>
 							</div>
 							<div id="T6">
-								<table id="tabelAllT6" class="table table-sm dataTable no-footer" width="100%">
+								<table id="tabelAllT6" class="table table-sm table-hover" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>รหัสบัญชี</th>

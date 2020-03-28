@@ -106,8 +106,17 @@
 	</li>
 
 	<!-- ตั้งค่า -->
-	<li class="nav-item"><a class="nav-link icon-color" href="/setting">
-			<i class="fas fa-fw fa-cog"></i> <span>ตั้งค่า</span></a>
+	<li class="nav-item">
+		<a class="nav-link collapsed icon-color" href="#" data-toggle="collapse" data-target="#collapseNine"
+			aria-expanded="true" aria-controls="collapseNine">
+			<i class="fas fa-fw fa-cog"></i> <span>ตั้งค่า</span>
+		</a>
+		<div id="collapseNine" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseNine">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<a class="collapse-item" href="/setting" style="color: purple;">ตั้งค่าธุระกิจ</a>
+				<a class="collapse-item" href="/setting-user" style="color: purple;">ตั้งค่าผู้ใช้งาน</a>
+			</div>
+		</div>
 	</li>
 
 	<!-- Sidebar Toggler (Sidebar) -->

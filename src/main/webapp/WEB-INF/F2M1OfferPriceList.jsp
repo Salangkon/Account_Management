@@ -89,7 +89,7 @@
 											</button>
 										</div>
 									</div>
-									<table id="tableQuotation" class="table table-sm" width="100%">
+									<table id="tableQuotation" class="table table-sm table-hover" width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
 												<th style="text-align: center;">วันที่</th>
@@ -232,7 +232,7 @@
 									<div class="card">
 										<div class="card-body">
 											<table id="tableCreateQuotationDisplay"
-												class="table table-sm table-bordered">
+												class="table table-sm table-hover">
 												<thead style="color: white; background-color: purple;">
 													<tr>
 														<th>ลำดับ</th>

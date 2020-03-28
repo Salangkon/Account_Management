@@ -124,4 +124,9 @@ public class HomePageController {
 	public String setting() {
 		return "F9Setting";
 	}
+
+	@RequestMapping("/setting-user")
+	public String settingUser() {
+		return "F9SettingUser";
+	}
 }
