@@ -5,7 +5,7 @@ $(document).on("click", ".browse", function () {
 $('input[type="file"]').change(function (e) {
     var fileName = e.target.files[0].name;
     $("#file").val(fileName);
-
+    logo = fileName;
     var reader = new FileReader();
     reader.onload = function (e) {
         // get loaded data and render thumbnail.
@@ -15,6 +15,7 @@ $('input[type="file"]').change(function (e) {
     reader.readAsDataURL(this.files[0]);
 });
 
+var logo;
 
 $(document).ready(function () {
     login();
@@ -50,9 +51,10 @@ function login() {
                 $('#tel').val(msg.tel),
                 $('#type').val(msg.type),
                 $('#status').val(msg.status),
-                $('#taxId').val(msg.taxId)
+                $('#taxId').val(msg.taxId),
+                $('#logo').val(msg.logo),
+
             CheckOffice(msg.department);
-            // $('#logo').val(msg.logo),
         }
     })
 }
@@ -71,6 +73,7 @@ function update() {
         type: $('#type').val(),
         status: $('#status').val(),
         taxId: $('#taxId').val(),
+        logo: logo,
         department: departmentData,
         departmentPass: $('#departmentPass').val(),
         departmentName: $('#departmentName').val(),

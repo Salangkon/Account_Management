@@ -29,8 +29,7 @@ public class User implements Serializable {
 	@Column(name = "l_name")
 	private String lName;
 
-	@Lob
-	private byte[] logo;
+	private String logo;
 
 	private String password;
 
@@ -110,11 +109,11 @@ public class User implements Serializable {
 		this.lName = lName;
 	}
 
-	public byte[] getLogo() {
-		return this.logo;
+	public String getLogo() {
+		return logo;
 	}
 
-	public void setLogo(byte[] logo) {
+	public void setLogo(String logo) {
 		this.logo = logo;
 	}
 
