@@ -52,7 +52,7 @@
 								<div class="form-group row">
 									<div class="col-sm-4"><label>ประเภทธุระกิจ : </label></div>
 									<div class="col-sm-8">
-										<select class="form-control" id="companyType">
+										<select class="form-control" id="type">
 											<option value="0">บริบัท</option>
 											<option value="1">ห้างหุ้นส่วน</option>
 											<option value="2">บุคคลธรรมดา/ฟรีแลนซ์</option>
@@ -61,14 +61,12 @@
 									</div>
 									<div class="col-sm-4"><label>ชื่อธุระกิจ : </label></div>
 									<div class="col-sm-8">
-										<input type="text" class="form-control form-control" id="companyId"
-											placeholder="รหัสผู้ติดต่อ">
+										<input type="text" class="form-control form-control" id="company">
 										<p class="hide" id="error-companyId"></p>
 									</div>
 									<div class="col-sm-4"><label>ที่อยู่ : </label></div>
 									<div class="col-sm-8">
-										<textarea class="form-control" id="address" style="height: 100px"
-											placeholder="ที่อยู่"></textarea>
+										<textarea class="form-control" id="address" style="height: 100px"></textarea>
 										<p class="hide" id="error-address"></p>
 									</div>
 									<div class="col-sm-4">
@@ -99,8 +97,7 @@
 									</div>
 									<div class="col-sm-4"><label>เบอร์ติดต่อ : </label></div>
 									<div class="col-sm-8">
-										<input type="text" OnKeyPress="return chkNumber(this)" class="form-control form-con
-											trol" id="tel" maxlength="10" value="<%=user.getTel() %>" placeholder="เบอร์ติดต่อ">
+										<input type="text" OnKeyPress="return chkNumber(this)" class="form-control form-control" id="tel" maxlength="10">
 										<p class="hide" id="error-tel"></p>
 									</div>
 									<div class="col-sm-4"><label>โลโก้บริษัท : </label></div>

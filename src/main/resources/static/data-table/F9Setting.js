@@ -32,11 +32,24 @@ function login() {
         data: JSON.stringify(login),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function (result) {
-            console.log(JSON.stringify(result));
+        success: function (msg) {
+            console.log(JSON.stringify(msg));
+            $('#id').val(msg.id),
+                $('#password').val(msg.password),
+                $('#f_name').val(msg.f_name),
+                $('#l_name').val(msg.l_name),
+                $('#email').val(msg.email),
+                $('#company').val(msg.company),
+                $('#department').val(msg.department),
+                $('#address').val(msg.address),
+                $('#position').val(msg.position),
+                $('#tel').val(msg.tel),
+                $('#type').val(msg.type),
+                $('#status').val(msg.status),
+                $('#status').val(msg.status)
+                // $('#logo').val(msg.logo),
         }
-    });
-
+    })
 }
 
 // validate
