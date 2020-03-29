@@ -85,6 +85,7 @@
 					</a> 
 				</div>
 			</li> -->
+			<input type="text" id="positionLog" value="<%=user.getPosition()%>" hidden>
 
 			<div class="topbar-divider d-none d-sm-block"></div>
 
