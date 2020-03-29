@@ -77,7 +77,7 @@
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="example" class="table table-sm table-hover"
+									<table id="tableJournal" class="table table-sm table-hover"
 										width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
