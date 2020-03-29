@@ -79,13 +79,13 @@
 									<div class="col-sm-4"><label>สำนักงาน / สาขาที่</label></div>
 									<div class="col-sm-8">
 										<div>
-											<input type="radio" name="officeType" id="officeType1"
+											<input type="radio" name="officeType" id="department1"
 												onclick="CheckOffice(1)" value="1" style="margin-left: 10px" checked>
 											สำนักงานใหญ่
-											<input type="radio" name="officeType" id="officeType2"
+											<input type="radio" name="officeType" id="department2"
 												onclick="CheckOffice(2)" value="2" style="margin-left: 10px"> สาขาที่
 										</div>
-										<div id="officeTypeCheck">
+										<div id="department">
 											<div class="input-group input-group-sm mb-3">
 												<input type="text" class="form-control" placeholder="รหัสสาขา"
 													aria-describedby="inputGroup-sizing-sm">
