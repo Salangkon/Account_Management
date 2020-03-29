@@ -43,6 +43,8 @@
 
 					<!-- Content Row -->
 					<div class="row" style="margin-top: 10px;">
+						<input id="id" value="<%=user.getId() %>" hidden>
+						<input id="password" value="<%=user.getPassword() %>" hidden>
 						<div class="col-lg-5">
 							<div class="p-3">
 								<div class="form-group row">
@@ -103,6 +105,8 @@
 	</div>
 
 	<!-- script -->
+	<script src="/data-table/F9SettingUser.js" type="text/javascript"></script>
+
 	<%@include file="/WEB-INF/Extensions/js.jsp" %>
 
 </body>

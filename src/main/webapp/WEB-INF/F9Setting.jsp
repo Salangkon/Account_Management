@@ -38,15 +38,21 @@
 							<h3>ตั้งค่าธุระกิจ</h3>
 						</div>
 						<div class="col-lg-1">
-							<button type="button" style="margin-left: 30px;" class="btn btn btn-primary"
+							<button type="button" style="margin-left: 30px;" class="btn btn btn-primary" onclick="update()" 
 								id="save">บันทึก</button>
 						</div>
 						<div class="col-lg-7"></div>
 					</div>
 					<!-- Content Row -->
 					<div class="row" style="margin-top: 10px;">
+						<!-- data update -->
 						<input id="id" value="<%=user.getId() %>" hidden>
 						<input id="password" value="<%=user.getPassword() %>" hidden>
+						<input id="fName" value="<%=user.getFName() %>" hidden>
+						<input id="lName" value="<%=user.getLName() %>" hidden>
+						<input id="email" value="<%=user.getEmail() %>" hidden>
+						<input id="position" value="<%=user.getPosition() %>" hidden>
+						<input id="status" value="<%=user.getStatus() %>" hidden>
 						<div class="col-lg-5">
 							<div class="p-3">
 								<div class="form-group row">
@@ -87,10 +93,8 @@
 										</div>
 										<div id="department">
 											<div class="input-group input-group-sm mb-3">
-												<input type="text" class="form-control" placeholder="รหัสสาขา"
-													aria-describedby="inputGroup-sizing-sm">
-												<input type="text" class="form-control" placeholder="ชื่อสาขา"
-													aria-describedby="inputGroup-sizing-sm" id="department">
+												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentPass">
+												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentName">
 											</div>
 											<p class="hide" id="error-department"></p>
 										</div>

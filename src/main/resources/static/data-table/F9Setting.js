@@ -20,6 +20,13 @@ $(document).ready(function () {
     login();
 });
 
+//กรอกได้เฉพราะ ตัวเลข
+function chkNumber(ele) {
+    var vchar = String.fromCharCode(event.keyCode);
+    if ((vchar < '0' || vchar > '9') && (vchar != '.')) return false;
+    ele.onKeyPress = vchar;
+}
+
 function login() {
     var login = {
         id: $('#id').val(),
@@ -36,8 +43,6 @@ function login() {
             console.log(JSON.stringify(msg));
             $('#id').val(msg.id),
                 $('#password').val(msg.password),
-                $('#f_name').val(msg.f_name),
-                $('#l_name').val(msg.l_name),
                 $('#email').val(msg.email),
                 $('#company').val(msg.company),
                 $('#address').val(msg.address),
@@ -46,25 +51,61 @@ function login() {
                 $('#type').val(msg.type),
                 $('#status').val(msg.status),
                 $('#taxId').val(msg.taxId)
-                if (msg.department == 1) {
-					document.getElementById("department1").checked = true;
-                    document.getElementById("department").hidden = true;
-				} else {
-					document.getElementById("department2").checked = true;
-					document.getElementById("department").hidden = false;
-				}
-                // $('#logo').val(msg.logo),
+            CheckOffice(msg.department);
+            // $('#logo').val(msg.logo),
         }
     })
 }
 
+function update() {
+
+    var data = {
+        id: $('#id').val(),
+        password: $('#password').val(),
+        fName: $('#fName').val(),
+        lName: $('#lName').val(),
+        email: $('#email').val(),
+        address: $('#address').val(),
+        company: $('#company').val(),
+        position: $('#position').val(),
+        tel: $('#tel').val(),
+        type: $('#type').val(),
+        status: $('#status').val(),
+        taxId: $('#taxId').val(),
+        department: departmentData,
+        departmentPass: $('#departmentPass').val(),
+        departmentName: $('#departmentName').val(),
+    }
+    console.log(JSON.stringify(data));
+
+    $.ajax({
+        type: "POST",
+        url: "/api-login/save-update/",
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            if (result == 'pass') {
+                window.location.href = "/seting";
+            } else {
+                alert('บันทึก ไม่สำเร็จ..')
+            }
+        }
+    });
+
+}; // update
+
+var departmentData;
 function CheckOffice(department) {
-	if (department == 1) {
-		document.getElementById("department").hidden = true;
-	} else {
-		document.getElementById("department").hidden = false;
-	}
-	console.log("CheckOffice :: " + officeType);
+    if (department == 1) {
+        document.getElementById("department1").checked = true;
+        document.getElementById("department").hidden = true;
+    } else {
+        document.getElementById("department2").checked = true;
+        document.getElementById("department").hidden = false;
+    }
+    departmentData = department;
+    console.log("CheckOffice :: " + department);
 }
 
 // validate
