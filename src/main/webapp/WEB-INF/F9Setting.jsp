@@ -45,14 +45,6 @@
 					</div>
 					<!-- Content Row -->
 					<div class="row" style="margin-top: 10px;">
-						<!-- data update -->
-						<input id="id" value="<%=user.getId() %>" hidden>
-						<input id="password" value="<%=user.getPassword() %>" hidden>
-						<input id="fName" value="<%=user.getFName() %>" hidden>
-						<input id="lName" value="<%=user.getLName() %>" hidden>
-						<input id="email" value="<%=user.getEmail() %>" hidden>
-						<input id="position" value="<%=user.getPosition() %>" hidden>
-						<input id="status" value="<%=user.getStatus() %>" hidden>
 						<div class="col-lg-5">
 							<div class="p-3">
 								<div class="form-group row">

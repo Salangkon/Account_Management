@@ -43,54 +43,51 @@
 
 					<!-- Content Row -->
 					<div class="row" style="margin-top: 10px;">
-						<input id="id" hidden>
-						<input id="idLog" value="<%=user.getId() %>" hidden>
-						<input id="passwordLog" value="<%=user.getPassword() %>" hidden>
 						<div class="col-lg-5">
 							<div class="p-3">
 								<div class="form-group row">
 									<div class="col-sm-4"><label>ชื่อ : </label></div>
 									<div class="col-sm-8">
-										<input type="text" class="form-control form-control" id="fName">
-										<p class="hide" id="error-tel"></p>
+										<input type="text" class="form-control form-control" id="fNameUser">
+										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>นามสกุล : </label></div>
 									<div class="col-sm-8">
-										<input type="text" class="form-control form-control" id="lName">
-										<p class="hide" id="error-tel"></p>
+										<input type="text" class="form-control form-control" id="lNameUser">
+										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>เบอร์ติดต่อ : </label></div>
 									<div class="col-sm-8">
 										<input type="text" OnKeyPress="return chkNumber(this)" class="form-control form-con
 											trol" id="tel" maxlength="10">
-										<p class="hide" id="error-tel"></p>
+										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>อีเมลล์(ผู้ใช้งาน) : </label></div>
 									<div class="col-sm-8">
-										<input type="email" class="form-control form-control" id="email">
-										<p class="hide" id="error-tel"></p>
+										<input type="email" class="form-control form-control" id="emailUser">
+										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>ตำแหน่ง : </label></div>
 									<div class="col-sm-8">
-										<input type="email" class="form-control form-control" id="position" disabled>
-										<p class="hide" id="error-tel"></p>
+										<input type="text" class="form-control form-control" id="positionUser" disabled>
+										<p class="hide" id=""></p>
 									</div>
 
 									<div class="col-sm-12"><label><b>แก้ไขรหัสผ่าน</b></label></div>
 									<div class="col-sm-4"><label>รหัสผ่านเดิม : </label></div>
 									<div class="col-sm-8">
-										<input type="password" class="form-control form-control" id="password" disabled>
-										<p class="hide" id="error-tel"></p>
+										<input type="password" class="form-control form-control" id="passwordUser" disabled>
+										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>รหัสผ่านใหม่ : </label></div>
 									<div class="col-sm-8">
 										<input type="password" class="form-control form-control" id="passwordNew">
-										<p class="hide" id="error-tel"></p>
+										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>ยืนยันรหัสผ่าน : </label></div>
 									<div class="col-sm-8">
 										<input type="password" class="form-control form-control" id="passwordNew2">
-										<p class="hide" id="error-tel"></p>
+										<p class="hide" id=""></p>
 									</div>
 								</div>
 							</div>
