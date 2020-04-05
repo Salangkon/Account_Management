@@ -106,8 +106,8 @@
 									</div>
 									<div class="col-sm-4"><label>โลโก้บริษัท : </label></div>
 									<div class=" col-sm-8">
-										<form method="post" id="image-form">
-											<input type="file" name="img[]" class="file" accept="image/*">
+										<!-- <form method="post" id="image-form"> -->
+											<input id="singleFileUploadInput" type="file" name="img[]" class="file" accept="image/*">
 											<div class="input-group my-3">
 												<div class="input-group-append">
 													<button type="button"
@@ -116,7 +116,7 @@
 												<input type="text" class="form-control" disabled
 													placeholder="Upload File" id="file">
 											</div>
-										</form>
+										<!-- </form> -->
 										<div class="ml-2 col-sm-6">
 											<img src="https://placehold.it/80x80" id="preview" class="img-thumbnail">
 										</div>

@@ -5,17 +5,17 @@ $(document).on("click", ".browse", function () {
 $('input[type="file"]').change(function (e) {
     var fileName = e.target.files[0].name;
     $("#file").val(fileName);
-    logo = fileName;
     var reader = new FileReader();
     reader.onload = function (e) {
-        // get loaded data and render thumbnail.
         document.getElementById("preview").src = e.target.result;
     };
-    // read the image file as a data URL.
     reader.readAsDataURL(this.files[0]);
 });
 
 var logo;
+var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+var preview;
+var myImg;
 
 $(document).ready(function () {
     login();
@@ -33,7 +33,7 @@ function login() {
         id: $('#id').val(),
         password: $('#password').val(),
     }
-    console.log(JSON.stringify(login))
+    // console.log(JSON.stringify(login))
     $.ajax({
         type: 'POST',
         url: '/api-login/seting',
@@ -41,7 +41,7 @@ function login() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            console.log(JSON.stringify(msg));
+            // console.log(JSON.stringify(msg));
             $('#id').val(msg.id),
                 $('#password').val(msg.password),
                 $('#email').val(msg.email),
@@ -52,14 +52,21 @@ function login() {
                 $('#type').val(msg.type),
                 $('#status').val(msg.status),
                 $('#taxId').val(msg.taxId),
-                $('#logo').val(msg.logo),
-
+                logo = msg.logo,
+                document.getElementById("preview").src = "\\img\\" + msg.logo;
+                document.getElementById("myImg").src = "\\img\\" + msg.logo;
             CheckOffice(msg.department);
         }
     })
 }
 
 function update() {
+    var files = singleFileUploadInput.files;
+    if (singleFileUploadInput.files.length > 0) {
+        uploadSingleFile(files[0]);
+        logo = files[0].name;
+    }
+
     var data = {
         id: $('#id').val(),
         password: $('#password').val(),
@@ -80,6 +87,8 @@ function update() {
     }
     console.log(JSON.stringify(data));
     alert('บันทึกเรียบร้อย')
+    document.getElementById("preview").src = "\\img\\" + logo;
+    document.getElementById("myImg").src = "\\img\\" + logo;
     $.ajax({
         type: "POST",
         url: "/api-login/save-update/",
@@ -96,6 +105,24 @@ function update() {
     });
 }; // update
 
+function uploadSingleFile(file) {
+    var formData = new FormData();
+    formData.append("file", file);
+
+    $.ajax({
+        url: "/uploadLogo",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+        success: function (data) {
+            // alert(data);
+        }
+    });
+}
+
 var departmentData;
 
 function CheckOffice(department) {
@@ -109,3 +136,5 @@ function CheckOffice(department) {
     departmentData = department;
     console.log("CheckOffice :: " + department);
 }
+
+var multipleFileUploadInput = document.querySelector('#multipleFileUploadInput');

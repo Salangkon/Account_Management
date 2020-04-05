@@ -33,11 +33,19 @@ public class UpdoadAndDownloadFileController {
 	DBFileRepository DBFileRepo;
 	@Autowired
 	DirectoryRepository directoryRepo;
+
 	Path pathNas;
 
 	@Value("${filepath.path}")
 	private void setPathNas(String pathnas) {
 		pathNas = Paths.get(pathnas);
+	}
+
+	Path pathLogo;
+
+	@Value("${filepath.imp}")
+	private void setPathLogo(String pathnas) {
+		pathLogo = Paths.get(pathnas);
 	}
 
 	@RequestMapping(value = "/uploadFile/{dir}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -60,8 +68,28 @@ public class UpdoadAndDownloadFileController {
 		return "File has uploaded successfully";
 	}
 
+	@RequestMapping(value = "/uploadLogo", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String fileUploadLogo(@RequestParam("file") MultipartFile file) throws IOException {
+		String path = pathLogo + "\\" + file.getOriginalFilename();
+		File convertFile = new File(path);
+
+		convertFile.createNewFile();
+
+		try (FileOutputStream fout = new FileOutputStream(convertFile)) {
+			fout.write(file.getBytes());
+		} catch (Exception exe) {
+			exe.printStackTrace();
+		}
+		DBFile dbFile = new DBFile();
+		dbFile.setFileName(path);
+		dbFile.setFileType(file.getName());
+		DBFileRepo.save(dbFile);
+		return "File has uploaded successfully";
+	}
+
 	@RequestMapping(value = "/download/{dir}/{name}/{type}", method = RequestMethod.GET)
-	public ResponseEntity<Object> downloadFile(@PathVariable("dir") String dir, @PathVariable("name") String name, @PathVariable("type") String type) throws IOException {
+	public ResponseEntity<Object> downloadFile(@PathVariable("dir") String dir, @PathVariable("name") String name,
+			@PathVariable("type") String type) throws IOException {
 		System.err.println(name);
 		String filename = pathNas + "\\" + dir + "\\" + name + "." + type;
 		File file = new File(filename);
