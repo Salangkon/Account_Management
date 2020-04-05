@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,13 +114,15 @@ public class UpdoadAndDownloadFileController {
 	@GetMapping("/create-directory/{name}")
 	private String createDirectory(@PathVariable("name") String name) {
 		String res = "false";
-		Path path = Paths.get(pathNas + "\\" + name);
-
+		Date date = new Date();
 		try {
+			Path path = Paths.get(pathNas + "\\" + name);
 			Directory directory = directoryRepo.findByName(name);
 			if (directory == null) {
 				Directory dir = new Directory();
+				dir.setId(UUID.randomUUID().toString());
 				dir.setName(name);
+				dir.setCreateDate(new Timestamp(date.getTime()));
 				directoryRepo.save(dir);
 
 				Files.createDirectories(path);
@@ -127,5 +133,10 @@ public class UpdoadAndDownloadFileController {
 			e.printStackTrace();
 		}
 		return res;
+	}
+	
+	@GetMapping("/directory-all")
+	private List<Directory> directory() {
+		return directoryRepo.findAllGroupByCreateDate();
 	}
 }

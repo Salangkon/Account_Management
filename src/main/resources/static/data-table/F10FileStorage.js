@@ -3,63 +3,78 @@ $(document).ready(function () {
 });
 
 function getFile() {
-    /*  $.ajax({
-          type: "GET",
-          url: "/api-chart-account/selete-chart-account",
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function (msg) {
-              SeleteChartAccountItem = msg;
-              console.log('getSeleteChartAccountItem', msg);
-          }
-      });*/
-    var fileItem = [
-        // {
-        //     ig: '123',
-        //     name: 'file1',
-        //     path: '/root/file1'
-        // },
-    ];
-    for (let index = 0; index < 20; index++) {
-        fileItem.push({
-            ig: index.toString(),
-            name: 'จัดเก็บไฟล์เอกสาร' + index.toString(),
-            path: '/root/file' + index.toString()
-        });
-    }
-    createDatatable(fileItem);
+    $.ajax({
+        type: "GET",
+        url: "/directory-all",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            createDatatable(msg);
+        }
+    });
 }
 
+function formatDate(nowDate) {
+    var date = new Date(nowDate * 1000);
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    return new Date(nowDate).toLocaleDateString("en-US") + " " + formattedTime;
+}
 
 function createDatatable(data) {
     tablegeneraJournal = $('#tablegeneraJournalDisplay').DataTable({
-        lengthChange: false,
-        "paging": false,
-        searching: false,
-        responsive: true,
-        "bDestroy": true,
         data: data,
+        lengthChange: false,
+        "pageLength": 20,
+        "bFilter": true,
+        "bInfo": false,
         "bAutoWidth": false,
+        responsive: true,
         "sAjaxDataProp": "",
+        "bDestroy": true,
+        "order": [
+            [0, "desc"]
+        ],
         "aoColumns": [{
-            'data': '',
-            "sWidth": "70%",
-            "mRender": function (data,
-                type, row, index) {
-                console.log(row);
-                return '<a>' + row.name + '<a/>';
-            }
-        },
-        {
-            'data': '',
-            "sWidth": "30%",
+            "sWidth": "25%",
             "className": "text-center",
             "mRender": function (data,
                 type, row, index) {
-                return '<a href="#">Download..<a/>';
+                return formatDate(row.createDate);
+            }
+        }, {
+            "sWidth": "75%",
+            "mRender": function (data,
+                type, row, index) {
+                return '<a href="#"> <i class="fa fa-folder-open"></i> ' + row.name + '<a/>';
             }
         }],
     });
     console.log(tablegeneraJournal);
 }
 
+function AddFolder() {
+    console.log($('#folder').val());
+    var createFolder = $('#folder').val()
+
+    if (createFolder.includes('/') || createFolder.includes('|') ||
+        createFolder.includes('*') || createFolder.includes('<') ||
+        createFolder.includes('>') || createFolder.includes('"') ||
+        createFolder.includes('\\') || createFolder.includes('.')) {
+        alert('ห้ามใช้อักษรพิเศษ')
+    } else {
+        $.ajax({
+            url: '/create-directory/' + createFolder,
+            type: 'GET',
+            success: function (result) {
+                if (result == "success") {
+                    window.location.href = "/file-storage";
+                } else {
+                    alert("สร้าง Folder ไม่สำเร็จ!!!");
+                }
+            }
+        });
+    }
+}

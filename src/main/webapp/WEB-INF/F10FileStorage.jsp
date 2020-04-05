@@ -9,66 +9,84 @@
 	<title>File storage</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp"%>
-	<link rel="stylesheet" href="/css/main.css" />
 
-	<style>
-		.update-content {
-			box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-			background-color: white;
-
-		}
-
-		.table-file {
-			padding: 40px;
-		}
-	</style>
 </head>
 
 <body id="page-top">
-
-	<!-- Page Wrapper -->
 	<div id="wrapper">
-		<!-- Sidebar -->
 		<%@include file="TabBar.jsp"%>
-		<!-- End of Sidebar -->
-		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 
-			<!-- Main Content -->
 			<div id="content">
-				<!-- Topbar -->
 				<%@include file="Topbar.jsp"%>
-				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<!-- <p>สมุดรายวัน</p> -->
-					<div class="row" style="margin-bottom: 10px;margin-left: 3px;">/ จัดเก็บไฟล์เอกสาร</div>
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">จัดเก็บไฟล์เอกสาร</h4>
-						</div>
-						<div class="card-body">
-							<div class="table-responsive col-sm-12">
-								<div class="table-responsive col-sm-12">
-									<div class="row">
-										<div class="col-sm-12 text-right">
-											<button type="button" class="btn btn-primary" data-toggle="modal"
-												data-target="#myModal" onclick="createUpdate(null)">Upload File</button>
-										</div>
-									</div>
-									<table id="tablegeneraJournalDisplay" class="table table-sm table-striped"
-										width="100%">
-										<thead class="bg-gradient-primary" style="color: white;">
+					<div class="row">
+
+						<div class="col-lg-6">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Folders</h6>
+								</div>
+								<div class="card-body" style="height: 730px;">
+									<!-- Button trigger modal -->
+									<!-- <button type="button" class="btn btn-primary" data-toggle="modal"
+										data-target="#exampleModalCenter">
+									</button> -->
+									<a data-toggle="modal" data-target="#exampleModalCenter" style="cursor: pointer;"><i
+											class="fas fa-folder-plus fa-2x text-gray-500"></i></a>
+
+									<table id="tablegeneraJournalDisplay" style="width: 100%;">
+										<thead>
 											<tr>
-												<th class="text-center">ชื่อไฟล์เอกสาร</th>
-												<th>Download</th>
+												<th>Create Date</th>
+												<th>Folder Name</th>
 											</tr>
 										</thead>
 									</table>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Files</h6>
+								</div>
+								<div class="card-body" style="height: 730px;">
+
 								</div>
 							</div>
 						</div>
 
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Add Folder
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-10">
+							<input class="form-control" id="folder" placeholder="Folder Name">
+						</div>
+						<div class="col-sm-2">
+							<button type="button" class="btn btn-primary" onclick="AddFolder()">เพิ่ม</button>
+						</div>
+					</div>
+					<p style="color: red;margin-top: 10px;">*ห้ามอักษร \ | / : * ? " < > .</p>
 				</div>
 			</div>
 		</div>
