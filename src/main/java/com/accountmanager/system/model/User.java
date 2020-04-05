@@ -14,7 +14,7 @@ public class User implements Serializable {
 
 	@Id
 	private String id;
-	
+
 	private String address;
 
 	private String company;
@@ -29,8 +29,7 @@ public class User implements Serializable {
 	@Column(name = "l_name")
 	private String lName;
 
-	@Lob
-	private byte[] logo;
+	private String logo;
 
 	private String password;
 
@@ -41,6 +40,15 @@ public class User implements Serializable {
 	private String tel;
 
 	private String type;
+
+	@Column(name = "department_name")
+	private int departmentName;
+
+	@Column(name = "department_pass")
+	private String departmentPass;
+
+	@Column(name = "tax_id")
+	private String taxId;
 
 	public User() {
 	}
@@ -101,11 +109,11 @@ public class User implements Serializable {
 		this.lName = lName;
 	}
 
-	public byte[] getLogo() {
-		return this.logo;
+	public String getLogo() {
+		return logo;
 	}
 
-	public void setLogo(byte[] logo) {
+	public void setLogo(String logo) {
 		this.logo = logo;
 	}
 
@@ -147,6 +155,46 @@ public class User implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getlName() {
+		return lName;
+	}
+
+	public void setlName(String lName) {
+		this.lName = lName;
+	}
+
+	public int getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(int departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public String getDepartmentPass() {
+		return departmentPass;
+	}
+
+	public void setDepartmentPass(String departmentPass) {
+		this.departmentPass = departmentPass;
+	}
+
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
 	}
 
 }

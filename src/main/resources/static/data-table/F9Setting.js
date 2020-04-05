@@ -5,108 +5,136 @@ $(document).on("click", ".browse", function () {
 $('input[type="file"]').change(function (e) {
     var fileName = e.target.files[0].name;
     $("#file").val(fileName);
-
     var reader = new FileReader();
     reader.onload = function (e) {
-        // get loaded data and render thumbnail.
         document.getElementById("preview").src = e.target.result;
     };
-    // read the image file as a data URL.
     reader.readAsDataURL(this.files[0]);
 });
 
+var logo;
+var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+var preview;
+var myImg;
 
 $(document).ready(function () {
     login();
 });
+
+//กรอกได้เฉพราะ ตัวเลข
+function chkNumber(ele) {
+    var vchar = String.fromCharCode(event.keyCode);
+    if ((vchar < '0' || vchar > '9') && (vchar != '.')) return false;
+    ele.onKeyPress = vchar;
+}
 
 function login() {
     var login = {
         id: $('#id').val(),
         password: $('#password').val(),
     }
-    console.log(JSON.stringify(login))
+    // console.log(JSON.stringify(login))
     $.ajax({
         type: 'POST',
         url: '/api-login/seting',
         data: JSON.stringify(login),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function (result) {
-            console.log(JSON.stringify(result));
+        success: function (msg) {
+            // console.log(JSON.stringify(msg));
+            $('#id').val(msg.id),
+                $('#password').val(msg.password),
+                $('#email').val(msg.email),
+                $('#company').val(msg.company),
+                $('#address').val(msg.address),
+                $('#position').val(msg.position),
+                $('#tel').val(msg.tel),
+                $('#type').val(msg.type),
+                $('#status').val(msg.status),
+                $('#taxId').val(msg.taxId),
+                logo = msg.logo,
+                document.getElementById("preview").src = "\\img\\" + msg.logo;
+                document.getElementById("myImg").src = "\\img\\" + msg.logo;
+            CheckOffice(msg.department);
         }
-    });
-
+    })
 }
 
-// validate
-function validateInput() {
-    var pass = true;
-
-    if ('' == $('#tel').val()) {
-        tel.focus()
-        $('#error-tel').removeClass("hide")
-        pass = false;
-    } else {
-        $('#error-tel').addClass("hide")
+function update() {
+    var files = singleFileUploadInput.files;
+    if (singleFileUploadInput.files.length > 0) {
+        uploadSingleFile(files[0]);
+        logo = files[0].name;
     }
 
-    if ('' == $('#customerName').val()) {
-        customerName.focus()
-        $('#error-customerName').removeClass("hide")
-        pass = false;
-    } else {
-        $('#error-customerName').addClass("hide")
+    var data = {
+        id: $('#id').val(),
+        password: $('#password').val(),
+        fName: $('#fName').val(),
+        lName: $('#lName').val(),
+        email: $('#email').val(),
+        address: $('#address').val(),
+        company: $('#company').val(),
+        position: $('#position').val(),
+        tel: $('#tel').val(),
+        type: $('#type').val(),
+        status: $('#status').val(),
+        taxId: $('#taxId').val(),
+        logo: logo,
+        department: departmentData,
+        departmentPass: $('#departmentPass').val(),
+        departmentName: $('#departmentName').val(),
     }
-
-    if ('2' == officeType) {
-        if ('' == $('#department').val()) {
-            department.focus()
-            $('#error-department').removeClass("hide")
-            pass = false;
-        } else {
-            $('#error-department').addClass("hide")
+    console.log(JSON.stringify(data));
+    alert('บันทึกเรียบร้อย')
+    document.getElementById("preview").src = "\\img\\" + logo;
+    document.getElementById("myImg").src = "\\img\\" + logo;
+    $.ajax({
+        type: "POST",
+        url: "/api-login/save-update/",
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            if (result == 'pass') {
+                window.location.href = "/seting";
+            } else {
+                alert('บันทึก ไม่สำเร็จ..')
+            }
         }
-    }
-    if ('' == $('#taxId').val()) {
-        taxId.focus()
-        $('#error-taxId').removeClass("hide")
-        pass = false;
-    } else {
-        $('#error-taxId').addClass("hide")
-    }
+    });
+}; // update
 
-    if ('' == $('#address').val()) {
-        address.focus()
-        $('#error-address').removeClass("hide")
-        pass = false;
-    } else {
-        $('#error-address').addClass("hide")
-    }
+function uploadSingleFile(file) {
+    var formData = new FormData();
+    formData.append("file", file);
 
-    if ('' == $('#companyName').val()) {
-        companyName.focus()
-        $('#error-companyName').removeClass("hide")
-        pass = false;
-    } else {
-        $('#error-companyName').addClass("hide")
-    }
+    $.ajax({
+        url: "/uploadLogo",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+        success: function (data) {
+            // alert(data);
+        }
+    });
+}
 
-    if ('' == $('#companyId').val()) {
-        companyId.focus()
-        $('#error-companyId').removeClass("hide")
-        pass = false;
-    } else {
-        $('#error-companyId').addClass("hide")
-    }
+var departmentData;
 
-    if ('0' == $('#companyType').val()) {
-        companyType.focus()
-        $('#error-companyType').removeClass("hide")
-        pass = false;
+function CheckOffice(department) {
+    if (department == 1) {
+        document.getElementById("department1").checked = true;
+        document.getElementById("department").hidden = true;
     } else {
-        $('#error-companyType').addClass("hide")
+        document.getElementById("department2").checked = true;
+        document.getElementById("department").hidden = false;
     }
+    departmentData = department;
+    console.log("CheckOffice :: " + department);
+}
 
-    return pass;
-} // end validate
+var multipleFileUploadInput = document.querySelector('#multipleFileUploadInput');
