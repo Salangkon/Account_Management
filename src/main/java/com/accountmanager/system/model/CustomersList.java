@@ -45,7 +45,7 @@ public class CustomersList implements Serializable {
 	@Column(name="tax_id")
 	private int taxId;
 
-	private int tel;
+	private String tel;
 	
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -138,11 +138,11 @@ public class CustomersList implements Serializable {
 		this.taxId = taxId;
 	}
 
-	public int getTel() {
+	public String getTel() {
 		return this.tel;
 	}
 
-	public void setTel(int tel) {
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
 

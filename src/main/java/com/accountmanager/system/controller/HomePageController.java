@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomePageController {
 
-	@RequestMapping("/")
+	@RequestMapping("/home-pages")
 	public String HomePages() {
 		return "F1HomePages";
 	}
 
-	@RequestMapping("/login")
+	@RequestMapping("/")
 	public String login() {
 		return "login";
 	}
@@ -70,6 +70,31 @@ public class HomePageController {
 	public String reportQuotidia() {
 		return "F6ReportQuotidia";
 	}
+	/* สมุดรายวัน สมุดรายวันทั่วไป */
+	@RequestMapping("/general-journal")
+	public String generalJournal() {
+		return "F6M1GeneralJournal";
+	}
+	/* สมุดรายวัน  สมุดรายวันซื้อ*/
+	@RequestMapping("/bought-day-book")
+	public String boughtDayBook() {
+		return "F6M2BoughtDayBook";
+	}
+	/* สมุดรายวัน สมุดรายวันขาย */
+	@RequestMapping("/sales-journal")
+	public String salesJournal() {
+		return "F6M3SalesJournal";
+	}
+	/* สมุดรายวัน สมุดรายวันจ่าย */
+	@RequestMapping("/cash-disbursement-journal")
+	public String cashDisbursementJournal() {
+		return "F6M4CashDisbursementJournal";
+	}
+	/* สมุดรายวัน สมุดรายวันรับ */
+	@RequestMapping("/cash-receipts-journal")
+	public String cashReceiptsJournal() {
+		return "F6M5CashReceiptsJournal";
+	}
 	
 	/* รายงานภาษี */
 	@RequestMapping("/report-buy-tax")
@@ -98,5 +123,10 @@ public class HomePageController {
 	@RequestMapping("/setting")
 	public String setting() {
 		return "F9Setting";
+	}
+
+	@RequestMapping("/setting-user")
+	public String settingUser() {
+		return "F9SettingUser";
 	}
 }

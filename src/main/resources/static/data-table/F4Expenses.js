@@ -28,9 +28,9 @@ function chkNumber(ele) {
 
 var discountPrice = 0;
 $('#tableCreateQuotationDisplay').on('keyup', 'input', function () {
-    var sum1 = $(this).parent().parent().find('td')[4];
-    var number1 = $(this).parent().parent().find('td')[2];
-    var number2 = $(this).parent().parent().find('td')[3];
+    var sum1 = $(this).parent().parent().find('td')[5];
+    var number1 = $(this).parent().parent().find('td')[3];
+    var number2 = $(this).parent().parent().find('td')[4];
 
     var num1 = $(number1).find('input.number1').val();
     var num2 = $(number2).find('input.number2').val();
@@ -65,7 +65,24 @@ $(document).ready(function () {
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
+    getSeleteChartAccountItem();
+    $('.selectpicker').selectpicker();
 }); // end document
+
+
+var expense_dropdownItem = [];
+
+function getSeleteChartAccountItem() {
+    $.ajax({
+        type: "GET",
+        url: "/api-expense/get-dropdown",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            expense_dropdownItem = msg;
+        }
+    });
+}
 
 function myFunction() {
     // ไม่รวมภาษี
@@ -111,11 +128,11 @@ function changeFunc($i) {
         case "0":
             updateStatus(id, "0");
             break;
-        case "2":
-            updateStatus(id, "2");
+        case "6":
+            updateStatus(id, "6");
             break;
-        case "3":
-            updateStatus(id, "3");
+        case "7":
+            updateStatus(id, "7");
             break;
             // case "4":
             //     $('#myModal').modal('show');
@@ -198,6 +215,7 @@ function updateQuotation(id) {
                 }
                 dataCustomer(msg.companyId)
                 tableCreateQuotationDisplay1(msg.id);
+
             }
         })
     } else {
@@ -241,6 +259,14 @@ function updateQuotation(id) {
     }
     $('#myModal').modal('show');
 } // end update Quotation
+
+function setSelectpicker(msg) {
+    $('.selectpicker').selectpicker();
+    for (let index = 0; index < msg.length; index++) {
+        $('#groupExpense' + index).val(msg[index].groupExpense);
+        $('#groupExpense' + index).selectpicker('refresh');
+    }
+}
 
 function genDepartment() {
     $.ajax({
@@ -335,15 +361,75 @@ function dataCustomer(companyId) {
     });
 }
 
-var tableCreateQuotation
+var tableCreateQuotation;
+
+function expense(expenseValue, row, groupExpense) {
+    var expenseDropdown = [];
+    var expenseDropdown1 = [];
+    alert('expense');
+    if (expenseValue != null) {
+        $.ajax({
+            type: "GET",
+            url: "/api-expense/get-dropdown",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                expenseDropdown.push('<select class="form-control form-control-sm" style="height: 8 mm" placeholder="กรุณากรอก" id="' + groupExpense + '" value="' + groupExpense + '">')
+                expenseDropdown.push("<option>กรุณากรอก</option>");
+                for (const iterator of msg) {
+                    $('#expenseDropdown').append('<option value="' + expenseValue + '">' + expenseValue + '</option>');
+                    expenseDropdown.push("<option value=" + iterator.name + ">" + iterator.name + "</option>")
+                }
+                expenseDropdown.push("</select>")
+            }
+        });
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "/api-expense/get-dropdown",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                expenseDropdown.push('<select class="form-control form-control-sm" style="height: 8 mm" placeholder="กรุณากรอก" id="groupExpense' + row + '">')
+                expenseDropdown.push("<option>กรุณากรอก</option>");
+                for (const iterator of msg) {
+                    expenseDropdown.push('<option value="' + iterator.name + '">' + iterator.name + '</option>')
+                    // $('#expenseDropdown').append('<option value="' + iterator.name + '">' + iterator.name + '</option>');
+                }
+                expenseDropdown.push('</select>')
+            }
+        });
+    }
+    console.log(JSON.stringify(expenseDropdown));
+    console.log(expenseDropdown);
+
+
+
+    return expenseDropdown;
+}
 
 function tableCreateQuotationDisplay1(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api-f2/get-f2ListRepo-by-id/" + id,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            tableCreateQuotationDisplay1_UpdateByKO(msg);
+            setSelectpicker(msg);
+        }
+    });
+}
+
+function tableCreateQuotationDisplay1_UpdateByKO(msg) {
+
     tableCreateQuotation = $('#tableCreateQuotationDisplay').DataTable({
         lengthChange: false,
         searching: false,
         responsive: true,
         "bDestroy": true,
-        "sAjaxSource": "/api-f2/get-f2ListRepo-by-id/" + id,
+        data: msg,
+        //"sAjaxSource": "/api-f2/get-f2ListRepo-by-id/" + id,
         "bAutoWidth": false,
         "sAjaxDataProp": "",
         "aoColumns": [{
@@ -354,50 +440,55 @@ function tableCreateQuotationDisplay1(id) {
                     return '<div style="text-align: center"> ' + index.row + '</div>';
                 }
             }, {
-                "sWidth": "60%",
+                "sWidth": "50%",
                 "mRender": function (data,
                     type, row, index) {
-                    if (row.product != null && row.productDetail != null) {
-                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
-                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า">' + row.productDetail + ' </textarea></div>';
-                    } else if (row.product != null) {
-                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
-                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
-                    } else if (row.productDetail != null) {
-                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
-                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า">' + row.productDetail + '</textarea></div>';
+                    if (row.product != null) {
+                        return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value="' + row.product + '"/> \n\
+                     <p class="hide error-product" id="error-product' + index.row + '">กรุณากรอกรายละเอียด</p>';
                     } else {
-                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
-                        <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
+                        return '<input class="form-control" style="height: 8mm" type="text" placeholder="รายละเอียด" name="" id="product' + index.row + '" value=""/> \n\
+                        	<p class="hide error-product"  id="error-product' + index.row + '">กรุณากรอกรายละเอียด</p>';
                     }
-
                 }
             },
             {
-                "sWidth": "10%",
+                "sWidth": "20%",
+                "mRender": function (data,
+                    type, row, index) {
+                    var selectItem = '';
+                    expense_dropdownItem.forEach(item => {
+                        selectItem += '<option value="' + item.row + '">' + item.name + '</option>';
+                    })
+                    return '<select id="groupExpense' + index.row + '" class="selectpicker" data-hide-disabled="true" data-live-search="true">\n\
+                           ' + selectItem + '\n\
+                          </select>';
+                }
+            }, {
+                "sWidth": "7%",
                 "mRender": function (data,
                     type, row, index) {
                     if (row.productNumber != null) {
-                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
+                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productNumber' +
                             index.row +
                             '" value="' + row.productNumber + '"/>';
                     } else {
-                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
+                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productNumber' +
                             index.row +
                             '" value="1"/>';
                     }
                 }
             },
             {
-                "sWidth": "10%",
+                "sWidth": "7%",
                 "mRender": function (data,
                     type, row, index) {
                     if (row.productPrice != null) {
-                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productPrice' +
                             index.row +
                             '" value="' + row.productPrice + '"/>';
                     } else {
-                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
+                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 8mm" type="text" name="allowence" id="productPrice' +
                             index.row +
                             '" value=""/>';
                     }
@@ -405,15 +496,15 @@ function tableCreateQuotationDisplay1(id) {
             },
             {
                 "mData": "",
-                "sWidth": "10%",
+                "sWidth": "8%",
                 "mRender": function (data,
                     type, row, index) {
                     if (row.productSumPrice != null) {
-                        return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                        return '<input class="form-control sum1" style="width: 120px;height: 8mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
                             index.row +
                             '" value="' + row.productSumPrice + '" disabled/>';
                     } else {
-                        return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                        return '<input class="form-control sum1" style="width: 120px;height: 8mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
                             index.row +
                             '" value="" disabled/>';
                     }
@@ -421,17 +512,19 @@ function tableCreateQuotationDisplay1(id) {
             },
             {
                 "mData": "",
-                "sWidth": "5px",
+                "sWidth": "3px",
                 "mRender": function (data,
                     type, row, index) {
-                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+                    return '<div style="text-align:center"><i class="fas fa-trash" style="cursor: pointer;color: red"></i></div>';
                 }
             }
         ]
     });
-
-    $('#tableCreateQuotationDisplay').on('click', 'a', function () {
+    $('#tableCreateQuotationDisplay').on('click', 'i', function () {
         tableCreateQuotation.row($(this).parents('tr')).remove().draw();
+    });
+    $('#tableCreateQuotationDisplay').on('click', 'a', function () {
+        //   tableCreateQuotation.row($(this).parents('tr')).remove().draw();
 
         var sumvalues = $("[name='rentDateSum']");
         var sum = 0;
@@ -478,6 +571,7 @@ function tableCreateQuotationDisplay1(id) {
 
 function Add() {
     tableCreateQuotation.row.add([tableCreateQuotation.data]).draw(false);
+    $('.selectpicker').selectpicker();
 }
 
 function remove() {
@@ -486,8 +580,9 @@ function remove() {
 
 function saveCreateQuotation() {
     var pass = true;
-    pass = validateInput();
 
+    pass = validateInput();
+    // alert(pass);
     if (pass) {
         var insertQuotation = {
             id: $('#id').val(), //ลูกค้า
@@ -521,6 +616,7 @@ function saveCreateQuotation() {
             d.product = $("#product" + i).val(); //สินค้า
             d.productDetail = $("#productDetail" + i).val(); //รายละเอียดสินค้า
             d.productNumber = $("#productNumber" + i).val(); //จำนวนสินค้า
+            d.groupExpense = $("#groupExpense" + i).val();
             d.productPrice = $("#productPrice" + i).val(); //ราคาสินค้า
             d.productSumPrice = $("#productSumPrice" + i).val(); //รวมยอดสินค้า
             insertQuotation.f2ListModels.push(d)
@@ -619,14 +715,19 @@ function tableQuotation() {
                             if (row.status == 'รออนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                                     <option value="0' + row.id + '" style="color: black">รอดำเนินการ</option/>\n\
-                                    <option value="2' + row.id + '" style="color: black">ชำระเงินแล้ว</option/>\n\
-                                    <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
+                                    <option value="6' + row.id + '" style="color: black">ชำระเงินแล้ว</option/>\n\
+                                    <option value="7' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     </select>';
                             } else if (row.status == 'อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                                     <option style="color: black">ดำเนิการเเล้ว</option/>\n\
                                     <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                     </select>';
+                            } else if (row.status == 'ชำระเงินแล้ว') {
+                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                                        <option style="color: black">ชำระเงินแล้ว</option/>\n\
+                                        <option value="0' + row.id + '" style="color: red">รีเซต</option/>\n\
+                                        </select>';
                             } else if (row.status == 'ไม่อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
@@ -645,6 +746,11 @@ function tableQuotation() {
                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
                                        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
                             } else if (full.status == 'อนุมัติ') {
+                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
+                                // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
+                            } else if (full.status == 'ชำระเงินแล้ว') {
                                 return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
                                 <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
                                 <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
@@ -713,6 +819,22 @@ function validateInput() {
         pass = false;
     } else {
         $('#error-customers').addClass("hide")
+    }
+
+    var table = $('#tableCreateQuotationDisplay').DataTable();
+    console.log('table.row', table.rows().count())
+    for (let index = 0; index < table.rows().count(); index++) {
+        const value = $('#product' + index).val();
+        console.log('value' + value);
+        if ('' == value) {
+            //customers.focus()
+            //  alert('true' + '#product' + index)
+            $('#error-product' + index).removeClass("hide")
+            pass = false;
+        } else {
+            //alert('flase')
+            $('#error-product' + index).addClass("hide")
+        }
     }
 
     return pass;

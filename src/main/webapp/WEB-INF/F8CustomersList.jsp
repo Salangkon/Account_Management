@@ -7,7 +7,7 @@
 	<title>Users List</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp" %>
-	<script src="/data-table/customers-list.js" type="text/javascript"></script>
+	<script src="/data-table/F8CustomersList.js" type="text/javascript"></script>
 	<style>
 		input {
 			margin-top: 13px;
@@ -66,7 +66,7 @@
 										<!-- <button type="button" class="btn btn-primary"  onclick="sd()">TEST SWEET ALERT</button> -->
 									</div>
 								</div>
-								<table id="customersList" class="table table-sm table-striped table-bordered"
+								<table id="customersList" class="table table-sm table-hover"
 									width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
@@ -114,9 +114,9 @@
 									<div class="col-sm-4"><label>ประเภท</label></div>
 									<div class="col-sm-8">
 										<select class="form-control" id="companyType">
-											<option value="">ประเภท</option>
-											<option value="test01">นิติบุคคล</option>
-											<option value="test02">บุคคลธรรมดา</option>
+											<option value="0">ประเภท</option>
+											<option value="1">นิติบุคคล</option>
+											<option value="2">บุคคลธรรมดา</option>
 										</select>
 										<p class="hide" id="error-companyType">กรุณาเลือก
 											ประเภท</p>
@@ -198,8 +198,7 @@
 										<input type="text" style="max-width: 90%;" OnKeyPress="return chkNumber(this)"
 											class="form-control form-con
 											trol" id="tel" maxlength="10" placeholder="เบอร์ติดต่อ">
-										<p class="hide" id="error-tel">กรุณากรอก
-											เบอร์ติดต่อ</p>
+										<p class="hide" id="error-tel"></p>
 									</div>
 								</div>
 							</div>
