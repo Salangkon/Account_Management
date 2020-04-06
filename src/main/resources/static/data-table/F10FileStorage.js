@@ -51,7 +51,7 @@ function directoryTable(data) {
             "mRender": function (data, type, row, index, full) {
                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                     <option value="" style="color: black">ตัวเลือก</option/>\n\
-                    <option value="1' + row.id + '" style="color: green">แก้ไขชื่อโฟลเดอร์</option/>\n\
+                    <option value="1' + row.id + '" style="color: darkgoldenrod">แก้ไขชื่อโฟลเดอร์</option/>\n\
                     <option value="2' + row.id + '" style="color: red">ลบโฟลเดอร์</option/>\n\
                     </select>';
             }
@@ -60,19 +60,22 @@ function directoryTable(data) {
     // console.log(tablegeneraJournal);
 }
 
-function getFile(id) {
-    console.log("File :: " + id);
+var setFile;
 
+function getFile(id) {
+    setFile = id;
+    console.log("File :: " + id);
     if (id == null) {
+        document.getElementById("addFile").hidden = true;
         filesDataTable(null)
     } else {
+        document.getElementById("addFile").hidden = false;
         $.ajax({
             type: "GET",
             url: "/file-by/" + id,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                console.log("File :: " + JSON.stringify(msg));
                 filesDataTable(msg);
             }
         });
@@ -102,9 +105,10 @@ function filesDataTable(data) {
             "sWidth": "55%",
         }, {
             "sWidth": "20%",
+            "className": "text-center",
             "mRender": function (data, type, row, index, full) {
                 return '<button class="btn-primary btn-sm" onclick="getDownload(' + "'" + row.id + "'" + ')"><i class="fa fa-download"></i></button>\n\
-                        <button class="btn btn-danger btn-sm" onclick="deleteFile(' + "'" + row.id + "'" + ')><i class="fa fa-trash-o"></i></button>';
+                <button class="btn-danger btn-sm" onclick="getDeleteFile(' + "'" + row.id + "'" + ')"><i class="fa fa-trash"></i></button>';
             }
         }],
     });
@@ -113,6 +117,31 @@ function filesDataTable(data) {
 
 function getDownload(id) {
     window.open("http://localhost:8080/download/" + id)
+}
+
+function getDeleteFile(id) {
+    swal({
+        title: "Are you sure?",
+        text: "Your will not be able to recover this imaginary file!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    },
+    function () {
+        $.ajax({
+            url: '/delete-file/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                if (result) {
+                    window.location.href = "/file-storage";
+                } else {
+                    alert("Delete Fail!!!");
+                }
+            }
+        });
+    });
 }
 
 function changeFunc($i) {
@@ -234,4 +263,42 @@ function updateFolder() {
             }
         });
     }
+}
+
+var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+
+$(document).on("click", ".browse", function () {
+    var file = $(this).parents().find(".file");
+    file.trigger("click");
+});
+$('input[type="file"]').change(function (e) {
+    var fileName = e.target.files[0].name;
+    $("#file").val(fileName);
+    reader.readAsDataURL(this.files[0]);
+});
+
+function AddFiles() {
+    var files = singleFileUploadInput.files;
+    if (singleFileUploadInput.files.length > 0) {
+        uploadSingleFile(files[0]);
+        logo = files[0].name;
+    }
+}
+
+function uploadSingleFile(file) {
+    var formData = new FormData();
+    formData.append("file", file);
+
+    $.ajax({
+        url: "/fileUpload/" + setFile,
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+        success: function (data) {
+            getFile(setFile);
+        }
+    });
 }

@@ -217,4 +217,20 @@ public class UpdoadAndDownloadFileController {
 
 		return res;
 	}
+	
+	@DeleteMapping("/delete-file/{id}")
+	private String deleteFile(@PathVariable("id") String id) {
+		String res = "false";
+		try {
+			DBFile dbFile = DBFileRepo.findOne(id);
+			String filename = pathNas + "\\" + directoryRepo.findOne(dbFile.getDirectoryId()).getName() + "\\" + dbFile.getFileName();
+			File file = new File(filename);
+			file.delete();
+			DBFileRepo.delete(id);
+			res = "success";
+		} catch (Exception e) {
+			res = "false";
+		}
+		return res;
+	}
 }
