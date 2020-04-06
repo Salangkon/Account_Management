@@ -9,7 +9,6 @@
 	<title>File storage</title>
 
 	<%@include file="/WEB-INF/Extensions/css.jsp"%>
-
 </head>
 
 <body id="page-top">
@@ -25,21 +24,26 @@
 						<div class="col-lg-6">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Folders</h6>
+									<div class="row">
+										<div class="col-sm-6">
+											<h4 class="m-0 font-weight-bold text-primary">Folders</h4>
+										</div>
+										<div class="col-sm-6" style="text-align: right;">
+											<a data-toggle="modal" data-target="#exampleModalCenter"
+												style="cursor: pointer;"><i
+													class="fas fa-folder-plus fa-2x text-gray-500"
+													onclick="updateFile(null)"></i></a>
+										</div>
+									</div>
 								</div>
 								<div class="card-body" style="height: 730px;">
-									<!-- Button trigger modal -->
-									<!-- <button type="button" class="btn btn-primary" data-toggle="modal"
-										data-target="#exampleModalCenter">
-									</button> -->
-									<a data-toggle="modal" data-target="#exampleModalCenter" style="cursor: pointer;"><i
-											class="fas fa-folder-plus fa-2x text-gray-500"></i></a>
 
-									<table id="tablegeneraJournalDisplay" style="width: 100%;">
+									<table id="directory" style="width: 100%;">
 										<thead>
 											<tr>
 												<th>Create Date</th>
 												<th>Folder Name</th>
+												<th></th>
 											</tr>
 										</thead>
 									</table>
@@ -54,7 +58,18 @@
 									<h6 class="m-0 font-weight-bold text-primary">Files</h6>
 								</div>
 								<div class="card-body" style="height: 730px;">
+									<a data-toggle="modal" data-target="#" style="cursor: pointer;"><i
+											class="fas fa-folder-file fa-2x text-gray-500" onclick=""></i></a>
 
+									<table id="filesTable" style="width: 100%;">
+										<thead>
+											<tr>
+												<th>Create Date</th>
+												<th>Folder Name</th>
+												<th></th>
+											</tr>
+										</thead>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -83,10 +98,12 @@
 							<input class="form-control" id="folder" placeholder="Folder Name">
 						</div>
 						<div class="col-sm-2">
-							<button type="button" class="btn btn-primary" onclick="AddFolder()">เพิ่ม</button>
+							<button type="button" id="save" class="btn btn-primary" onclick="AddFolder()">เพิ่ม</button>
+							<button type="button" id="edit" class="btn btn-primary"
+								onclick="updateFolder()">แก้ไข</button>
 						</div>
 					</div>
-					<p style="color: red;margin-top: 10px;">*ห้ามอักษร \ | / : * ? " < > .</p>
+					<p style="color: red;margin-top: 10px;">*ห้ามอักษร \ | / : * ? " <> .</p>
 				</div>
 			</div>
 		</div>
@@ -94,7 +111,6 @@
 	<!-- script -->
 	<%@include file="/WEB-INF/Extensions/js.jsp"%>
 	<script src="\data-table\F10FileStorage.js" type="text/javascript"></script>
-	<script src="/js/main.js"></script>
 </body>
 
 </html>
