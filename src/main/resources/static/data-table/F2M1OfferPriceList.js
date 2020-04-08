@@ -527,8 +527,8 @@ function saveCreateQuotation() {
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
-            type: $('#type').val(), //ประเภท
-            status: $('#status').val(), //สถานะ
+            type: "Quotation", //ประเภท
+            status: "รออนุมัติ", //สถานะ
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
             // ไม่รวมภาษี
             price: $('#price').text(), //รวมเป็นเงิน

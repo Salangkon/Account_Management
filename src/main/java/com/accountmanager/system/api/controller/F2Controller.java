@@ -201,8 +201,7 @@ public class F2Controller {
 		return f2Repo.findById(id);
 	}
 
-	@SuppressWarnings("null")
-	@PostMapping("/update-status/{id}/{status}")
+ 	@PostMapping("/update-status/{id}/{status}")
 	public F2Model updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
 		F2Model f2Model = f2Repo.findById(id);
 
@@ -246,7 +245,6 @@ public class F2Controller {
 
 	@PostMapping("/add-update")
 	public ResponseEntity<?> Quotation(@RequestBody F2Model f2Model) {
-		// Convert Date to Timestamp
 		Date date = new Date();
 		Timestamp ts = new Timestamp(date.getTime());
 
