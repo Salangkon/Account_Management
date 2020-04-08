@@ -54,13 +54,13 @@
                     <button style="border-radius: 10rem;" class="btn btn-primary btn-user btn-block" onclick="login()">
                       Login
                     </button>
-                    <hr>
-                    <a href="/login" class="btn btn-google btn-user btn-block">
+                    <!-- <hr> -->
+                    <!-- <a href="/login" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Login with Google
                     </a>
                     <a href="/login" class="btn btn-facebook btn-user btn-block">
                       <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
+                    </a> -->
                   </div>
                   <hr>
                   <div class="text-center">

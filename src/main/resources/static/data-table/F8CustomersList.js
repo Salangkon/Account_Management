@@ -73,7 +73,7 @@ $(document).ready(function () {
 				companyType: $('#companyType').val(),
 				customerName: $('#customerName').val(),
 				department: $('#department').val(),
-				email: $('#email').val(),
+				email: $('#emailCus').val(),
 				officeType: officeType,
 				taxId: $('#taxId').val(),
 				tel: $('#tel').val(),
@@ -116,12 +116,12 @@ $(document).ready(function () {
 			$('#error-tel').addClass("hide")
 		}
 
-		if ('' == $('#email').val()) {
-			email.focus()
-			$('#error-email').removeClass("hide")
+		if ('' == $('#emailCus').val()) {
+			emailCus.focus()
+			$('#error-emailCus').removeClass("hide")
 			pass = false;
 		} else {
-			$('#error-email').addClass("hide")
+			$('#error-emailCus').addClass("hide")
 		}
 
 		if ('' == $('#customerName').val()) {
@@ -239,7 +239,7 @@ function update(companyId) {
 		$('#department').val("");
 		$('#customerName').val("");
 		$('#address').val("");
-		$('#email').val("");
+		$('#emailCus').val("");
 		document.getElementById("officeType1").checked = true;
 		$('#taxId').val("");
 		$('#tel').val("");
@@ -270,7 +270,7 @@ function update(companyId) {
 				$('#department').val(msg.department);
 				$('#customerName').val(msg.customerName);
 				$('#address').val(msg.address);
-				$('#email').val(msg.email);
+				$('#emailCus').val(msg.email);
 				if (msg.officeType == 1) {
 					document.getElementById("officeType1").checked = true;
 					$("#officeType1").val("1")
