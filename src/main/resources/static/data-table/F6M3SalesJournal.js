@@ -268,6 +268,9 @@ function tableCreateJournal(data) {
         data: jQuery.parseJSON(JSON.stringify(data)),
         "bAutoWidth": false,
         "sAjaxDataProp": "",
+        "order": [
+            [0, "desc"]
+        ],
         "aoColumns": [{
             'data': '',
             "sWidth": "20%",
