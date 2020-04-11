@@ -39,12 +39,19 @@
                 <p class="hide" id="error-passReg">กรุณากรอก Password</p>
                 <input type="text" class="input-field" id="companyReg" placeholder="ชื่อธุรกิจ" style="margin-top: 10px;">
                 <p class="hide" id="error-companyReg">กรุณากรอก ชื่อธุรกิจ</p>
+                <select class="input-field" style="width: 304px;background-color: rgb(43, 247, 162);" id="position">
+                    <option value="">ตำแหน่ง</option>
+                    <option value="เจ้าของธุระกิจ">เจ้าของธุระกิจ</option>
+                    <option value="นักบัญชี">นักบัญชี</option>
+                    <option value="แอดมินหรือฝ่าบุคลธรรมดา">แอดมินหรือฝ่าบุคลธรรมดา</option>
+                </select>
+                <p class="hide" id="error-position">กรุณาเลือก ตำแหน่ง</p>
                 <select class="input-field" style="width: 304px;background-color: aqua;" id="typeReg">
                     <option value="0">ประเภทธุระกิจ</option>
                     <option value="1">นิติบุคคล</option>
                     <option value="2">บุคคลธรรมดา</option>
                 </select>
-                <p class="hide" id="error-typeReg">กรุณากรอก ประเภทธุระกิจ</p>
+                <p class="hide" id="error-typeReg">กรุณาเลือก ประเภทธุระกิจ</p>
                 <input type="text" class="input-field" id="fNameReg" placeholder="ชื่อ">
                 <p class="hide" id="error-fNameReg">กรุณากรอก ชื่อ</p>
                 <input type="text" class="input-field" id="lNameReg" placeholder="นามสกุล">

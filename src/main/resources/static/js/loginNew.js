@@ -50,6 +50,8 @@ function registerUser() {
             lName: $('#lNameReg').val(),
             email: $('#emailReg').val(),
             tel: $('#telReg').val(),
+            position: $('#position').val(),
+            department: '1',
             logo: 'logo20200412.png',
         }
         console.log(JSON.stringify(register));
@@ -137,6 +139,14 @@ function validateInput() {
         pass = false;
     } else {
         $('#error-companyReg').addClass("hide")
+    }
+
+    if ('' == $('#position').val()) {
+        position.focus()
+        $('#error-position').removeClass("hide")
+        pass = false;
+    } else {
+        $('#error-position').addClass("hide")
     }
 
     if ('' == $('#passReg').val()) {
