@@ -151,14 +151,12 @@ function tableJournal() {
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
                             <option value="9' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
                             <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
-                            <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             <option value="5' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                             </select>';
                         } else {
                             return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                             <option value="" style="color: black">ตัวเลือก</option/>\n\
                             <option value="6' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
-                            <option value="7' + row.id + '" style="color: blue">ดาวน์โหลด</option/>\n\
                             </select>';
                         }
                     }

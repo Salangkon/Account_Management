@@ -96,8 +96,8 @@ function update() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result == 'pass') {
-                window.location.href = "/seting";
+            if (result.res == 'pass') {
+                window.location.href = "/setting";
             } else {
                 alert('บันทึก ไม่สำเร็จ..')
             }

@@ -48,16 +48,34 @@ public class LoginController {
 	}
 
 	@PostMapping("save-update")
-	private String loginUsaveUpdate(@RequestBody User user) {
-		String res = "false";
+	private HashMap<String, String> loginUsaveUpdate(@RequestBody User user) {
+		HashMap<String, String> map = new HashMap<String, String>();
 		try {
 			userRepo.save(user);
-			res = "pass";
+			map.put("res", "pass");
 		} catch (Exception e) {
-			res = "false";
+			map.put("res", "false");
 			e.printStackTrace();
 		}
-		return res;
+		return map;
+	}
+	
+	@PostMapping("register")
+	private HashMap<String, String> register(@RequestBody User user) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		try {
+			User use = userRepo.findOne(user.getId());
+			if (use != null) {
+				map.put("res", "user");
+			} else {
+				userRepo.save(user);
+				map.put("res", "pass");
+			}
+		} catch (Exception e) {
+			map.put("res", "false");
+			e.printStackTrace();
+		}
+		return map;
 	}
 
 	@GetMapping("/get-all")

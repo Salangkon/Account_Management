@@ -11,9 +11,14 @@ public class HomePageController {
 		return "F1HomePages";
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/loginOld")
 	public String login() {
 		return "login";
+	}
+
+	@RequestMapping("/")
+	public String loginNew() {
+		return "loginNew";
 	}
 
 	@RequestMapping("/register")
