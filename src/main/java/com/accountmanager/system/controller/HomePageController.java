@@ -70,11 +70,6 @@ public class HomePageController {
 		return "F5ChartAccounts";
 	}
 	
-	/* สมุดรายวัน */
-	@RequestMapping("/report-quotidia")
-	public String reportQuotidia() {
-		return "F6ReportQuotidia";
-	}
 	/* สมุดรายวัน สมุดรายวันทั่วไป */
 	@RequestMapping("/general-journal")
 	public String generalJournal() {
