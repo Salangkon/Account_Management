@@ -67,7 +67,7 @@ $(document).ready(function () {
     $('#MyModalPrintPDF').on('hidden.bs.modal', function (e) {
         tableQuotation();
     })
-    
+
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
