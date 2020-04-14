@@ -233,7 +233,7 @@
 						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
 					</div>
 					<div>
-						<%@include file="/WEB-INF/PrintPDF/PrintPDFF2M4.jsp" %>
+						<%@include file="/WEB-INF/PrintPDF/PrintPDFF6.jsp" %>
 					</div>
 				</div>
 			</div>
@@ -242,6 +242,7 @@
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="\data-table\F6M1GeneralJournal.js" type="text/javascript"></script>
+		<script src="/print-pdf-js/f6-print-pdf-book-day.js" type="text/javascript"></script>
 		<!-- select -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>

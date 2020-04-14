@@ -45,7 +45,10 @@ $(document).ready(function () {
     $('#myModal').on('hidden.bs.modal', function (e) {
         tableJournal();
     });
-
+    $('#MyModalPrintPDF').on('hidden.bs.modal', function (e) {
+        tableJournal();
+    })
+    
     dataCustomer(null);
     tableCreateJournal(null);
     tableJournal();
