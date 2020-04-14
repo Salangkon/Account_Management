@@ -35,7 +35,7 @@
                 </table>
                 <table style="width: 100%;">
                     <tr>
-                        <th style="width: 60%;">เลขประจำตัวผู้เสียภาษี</th>
+                        <td style="width: 60%;">เลขประจำตัวผู้เสียภาษี</td>
                         <td style="width: 15%; color: purple;">ผู้จัดทำ/Preparer</td>
                         <td style="width: 25%;"></td>
                     </tr>
