@@ -124,7 +124,7 @@ function changeFunc($i) {
             updateStatus(id, "3");
             break;
         case "5":
-            updateQuotation(id, "true");
+            updateQuotation(id, "saveReceiveReportFlg");
             break;
     }
 } // end update status
@@ -146,21 +146,24 @@ function statusVatFlg($i) {
 // update Quotation
 function updateQuotation(id, PurchaseOrder) {
     console.log("test :: ", id + PurchaseOrder);
-    if (id == null || PurchaseOrder == "false") {
-        PurchaseOrder = false;
+    if (PurchaseOrder == "save" || PurchaseOrder == "update") {
+        document.getElementById("purchaseOrderFlgTitle").hidden = false;
+        document.getElementById("receiveReportFlgTitle").hidden = true;
+
+        document.getElementById("savePurchaseOrderFlg").hidden = false;
+        document.getElementById("saveReceiveReportFlg").hidden = true;
+    } else if (PurchaseOrder == "saveReceiveReportFlg") {
+        document.getElementById("purchaseOrderFlgTitle").hidden = true;
+        document.getElementById("receiveReportFlgTitle").hidden = false;
+
+        document.getElementById("savePurchaseOrderFlg").hidden = true;
+        document.getElementById("saveReceiveReportFlg").hidden = false;
     } else {
-        PurchaseOrder = true;
-    }
-    if (PurchaseOrder) {
-        document.getElementById("PurchaseOrderFlg").style.display = "none";
-        document.getElementById("PurchaseOrderFlgDefault").style.display = "block";
-        document.getElementById("savePurchaseOrderFlg").style.display = "none";
-        document.getElementById("savePurchaseOrderFlgDefault").style.display = "block";
-    } else {
-        document.getElementById("PurchaseOrderFlg").style.display = "block";
-        document.getElementById("PurchaseOrderFlgDefault").style.display = "none";
-        document.getElementById("savePurchaseOrderFlg").style.display = "block";
-        document.getElementById("savePurchaseOrderFlgDefault").style.display = "none";
+        document.getElementById("purchaseOrderFlgTitle").hidden = false;
+        document.getElementById("receiveReportFlgTitle").hidden = true;
+
+        document.getElementById("savePurchaseOrderFlg").hidden = true;
+        document.getElementById("saveReceiveReportFlg").hidden = true;
     }
 
     if (id != null) {
@@ -195,7 +198,8 @@ function updateQuotation(id, PurchaseOrder) {
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
+                    $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
                 $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
@@ -241,6 +245,7 @@ function updateQuotation(id, PurchaseOrder) {
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val("") //วันที่_ครบกำหนด
+            $('#referenceDocument').val("") //เลขที่เอกสาร
         $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
@@ -537,6 +542,7 @@ function saveCreateQuotation() {
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
             f2ListModels: [],
         }
         var data = tableCreateQuotation.data();
@@ -597,6 +603,7 @@ function saveCreateQuotationBilling() {
                     note: $('#note').val(), //หมาบเหตุ
                     date: $('#date').val(), //วันที่
                     dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+                    referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
                     f2ListModels: [],
                 }
                 var data = tableCreateQuotation.data();
@@ -683,7 +690,7 @@ function tableQuotation() {
                         "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','checkPurchaseOrderFlg'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
@@ -771,7 +778,7 @@ function changeStatus($i) {
     console.log(type, id);
     switch (type) {
         case '1':
-            updateQuotation(id);
+            updateQuotation(id, 'update');
             break;
         case '2':
             printPDF(id);
