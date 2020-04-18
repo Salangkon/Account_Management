@@ -71,7 +71,7 @@
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" style="margin-top: 10px"
 												data-toggle="modal" data-target="#myModal"
-												onclick="updateQuotation(null)">สร้างใหม่</button>
+												onclick="updateQuotation(null, 'save')">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
@@ -118,8 +118,9 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title" id="BiilingFlg">สร้างใบเสนอราคา</h4>
-						<h4 class="modal-title" id="BiilingFlgDefault">สร้างใบวางบิล</h4>
+						<h4 class="modal-title" id="quotationTitle">สร้างใบเสนอราคา</h4>
+						<h4 class="modal-title" id="biilingFlgTitle">สร้างใบวางบิล</h4>
+						<h4 class="modal-title" id="taxInvoiceFlgTitle">สร้างใบกำกับภาษี</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -376,9 +377,9 @@
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()"
-							id="saveBiilingFlg">บันทึก</button>
+							id="saveQuotationFlg">บันทึก</button>
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotationBilling()"
-							id="saveBiilingFlgDefault">สร้างใบวางบิล</button>
+							id="saveBiilingFlg">สร้างใบวางบิล</button>
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotationTaxInvoice()"
 							id="taxInvoiceFlg">สร้างใบกำกับภาษี</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>

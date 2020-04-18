@@ -126,14 +126,10 @@ function changeFunc($i) {
             updateStatus(id, "3");
             break;
         case "5":
-            updateQuotation(id, "true");
-            document.getElementById("saveBiilingFlgDefault").hidden = false;
-            document.getElementById("taxInvoiceFlg").hidden = true;
+            updateQuotation(id, "biilingFlg");
             break;
         case "6":
-            updateQuotation(id, "true");
-            document.getElementById("saveBiilingFlgDefault").hidden = true;
-            document.getElementById("taxInvoiceFlg").hidden = false;
+            updateQuotation(id, "taxInvoiceFlg");
             break;
             // case "4":
             //     $('#myModal').modal('show');
@@ -156,24 +152,42 @@ function statusVatFlg($i) {
 } // end update status vat
 
 // update Quotation
-function updateQuotation(id, Biiling) {
-    console.log("test :: ", id + Biiling);
-    if (id == null || Biiling == "false") {
-        Biiling = false;
-    } else {
-        Biiling = true;
-    }
-    if (Biiling) {
-        document.getElementById("BiilingFlg").style.display = "none";
-        document.getElementById("BiilingFlgDefault").style.display = "block";
-        document.getElementById("saveBiilingFlg").style.display = "none";
-    } else {
-        document.getElementById("BiilingFlg").style.display = "block";
-        document.getElementById("BiilingFlgDefault").style.display = "none";
-        document.getElementById("saveBiilingFlg").style.display = "block";
-        document.getElementById("saveBiilingFlgDefault").hidden = true;
+function updateQuotation(id, flg) {
+    console.log("Flg :: ", id + " :: " + flg);
+
+    if (flg == "save" || flg == "update") {
+        document.getElementById("quotationTitle").hidden = false;
+        document.getElementById("biilingFlgTitle").hidden = true;
+        document.getElementById("taxInvoiceFlgTitle").hidden = true;
+        
+        document.getElementById("saveQuotationFlg").hidden = false;
+        document.getElementById("saveBiilingFlg").hidden = true;
         document.getElementById("taxInvoiceFlg").hidden = true;
-        // document.getElementById("saveBiilingFlgDefault").style.display = "none";อ
+        
+    } else if (flg == "biilingFlg") {
+        document.getElementById("quotationTitle").hidden = true;
+        document.getElementById("biilingFlgTitle").hidden = false;
+        document.getElementById("taxInvoiceFlgTitle").hidden = true;
+
+        document.getElementById("saveQuotationFlg").hidden = true;
+        document.getElementById("saveBiilingFlg").hidden = false;
+        document.getElementById("taxInvoiceFlg").hidden = true;
+    } else if (flg == "taxInvoiceFlg") {
+        document.getElementById("quotationTitle").hidden = true;
+        document.getElementById("biilingFlgTitle").hidden = true;
+        document.getElementById("taxInvoiceFlgTitle").hidden = false;
+
+        document.getElementById("saveQuotationFlg").hidden = true;
+        document.getElementById("saveBiilingFlg").hidden = true;
+        document.getElementById("taxInvoiceFlg").hidden = false;
+    } else {
+        document.getElementById("quotationTitle").hidden = false;
+        document.getElementById("biilingFlgTitle").hidden = true;
+        document.getElementById("taxInvoiceFlgTitle").hidden = true;
+
+        document.getElementById("saveQuotationFlg").hidden = true;
+        document.getElementById("saveBiilingFlg").hidden = true;
+        document.getElementById("taxInvoiceFlg").hidden = true;
     }
 
     if (id != null) {
@@ -779,7 +793,7 @@ function tableQuotation() {
                         "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + null + "'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
@@ -868,7 +882,7 @@ function changeStatus($i) {
     console.log(type, id);
     switch (type) {
         case '1':
-            updateQuotation(id, "true");
+            updateQuotation(id, "update");
             break;
         case '2':
             printPDF(id);
