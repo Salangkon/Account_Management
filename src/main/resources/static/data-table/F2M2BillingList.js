@@ -145,16 +145,16 @@ function statusVatFlg($i) {
 } // end update status vat
 
 // update Quotation
-function updateQuotation(id, TaxInvoice) {
-    console.log("TaxInvoice :: ", id + " :: " +  TaxInvoice);
+function updateQuotation(id, biiling) {
+    console.log("TaxInvoice :: ", id + " :: " +  biiling);
 
-    if (TaxInvoice == "save" || TaxInvoice == "update") {
+    if (biiling == "save" || biiling == "update") {
         document.getElementById("biilingFlgTitle").hidden = false;
         document.getElementById("taxInvoiceFlgTitle").hidden = true;
 
         document.getElementById("saveBiilingFlg").hidden = false;
         document.getElementById("saveTaxInvoiceFlg").hidden = true;
-    } else if (TaxInvoice == "taxInvoiceFlg") {
+    } else if (biiling == "taxInvoiceFlg") {
         document.getElementById("biilingFlgTitle").hidden = true;
         document.getElementById("taxInvoiceFlgTitle").hidden = false;
 

@@ -124,7 +124,7 @@ function changeFunc($i) {
             updateStatus(id, "3");
             break;
         case "5":
-            updateQuotation(id, "true");
+            updateQuotation(id, "taxInvoiceFlg");
             break;
     }
 } // end update status
@@ -144,23 +144,26 @@ function statusVatFlg($i) {
 } // end update status vat
 
 // update Quotation
-function updateQuotation(id, Receipt) {
-    console.log("test :: ", id + Receipt);
-    if (id == null || Receipt == "false") {
-        Receipt = false;
+function updateQuotation(id, TaxInvoice) {
+    console.log("test :: ", id + " :: " + TaxInvoice);
+    if (TaxInvoice == "save" || TaxInvoice == "update") {
+        document.getElementById("taxInvoiceFlgTitle").hidden = false;
+        document.getElementById("receiptFlgTitle").hidden = true;
+
+        document.getElementById("saveTaxInvoiceFlg").hidden = false;
+        document.getElementById("saveReceiptFlg").hidden = true;
+    } else if (TaxInvoice == "taxInvoiceFlg") {
+        document.getElementById("taxInvoiceFlgTitle").hidden = true;
+        document.getElementById("receiptFlgTitle").hidden = false;
+
+        document.getElementById("saveTaxInvoiceFlg").hidden = true;
+        document.getElementById("saveReceiptFlg").hidden = false;
     } else {
-        Receipt = true;
-    }
-    if (Receipt) {
-        document.getElementById("ReceiptFlg").style.display = "none";
-        document.getElementById("ReceiptFlgDefault").style.display = "block";
-        document.getElementById("saveReceiptFlg").style.display = "none";
-        document.getElementById("saveReceiptFlgDefault").style.display = "block";
-    } else {
-        document.getElementById("ReceiptFlg").style.display = "block";
-        document.getElementById("ReceiptFlgDefault").style.display = "none";
-        document.getElementById("saveReceiptFlg").style.display = "block";
-        document.getElementById("saveReceiptFlgDefault").style.display = "none";
+        document.getElementById("taxInvoiceFlgTitle").hidden = false;
+        document.getElementById("receiptFlgTitle").hidden = true;
+
+        document.getElementById("saveTaxInvoiceFlg").hidden = true;
+        document.getElementById("saveReceiptFlg").hidden = true;
     }
     if (id != null) {
         $.ajax({
@@ -194,7 +197,8 @@ function updateQuotation(id, Receipt) {
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
+                    $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
                 $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
@@ -239,7 +243,8 @@ function updateQuotation(id, Receipt) {
             $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
-            $('#dateEnd').val("") //วันที่_ครบกำหนด
+            $('#dateEnd').val(""), //วันที่_ครบกำหนด
+            $('#referenceDocument').val(""), //เลขที่เอกสาร
         $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
@@ -536,6 +541,7 @@ function saveCreateQuotation() {
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
             f2ListModels: [],
         }
         var data = tableCreateTaxInvoice.data();
@@ -596,6 +602,7 @@ function saveCreateQuotationReceipt() {
                     note: $('#note').val(), //หมาบเหตุ
                     date: $('#date').val(), //วันที่
                     dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+                    referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
                     f2ListModels: [],
                 }
                 var data = tableCreateTaxInvoice.data();
@@ -681,7 +688,7 @@ function tableTaxInvoice() {
                         "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + null + "'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
@@ -769,7 +776,7 @@ function changeStatus($i) {
     console.log(type, id);
     switch (type) {
         case '1':
-            updateQuotation(id);
+            updateQuotation(id, 'update');
             break;
         case '2':
             printPDF(id);

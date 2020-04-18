@@ -9,7 +9,7 @@
 						<th style="width: 50%;"></th>
 						<th style="width: 40%;">
 							<h4 style="color: purple;">
-								<b>ใบเสนอราคา</b>
+								<b>ใบวางบิล</b>
 							</h4>
 							<hr>
 						</th>
