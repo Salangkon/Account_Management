@@ -351,7 +351,7 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()" id="saveReceiptFlg">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>

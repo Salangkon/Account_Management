@@ -159,11 +159,11 @@ function updateQuotation(id, flg) {
         document.getElementById("quotationTitle").hidden = false;
         document.getElementById("biilingFlgTitle").hidden = true;
         document.getElementById("taxInvoiceFlgTitle").hidden = true;
-        
+
         document.getElementById("saveQuotationFlg").hidden = false;
         document.getElementById("saveBiilingFlg").hidden = true;
         document.getElementById("taxInvoiceFlg").hidden = true;
-        
+
     } else if (flg == "biilingFlg") {
         document.getElementById("quotationTitle").hidden = true;
         document.getElementById("biilingFlgTitle").hidden = false;
@@ -222,8 +222,8 @@ function updateQuotation(id, flg) {
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
-                $('#referenceDocument').val(msg.referenceDocument) //เลขที่เอกสาร
+                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
+                $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
                 $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
@@ -268,8 +268,8 @@ function updateQuotation(id, flg) {
             $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
-            $('#dateEnd').val("") //วันที่_ครบกำหนด
-        $('#referenceDocument').val("") //เลขที่เอกสาร
+            $('#dateEnd').val(""), //วันที่_ครบกำหนด
+        $('#referenceDocument').val(""), //เลขที่เอกสาร
         $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 

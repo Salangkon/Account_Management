@@ -141,7 +141,13 @@ function statusVatFlg($i) {
 } // end update status vat
 
 // update Quotation
-function updateQuotation(id) {
+function updateQuotation(id, checkReceiptFlg) {
+    console.log("checkReceiptFlg ::" + checkReceiptFlg);
+    if (checkReceiptFlg === "checkReceiptFlg") {
+        document.getElementById("saveReceiptFlg").hidden = true;
+    } else {
+        document.getElementById("saveReceiptFlg").hidden = false;
+    }
     if (id != null) {
         $.ajax({
             type: "GET",
@@ -174,7 +180,8 @@ function updateQuotation(id) {
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
+                $('#referenceDocument').val(msg.referenceDocument) //เลขที่เอกสาร
                 $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
@@ -219,7 +226,8 @@ function updateQuotation(id) {
             $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
-            $('#dateEnd').val("") //วันที่_ครบกำหนด
+            $('#dateEnd').val(""), //วันที่_ครบกำหนด
+        $('#referenceDocument').val(""), //เลขที่เอกสาร
         $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
@@ -516,6 +524,7 @@ function saveCreateQuotation() {
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
             f2ListModels: [],
         }
         var data = tableCreateReceipt.data();
@@ -599,7 +608,7 @@ function tableReceipt() {
                         "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','checkReceiptFlg'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
