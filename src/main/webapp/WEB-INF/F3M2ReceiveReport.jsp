@@ -190,7 +190,7 @@
 										</div>
 										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
 										<div class="col-sm-8">
-											<input class="form-control" style="margin-top: 10px;" id=""
+											<input class="form-control" style="margin-top: 10px;" id="referenceDocument"
 												placeholder="เลขอ้างอิง">
 										</div>
 										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>

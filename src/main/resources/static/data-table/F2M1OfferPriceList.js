@@ -209,6 +209,7 @@ function updateQuotation(id, Biiling) {
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
                     $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                $('#referenceDocument').val(msg.referenceDocument) //เลขที่เอกสาร
                 $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
@@ -254,6 +255,7 @@ function updateQuotation(id, Biiling) {
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val("") //วันที่_ครบกำหนด
+        $('#referenceDocument').val("") //เลขที่เอกสาร
         $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
@@ -551,6 +553,7 @@ function saveCreateQuotation() {
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
             f2ListModels: [],
         }
         var data = tableCreateQuotation.data();
@@ -612,6 +615,7 @@ function saveCreateQuotationBilling() {
                     note: $('#note').val(), //หมาบเหตุ
                     date: $('#date').val(), //วันที่
                     dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+                    referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
                     f2ListModels: [],
                 }
                 var data = tableCreateQuotation.data();
@@ -674,6 +678,7 @@ function saveCreateQuotationTaxInvoice() {
                     note: $('#note').val(), //หมาบเหตุ
                     date: $('#date').val(), //วันที่
                     dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+                    referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
                     f2ListModels: [],
                 }
                 var data = tableCreateQuotation.data();
@@ -863,7 +868,7 @@ function changeStatus($i) {
     console.log(type, id);
     switch (type) {
         case '1':
-            updateQuotation(id);
+            updateQuotation(id, "true");
             break;
         case '2':
             printPDF(id);

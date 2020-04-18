@@ -94,8 +94,11 @@ public class F2Model implements Serializable {
 	private Timestamp updateDate;
 
 	private float vat;
-	
+
 	private float vat1;
+
+	@Column(name = "reference_document")
+	private String referenceDocument;
 
 	// bi-directional many-to-one association to F2ListModel
 	@OneToMany(mappedBy = "f2Model", cascade = CascadeType.MERGE)
@@ -324,6 +327,14 @@ public class F2Model implements Serializable {
 
 	public void setVat1(float vat1) {
 		this.vat1 = vat1;
+	}
+
+	public String getReferenceDocument() {
+		return referenceDocument;
+	}
+
+	public void setReferenceDocument(String referenceDocument) {
+		this.referenceDocument = referenceDocument;
 	}
 
 }

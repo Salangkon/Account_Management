@@ -50,7 +50,7 @@ function registerUser() {
             lName: $('#lNameReg').val(),
             email: $('#emailReg').val(),
             tel: $('#telReg').val(),
-            position: $('#position').val(),
+            position: 'เจ้าของธุระกิจ',
             department: '1',
             logo: 'logo20200412.png',
         }
