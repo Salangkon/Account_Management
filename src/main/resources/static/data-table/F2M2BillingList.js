@@ -125,7 +125,7 @@ function changeFunc($i) {
             updateStatus(id, "3");
             break;
         case "5":
-            updateQuotation(id, "true");
+            updateQuotation(id, "taxInvoiceFlg");
             break;
     }
 } // end update status
@@ -146,22 +146,26 @@ function statusVatFlg($i) {
 
 // update Quotation
 function updateQuotation(id, TaxInvoice) {
-    console.log("test :: ", id + TaxInvoice);
-    if (id == null || TaxInvoice == "false") {
-        TaxInvoice = false;
+    console.log("TaxInvoice :: ", id + " :: " +  TaxInvoice);
+
+    if (TaxInvoice == "save" || TaxInvoice == "update") {
+        document.getElementById("biilingFlgTitle").hidden = false;
+        document.getElementById("taxInvoiceFlgTitle").hidden = true;
+
+        document.getElementById("saveBiilingFlg").hidden = false;
+        document.getElementById("saveTaxInvoiceFlg").hidden = true;
+    } else if (TaxInvoice == "taxInvoiceFlg") {
+        document.getElementById("biilingFlgTitle").hidden = true;
+        document.getElementById("taxInvoiceFlgTitle").hidden = false;
+
+        document.getElementById("saveBiilingFlg").hidden = true;
+        document.getElementById("saveTaxInvoiceFlg").hidden = false;
     } else {
-        TaxInvoice = true;
-    }
-    if (TaxInvoice) {
-        document.getElementById("TaxInvoiceFlg").style.display = "none";
-        document.getElementById("TaxInvoiceFlgDefault").style.display = "block";
-        document.getElementById("saveTaxInvoiceFlg").style.display = "none";
-        document.getElementById("saveTaxInvoiceFlgDefault").style.display = "block";
-    } else {
-        document.getElementById("TaxInvoiceFlg").style.display = "block";
-        document.getElementById("TaxInvoiceFlgDefault").style.display = "none";
-        document.getElementById("saveTaxInvoiceFlg").style.display = "block";
-        document.getElementById("saveTaxInvoiceFlgDefault").style.display = "none";
+        document.getElementById("biilingFlgTitle").hidden = false;
+        document.getElementById("taxInvoiceFlgTitle").hidden = true;
+
+        document.getElementById("saveBiilingFlg").hidden = true;
+        document.getElementById("saveTaxInvoiceFlg").hidden = true;
     }
     if (id != null) {
         $.ajax({
@@ -195,7 +199,8 @@ function updateQuotation(id, TaxInvoice) {
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
+                    $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
                 $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
@@ -240,7 +245,8 @@ function updateQuotation(id, TaxInvoice) {
             $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
-            $('#dateEnd').val("") //วันที่_ครบกำหนด
+            $('#dateEnd').val(""), //วันที่_ครบกำหนด
+            $('#referenceDocument').val(""), //เลขที่เอกสาร
         $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
@@ -538,6 +544,7 @@ function saveCreateQuotation() {
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
             f2ListModels: [],
         }
         var data = tableCreateBiiling.data();
@@ -598,6 +605,7 @@ function saveCreateQuotationTaxInvoice() {
                     note: $('#note').val(), //หมาบเหตุ
                     date: $('#date').val(), //วันที่
                     dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+                    referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
                     f2ListModels: [],
                 }
                 var data = tableCreateBiiling.data();
@@ -683,7 +691,7 @@ function tableBiiling() {
                         "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + null + "'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
@@ -771,7 +779,7 @@ function changeStatus($i) {
     console.log(type, id);
     switch (type) {
         case '1':
-            updateQuotation(id);
+            updateQuotation(id, 'update');
             break;
         case '2':
             printPDF(id);
