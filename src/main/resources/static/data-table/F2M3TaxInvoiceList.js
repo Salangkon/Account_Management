@@ -564,7 +564,25 @@ function saveCreateQuotation() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                window.location.href = "/tax-invoice-list";
+                if (result != null || result != '') {             
+                    $.ajax({
+                        type: 'POST',
+                        url: '/TaxReport/add-update/TaxReport',
+                        data: JSON.stringify(result),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result != null || result != '') {
+                                window.location.href = "/tax-invoice-list";
+                            } else {
+                                alert('Save Tax Invoice False!!')
+                            }
+                        }
+                    });
+                    window.location.href = "/tax-invoice-list";
+                } else {
+                    alert('Save Tax Invoice False!!')
+                }
             }
         });
     }

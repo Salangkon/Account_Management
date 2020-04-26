@@ -62,6 +62,10 @@ public class CustomersList implements Serializable {
 	@Column(name = "update_by")
 	private Date updateBy;
 
+	@OneToOne
+	@JoinColumn(name = "company_id", referencedColumnName = "company")
+	private TaxReport taxReport;
+
 	public CustomersList() {
 	}
 
@@ -175,6 +179,14 @@ public class CustomersList implements Serializable {
 
 	public void setUpdated_date(Date updated_date) {
 		this.updated_date = updated_date;
+	}
+
+	public TaxReport getTaxReport() {
+		return taxReport;
+	}
+
+	public void setTaxReport(TaxReport taxReport) {
+		this.taxReport = taxReport;
 	}
 
 }
