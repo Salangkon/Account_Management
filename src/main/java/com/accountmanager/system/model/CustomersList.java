@@ -3,7 +3,14 @@ package com.accountmanager.system.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -61,10 +68,6 @@ public class CustomersList implements Serializable {
 
 	@Column(name = "update_by")
 	private Date updateBy;
-
-	@OneToOne
-	@JoinColumn(name = "company_id", referencedColumnName = "company")
-	private TaxReport taxReport;
 
 	public CustomersList() {
 	}
@@ -179,14 +182,6 @@ public class CustomersList implements Serializable {
 
 	public void setUpdated_date(Date updated_date) {
 		this.updated_date = updated_date;
-	}
-
-	public TaxReport getTaxReport() {
-		return taxReport;
-	}
-
-	public void setTaxReport(TaxReport taxReport) {
-		this.taxReport = taxReport;
 	}
 
 }

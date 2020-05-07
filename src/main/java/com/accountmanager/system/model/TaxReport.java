@@ -2,12 +2,12 @@ package com.accountmanager.system.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,7 +24,7 @@ public class TaxReport implements Serializable {
 	@Id
 	private String id;
 
-	private Timestamp date;
+	private Date date;
 
 	@Column(name = "department_id")
 	private String departmentId;
@@ -58,10 +58,6 @@ public class TaxReport implements Serializable {
 	@Column(name = "update_date")
 	private Timestamp updateDate;
 
-	// bi-directional one-to-one association to CustomersList
-	@OneToOne(mappedBy = "taxReport")
-	private CustomersList customersList;
-
 	private String company;
 
 	@Column(name = "f2_id")
@@ -86,11 +82,11 @@ public class TaxReport implements Serializable {
 		this.createBy = createBy;
 	}
 
-	public Timestamp getDate() {
-		return this.date;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setDate(Timestamp date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -164,14 +160,6 @@ public class TaxReport implements Serializable {
 
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
-	}
-
-	public CustomersList getCustomersList() {
-		return this.customersList;
-	}
-
-	public void setCustomersList(CustomersList customersList) {
-		this.customersList = customersList;
 	}
 
 	public String getF2Id() {
