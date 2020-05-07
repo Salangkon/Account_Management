@@ -19,7 +19,7 @@ public interface TaxReportRepository extends CrudRepository<TaxReport, String> {
 	@Query(value = "select * from tax_report where type = ?1 and ?2 <= date", nativeQuery = true)
 	List<TaxReport> findByTypeAndStartDate(String string, String startDate);
 
-	@Query(value = "select * from tax_report where type = ?1 and  status = ?2 and ?3 <= date", nativeQuery = true)
+	@Query(value = "select * from tax_report where type = ?1 and date between ?2 and ?3", nativeQuery = true)
 	List<TaxReport> findByTypeAndStartDateAndEndDate(String string, String startDate, String endDate);
 
 }

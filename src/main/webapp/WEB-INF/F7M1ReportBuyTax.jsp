@@ -41,7 +41,7 @@
 									<div class="col-sm-7"></div>
 									<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" /> </div>
 									<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /> </div>
-									<div class="col-sm-1"><button class="btn btn-primary" type="button" onclick="tableReportBuyTax()" 
+									<div class="col-sm-1"><button class="btn btn-primary" type="button" onclick="reportBuyTax()" 
 											style="margin-top: 32px"> ค้นหา <i class="fas fa-fw fa-search"></i>
 										</button></div>
 								</div>

@@ -124,7 +124,7 @@ public class TaxReportController {
 			if (f2Model != null) {
 				taxReport.setId(UUID.randomUUID().toString());
 				taxReport.setF2Id(f2Model.getId());
-				taxReport.setDate(ts);
+				taxReport.setDate(f2Model.getDate());
 				taxReport.setDepartmentId(f2Model.getDepartmentId());
 				taxReport.setReferenceDocument(f2Model.getReferenceDocument());
 				if (f2Model.getType().equalsIgnoreCase("TaxInvoice")) {
