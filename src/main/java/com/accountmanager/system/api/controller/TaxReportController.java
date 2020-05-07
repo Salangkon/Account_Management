@@ -1,8 +1,7 @@
-package com.accountmanager.system.controller;
+package com.accountmanager.system.api.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +34,15 @@ public class TaxReportController {
 	public Iterable<TaxReport> getAll() {
 		return taxReportRepo.findAll();
 	}
+	
+	@GetMapping("/get-by/{type}")
+	public ResponseEntity<?> getBy(@PathVariable String type) {
+		if (type.equalsIgnoreCase("TaxInvoice")) {
+			return new ResponseEntity<>(taxReportRepo.findByType("ReportSaleTax"), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(taxReportRepo.findByType("ReportBuyTax"), HttpStatus.OK);
+		}
+	}
 
 	@PostMapping("/add-update/TaxReport")
 	public ResponseEntity<?> addUpdateTaxReport(@Valid @RequestBody F2Model f2Model) {
@@ -56,10 +65,20 @@ public class TaxReportController {
 				taxReport.setDate(ts);
 				taxReport.setDepartmentId(f2Model.getDepartmentId());
 				taxReport.setReferenceDocument(f2Model.getReferenceDocument());
-				taxReport.setType(f2Model.getType());
-				taxReport.setPrice(f2Model.getPrice());
-				taxReport.setPriceVat(f2Model.getVat());
-				taxReport.setProductPriceAll(f2Model.getProductPriceAll());
+				if (f2Model.getType().equalsIgnoreCase("TaxInvoice")) {
+					taxReport.setType("ReportSaleTax");
+				} else {
+					taxReport.setType("ReportBuyTax");
+				}
+				if (f2Model.getStatusVat().equals("1")) {
+					taxReport.setPrice(f2Model.getPrice());
+					taxReport.setPriceVat(f2Model.getVat());
+					taxReport.setProductPriceAll(f2Model.getProductPriceAll());
+				} else {
+					taxReport.setPrice(f2Model.getPrice1());
+					taxReport.setPriceVat(f2Model.getVat1());
+					taxReport.setProductPriceAll(f2Model.getProductPriceAll1());
+				}
 				taxReport.setCompany(f2Model.getCompanyId());
 				taxReport.setCreateBy("");
 				taxReport.setCreateDate(ts);
