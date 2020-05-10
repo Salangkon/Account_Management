@@ -14,22 +14,20 @@
 			text-align: right;
 			margin-top: 20px;
 		}
-		.invalid{
+
+		.invalid {
 			color: red;
 		}
+
 		[x-placement=bottom-start] {
 			position: relative !important;
-			top: -37px !important; 
+			top: -37px !important;
 			margin-top: -40px !important;
 		}
-		/* .dropdown-menu.show:first-of-type {
-			position: relative !important;
-			top: 2.5rem !important; 
-			margin-top: -40px !important;
-		} */
+
 		[x-placement=top-start] {
 			position: relative !important;
-			top: 2.5rem !important; 
+			top: 2.5rem !important;
 			margin-top: -40px !important;
 		}
 	</style>
@@ -77,8 +75,7 @@
 													class="fas fa-fw fa-search"></i></button>
 										</div>
 									</div>
-									<table id="tableJournal" class="table table-sm table-hover"
-										width="100%">
+									<table id="tableJournal" class="table table-sm table-hover" width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
 												<th>วันที่</th>
@@ -121,7 +118,8 @@
 											<div class="col-sm-12" style="text-align: right;margin-bottom: 20px;">
 												<a href="#" onclick="saveCreate()"><i class="fas fa-2x fa-print"
 														style="margin-right: 10px;"></i></a>
-												<a href="#" onclick="saveCreate()"><i class="fas fa-2x fa-download"></i></a>
+												<a href="#" onclick="saveCreate()"><i
+														class="fas fa-2x fa-download"></i></a>
 											</div>
 											<input id="id" hidden>
 											<div class="col-sm-5 mb-3 mb-sm-0">
@@ -168,16 +166,16 @@
 													<div class="col-sm-8">
 														<input class="form-control" id="referenceDocument"
 															placeholder="เลขที่เอกสาร">
-															<div hidden class="invalid" id="invalid-referenceDocument">
-																กรุณาระบุเลขที่เอกสาร
-															</div>
+														<div hidden class="invalid" id="invalid-referenceDocument">
+															กรุณาระบุเลขที่เอกสาร
+														</div>
 													</div>
 												</div>
 											</div>
 
 											<div class="table-responsive col-sm-12" style="margin-top: 12px;">
-												<table id="tablegeneraJournalDisplay"
-													class="table table-sm table-hover" width="100%">
+												<table id="tablegeneraJournalDisplay" class="table table-sm table-hover"
+													width="100%">
 													<thead class="bg-gradient-primary" style="color: white;">
 														<tr>
 															<th>รหัสบัญชี / ชื่อบัญชี</th>
@@ -196,9 +194,10 @@
 																	เพิ่มรายการ
 																</button>
 															</th>
-															<th style="text-align: right;"><span hidden class="invalid" id="invalid-sumDebitCredit">
-																กรุณาตรวจสอบยอดเคดิต และเดบิต
-															</span> รวม </th>
+															<th style="text-align: right;"><span hidden class="invalid"
+																	id="invalid-sumDebitCredit">
+																	กรุณาตรวจสอบยอดเคดิต และเดบิต
+																</span> รวม </th>
 															<th><label id="sumDebit">00.00</label></th>
 															<th><label id="sumCredit">00.00</label></th>
 															<th></th>
@@ -215,7 +214,8 @@
 					</div>
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" id="checkSaveFlg" onclick="saveCreate()">บันทึก</button>
+						<button type="button" class="btn btn-success" id="checkSaveFlg"
+							onclick="saveCreate()">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 
@@ -242,7 +242,7 @@
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="\data-table\F6M1GeneralJournal.js" type="text/javascript"></script>
-		<script src="/print-pdf-js/f6-print-pdf-book-day.js" type="text/javascript"></script>
+		<script src="\print-pdf-js\f6-print-pdf-book-day.js" type="text/javascript"></script>
 		<!-- select -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>

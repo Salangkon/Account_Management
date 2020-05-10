@@ -7,8 +7,8 @@
                 <table>
                     <tr>
                         <th style="color: purple;">
-                            <h5><b>สมุดรายวันทั่วไป</b></h4>
-                                <label>Joumal voucher</label>
+                            <h4><b id="titleTHPrint"></b></h4>
+                                <b id="titleENPrint"></b>
                         </th>
                     </tr>
                 </table>
@@ -16,7 +16,7 @@
                     <tr>
                         <td style="width: 60%;">บริษัท โฟลว์แอคเคาน์ กำจัด</td>
                         <td style="width: 15%; color: purple;">เลขที่/Voucher</td>
-                        <td style="width: 25%;" id="departmentIdPrint"></td>
+                        <td style="width: 25%;" id="referenceDocumentPDFF6"></td>
                     </tr>
                 </table>
                 <table style="width: 100%;">
@@ -51,38 +51,40 @@
                         <td style="width: 50%;color: purple;"><b>คำอธิบาย/Description</b></td>
                     </tr>
                 </table>
-                <table class="table table-bordered" id="tablePrintPDFDisplay" style="margin-top: 15px;">
+                <table id="" style="margin-top: 15px;width: 100%;">
                     <tr>
-                        <td style="width: 15%;text-align: center;">รหัสบัญชี<br>Code</td>
-                        <td style="width: 45%;text-align: center">ชื่อบัญชี<br>Account Name</td>
-                        <td style="width: 20%;text-align: center">เดบิค<br>Debit</td>
-                        <td style="width: 20%;text-align: center">เครดิต<br>Credit</td>
+                        <td style="width: 15%;text-align: center;border: 1px solid black">รหัสบัญชี<br>Code</td>
+                        <td style="width: 45%;text-align: center;border: 1px solid black">ชื่อบัญชี<br>Account Name</td>
+                        <td style="width: 20%;text-align: center;border: 1px solid black">เดบิค<br>Debit</td>
+                        <td style="width: 20%;text-align: center;border: 1px solid black">เครดิต<br>Credit</td>
                     </tr>
                     <tr style="height: 500px;">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style="border: 1px solid black"></td>
+                        <td style="border: 1px solid black"></td>
+                        <td style="border: 1px solid black"></td>
+                        <td style="border: 1px solid black"></td>
                     </tr>
                     <tr style="height: 10px;">
-                        <td></td>
-                        <td style="text-align: right;">รวมทั้งสิ้น/Grand total</td>
-                        <td></td>
-                        <td></td>
+                        <td style="border: 1px solid black"></td>
+                        <td style="text-align: right;border: 1px solid black">รวมทั้งสิ้น/Grand total</td>
+                        <td style="border: 1px solid black"></td>
+                        <td style="border: 1px solid black"></td>
                     </tr>
                     <tr style="height: 10px;">
-                        <td colspan="4">หมายเหตุ/Remark </td>
+                        <td colspan="4" style="border: 1px solid black">หมายเหตุ/Remark </td>
                     </tr>
                 </table>
-                <table class="table table-bordered" id="tablePrintPDFDisplay">
+                <table id="">
                     <tr style="height: 60px;">
-                        <td style="width: 35%;text-align: center;">
+                        <td style="width: 35%;text-align: center;border: 1px solid black">
                             ผู้จัดทำ/Preparer<br><br><br><br>(.................................................................)<br>วันที่/Date:
                         </td>
-                        <td style="width: 40%;text-align: center">ผู้สอบทาน/Review
-                            by<br><br><br><br>(.................................................................)<br>วันที่/Date:</td>
-                        <td style="width: 35%;text-align: center">ผู้อนุมัติ/Approve
-                            by<br><br><br><br>(.................................................................)<br>วันที่/Date:</td>
+                        <td style="width: 40%;text-align: center;border: 1px solid black">ผู้สอบทาน/Review
+                            by<br><br><br><br>(.................................................................)<br>วันที่/Date:
+                        </td>
+                        <td style="width: 35%;text-align: center;border: 1px solid black">ผู้อนุมัติ/Approve
+                            by<br><br><br><br>(.................................................................)<br>วันที่/Date:
+                        </td>
                     </tr>
                 </table>
             </div>

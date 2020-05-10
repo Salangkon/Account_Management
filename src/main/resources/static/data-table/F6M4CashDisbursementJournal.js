@@ -193,7 +193,7 @@ function changeFunc($i) {
             deleteId(id);
             break;
         case "6":
-            // printPDF(id);
+            printPDF(id);
             $('#MyModalPrintPDF').modal('show');
             break;
     }
