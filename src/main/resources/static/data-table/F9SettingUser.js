@@ -32,7 +32,83 @@ function login() {
                 type = msg.type,
                 companyId = msg.companyId,
                 taxId = msg.taxId
-                document.getElementById("myImg").src = "\\img\\" + msg.companys.logo;
+            document.getElementById("myImg").src = "\\img\\" + msg.companys.logo;
+
+            persanol(msg.companyId)
+        }
+    })
+}
+
+function persanol(companyId) {
+    $.ajax({
+        type: "GET",
+        url: "/api-login/seting-persanol/" + companyId,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            $('#tableSetingPersanol').DataTable({
+                paging: true,
+                "bDestroy": true,
+                data: jQuery.parseJSON(JSON.stringify(msg)),
+                "sAjaxDataProp": "",
+                "aoColumns": [{
+                        "sWidth": "15%",
+                        "mRender": function (data, type, row) {
+                            return row.fName + " " + row.lName
+                        }
+                    }, {
+                        'data': 'position',
+                        "className": "text-center",
+                        "sWidth": "8%",
+                    }, {
+                        'data': 'tel',
+                        "className": "text-center",
+                        "sWidth": "8%",
+                    }, {
+                        'data': 'email',
+                        "sWidth": "14%",
+                    }, {
+                        'data': 'address',
+                        "sWidth": "25%",
+                    },
+                    {
+                        "className": "text-center",
+                        "sWidth": "10%",
+                        "mRender": function (data, type, row) {
+                            if (row.status == 'Y') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: green">ใช้งาน</option/>\n\
+                                            <option value="N' + row.id + '" style="color: red">ระงับการใช้งาน</option/>\n\
+                                        </select>';
+                            } else if (row.status == 'N') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: red">ระงับการใช้งาน</option/>\n\
+                                            <option value="Y' + row.id + '" style="color: green">ใช้งาน</option/>\n\
+                                        </select>';
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+    });
+}
+
+// update status
+function changeStatus($i) {
+    var type = $i.slice(0, 1);
+    var id = $i.substr(1, 100);
+    console.log(type, id);
+    $.ajax({
+        type: 'GET',
+        url: '/api-login/update-position/' + id + "/" + type,
+        data: JSON.stringify(login),
+        success: function (msg) {
+            if (msg == 'pass') {
+                window.location.href = "/setting-user";
+            } else {
+                alert('ระงับการใช้งาน ไม่สำเร็จ..')
+            }
         }
     })
 }

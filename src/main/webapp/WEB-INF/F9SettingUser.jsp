@@ -32,22 +32,22 @@
 							<h4>ตั้งค่าผู้ใช้งาน</h4>
 						</div>
 						<div class="col-lg-1">
-							<button type="button" style="margin-left: 30px;" class="btn btn btn-primary"
-								onclick="update()" id="save">บันทึก</button>
+							<!-- <button type="button" style="margin-left: 30px;" class="btn btn btn-primary"
+								onclick="update()" id="save">บันทึก</button> -->
 						</div>
-						<div class="col-lg-6"></div>
-						<div class="col-lg-1" style="margin-left: -25px;">
-							<button type="button" class="btn btn-primary" data-toggle="modal" onclick="update(null)"
-								data-target="#myModal">เพิ่มรายชื่อ</button>
-						</div>
-						<div class="col-lg-12">
+						<div class="col-lg-7"></div>
+						<div class="col-lg-11">
 							<h5>แก้ไขข้อมูลส่วนตัว</h5>
+						</div>
+						<div class="col-lg-1" style="margin-left: -25px;">
+							<button type="button" class="btn btn-primary" data-toggle="modal" onclick="update()"
+								data-target="#myModal">เพิ่มรายชื่อ</button>
 						</div>
 					</div>
 
 					<!-- Content Row -->
 					<div class="row" style="margin-top: 10px;">
-						<div class="col-lg-5">
+						<!-- <div class="col-lg-5">
 							<div class="p-3">
 								<div class="form-group row">
 									<div class="col-sm-4"><label>ชื่อ : </label></div>
@@ -96,18 +96,18 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-7">
+						</div> -->
+						<div class="col-lg-12">
 							<div class="card-body">
 								<div class="table-responsive col-sm-12">
-									<table id="customersList" class="table table-sm table-hover" width="100%">
+									<table id="tableSetingPersanol" class="table table-sm table-hover" width="100%">
 										<thead class="bg-gradient-primary" style="color: white;">
 											<tr>
-												<th>ชื่อบริษัท</th>
+												<th>ชื่อ-สกุล</th>
+												<th>ตำแหน่ง</th>
 												<th>เบอร์ติดต่อ</th>
-												<th>E-mail</th>
-												<th>ประเภท</th>
-												<th>create</th>
+												<th>อีเมลล์</th>
+												<th>ที่อยู่</th>
 												<th>ตัวเลือก</th>
 											</tr>
 										</thead>

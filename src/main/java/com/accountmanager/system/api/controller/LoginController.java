@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,8 @@ public class LoginController {
 	CompanyRepository companyRepo;
 
 	@PostMapping("/login")
-	private HashMap<String, String> loginUser(@RequestBody HashMap<String, String> user, Model model, HttpServletRequest request) {
+	private HashMap<String, String> loginUser(@RequestBody HashMap<String, String> user, Model model,
+			HttpServletRequest request) {
 		HashMap<String, String> res = new HashMap<String, String>();
 		res.put("res", "false");
 		System.err.println(user.get("id") + " :: " + user.get("password"));
@@ -49,7 +51,7 @@ public class LoginController {
 		}
 		return res;
 	}
-	
+
 	@PostMapping("/seting")
 	private User seting(@RequestBody HashMap<String, String> user, Model model, HttpServletRequest request) {
 		return userRepo.findByIdAndPassword(user.get("id"), user.get("password"));
@@ -67,12 +69,12 @@ public class LoginController {
 		}
 		return map;
 	}
-	
+
 	@PostMapping("save-update-company")
 	private HashMap<String, String> loginUsaveUpdateCompany(@RequestBody Company company) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		try {
-			companyRepo.save(company);	
+			companyRepo.save(company);
 			map.put("res", "pass");
 		} catch (Exception e) {
 			map.put("res", "false");
@@ -80,7 +82,7 @@ public class LoginController {
 		}
 		return map;
 	}
-	
+
 	@PostMapping("save-update-user")
 	private HashMap<String, String> loginUsaveUpdateUser(@RequestBody User user) {
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -93,7 +95,7 @@ public class LoginController {
 		}
 		return map;
 	}
-	
+
 	@PostMapping("/register")
 	private HashMap<String, String> register(@RequestBody Company companys) throws JsonProcessingException {
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -108,21 +110,43 @@ public class LoginController {
 					String id = UUID.randomUUID().toString();
 					companys.setCompanyId(id);
 					user.setCompanyId(id);
-					
+
 					System.err.println(mapper.writeValueAsString(companys));
-					companyRepo.save(companys);	
-					
+					companyRepo.save(companys);
+
 					userRepo.save(user);
 
 					map.put("res", "pass");
 				}
 			}
-			
+
 		} catch (Exception e) {
 			map.put("res", "false");
 			e.printStackTrace();
 		}
 		return map;
+	}
+
+	@GetMapping("/seting-persanol/{companyId}")
+	private Iterable<User> setingPersanol(@PathVariable("companyId") String companyId) {
+		Company company = companyRepo.findOne(companyId);
+		return company.getUsers();
+	}
+
+	@GetMapping("/update-position/{id}/{position}")
+	private String updateStatus(@PathVariable("id") String id,
+			@PathVariable("position") String position) {
+		String res = "fail";
+		try {
+			User user = userRepo.findOne(id);
+			user.setStatus(position);
+			userRepo.save(user);
+			res = "pass";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
 	}
 
 	@GetMapping("/get-all")
