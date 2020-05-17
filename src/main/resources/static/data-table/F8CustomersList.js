@@ -77,6 +77,7 @@ $(document).ready(function () {
 				officeType: officeType,
 				taxId: $('#taxId').val(),
 				tel: $('#tel').val(),
+				createBy: $('#createBy').val(), //สร้างโดย
 			}
 
 			console.log(JSON.stringify(customers));

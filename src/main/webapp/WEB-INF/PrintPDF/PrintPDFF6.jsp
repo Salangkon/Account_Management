@@ -8,36 +8,55 @@
                     <tr>
                         <th style="color: purple;">
                             <h4><b id="titleTHPrint"></b></h4>
-                                <b id="titleENPrint"></b>
+                            <b id="titleENPrint"></b>
                         </th>
                     </tr>
                 </table>
-                <table style="width: 100%;margin-top: 10px;">
+                <table style="width: 100%">
                     <tr>
-                        <td style="width: 60%;">บริษัท โฟลว์แอคเคาน์ กำจัด</td>
-                        <td style="width: 15%; color: purple;">เลขที่/Voucher</td>
-                        <td style="width: 25%;" id="referenceDocumentPDFF6"></td>
-                    </tr>
-                </table>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="width: 60%;"></td>
-                        <td style="width: 15%; color: purple;">วันที่/Date</td>
-                        <td style="width: 25%;" id="datePrint"></td>
-                    </tr>
-                </table>
-                <table style="width: 100%;">
-                    <tr>
-                        <th style="width: 60%;"></th>
-                        <td style="width: 15%; color: purple;">อ้างอิง/Reference</td>
-                        <td style="width: 32%;" id="dateEndPrint"></td>
-                    </tr>
-                </table>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="width: 60%;">เลขประจำตัวผู้เสียภาษี</td>
-                        <td style="width: 15%; color: purple;">ผู้จัดทำ/Preparer</td>
-                        <td style="width: 25%;"></td>
+                        <td style="width: 60%;text-align: start;">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 100%;"><%=user.getCompanys().getCompanyName()%></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 100%;"><%=user.getAddress() %></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 100%;">เลขประจำาตัวผู้เสียภาษี/Tax ID: <%=user.getCompanys().getTaxId() %></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 40%">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 35%; color: purple;">เลขที่/Voucher</td>
+                                    <td style="width: 65%;" id="documentCodePrint"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 35%; color: purple;">วันที่/Date</td>
+                                    <td style="width: 65%;" id="datePrint"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 35%; color: purple;">อ้างอิง/Reference</td>
+                                    <td style="width: 65%;" id="referenceDocumentPrint"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 35%; color: purple;">ผู้จัดทำ/Preparer</td>
+                                    <td style="width: 65%;" id=""></td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
                 </table>
                 <table style="width: 100%;margin-top: 15px;">
@@ -48,10 +67,12 @@
                 </table>
                 <table style="width: 100%;margin-top: 20px;">
                     <tr>
-                        <td style="width: 50%;color: purple;"><b>คำอธิบาย/Description</b></td>
+                        <td><b style="color: purple;">คำอธิบาย/Description</b>
+                            <p style="margin-left: 20px;" id="descriptionPrint"></p>
+                        </td>
                     </tr>
                 </table>
-                <table id="" style="margin-top: 15px;width: 100%;">
+                <table id="" style="width: 100%;">
                     <tr>
                         <td style="width: 15%;text-align: center;border: 1px solid black">รหัสบัญชี<br>Code</td>
                         <td style="width: 45%;text-align: center;border: 1px solid black">ชื่อบัญชี<br>Account Name</td>

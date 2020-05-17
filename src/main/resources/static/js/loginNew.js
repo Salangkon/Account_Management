@@ -42,22 +42,31 @@ function registerUser() {
     console.log("pass :: ", pass);
     if (pass) {
         var register = {
-            id: $('#idReg').val(),
-            password: $('#passReg').val(),
-            company: $('#companyReg').val(),
-            type: $('#typeReg').val(),
-            fName: $('#fNameReg').val(),
-            lName: $('#lNameReg').val(),
-            email: $('#emailReg').val(),
+            address: "",
+            companyName: $('#companyReg').val(),
+            companyType: $('#companyTypeReg').val(),
+            department: "1",
+            departmentName: "",
+            departmentPass: "",
+            logo: "logo20200412.png",
             tel: $('#telReg').val(),
-            position: 'เจ้าของธุระกิจ',
-            department: '1',
-            logo: 'logo20200412.png',
+            taxId: "",
+            users: [{
+                id: $('#idReg').val(),
+                password: $('#passReg').val(),
+                fName: $('#lNameReg').val(),
+                lName: $('#lNameReg').val(),
+                email: $('#emailReg').val(),
+                address: "",
+                position: "เจ้าของธุระกิจ",
+                tel: "",
+                status: "Y",
+            }]
         }
         console.log(JSON.stringify(register));
         $.ajax({
             type: "POST",
-            url: "/api-login/register/",
+            url: "/api-login/register",
             data: JSON.stringify(register),
             contentType: "application/json; charset=utf-8",
             dataType: "json",

@@ -35,7 +35,11 @@
 							<button type="button" style="margin-left: 30px;" class="btn btn btn-primary"
 								onclick="update()" id="save">บันทึก</button>
 						</div>
-						<div class="col-lg-7"></div>
+						<div class="col-lg-6"></div>
+						<div class="col-lg-1" style="margin-left: -25px;">
+							<button type="button" class="btn btn-primary" data-toggle="modal" onclick="update(null)"
+								data-target="#myModal">เพิ่มรายชื่อ</button>
+						</div>
 						<div class="col-lg-12">
 							<h5>แก้ไขข้อมูลส่วนตัว</h5>
 						</div>
@@ -76,7 +80,8 @@
 									<div class="col-sm-12"><label><b>แก้ไขรหัสผ่าน</b></label></div>
 									<div class="col-sm-4"><label>รหัสผ่านเดิม : </label></div>
 									<div class="col-sm-8">
-										<input type="password" class="form-control form-control" id="passwordUser" disabled>
+										<input type="password" class="form-control form-control" id="passwordUser"
+											disabled>
 										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>รหัสผ่านใหม่ : </label></div>
@@ -92,8 +97,24 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-6"></div>
-						<div class="col-lg-1"></div>
+						<div class="col-lg-7">
+							<div class="card-body">
+								<div class="table-responsive col-sm-12">
+									<table id="customersList" class="table table-sm table-hover" width="100%">
+										<thead class="bg-gradient-primary" style="color: white;">
+											<tr>
+												<th>ชื่อบริษัท</th>
+												<th>เบอร์ติดต่อ</th>
+												<th>E-mail</th>
+												<th>ประเภท</th>
+												<th>create</th>
+												<th>ตัวเลือก</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
 
 				</div>

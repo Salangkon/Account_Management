@@ -509,6 +509,7 @@ function saveCreate() {
                     // เดบิต เครดิต
                     sumDebit: $('#sumDebit').text(), //เดบิต
                     sumCredit: $('#sumCredit').text(), //เครดิต
+                    createBy: $('#createBy').val(), //สร้างโดย
                     journalLists: [],
                 }
                 var data = tablegeneraJournal.data();

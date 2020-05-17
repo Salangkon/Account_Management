@@ -2,15 +2,10 @@ $(document).ready(function () {
     login();
 });
 
-var taxId;
-var department;
-var departmentPass;
-var departmentName;
 var address;
-var company;
 var type;
 var status;
-var logo;
+var companyId;
 
 function login() {
     var login = {
@@ -33,16 +28,11 @@ function login() {
                 $('#emailUser').val(msg.email),
                 $('#positionUser').val(msg.position),
                 $('#tel').val(msg.tel),
-                logo = msg.logo,
                 status = msg.status,
                 type = msg.type,
-                taxId = msg.taxId,
-                department = msg.department,
-                departmentPass = msg.departmentPass,
-                departmentName = msg.departmentName,
-                address = msg.address,
-                company = msg.company
-                document.getElementById("myImg").src = "\\img\\" + msg.logo;
+                companyId = msg.companyId,
+                taxId = msg.taxId
+                document.getElementById("myImg").src = "\\img\\" + msg.companys.logo;
         }
     })
 }
@@ -57,16 +47,11 @@ function update() {
         lName: $('#lNameUser').val(),
         email: $('#emailUser').val(),
         address: address,
-        company: company,
+        companyId: companyId,
         position: $('#positionUser').val(),
         tel: $('#tel').val(),
         type: type,
         status: status,
-        taxId: taxId,
-        logo: logo,
-        department: department,
-        departmentPass: departmentPass,
-        departmentName: departmentName,
     }
     if (data.passwordNew != '') {
         data.password = data.passwordNew;
@@ -77,7 +62,7 @@ function update() {
         alert('บันทึกเรียบร้อย')
         $.ajax({
             type: "POST",
-            url: "/api-login/save-update/",
+            url: "/api-login/save-update-user",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",

@@ -545,6 +545,7 @@ function saveCreateQuotation() {
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
             referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
+            createBy: $('#createBy').val(), //สร้างโดย
             f2ListModels: [],
         }
         var data = tableCreateBiiling.data();
@@ -606,6 +607,7 @@ function saveCreateQuotationTaxInvoice() {
                     date: $('#date').val(), //วันที่
                     dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
                     referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
+                    createBy: $('#createBy').val(), //สร้างโดย
                     f2ListModels: [],
                 }
                 var data = tableCreateBiiling.data();

@@ -23,17 +23,22 @@ function printPDF(id) {
                 $('#titleENPrint').text("Receipt voucher ")
             }
             $('#datePrint').text(formatDMY(msg.date)),
+            $('#referenceDocumentPrint').text(msg.referenceDocument),
+            $('#documentCodePrint').text(msg.documentCode),
+            $('#descriptionPrint').text(msg.description),
+
+            customerList(msg.companyId);
 
             $('#typePDF11').text(),
             $('#idPDF').text(msg.id),
-                $('#customersPDF').text(msg.companyId),
-                $('#datePDF').text(msg.date),
-                $('#descriptionPDF').text(msg.description),
-                $('#referenceDocumentPDFF6').text(msg.referenceDocument),
+                
                 $('#sumDebitPDF').text(parseFloat(msg.sumDebit).toFixed(2)),
                 $('#sumCreditPDF').text(parseFloat(msg.sumCredit).toFixed(2))
         }
     })
+}
+
+function customerList(companyId) {
 }
 
 function formatDMY(ts) {
