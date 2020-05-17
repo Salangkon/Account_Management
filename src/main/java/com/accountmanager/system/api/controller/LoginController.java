@@ -132,6 +132,12 @@ public class LoginController {
 		Company company = companyRepo.findOne(companyId);
 		return company.getUsers();
 	}
+	
+	@GetMapping("/seting-user/{id}")
+	private User setingUser(@PathVariable("id") String id) {
+		return userRepo.findOne(id);
+	}
+
 
 	@GetMapping("/update-position/{id}/{position}")
 	private String updateStatus(@PathVariable("id") String id,

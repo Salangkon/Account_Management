@@ -40,8 +40,8 @@
 							<h5>แก้ไขข้อมูลส่วนตัว</h5>
 						</div>
 						<div class="col-lg-1" style="margin-left: -25px;">
-							<button type="button" class="btn btn-primary" data-toggle="modal" onclick="update()"
-								data-target="#myModal">เพิ่มรายชื่อ</button>
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+								onclick="add(null)">เพิ่มผู้ใช้งาน</button>
 						</div>
 					</div>
 
@@ -118,6 +118,95 @@
 					</div>
 
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- The Modal Create-->
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog modal-lg" style="max-width: 1200px;">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<div id="myDIV1">
+						<h4 class="modal-title">เปลี่ยนแปลงผู้ใช้งาน</h4>
+					</div>
+					<div id="myDIV">
+						<h4 class="modal-title">เพิ่มรายผู้ใช้งาน</h4>
+					</div>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="card-body p-0" style="margin-left: 50px;">
+					<!-- Nested Row within Card Body -->
+					<div class="row" style="margin-top: 20px;">
+						<div class="col-lg-7">
+							<div class="p-3">
+								<div class="form-group row">
+									<div class="col-sm-4"><label>Username : </label></div>
+									<div class="col-sm-8">
+										<input type="text" class="form-control form-control" id="idAdd"
+											placeholder="Username">
+										<p class="hide" id=""></p>
+									</div>
+									<div class="col-sm-4"><label>Password : </label></div>
+									<div class="col-sm-8">
+										<input type="text" class="form-control form-control" id="passwordAdd"
+											placeholder="Password">
+										<p class="hide" id=""></p>
+									</div>
+									<div class="col-sm-4"><label>ชื่อ : </label></div>
+									<div class="col-sm-8">
+										<input type="text" class="form-control form-control" id="fNameAdd"
+											placeholder="ชื่อ">
+										<p class="hide" id=""></p>
+									</div>
+									<div class="col-sm-4"><label>นามสกุล : </label></div>
+									<div class="col-sm-8">
+										<input type="text" class="form-control form-control" id="lNameAdd"
+											placeholder="นามสกุล">
+										<p class="hide" id=""></p>
+									</div>
+									<div class="col-sm-4"><label>อีเมลล์(ผู้ใช้งาน) : </label></div>
+									<div class="col-sm-8">
+										<input type="email" class="form-control form-control" id="emailAdd"
+											placeholder="อีเมลล์">
+										<p class="hide" id=""></p>
+									</div>
+									<div class="col-sm-4"><label>ตำแหน่ง : </label></div>
+									<div class="col-sm-8">
+										<input type="text" class="form-control form-control" id="positionAdd"
+											value="สำนักบัญชี" disabled>
+										<p class="hide" id=""></p>
+									</div>
+									<div class="col-sm-4"><label>เบอร์ติดต่อ</label></div>
+									<div class="col-sm-8">
+										<input type="text" OnKeyPress="return chkNumber(this)" class="form-control form-con
+											trol" id="telAdd" maxlength="10" placeholder="เบอร์ติดต่อ">
+										<p class="hide" id="error-tel"></p>
+									</div>
+									<div class="col-sm-4"><label>ที่อยู่</label></div>
+									<div class="col-sm-8">
+										<textarea class="form-control" id="addressAdd" placeholder="ที่อยู่"
+											style="height: 100px"></textarea>
+										<p class="hide" id="error-address"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-5">
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" id="save" onclick="update()">บันทึก</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+				</div>
+
 			</div>
 		</div>
 	</div>

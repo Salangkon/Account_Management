@@ -79,6 +79,7 @@ function persanol(companyId) {
                                 return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
                                             <option value="" style="color: green">ใช้งาน</option/>\n\
                                             <option value="N' + row.id + '" style="color: red">ระงับการใช้งาน</option/>\n\
+                                            <option value="1' + row.id + '" style="color: orange">แก้ไข</option/>\n\
                                         </select>';
                             } else if (row.status == 'N') {
                                 return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
@@ -99,61 +100,91 @@ function changeStatus($i) {
     var type = $i.slice(0, 1);
     var id = $i.substr(1, 100);
     console.log(type, id);
-    $.ajax({
-        type: 'GET',
-        url: '/api-login/update-position/' + id + "/" + type,
-        data: JSON.stringify(login),
-        success: function (msg) {
-            if (msg == 'pass') {
-                window.location.href = "/setting-user";
-            } else {
-                alert('ระงับการใช้งาน ไม่สำเร็จ..')
-            }
-        }
-    })
-}
-
-function update() {
-    var data = {
-        id: $('#id').val(),
-        password: $('#passwordUser').val(),
-        passwordNew: $('#passwordNew').val(),
-        passwordNew2: $('#passwordNew2').val(),
-        fName: $('#fNameUser').val(),
-        lName: $('#lNameUser').val(),
-        email: $('#emailUser').val(),
-        address: address,
-        companyId: companyId,
-        position: $('#positionUser').val(),
-        tel: $('#tel').val(),
-        type: type,
-        status: status,
-    }
-    if (data.passwordNew != '') {
-        data.password = data.passwordNew;
-    }
-    console.log(JSON.stringify(data));
-
-    if (data.passwordNew == data.passwordNew2) {
-        alert('บันทึกเรียบร้อย')
+    if (type == '1') {
+        add(id)
+        $('#myModal').modal('show');
+    } else {
         $.ajax({
-            type: "POST",
-            url: "/api-login/save-update-user",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                if (result.res == 'pass') {
+            type: 'GET',
+            url: '/api-login/update-position/' + id + "/" + type,
+            data: JSON.stringify(login),
+            success: function (msg) {
+                if (msg == 'pass') {
                     window.location.href = "/setting-user";
                 } else {
-                    alert('บันทึก ไม่สำเร็จ..')
+                    alert('ระงับการใช้งาน ไม่สำเร็จ..')
                 }
             }
-        });
-    } else {
-        alert('กรุณากรอกรหัสใหม่ ให้ถูกต้อง')
-        passwordNew2.focus()
+        })
     }
+}
+
+function add(id) {
+    if (id == null) {
+        document.getElementById("myDIV1").hidden = true;
+        document.getElementById("myDIV").hidden = false;
+        $('#idAdd').val(""),
+            $('#passwordAdd').val(""),
+            $('#fNameAdd').val(""),
+            $('#lNameAdd').val(""),
+            $('#emailAdd').val(""),
+            $('#positionAdd').val(""),
+            $('#tel').val(""),
+            $('#tel').val("")
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "/api-login/seting-user/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                $('#idAdd').val(msg.id),
+                    $('#passwordAdd').val(msg.password),
+                    $('#fNameAdd').val(msg.fName),
+                    $('#lNameAdd').val(msg.lName),
+                    $('#emailAdd').val(msg.email),
+                    $('#positionAdd').val(msg.position),
+                    $('#telAdd').val(msg.tel),
+                    $('#addressAdd').val(msg.address)
+            }
+        })
+        document.getElementById("idAdd").disabled = true;
+        document.getElementById("myDIV1").hidden = false;
+        document.getElementById("myDIV").hidden = true;
+    }
+}
+
+function update(id) {
+    var data = {
+        id: $('#idAdd').val(),
+        password: $('#passwordAdd').val(),
+        fName: $('#fNameAdd').val(),
+        lName: $('#lNameAdd').val(),
+        email: $('#emailAdd').val(),
+        address: $('#addressAdd').val(),
+        companyId: companyId,
+        position: $('#positionAdd').val(),
+        tel: $('#tel').val(),
+        status: "Y",
+    }
+
+    console.log(JSON.stringify(data));
+
+    alert('บันทึกเรียบร้อย')
+    $.ajax({
+        type: "POST",
+        url: "/api-login/save-update-user",
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            if (result.res == 'pass') {
+                window.location.href = "/setting-user";
+            } else {
+                alert('บันทึก ไม่สำเร็จ..')
+            }
+        }
+    });
 }; // update
 
 //กรอกได้เฉพราะ ตัวเลข
