@@ -106,7 +106,7 @@
 	</li>
 
 	<!-- ตั้งค่า -->
-	<li class="nav-item">
+	<li class="nav-item" id="statusTabBar">
 		<a class="nav-link collapsed icon-color" href="#" data-toggle="collapse" data-target="#collapseNine"
 			aria-expanded="true" aria-controls="collapseNine">
 			<i class="fas fa-fw fa-cog"></i> <span>ตั้งค่า</span>
@@ -145,3 +145,13 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function () {
+		if ($('#position').val() === 'เจ้าของธุระกิจ') {
+			document.getElementById("statusTabBar").hidden = false;
+		} else {
+			document.getElementById("statusTabBar").hidden = true;
+		}
+	})
+</script>

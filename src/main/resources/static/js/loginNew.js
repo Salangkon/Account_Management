@@ -29,7 +29,9 @@ function loginUser() {
         success: function (result) {
             if (result.res === "pass") {
                 window.location.href = "/home-pages";
-            } else {
+            } else if(result.res === "ban") {
+                alert("username ถูกรงับการใช้งาน!!!")
+            }else {
                 alert("กรุณา login")
             }
         }

@@ -40,9 +40,13 @@ public class LoginController {
 		try {
 			User checkUser = userRepo.findByIdAndPassword(user.get("id"), user.get("password"));
 			if (checkUser != null) {
-				res.put("res", "pass");
-				request.getSession().setAttribute("user", checkUser);
-				model.addAttribute("messessError", "S");
+				if (checkUser.getStatus().equals("Y")) {
+					res.put("res", "pass");
+					request.getSession().setAttribute("user", checkUser);
+					model.addAttribute("messessError", "S");
+				} else {
+					res.put("res", "ban");
+				}
 			}
 		} catch (Exception e) {
 			res.put("res", "false");
