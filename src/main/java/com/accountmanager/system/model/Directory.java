@@ -21,6 +21,9 @@ public class Directory {
 
 	private String name;
 
+	@Column(name = "created_by")
+	private String createdBy;
+
 	@Column(name = "create_date", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -60,6 +63,14 @@ public class Directory {
 
 	public void setDbFiles(List<DBFile> dbFiles) {
 		this.dbFiles = dbFiles;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }

@@ -29,6 +29,9 @@ public class DBFile {
 
 	private String fileType;
 
+	@Column(name = "created_by")
+	private String createdBy;
+
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -36,7 +39,7 @@ public class DBFile {
 
 	@Column(name = "directory_id")
 	private String directoryId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "directory_id", referencedColumnName = "id", insertable = false, updatable = false)
 	@JsonBackReference
@@ -88,5 +91,13 @@ public class DBFile {
 
 	public void setDirectory(Directory directory) {
 		this.directory = directory;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 }

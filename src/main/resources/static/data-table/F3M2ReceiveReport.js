@@ -186,8 +186,8 @@ function updateQuotation(id, checkFlg) {
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
                     $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
-                    $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
-                $('#statusVat').val(msg.statusVat)
+                $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
+                    $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
                     document.getElementById("statusVat2").hidden = true;
@@ -232,8 +232,8 @@ function updateQuotation(id, checkFlg) {
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val("") //วันที่_ครบกำหนด
-            $('#referenceDocument').val(""), //เลขที่เอกสาร
-        $('#statusVat').val("1")
+        $('#referenceDocument').val(""), //เลขที่เอกสาร
+            $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
         // ไม่รวมภาษี
@@ -553,7 +553,7 @@ function saveCreateQuotation() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                if (result != null || result != '') {             
+                if (result != null || result != '') {
                     $.ajax({
                         type: 'POST',
                         url: '/TaxReport/add-update/TaxReport',
@@ -664,7 +664,7 @@ function tableQuotation() {
                                     <option style="color: black">ชำระเงินแล้ว</option/>\n\
                                     <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                     </select>';
-                            }  else if (row.status == 'ชำระเงินแล้ว') {
+                            } else if (row.status == 'ชำระเงินแล้ว') {
                                 return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                                     <option style="color: black">ชำระเงินแล้ว</option/>\n\
                                     <option value="0' + row.id + '" style="color: red">รีเซต</option/>\n\
@@ -690,6 +690,15 @@ function tableQuotation() {
                                 // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
                                 //        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
                                 //        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                            } else if (row.status == 'ชำระเงินแล้ว') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                            <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                                        </select>';
+                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                // <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
+                                // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
                             } else if (row.status == 'อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
                                             <option value="" style="color: black">ตัวเลือก</option/>\n\

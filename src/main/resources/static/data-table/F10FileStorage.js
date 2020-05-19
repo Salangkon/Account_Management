@@ -221,7 +221,7 @@ function AddFolder() {
         alert('ห้ามใช้อักษรพิเศษ')
     } else {
         $.ajax({
-            url: '/create-directory/' + createFolder,
+            url: '/create-directory/' + createFolder + "/" + $('#createBy').val(),
             type: 'GET',
             success: function (result) {
                 if (result == "success") {
@@ -288,9 +288,8 @@ function AddFiles() {
 function uploadSingleFile(file) {
     var formData = new FormData();
     formData.append("file", file);
-
     $.ajax({
-        url: "/fileUpload/" + setFile,
+        url: "/fileUpload/" + setFile + "/" + $('#createBy').val(),
         data: formData,
         cache: false,
         contentType: false,

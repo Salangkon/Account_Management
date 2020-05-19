@@ -314,6 +314,7 @@ public class F2Controller {
 		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
 		journal.setSumCredit(f2Model.getPrice());
 		journal.setSumDebit(f2Model.getPrice());
+		journal.setCreateBy(f2Model.getCreateBy());
 		if (passId.equals("PV")) {
 			if (f2Model.getPrice() != 0) {
 				List<JournalList> journalLists = new ArrayList<JournalList>();
@@ -417,6 +418,7 @@ public class F2Controller {
 		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
 		journal.setSumCredit(f2Model.getPrice());
 		journal.setSumDebit(f2Model.getPrice());
+		journal.setCreateBy(f2Model.getCreateBy());
 		if (passId.equals("UV")) {
 			if (f2Model.getPrice() != 0) {
 				List<JournalList> journalLists = new ArrayList<JournalList>();
@@ -469,6 +471,7 @@ public class F2Controller {
 		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
 		journal.setSumCredit(f2Model.getPrice());
 		journal.setSumDebit(f2Model.getPrice());
+		journal.setCreateBy(f2Model.getCreateBy());
 		if (passId.equals("RV")) {
 			if (f2Model.getPrice() != 0) {
 				List<JournalList> journalLists = new ArrayList<JournalList>();
@@ -514,6 +517,7 @@ public class F2Controller {
 		journal.setDocumentCode(journalController.getGenerateDepartmentCode(passId));
 		journal.setSumCredit(f2Model.getProductPriceAll());
 		journal.setSumDebit(f2Model.getProductPriceAll());
+		journal.setCreateBy(f2Model.getCreateBy());
 		if (passId.equals("UV")) {
 			if (f2Model.getPrice() != 0) {
 				List<JournalList> journalLists = new ArrayList<JournalList>();

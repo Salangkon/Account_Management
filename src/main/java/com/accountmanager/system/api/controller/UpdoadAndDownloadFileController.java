@@ -56,8 +56,8 @@ public class UpdoadAndDownloadFileController {
 		pathLogo = Paths.get(pathnas);
 	}
 
-	@RequestMapping(value = "/uploadFile/{dir}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String uploadFile(@PathVariable("dir") String dir, @RequestParam("file") MultipartFile file)
+	@RequestMapping(value = "/uploadFile/{dir}/{createBy}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String uploadFile(@PathVariable("dir") String dir, @PathVariable("createBy") String createBy, @RequestParam("file") MultipartFile file)
 			throws IOException {
 		String path = pathNas + "\\" + dir + "\\" + file.getOriginalFilename();
 		File convertFile = new File(path);
@@ -72,12 +72,13 @@ public class UpdoadAndDownloadFileController {
 		DBFile dbFile = new DBFile();
 		dbFile.setFileName(path);
 		dbFile.setFileType(file.getName());
+		dbFile.setCreatedBy(createBy);
 		DBFileRepo.save(dbFile);
 		return "File has uploaded successfully";
 	}
 	
-	@RequestMapping(value = "/fileUpload/{directoryId}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String fileUpload(@PathVariable("directoryId") String dir, @RequestParam("file") MultipartFile file)
+	@RequestMapping(value = "/fileUpload/{directoryId}/{createBy}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String fileUpload(@PathVariable("directoryId") String dir, @PathVariable("createBy") String createBy, @RequestParam("file") MultipartFile file)
 			throws IOException {
 		
 		String path = pathNas + "\\" + directoryRepo.findOne(dir).getName() + "\\" + file.getOriginalFilename();
@@ -94,6 +95,7 @@ public class UpdoadAndDownloadFileController {
 		dbFile.setFileName(file.getOriginalFilename());
 		dbFile.setFileType(file.getName());
 		dbFile.setDirectoryId(dir);
+		dbFile.setCreatedBy(createBy);
 		DBFileRepo.save(dbFile);
 		return "File has uploaded successfully";
 	}
@@ -132,8 +134,8 @@ public class UpdoadAndDownloadFileController {
 		return responseEntity;
 	}
 
-	@GetMapping("/create-directory/{name}")
-	private String createDirectory(@PathVariable("name") String name) {
+	@GetMapping("/create-directory/{name}/{createBy}")
+	private String createDirectory(@PathVariable("name") String name, @PathVariable("createBy") String createBy) {
 		String res = "false";
 		try {
 			Path path = Paths.get(pathNas + "\\" + name);
@@ -142,6 +144,7 @@ public class UpdoadAndDownloadFileController {
 				Directory dir = new Directory();
 				dir.setId(UUID.randomUUID().toString());
 				dir.setName(name);
+				dir.setCreatedBy(createBy);
 				directoryRepo.save(dir);
 
 				Files.createDirectories(path);

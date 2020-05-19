@@ -127,6 +127,7 @@ public class TaxReportController {
 				taxReport.setDate(f2Model.getDate());
 				taxReport.setDepartmentId(f2Model.getDepartmentId());
 				taxReport.setReferenceDocument(f2Model.getReferenceDocument());
+				taxReport.setCreateBy(f2Model.getCreateBy());
 				if (f2Model.getType().equalsIgnoreCase("TaxInvoice")) {
 					taxReport.setType("ReportSaleTax");
 				} else {
@@ -142,9 +143,7 @@ public class TaxReportController {
 					taxReport.setProductPriceAll(f2Model.getProductPriceAll1());
 				}
 				taxReport.setCompany(f2Model.getCompanyId());
-				taxReport.setCreateBy("");
 				taxReport.setCreateDate(ts);
-				taxReport.setCreateBy("");
 				taxReport.setUpdateDate(ts);
 			}
 
