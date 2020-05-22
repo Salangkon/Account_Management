@@ -48,7 +48,7 @@ $(document).ready(function () {
     $('#MyModalPrintPDF').on('hidden.bs.modal', function (e) {
         tableJournal();
     })
-    
+
     dataCustomer(null);
     tableCreateJournal(null);
     tableJournal();
@@ -88,7 +88,7 @@ function tableJournal() {
     }
     $.ajax({
         type: "GET",
-        url: "/api-journal/get-all/JV/" + fromDate + "/" + toDate,
+        url: "/api-journal/get-all/JV/" + $('#createBy').val() + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {

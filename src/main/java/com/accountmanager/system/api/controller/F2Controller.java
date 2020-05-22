@@ -21,17 +21,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accountmanager.system.model.CategoryExpensesMapping;
+import com.accountmanager.system.model.Company;
 import com.accountmanager.system.model.CustomersList;
 import com.accountmanager.system.model.F2ListModel;
 import com.accountmanager.system.model.F2Model;
 import com.accountmanager.system.model.Journal;
 import com.accountmanager.system.model.JournalList;
+import com.accountmanager.system.model.User;
 import com.accountmanager.system.repository.CategoryExpensesMappingRepository;
 import com.accountmanager.system.repository.CustomersListRepository;
 import com.accountmanager.system.repository.F2ListRepository;
 import com.accountmanager.system.repository.F2Repository;
 import com.accountmanager.system.repository.JournalListRepository;
 import com.accountmanager.system.repository.JournalRepository;
+import com.accountmanager.system.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api-f2")
@@ -44,12 +47,14 @@ public class F2Controller {
 	@Autowired
 	CustomersListRepository customersListRepo;
 	@Autowired
+	UserRepository userRepo;
+	@Autowired
 	JournalRepository journalRepo;
 	@Autowired
 	JournalListRepository journalListRepo;
 	@Autowired
 	F6JournalController journalController;
-	@Autowired
+
 	CategoryExpensesMappingRepository categoryExpensesMappingRepo;
 
 	@GetMapping("/get-f2ListRepo-by-id/{id}")
@@ -110,9 +115,9 @@ public class F2Controller {
 		return gen;
 	}
 
-	@GetMapping("/get-by/{type}/{status}/{startDate}/{endDate}")
-	public List<F2Model> F2Model(@PathVariable String type, @PathVariable String status, @PathVariable String startDate,
-			@PathVariable String endDate) {
+	@GetMapping("/get-by/{type}/{userId}/{status}/{startDate}/{endDate}")
+	public List<F2Model> F2Model(@PathVariable String userId, @PathVariable String type, @PathVariable String status,
+			@PathVariable String startDate, @PathVariable String endDate) {
 		List<F2Model> f2Models = new ArrayList<F2Model>();
 		List<F2Model> f2ModelsDisplay = new ArrayList<F2Model>();
 		System.err.println(type + " :: " + status + " :: " + startDate + " :: " + endDate);
@@ -163,10 +168,23 @@ public class F2Controller {
 			f2ModelsDisplay.add(f2Model);
 		}
 
-		f2ModelsDisplay.sort(
+		User user = userRepo.findOne(userId);
+		Company company = user.getCompanys();
+
+		List<F2Model> f2ModelsByUser = new ArrayList<F2Model>();
+
+		for (User us : company.getUsers()) {
+			for (F2Model f2Model : f2ModelsDisplay) {
+				if (us.getId().equals(f2Model.getCreateBy())) {
+					f2ModelsByUser.add(f2Model);
+				}
+			}
+		}
+
+		f2ModelsByUser.sort(
 				(e2, e1) -> new Long(e1.getUpdateDate().getTime()).compareTo(new Long(e2.getUpdateDate().getTime())));
 
-		return f2ModelsDisplay;
+		return f2ModelsByUser;
 	}
 
 	public List<F2Model> searchF2(String type, String status, String startDate, String endDate) {
@@ -201,7 +219,7 @@ public class F2Controller {
 		return f2Repo.findById(id);
 	}
 
- 	@PostMapping("/update-status/{id}/{status}")
+	@PostMapping("/update-status/{id}/{status}")
 	public F2Model updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
 		F2Model f2Model = f2Repo.findById(id);
 
@@ -223,13 +241,13 @@ public class F2Controller {
 		case "5":
 			f2Model.setStatus("ชำระเงินแล้ว");
 //			if (journalRepo.findByF2IdAndType(f2Model.getId(), "PV") == null) {
-				ReceiveReport(f2Model, "PV");
+			ReceiveReport(f2Model, "PV");
 //			}
 			break;
 		case "6":
 			f2Model.setStatus("ชำระเงินแล้ว");
 //			if (journalRepo.findByF2IdAndType(f2Model.getId(), "PV") == null) {
-				Expenses(f2Model, "PV");
+			Expenses(f2Model, "PV");
 //			}
 			break;
 		case "7":

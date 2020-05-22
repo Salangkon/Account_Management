@@ -32,10 +32,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.accountmanager.system.model.Company;
 import com.accountmanager.system.model.DBFile;
 import com.accountmanager.system.model.Directory;
+import com.accountmanager.system.model.TaxReport;
+import com.accountmanager.system.model.User;
 import com.accountmanager.system.repository.DBFileRepository;
 import com.accountmanager.system.repository.DirectoryRepository;
+import com.accountmanager.system.repository.UserRepository;
 
 @RestController
 public class UpdoadAndDownloadFileController {
@@ -43,7 +47,9 @@ public class UpdoadAndDownloadFileController {
 	DBFileRepository DBFileRepo;
 	@Autowired
 	DirectoryRepository directoryRepo;
-
+	@Autowired
+	UserRepository userRepo;
+	
 	Path pathNas;
 	@Value("${filepath.path}")
 	private void setPathNas(String pathnas) {
@@ -157,8 +163,8 @@ public class UpdoadAndDownloadFileController {
 		return res;
 	}
 
-	@GetMapping("/directory-all")
-	private List<HashMap<String, String>> directory() {
+	@GetMapping("/directory-all/{userId}")
+	private List<HashMap<String, String>> directory(@PathVariable("userId") String userId) {
 		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		List<Directory> directories = directoryRepo.findAllGroupByCreateDate();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.US);
@@ -167,9 +173,24 @@ public class UpdoadAndDownloadFileController {
 			map.put("id", directory.getId());
 			map.put("name", directory.getName());
 			map.put("createDate", dateFormat.format(directory.getCreateDate()));
+			map.put("createBy",  directory.getCreatedBy());
 			list.add(map);
 		}
-		return list;
+		
+		User user = userRepo.findOne(userId);
+		Company company = user.getCompanys();
+
+		List<HashMap<String, String>> listFiles = new ArrayList<HashMap<String, String>>();
+
+		for (User us : company.getUsers()) {
+			for (HashMap<String, String> fileUser : list) {
+				if (us.getId().equals(fileUser.get("createBy"))) {
+					listFiles.add(fileUser);
+				}
+			}
+		}
+		
+		return listFiles;
 	}
 	
 	@GetMapping("/file-by/{directoryId}")

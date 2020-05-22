@@ -88,7 +88,7 @@ function tableJournal() {
     }
     $.ajax({
         type: "GET",
-        url: "/api-journal/get-all/SV/" + fromDate + "/" + toDate,
+        url: "/api-journal/get-all/SV/" + $('#createBy').val() + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {

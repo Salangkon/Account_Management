@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accountmanager.system.model.Company;
 import com.accountmanager.system.model.F2Model;
 import com.accountmanager.system.model.TaxReport;
+import com.accountmanager.system.model.User;
 import com.accountmanager.system.repository.F2Repository;
 import com.accountmanager.system.repository.TaxReportRepository;
+import com.accountmanager.system.repository.UserRepository;
 
 @RestController
 @RequestMapping("/TaxReport")
@@ -32,6 +35,8 @@ public class TaxReportController {
 	@Autowired
 	F2Repository F2Repo;
 	@Autowired
+	UserRepository userRepo;
+	@Autowired
 	F8CustomersController customersContro;
 	
 	@GetMapping("/get-all")
@@ -39,8 +44,8 @@ public class TaxReportController {
 		return taxReportRepo.findAll();
 	}
 
-	@GetMapping("/get-by/{type}/{startDate}/{endDate}")
-	public ResponseEntity<?> getBy(@PathVariable String type, @PathVariable String startDate,
+	@GetMapping("/get-by/{type}/{userId}/{startDate}/{endDate}")
+	public ResponseEntity<?> getBy(@PathVariable String type, @PathVariable("userId") String userId, @PathVariable String startDate,
 			@PathVariable String endDate) {
 		System.out.println("type :: " + type + " >> startDate :: " + startDate + " >> endDate :: " + endDate);
 		List<TaxReport> reports = new ArrayList<TaxReport>();
@@ -102,8 +107,20 @@ public class TaxReportController {
 			e.printStackTrace();
 		}
 		
+		User user = userRepo.findOne(userId);
+		Company company = user.getCompanys();
+
+		List<TaxReport> TaxReportByUser = new ArrayList<TaxReport>();
+
+		for (User us : company.getUsers()) {
+			for (TaxReport taxReport : reports) {
+				if (us.getId().equals(taxReport.getCreateBy())) {
+					TaxReportByUser.add(taxReport);
+				}
+			}
+		}
 		
-		return new ResponseEntity<>(reports, HttpStatus.OK);
+		return new ResponseEntity<>(TaxReportByUser, HttpStatus.OK);
 	}
 
 	@PostMapping("/add-update/TaxReport")

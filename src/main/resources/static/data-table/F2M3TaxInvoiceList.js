@@ -199,7 +199,7 @@ function updateQuotation(id, TaxInvoice) {
                     $('#date').val(msg.date), //วันที่
                     $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
                     $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
-                $('#statusVat').val(msg.statusVat)
+                    $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
                     document.getElementById("statusVat2").hidden = true;
@@ -245,7 +245,7 @@ function updateQuotation(id, TaxInvoice) {
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val(""), //วันที่_ครบกำหนด
             $('#referenceDocument').val(""), //เลขที่เอกสาร
-        $('#statusVat').val("1")
+            $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
         // ไม่รวมภาษี
@@ -565,7 +565,7 @@ function saveCreateQuotation() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                if (result != null || result != '') {             
+                if (result != null || result != '') {
                     $.ajax({
                         type: 'POST',
                         url: '/TaxReport/add-update/TaxReport',
@@ -683,7 +683,7 @@ function tableTaxInvoice() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/TaxInvoice/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/TaxInvoice/" + $('#createBy').val() + "/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {

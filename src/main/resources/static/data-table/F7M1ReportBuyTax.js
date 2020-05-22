@@ -45,7 +45,7 @@ function reportBuyTax() {
 
     $.ajax({
         type: "GET",
-        url: "/TaxReport/get-by/ReportBuyTax/" + fromDate + "/" + toDate,
+        url: "/TaxReport/get-by/ReportBuyTax/" + $('#createBy').val() + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (res) {

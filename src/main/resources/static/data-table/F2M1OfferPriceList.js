@@ -770,7 +770,7 @@ function tableQuotation() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/Quotation/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/Quotation/" + $('#createBy').val() + "/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {

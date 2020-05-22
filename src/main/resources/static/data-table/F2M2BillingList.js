@@ -146,7 +146,7 @@ function statusVatFlg($i) {
 
 // update Quotation
 function updateQuotation(id, biiling) {
-    console.log("TaxInvoice :: ", id + " :: " +  biiling);
+    console.log("TaxInvoice :: ", id + " :: " + biiling);
 
     if (biiling == "save" || biiling == "update") {
         document.getElementById("biilingFlgTitle").hidden = false;
@@ -201,7 +201,7 @@ function updateQuotation(id, biiling) {
                     $('#date').val(msg.date), //วันที่
                     $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
                     $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
-                $('#statusVat').val(msg.statusVat)
+                    $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
                     document.getElementById("statusVat2").hidden = true;
@@ -247,7 +247,7 @@ function updateQuotation(id, biiling) {
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val(""), //วันที่_ครบกำหนด
             $('#referenceDocument').val(""), //เลขที่เอกสาร
-        $('#statusVat').val("1")
+            $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
         // ไม่รวมภาษี
@@ -668,7 +668,7 @@ function tableBiiling() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/Biiling/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/Biiling/" + $('#createBy').val() + "/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {

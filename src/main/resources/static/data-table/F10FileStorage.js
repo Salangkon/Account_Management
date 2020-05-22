@@ -10,7 +10,7 @@ $(document).ready(function () {
 function getFolder() {
     $.ajax({
         type: "GET",
-        url: "/directory-all",
+        url: "/directory-all/" + $('#createBy').val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
