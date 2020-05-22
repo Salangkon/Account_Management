@@ -9,7 +9,7 @@
 						<th style="width: 50%;"></th>
 						<th style="width: 40%;">
 							<h4 style="color: purple;">
-								<b>ใบเสนอราคา</b>
+								<b>ใบรับสินค้า</b>
 							</h4>
 							<hr>
 						</th>
@@ -69,7 +69,7 @@
 						<td style="width: 50%;"></td>
 					</tr>
 				</table>
-				<table class="table table-sm table-hover" id="tablePrintPDFDisplay" style="margin-top: 15px;">
+				<table class="table table-sm" id="tablePrintPDFDisplay" style="margin-top: 15px;">
 					<tr>
 						<th style="width: 5%;text-align: center;">ลำดับ</th style="width: 100%;">
 						<th style="width: 45%;text-align: center">รายละเอียด</th style="width: 100%;">

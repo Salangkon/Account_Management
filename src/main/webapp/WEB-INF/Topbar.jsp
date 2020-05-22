@@ -39,29 +39,29 @@
 		</li>
 
 		<input type="text" id="positionLog" value="<%=user.getPosition()%>" hidden>
-		<!-- data update -->
 		<input id="id" value="<%=user.getId() %>" hidden>
 		<input id="password" value="<%=user.getPassword() %>" hidden>
-		<input id="fName" value="<%=user.getFName() %>" hidden>
-		<input id="lName" value="<%=user.getLName() %>" hidden>
+		<input id="fName" value="<%=user.getfName() %>" hidden>
+		<input id="lName" value="<%=user.getlName() %>" hidden>
 		<input id="email" value="<%=user.getEmail() %>" hidden>
 		<input id="position" value="<%=user.getPosition() %>" hidden>
 		<input id="status" value="<%=user.getStatus() %>" hidden>
-
+		<input id="createBy" value="<%=user.getId() %>" hidden>
+		
 		<div class="topbar-divider d-none d-sm-block"></div>
 
 		<!-- Nav Item - User Information -->
 		<li class="nav-item dropdown no-arrow">
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
 				aria-haspopup="true" aria-expanded="false">
-				<span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=user.getFName() %>
-					<%=user.getLName() %></span>
+				<span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=user.getfName() %>
+					<%=user.getlName() %></span>
 				<img class="img-profile rounded-circle" id="myImg">
 			</a>
 			<!-- Dropdown - User Information -->
 			<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 				<a class="dropdown-item"> <i class="fas fa-building fa-sm fa-fw mr-2 text-gray-400"></i><b>
-						<%=user.getCompany() %></b></a>
+						<%=user.getCompanys().getCompanyName() %></b></a>
 				<a class="dropdown-item"> <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 					<%=user.getPosition() %></a>
 				<a class="dropdown-item"> <i class="fas fa-envelope fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -95,7 +95,7 @@
 			success: function (msg) {
 				console.log(JSON.stringify(msg));
 				
-				document.getElementById("myImg").src = "\\img\\" + msg.logo;
+				document.getElementById("myImg").src = "\\img\\" + msg.companys.logo;
 			}
 		});
 	}

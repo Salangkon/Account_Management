@@ -50,7 +50,7 @@
 								<div class="form-group row">
 									<div class="col-sm-4"><label>ประเภทธุระกิจ : </label></div>
 									<div class="col-sm-8">
-										<select class="form-control" id="type">
+										<select class="form-control" id="companyType">
 											<option value="0">บริบัท</option>
 											<option value="1">ห้างหุ้นส่วน</option>
 											<option value="2">บุคคลธรรมดา/ฟรีแลนซ์</option>
@@ -85,8 +85,8 @@
 										</div>
 										<div id="department">
 											<div class="input-group input-group-sm mb-3">
-												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentPass">
 												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentName">
+												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentPass">
 											</div>
 											<p class="hide" id="error-department"></p>
 										</div>

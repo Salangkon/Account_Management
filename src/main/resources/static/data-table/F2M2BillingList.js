@@ -64,6 +64,10 @@ $(document).ready(function () {
     $('#myModal').on('hidden.bs.modal', function (e) {
         tableBiiling();
     })
+    $('#MyModalPrintPDF').on('hidden.bs.modal', function (e) {
+        tableBiiling();
+    })
+
     tableBiiling();
     dataCustomer(null);
     tableCreateBiiling1(null);
@@ -121,7 +125,7 @@ function changeFunc($i) {
             updateStatus(id, "3");
             break;
         case "5":
-            updateQuotation(id, "true");
+            updateQuotation(id, "taxInvoiceFlg");
             break;
     }
 } // end update status
@@ -141,23 +145,27 @@ function statusVatFlg($i) {
 } // end update status vat
 
 // update Quotation
-function updateQuotation(id, TaxInvoice) {
-    console.log("test :: ", id + TaxInvoice);
-    if (id == null || TaxInvoice == "false") {
-        TaxInvoice = false;
+function updateQuotation(id, biiling) {
+    console.log("TaxInvoice :: ", id + " :: " + biiling);
+
+    if (biiling == "save" || biiling == "update") {
+        document.getElementById("biilingFlgTitle").hidden = false;
+        document.getElementById("taxInvoiceFlgTitle").hidden = true;
+
+        document.getElementById("saveBiilingFlg").hidden = false;
+        document.getElementById("saveTaxInvoiceFlg").hidden = true;
+    } else if (biiling == "taxInvoiceFlg") {
+        document.getElementById("biilingFlgTitle").hidden = true;
+        document.getElementById("taxInvoiceFlgTitle").hidden = false;
+
+        document.getElementById("saveBiilingFlg").hidden = true;
+        document.getElementById("saveTaxInvoiceFlg").hidden = false;
     } else {
-        TaxInvoice = true;
-    }
-    if (TaxInvoice) {
-        document.getElementById("TaxInvoiceFlg").style.display = "none";
-        document.getElementById("TaxInvoiceFlgDefault").style.display = "block";
-        document.getElementById("saveTaxInvoiceFlg").style.display = "none";
-        document.getElementById("saveTaxInvoiceFlgDefault").style.display = "block";
-    } else {
-        document.getElementById("TaxInvoiceFlg").style.display = "block";
-        document.getElementById("TaxInvoiceFlgDefault").style.display = "none";
-        document.getElementById("saveTaxInvoiceFlg").style.display = "block";
-        document.getElementById("saveTaxInvoiceFlgDefault").style.display = "none";
+        document.getElementById("biilingFlgTitle").hidden = false;
+        document.getElementById("taxInvoiceFlgTitle").hidden = true;
+
+        document.getElementById("saveBiilingFlg").hidden = true;
+        document.getElementById("saveTaxInvoiceFlg").hidden = true;
     }
     if (id != null) {
         $.ajax({
@@ -191,8 +199,9 @@ function updateQuotation(id, TaxInvoice) {
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
-                $('#statusVat').val(msg.statusVat)
+                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
+                    $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
+                    $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
                     document.getElementById("statusVat2").hidden = true;
@@ -236,8 +245,9 @@ function updateQuotation(id, TaxInvoice) {
             $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
-            $('#dateEnd').val("") //วันที่_ครบกำหนด
-        $('#statusVat').val("1")
+            $('#dateEnd').val(""), //วันที่_ครบกำหนด
+            $('#referenceDocument').val(""), //เลขที่เอกสาร
+            $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
         // ไม่รวมภาษี
@@ -534,6 +544,8 @@ function saveCreateQuotation() {
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
+            createBy: $('#createBy').val(), //สร้างโดย
             f2ListModels: [],
         }
         var data = tableCreateBiiling.data();
@@ -594,6 +606,8 @@ function saveCreateQuotationTaxInvoice() {
                     note: $('#note').val(), //หมาบเหตุ
                     date: $('#date').val(), //วันที่
                     dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+                    referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
+                    createBy: $('#createBy').val(), //สร้างโดย
                     f2ListModels: [],
                 }
                 var data = tableCreateBiiling.data();
@@ -654,7 +668,7 @@ function tableBiiling() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/Biiling/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/Biiling/" + $('#createBy').val() + "/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
@@ -679,7 +693,7 @@ function tableBiiling() {
                         "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + null + "'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
@@ -721,22 +735,36 @@ function tableBiiling() {
                     },
                     {
                         'data': '',
-                        "className": "text-right",
+                        "className": "text-center",
                         "sWidth": "13%",
-                        "mRender": function (data, type, full) {
-                            if (full.status == 'ไม่อนุมัติ') {
-                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
-                                       <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
-                                       <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
-                            } else if (full.status == 'อนุมัติ') {
-                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
-                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
+                        "mRender": function (data, type, row) {
+                            if (row.status == 'ไม่อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                        <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                        <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
+                                    </select>';
+                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
+                                //        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
+                                //        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                            } else if (row.status == 'อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                        <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                        <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                                    </select>';
+                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                // <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
                                 // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
-                            } else if (full.status == 'รออนุมัติ') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
-                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
+                            } else if (row.status == 'รออนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                        <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                        <option value="1' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
+                                        <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                                        <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
+                                    </select>';
+                                // return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
+                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                // <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             }
                         }
                     }
@@ -744,7 +772,26 @@ function tableBiiling() {
             });
         }
     });
-}; // END tableBiiling
+}; // END tableQuotation
+
+// update status
+function changeStatus($i) {
+    var type = $i.slice(0, 1);
+    var id = $i.substr(1, 100);
+    console.log(type, id);
+    switch (type) {
+        case '1':
+            updateQuotation(id, 'update');
+            break;
+        case '2':
+            printPDF(id);
+            $('#MyModalPrintPDF').modal('show');
+            break;
+        case '3':
+            deleteId(id);
+            break;
+    }
+}
 
 function deleteId(id) {
     swal({

@@ -189,8 +189,8 @@
 									<div class="col-sm-3"><label>E-mail</label></div>
 									<div class="col-sm-9" style="max-width: 90%;">
 										<input type="email" style="max-width: 90%;" class="form-control form-control"
-											id="email" placeholder="E-mail">
-										<p class="hide" id="error-email">กรุณากรอก
+											id="emailCus" placeholder="E-mail">
+										<p class="hide" id="error-emailCus">กรุณากรอก
 											E-mail</p>
 									</div>
 									<div class="col-sm-3"><label>เบอร์ติดต่อ</label></div>

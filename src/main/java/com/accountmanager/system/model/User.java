@@ -1,7 +1,15 @@
 package com.accountmanager.system.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * The persistent class for the user database table.
@@ -15,13 +23,7 @@ public class User implements Serializable {
 	@Id
 	private String id;
 
-	private String address;
-
-	private String company;
-
-	private String department;
-
-	private String email;
+	private String password;
 
 	@Column(name = "f_name")
 	private String fName;
@@ -29,132 +31,42 @@ public class User implements Serializable {
 	@Column(name = "l_name")
 	private String lName;
 
-	private String logo;
+	private String email;
 
-	private String password;
+	private String address;
 
 	private String position;
 
-	private int status;
+	private String status;
 
 	private String tel;
 
-	private String type;
+	@Column(name = "company_id")
+	private String companyId;
 
-	@Column(name = "department_name")
-	private int departmentName;
-
-	@Column(name = "department_pass")
-	private String departmentPass;
-
-	@Column(name = "tax_id")
-	private String taxId;
+	// bi-directional many-to-one association to F2Model
+	@ManyToOne
+	@JoinColumn(name = "company_id", referencedColumnName = "company_id", insertable = false, updatable = false)
+	@JsonBackReference
+	private Company Companys;
 
 	public User() {
 	}
 
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCompany() {
-		return this.company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public String getDepartment() {
-		return this.department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getFName() {
-		return this.fName;
-	}
-
-	public void setFName(String fName) {
-		this.fName = fName;
-	}
-
 	public String getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public String getLName() {
-		return this.lName;
-	}
-
-	public void setLName(String lName) {
-		this.lName = lName;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getPosition() {
-		return this.position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
-
-	public int getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public String getTel() {
-		return this.tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
-	public String getType() {
-		return this.type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getfName() {
@@ -173,28 +85,60 @@ public class User implements Serializable {
 		this.lName = lName;
 	}
 
-	public int getDepartmentName() {
-		return departmentName;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setDepartmentName(int departmentName) {
-		this.departmentName = departmentName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getDepartmentPass() {
-		return departmentPass;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setDepartmentPass(String departmentPass) {
-		this.departmentPass = departmentPass;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getTaxId() {
-		return taxId;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setTaxId(String taxId) {
-		this.taxId = taxId;
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+
+	public Company getCompanys() {
+		return Companys;
+	}
+
+	public void setCompanys(Company companys) {
+		Companys = companys;
 	}
 
 }

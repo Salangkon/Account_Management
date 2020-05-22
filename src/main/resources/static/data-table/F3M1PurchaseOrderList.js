@@ -64,6 +64,10 @@ $(document).ready(function () {
     $('#myModal').on('hidden.bs.modal', function (e) {
         tableQuotation();
     })
+    $('#MyModalPrintPDF').on('hidden.bs.modal', function (e) {
+        tableQuotation();
+    })
+
     tableQuotation();
     dataCustomer(null);
     tableCreateQuotationDisplay1(null);
@@ -120,7 +124,7 @@ function changeFunc($i) {
             updateStatus(id, "3");
             break;
         case "5":
-            updateQuotation(id, "true");
+            updateQuotation(id, "saveReceiveReportFlg");
             break;
     }
 } // end update status
@@ -142,21 +146,24 @@ function statusVatFlg($i) {
 // update Quotation
 function updateQuotation(id, PurchaseOrder) {
     console.log("test :: ", id + PurchaseOrder);
-    if (id == null || PurchaseOrder == "false") {
-        PurchaseOrder = false;
+    if (PurchaseOrder == "save" || PurchaseOrder == "update") {
+        document.getElementById("purchaseOrderFlgTitle").hidden = false;
+        document.getElementById("receiveReportFlgTitle").hidden = true;
+
+        document.getElementById("savePurchaseOrderFlg").hidden = false;
+        document.getElementById("saveReceiveReportFlg").hidden = true;
+    } else if (PurchaseOrder == "saveReceiveReportFlg") {
+        document.getElementById("purchaseOrderFlgTitle").hidden = true;
+        document.getElementById("receiveReportFlgTitle").hidden = false;
+
+        document.getElementById("savePurchaseOrderFlg").hidden = true;
+        document.getElementById("saveReceiveReportFlg").hidden = false;
     } else {
-        PurchaseOrder = true;
-    }
-    if (PurchaseOrder) {
-        document.getElementById("PurchaseOrderFlg").style.display = "none";
-        document.getElementById("PurchaseOrderFlgDefault").style.display = "block";
-        document.getElementById("savePurchaseOrderFlg").style.display = "none";
-        document.getElementById("savePurchaseOrderFlgDefault").style.display = "block";
-    } else {
-        document.getElementById("PurchaseOrderFlg").style.display = "block";
-        document.getElementById("PurchaseOrderFlgDefault").style.display = "none";
-        document.getElementById("savePurchaseOrderFlg").style.display = "block";
-        document.getElementById("savePurchaseOrderFlgDefault").style.display = "none";
+        document.getElementById("purchaseOrderFlgTitle").hidden = false;
+        document.getElementById("receiveReportFlgTitle").hidden = true;
+
+        document.getElementById("savePurchaseOrderFlg").hidden = true;
+        document.getElementById("saveReceiveReportFlg").hidden = true;
     }
 
     if (id != null) {
@@ -191,8 +198,9 @@ function updateQuotation(id, PurchaseOrder) {
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
-                $('#statusVat').val(msg.statusVat)
+                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
+                    $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
+                    $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
                     document.getElementById("statusVat2").hidden = true;
@@ -237,6 +245,7 @@ function updateQuotation(id, PurchaseOrder) {
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
             $('#dateEnd').val("") //วันที่_ครบกำหนด
+        $('#referenceDocument').val("") //เลขที่เอกสาร
         $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
@@ -533,6 +542,8 @@ function saveCreateQuotation() {
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
+            createBy: $('#createBy').val(), //สร้างโดย
             f2ListModels: [],
         }
         var data = tableCreateQuotation.data();
@@ -593,6 +604,8 @@ function saveCreateQuotationBilling() {
                     note: $('#note').val(), //หมาบเหตุ
                     date: $('#date').val(), //วันที่
                     dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+                    referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
+                    createBy: $('#createBy').val(), //สร้างโดย
                     f2ListModels: [],
                 }
                 var data = tableCreateQuotation.data();
@@ -654,7 +667,7 @@ function tableQuotation() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/PurchaseOrder/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/PurchaseOrder/" + $('#createBy').val() + "/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
@@ -679,7 +692,7 @@ function tableQuotation() {
                         "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','checkPurchaseOrderFlg'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
@@ -721,22 +734,36 @@ function tableQuotation() {
                     },
                     {
                         'data': '',
-                        "className": "text-right",
+                        "className": "text-center",
                         "sWidth": "13%",
-                        "mRender": function (data, type, full) {
-                            if (full.status == 'ไม่อนุมัติ') {
-                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
-                                       <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
-                                       <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
-                            } else if (full.status == 'อนุมัติ') {
-                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
-                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
+                        "mRender": function (data, type, row) {
+                            if (row.status == 'ไม่อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                            <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
+                                        </select>';
+                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
+                                //        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
+                                //        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                            } else if (row.status == 'อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                            <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                                        </select>';
+                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                // <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
                                 // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
-                            } else if (full.status == 'รออนุมัติ') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
-                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
+                            } else if (row.status == 'รออนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                            <option value="1' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
+                                            <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                                            <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
+                                        </select>';
+                                // return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
+                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                // <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             }
                         }
                     }
@@ -745,6 +772,25 @@ function tableQuotation() {
         }
     });
 }; // END tableQuotation
+
+// update status
+function changeStatus($i) {
+    var type = $i.slice(0, 1);
+    var id = $i.substr(1, 100);
+    console.log(type, id);
+    switch (type) {
+        case '1':
+            updateQuotation(id, 'update');
+            break;
+        case '2':
+            printPDF(id);
+            $('#MyModalPrintPDF').modal('show');
+            break;
+        case '3':
+            deleteId(id);
+            break;
+    }
+}
 
 function deleteId(id) {
     swal({

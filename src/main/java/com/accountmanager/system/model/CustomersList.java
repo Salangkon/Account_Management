@@ -3,64 +3,70 @@ package com.accountmanager.system.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
 
 /**
  * The persistent class for the customers_list database table.
  * 
  */
 @Entity
-@Table(name="customers_list")
-@NamedQuery(name="CustomersList.findAll", query="SELECT c FROM CustomersList c")
+@Table(name = "customers_list")
+@NamedQuery(name = "CustomersList.findAll", query = "SELECT c FROM CustomersList c")
 public class CustomersList implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="company_id")
+	@Column(name = "company_id")
 	private String companyId;
 
 	@Lob
 	private String address;
 
-	@Column(name="company_name")
+	@Column(name = "company_name")
 	private String companyName;
 
-	@Column(name="company_type")
+	@Column(name = "company_type")
 	private String companyType;
 
-	@Column(name="customer_name")
+	@Column(name = "customer_name")
 	private String customerName;
 
 	private String department;
 
 	private String email;
 
-	@Column(name="office_type")
+	@Column(name = "office_type")
 	private int officeType;
 
-	@Column(name="tax_id")
-	private int taxId;
+	@Column(name = "tax_id")
+	private String taxId;
 
 	private String tel;
-	
+
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	private Date created_date = new Date();
-	
-	@Column(name="create_by")
+
+	@Column(name = "create_by")
 	private String createBy;
-	
+
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date updated_date = new Date();
-	
-	@Column(name="update_by")
+
+	@Column(name = "update_by")
 	private Date updateBy;
 
 	public CustomersList() {
@@ -130,11 +136,11 @@ public class CustomersList implements Serializable {
 		this.officeType = officeType;
 	}
 
-	public int getTaxId() {
-		return this.taxId;
+	public String getTaxId() {
+		return taxId;
 	}
 
-	public void setTaxId(int taxId) {
+	public void setTaxId(String taxId) {
 		this.taxId = taxId;
 	}
 

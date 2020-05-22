@@ -196,7 +196,7 @@
 										</div>
 										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
 										<div class="col-sm-8">
-											<input class="form-control" style="margin-top: 10px;" id=""
+											<input class="form-control" style="margin-top: 10px;" id="referenceDocument"
 												placeholder="เลขอ้างอิง">
 										</div>
 										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>
@@ -361,7 +361,7 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()">บันทึก</button>
+						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()" id="saveExpensesFlg">บันทึก</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>

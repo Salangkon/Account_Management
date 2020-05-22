@@ -224,9 +224,25 @@
 		</div>
 		<!--End The Modal -->
 
+		<div id="MyModalPrintPDF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-lg" style="max-width: 1100px;">
+				<div class="modal-content">
+					<div class="modal-footer border border-danger">
+						<button id="btnPrint" type="button" class="btn btn-primary">พิมพ์</button>
+						<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
+					</div>
+					<div>
+						<%@include file="/WEB-INF/PrintPDF/PrintPDFF6.jsp" %>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
 		<script src="\data-table\F6M5CashReceiptsJournal.js" type="text/javascript"></script>
+		<script src="/print-pdf-js/f6-print-pdf-book-day.js" type="text/javascript"></script>
 		<!-- select -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>

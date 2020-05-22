@@ -26,12 +26,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accountmanager.system.model.Company;
 import com.accountmanager.system.model.Journal;
 import com.accountmanager.system.model.JournalList;
+import com.accountmanager.system.model.User;
 import com.accountmanager.system.pojo.GroupJounalModel;
 import com.accountmanager.system.pojo.JournalSearchPojo;
 import com.accountmanager.system.repository.JournalListRepository;
 import com.accountmanager.system.repository.JournalRepository;
+import com.accountmanager.system.repository.UserRepository;
 import com.accountmanager.system.service.JournalSearchService;
 
 @RestController
@@ -44,9 +47,11 @@ public class F6JournalController {
 	JournalListRepository journalListRepo;
 	@Autowired
 	JournalSearchService journalSearchService;
+	@Autowired
+	UserRepository userRepo;
 
-	@GetMapping("/get-all/{type}/{startDate}/{endDate}")
-	public List<Journal> getAll(@PathVariable("type") String type, @PathVariable("startDate") String formDate, @PathVariable("endDate") String toDate) {
+	@GetMapping("/get-all/{type}/{userId}/{startDate}/{endDate}")
+	public List<Journal> getAll(@PathVariable("type") String type, @PathVariable("userId") String userId, @PathVariable("startDate") String formDate, @PathVariable("endDate") String toDate) {
 		List<Journal> journals = new ArrayList<Journal>();
 		System.err.println(formDate + " :: " + toDate);
 		switch (formDate) {
@@ -71,9 +76,24 @@ public class F6JournalController {
 			}
 			break;
 		}
-		journals.sort(
+		
+		User user = userRepo.findOne(userId);
+		Company company = user.getCompanys();
+
+		List<Journal> JournalByUser = new ArrayList<Journal>();
+
+		for (User us : company.getUsers()) {
+			for (Journal journal : journals) {
+				if (us.getId().equals(journal.getCreateBy())) {
+					JournalByUser.add(journal);
+				}
+			}
+		}
+		
+		JournalByUser.sort(
 				(e2, e1) -> new Long(e1.getCreateDate().getTime()).compareTo(new Long(e2.getCreateDate().getTime())));
-		return journals;
+		
+		return JournalByUser;
 	}
 
 	@PostMapping("/add-update")
