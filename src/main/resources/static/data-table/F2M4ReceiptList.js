@@ -61,6 +61,12 @@ $('#tableCreateReceiptDisplay').on('keyup', 'input', function () {
 });
 
 $(document).ready(function () {
+    $('#myModal').on('hidden.bs.modal', function (e) {
+        tableReceipt();
+    })
+    $('#MyModalPrintPDF').on('hidden.bs.modal', function (e) {
+        tableReceipt();
+    })
 
     tableReceipt();
     dataCustomer(null);
@@ -135,7 +141,13 @@ function statusVatFlg($i) {
 } // end update status vat
 
 // update Quotation
-function updateQuotation(id) {
+function updateQuotation(id, checkReceiptFlg) {
+    console.log("checkReceiptFlg ::" + checkReceiptFlg);
+    if (checkReceiptFlg === "checkReceiptFlg") {
+        document.getElementById("saveReceiptFlg").hidden = true;
+    } else {
+        document.getElementById("saveReceiptFlg").hidden = false;
+    }
     if (id != null) {
         $.ajax({
             type: "GET",
@@ -168,7 +180,8 @@ function updateQuotation(id) {
 
                     $('#note').val(msg.note), //หมาบเหตุ
                     $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd) //วันที่_ครบกำหนด
+                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
+                    $('#referenceDocument').val(msg.referenceDocument) //เลขที่เอกสาร
                 $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
@@ -213,8 +226,9 @@ function updateQuotation(id) {
             $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
             $('#note').val(""), //หมาบเหตุ
             $('#date').val(document.getElementById('date').value), //วันที่
-            $('#dateEnd').val("") //วันที่_ครบกำหนด
-        $('#statusVat').val("1")
+            $('#dateEnd').val(""), //วันที่_ครบกำหนด
+            $('#referenceDocument').val(""), //เลขที่เอกสาร
+            $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
         // ไม่รวมภาษี
@@ -510,6 +524,8 @@ function saveCreateQuotation() {
             note: $('#note').val(), //หมาบเหตุ
             date: $('#date').val(), //วันที่
             dateEnd: $('#dateEnd').val(), //วันที่_ครบกำหนด
+            referenceDocument: $('#referenceDocument').val(), //เลขที่เอกสาร
+            createBy: $('#createBy').val(), //สร้างโดย
             f2ListModels: [],
         }
         var data = tableCreateReceipt.data();
@@ -568,7 +584,7 @@ function tableReceipt() {
 
     $.ajax({
         type: "GET",
-        url: "/api-f2/get-by/Receipt/" + searchStatus + "/" + fromDate + "/" + toDate,
+        url: "/api-f2/get-by/Receipt/" + $('#createBy').val() + "/" + searchStatus + "/" + fromDate + "/" + toDate,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
@@ -593,7 +609,7 @@ function tableReceipt() {
                         "sWidth": "13%",
                         "mRender": function (data,
                             type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + true + "'" + ')">' + row.departmentId + '</a>';
+                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','checkReceiptFlg'" + ')">' + row.departmentId + '</a>';
                         }
                     },
                     {
@@ -634,22 +650,36 @@ function tableReceipt() {
                     },
                     {
                         'data': '',
-                        "className": "text-right",
+                        "className": "text-center",
                         "sWidth": "13%",
-                        "mRender": function (data, type, full) {
-                            if (full.status == 'ไม่อนุมัติ') {
-                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
-                                       <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
-                                       <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
-                            } else if (full.status == 'อนุมัติ') {
-                                return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
-                                <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
+                        "mRender": function (data, type, row) {
+                            if (row.status == 'ไม่อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                            <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
+                                        </select>';
+                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
+                                //        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
+                                //        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
+                            } else if (row.status == 'อนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                            <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                                        </select>';
+                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
+                                // <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
+                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
                                 // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
-                            } else if (full.status == 'รออนุมัติ') {
-                                return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
-                                <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + full.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
-                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
+                            } else if (row.status == 'รออนุมัติ') {
+                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                                            <option value="" style="color: black">ตัวเลือก</option/>\n\
+                                            <option value="1' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
+                                            <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
+                                            <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
+                                        </select>';
+                                // return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
+                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
+                                // <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             }
                         }
                     }
@@ -657,7 +687,26 @@ function tableReceipt() {
             });
         }
     });
-}; // END tableReceipt
+}; // END tableQuotation
+
+// update status
+function changeStatus($i) {
+    var type = $i.slice(0, 1);
+    var id = $i.substr(1, 100);
+    console.log(type, id);
+    switch (type) {
+        case '1':
+            updateQuotation(id);
+            break;
+        case '2':
+            printPDF(id);
+            $('#MyModalPrintPDF').modal('show');
+            break;
+        case '3':
+            deleteId(id);
+            break;
+    }
+}
 
 function deleteId(id) {
     swal({

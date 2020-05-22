@@ -13,6 +13,7 @@ $('input[type="file"]').change(function (e) {
 });
 
 var logo;
+var companyId;
 var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
 var preview;
 var myImg;
@@ -42,20 +43,19 @@ function login() {
         dataType: "json",
         success: function (msg) {
             // console.log(JSON.stringify(msg));
-            $('#id').val(msg.id),
-                $('#password').val(msg.password),
-                $('#email').val(msg.email),
-                $('#company').val(msg.company),
-                $('#address').val(msg.address),
-                $('#position').val(msg.position),
-                $('#tel').val(msg.tel),
-                $('#type').val(msg.type),
-                $('#status').val(msg.status),
-                $('#taxId').val(msg.taxId),
-                logo = msg.logo,
-                document.getElementById("preview").src = "\\img\\" + msg.logo;
-                document.getElementById("myImg").src = "\\img\\" + msg.logo;
-            CheckOffice(msg.department);
+            companyId = msg.companys.companyId,
+                $('#company').val(msg.companys.companyName),
+                $('#address').val(msg.companys.address),
+                $('#companyType').val(msg.companys.companyType),
+                $('#department').val(msg.companys.department),
+                $('#departmentName').val(msg.companys.departmentName),
+                $('#departmentPass').val(msg.companys.departmentPass),
+                $('#tel').val(msg.companys.tel),
+                $('#taxId').val(msg.companys.taxId),
+                logo = msg.companys.logo,
+                document.getElementById("preview").src = "\\img\\" + msg.companys.logo;
+            document.getElementById("myImg").src = "\\img\\" + msg.companys.logo;
+            CheckOffice(msg.companys.department, msg.companys.departmentName, msg.companys.departmentPass);
         }
     })
 }
@@ -68,22 +68,16 @@ function update() {
     }
 
     var data = {
-        id: $('#id').val(),
-        password: $('#password').val(),
-        fName: $('#fName').val(),
-        lName: $('#lName').val(),
-        email: $('#email').val(),
+        companyName: $('#company').val(),
+        companyId: $('#companyId').val(),
         address: $('#address').val(),
-        company: $('#company').val(),
-        position: $('#position').val(),
+        companyType: $('#companyType').val(),
+        department: departmentData,
+        departmentName: $('#departmentName').val(),
+        departmentPass: $('#departmentPass').val(),
         tel: $('#tel').val(),
-        type: $('#type').val(),
-        status: $('#status').val(),
         taxId: $('#taxId').val(),
         logo: logo,
-        department: departmentData,
-        departmentPass: $('#departmentPass').val(),
-        departmentName: $('#departmentName').val(),
     }
     console.log(JSON.stringify(data));
     alert('บันทึกเรียบร้อย')
@@ -91,13 +85,13 @@ function update() {
     document.getElementById("myImg").src = "\\img\\" + logo;
     $.ajax({
         type: "POST",
-        url: "/api-login/save-update/",
+        url: "/api-login/save-update-company",
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result == 'pass') {
-                window.location.href = "/seting";
+            if (result.res == 'pass') {
+                window.location.href = "/setting";
             } else {
                 alert('บันทึก ไม่สำเร็จ..')
             }
@@ -125,13 +119,15 @@ function uploadSingleFile(file) {
 
 var departmentData;
 
-function CheckOffice(department) {
+function CheckOffice(department, departmentName, departmentPass) {
     if (department == 1) {
         document.getElementById("department1").checked = true;
         document.getElementById("department").hidden = true;
     } else {
         document.getElementById("department2").checked = true;
         document.getElementById("department").hidden = false;
+        $('#departmentName').val(departmentName),
+            $('#departmentPass').val(departmentPass)
     }
     departmentData = department;
     console.log("CheckOffice :: " + department);

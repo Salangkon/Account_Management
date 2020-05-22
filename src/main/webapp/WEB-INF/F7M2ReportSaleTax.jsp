@@ -38,13 +38,13 @@
 							<div class="table-responsive col-sm-12">
 								<div class="row" style="margin-bottom: 10px;">
 									<div class="col-sm-7"></div>
-									<div class="col-sm-2"><label>เริ่มต้น : </label><input id="datepicker" /> </div>
-									<div class="col-sm-2"><label>ถึง : </label><input id="datepicker1" /> </div>
-									<div class="col-sm-1"><button class="btn btn-primary" type="button"
+									<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" /> </div>
+									<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /> </div>
+									<div class="col-sm-1"><button class="btn btn-primary" type="button" onclick="reportSaleTax()" 
 											style="margin-top: 32px"> ค้นหา <i class="fas fa-fw fa-search"></i>
 										</button></div>
 								</div>
-								<table id="example" class="table table-sm table-hover" width="100%">
+								<table id="tableReportSaleTax" class="table table-sm table-hover" width="100%">
 									<thead class="bg-gradient-primary" style="color: white;">
 										<tr>
 											<th>วันที่</th>
@@ -68,24 +68,8 @@
 
 	<!-- script -->
 	<%@include file="/WEB-INF/Extensions/js.jsp" %>
-	<script>
-		$('#datepicker').datepicker({
-			uiLibrary: 'bootstrap4'
-		});
-		$('#datepicker1').datepicker({
-			uiLibrary: 'bootstrap4'
-		});
+	<script src="/data-table/F7M2ReportSaleTax.js" type="text/javascript"></script>
 
-		$(document).ready(function () {
-			var table = $('#example').DataTable({
-				lengthChange: false,
-				buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
-			});
-
-			table.buttons().container()
-				.appendTo('#example_wrapper .col-md-6:eq(0)');
-		});
-	</script>
 </body>
 
 </html>

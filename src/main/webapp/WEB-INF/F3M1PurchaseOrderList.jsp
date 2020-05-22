@@ -72,7 +72,7 @@
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" style="margin-top: 10px"
 												data-toggle="modal" data-target="#myModal"
-												onclick="updateQuotation(null)">สร้างใหม่</button>
+												onclick="updateQuotation(null, 'save')">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
@@ -115,8 +115,8 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title" id="PurchaseOrderFlg">สร้างใบสั่งซื้อ</h4>
-						<h4 class="modal-title" id="PurchaseOrderFlgDefault">สร้างใบรับสินค้า</h4>
+						<h4 class="modal-title" id="purchaseOrderFlgTitle">สร้างใบสั่งซื้อ</h4>
+						<h4 class="modal-title" id="receiveReportFlgTitle">สร้างใบรับสินค้า</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -191,7 +191,7 @@
 										</div>
 										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
 										<div class="col-sm-8">
-											<input class="form-control" style="margin-top: 10px;" id=""
+											<input class="form-control" style="margin-top: 10px;" id="referenceDocument"
 												placeholder="เลขอ้างอิง">
 										</div>
 										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>
@@ -359,7 +359,7 @@
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()"
 							id="savePurchaseOrderFlg">บันทึก</button>
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotationBilling()"
-							id="savePurchaseOrderFlgDefault">สร้างใบรับสินค้า</button>
+							id="saveReceiveReportFlg">สร้างใบรับสินค้า</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>

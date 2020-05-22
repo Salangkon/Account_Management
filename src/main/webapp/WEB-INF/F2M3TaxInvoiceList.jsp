@@ -69,7 +69,7 @@
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary" style="margin-top: 10px"
 												data-toggle="modal" data-target="#myModal"
-												onclick="updateQuotation(null)">สร้างใหม่</button>
+												onclick="updateQuotation(null, 'save')">สร้างใหม่</button>
 										</div>
 									</div>
 									<div class="row" style="margin-bottom: 10px;">
@@ -112,8 +112,8 @@
 
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title" id="ReceiptFlg">สร้างใบเสนอราคา</h4>
-						<h4 class="modal-title" id="ReceiptFlgDefault">สร้างใบเสร็จรับเงิน</h4>
+						<h4 class="modal-title" id="taxInvoiceFlgTitle">สร้างใบกำกับภาษี</h4>
+						<h4 class="modal-title" id="receiptFlgTitle">สร้างใบเสร็จรับเงิน</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -188,7 +188,7 @@
 										</div>
 										<div class="col-sm-4"><label>เลขอ้างอิง</label></div>
 										<div class="col-sm-8">
-											<input class="form-control" style="margin-top: 10px;" id=""
+											<input class="form-control" style="margin-top: 10px;" id="referenceDocument"
 												placeholder="เลขอ้างอิง">
 										</div>
 										<div class="col-sm-4"><label style="margin-top: 50px;"><b>ราคาสินค้า</b></label>
@@ -354,9 +354,9 @@
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotation()"
-							id="saveReceiptFlg">บันทึก</button>
+							id="saveTaxInvoiceFlg">บันทึก</button>
 						<button type="button" class="btn btn-success" onclick="saveCreateQuotationReceipt()"
-							id="saveReceiptFlgDefault">บันทึกใบเสร็จรับเงิน</button>
+							id="saveReceiptFlg">บันทึกใบเสร็จรับเงิน</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 					</div>
 				</div>
