@@ -104,6 +104,6 @@ function reportBuyTax() {
 }; // END tableQuotation
 
 function reportBuyTaxPrint() {
-    window.open("/api/report/type/reportBuyTax/userid/s1/startDate/0/endDate/0/รายงานภาษี");
+    window.open("/api/report/type/reportBuyTax/userid/" + $('#createBy').val() + "/startDate/0/endDate/0/รายงานภาษี");
     // window.location.href = "/api/report/type/reportBuyTax/userid/s1/startDate/0/endDate/0/รายงานภาษี";
 }
