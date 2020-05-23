@@ -29,9 +29,9 @@ function loginUser() {
         success: function (result) {
             if (result.res === "pass") {
                 window.location.href = "/home-pages";
-            } else if(result.res === "ban") {
+            } else if (result.res === "ban") {
                 alert("username ถูกรงับการใช้งาน!!!")
-            }else {
+            } else {
                 alert("กรุณา login")
             }
         }
@@ -65,6 +65,7 @@ function registerUser() {
                 status: "Y",
             }]
         }
+
         console.log(JSON.stringify(register));
         $.ajax({
             type: "POST",
@@ -74,9 +75,10 @@ function registerUser() {
             dataType: "json",
             success: function (result) {
                 if (result.res == 'pass') {
+                    alert('ยินดีต้อนรับ')
                     var login = {
-                        id: register.id,
-                        password: register.password,
+                        id: $('#idReg').val(),
+                        password: $('#passReg').val(),
                     }
                     console.log(JSON.stringify(login))
                     $.ajax({
@@ -88,6 +90,10 @@ function registerUser() {
                         success: function (result) {
                             if (result.res === "pass") {
                                 window.location.href = "/setting";
+                            } else if (result.res === "ban") {
+                                alert("username ถูกรงับการใช้งาน!!!")
+                            } else {
+                                alert("กรุณา login")
                             }
                         }
                     });

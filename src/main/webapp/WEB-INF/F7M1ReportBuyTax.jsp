@@ -38,11 +38,15 @@
 						<div class="card-body">
 							<div class="table-responsive col-sm-12">
 								<div class="row" style="margin-bottom: 10px;">
-									<div class="col-sm-7"></div>
+									<div class="col-sm-7"><button class="btn btn-success" type="button"
+											onclick="reportBuyTaxPrint()" style="margin-top: 32px"> <i
+												class="fas fa-fw fa-print"></i> พิมพ์รายงาน
+										</button></div>
 									<div class="col-sm-2"><label>เริ่มต้น : </label><input id="fromDate" /> </div>
 									<div class="col-sm-2"><label>ถึง : </label><input id="toDate" /> </div>
-									<div class="col-sm-1"><button class="btn btn-primary" type="button" onclick="reportBuyTax()" 
-											style="margin-top: 32px"> ค้นหา <i class="fas fa-fw fa-search"></i>
+									<div class="col-sm-1"><button class="btn btn-primary" type="button"
+											onclick="reportBuyTax()" style="margin-top: 32px"> ค้นหา <i
+												class="fas fa-fw fa-search"></i>
 										</button></div>
 								</div>
 								<table id="tableReportBuyTax" class="table table-sm table-hover" width="100%">

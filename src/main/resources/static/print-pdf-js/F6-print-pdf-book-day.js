@@ -23,22 +23,34 @@ function printPDF(id) {
                 $('#titleENPrint').text("Receipt voucher ")
             }
             $('#datePrint').text(formatDMY(msg.date)),
-            $('#referenceDocumentPrint').text(msg.referenceDocument),
-            $('#documentCodePrint').text(msg.documentCode),
-            $('#descriptionPrint').text(msg.description),
-
-            customerList(msg.companyId);
-
-            $('#typePDF11').text(),
-            $('#idPDF').text(msg.id),
-                
+                $('#referenceDocumentPrint').text(msg.referenceDocument),
+                $('#documentCodePrint').text(msg.documentCode),
+                $('#descriptionPrint').text(msg.description),
+                $('#typePDF11').text(),
+                $('#idPDF').text(msg.id),
                 $('#sumDebitPDF').text(parseFloat(msg.sumDebit).toFixed(2)),
-                $('#sumCreditPDF').text(parseFloat(msg.sumCredit).toFixed(2))
+                $('#sumCreditPDF').text(parseFloat(msg.sumCredit).toFixed(2)),
+
+                customerList(msg.companyId);
+            user(msg.createBy);
         }
     })
 }
 
-function customerList(companyId) {
+function customerList(companyId) {}
+
+function user(userId) {
+    console.log("userId :: " + userId);
+    
+    $.ajax({
+        type: "GET",
+        url: "/api-login/seting-user/" + userId,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            $('#nameF6PDF').text(" " + msg.fName + " " + msg.lName)
+        }
+    })
 }
 
 function formatDMY(ts) {
