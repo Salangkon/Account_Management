@@ -128,9 +128,9 @@ function add(id) {
             $('#fNameAdd').val(""),
             $('#lNameAdd').val(""),
             $('#emailAdd').val(""),
-            $('#positionAdd').val(""),
-            $('#tel').val(""),
-            $('#tel').val("")
+            $('#positionAdd').val("สำนักงานบัญชี"),
+            $('#addressAdd').val(""),
+            $('#telAdd').val("")
     } else {
         $.ajax({
             type: "GET",
@@ -162,10 +162,10 @@ function update(id) {
         lName: $('#lNameAdd').val(),
         email: $('#emailAdd').val(),
         address: $('#addressAdd').val(),
-        companyId: companyId,
         position: $('#positionAdd').val(),
-        tel: $('#tel').val(),
+        tel: $('#telAdd').val(),
         status: "Y",
+        companyId: companyId
     }
 
     console.log(JSON.stringify(data));

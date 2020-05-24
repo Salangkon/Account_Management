@@ -177,9 +177,8 @@
 									</div>
 									<div class="col-sm-4"><label>ตำแหน่ง : </label></div>
 									<div class="col-sm-8">
-										<input type="text" class="form-control form-control" id="positionAdd"
-											value="สำนักบัญชี" disabled>
-										<p class="hide" id=""></p>
+										<input type="text" class="form-control form-control" id="positionAdd" disabled>
+										<p class="hide" id="error-positi"></p>
 									</div>
 									<div class="col-sm-4"><label>เบอร์ติดต่อ</label></div>
 									<div class="col-sm-8">
