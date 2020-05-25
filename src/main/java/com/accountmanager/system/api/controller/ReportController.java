@@ -33,7 +33,7 @@ public class ReportController {
     @ResponseBody
     public void getSalesTaxPDF(HttpServletResponse response,@PathVariable String userid,@PathVariable String startDate,@PathVariable String endDate,@PathVariable String header)
             throws Exception {
-    salesTaxService.genSalesTaxPDF(response, "ReportSaleTax", userid, startDate, endDate);;
+    salesTaxService.genSalesTaxPDF(response, "ReportSaleTax", userid, startDate, endDate);
     }
 
     @GetMapping(value = "/type/reportBuyTax/userid/{userid}/startDate/{startDate}/endDate/{endDate}/{header}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
