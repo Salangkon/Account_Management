@@ -646,6 +646,7 @@ function saveCreateQuotation() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
+                console.log("F4 ADD UPDATE : " + JSON.stringify(result));
                 if (result != null || result != '') {             
                     $.ajax({
                         type: 'POST',

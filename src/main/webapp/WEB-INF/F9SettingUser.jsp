@@ -32,8 +32,6 @@
 							<h4>ตั้งค่าผู้ใช้งาน</h4>
 						</div>
 						<div class="col-lg-1">
-							<!-- <button type="button" style="margin-left: 30px;" class="btn btn btn-primary"
-								onclick="update()" id="save">บันทึก</button> -->
 						</div>
 						<div class="col-lg-7"></div>
 						<div class="col-lg-11">
@@ -47,56 +45,6 @@
 
 					<!-- Content Row -->
 					<div class="row" style="margin-top: 10px;">
-						<!-- <div class="col-lg-5">
-							<div class="p-3">
-								<div class="form-group row">
-									<div class="col-sm-4"><label>ชื่อ : </label></div>
-									<div class="col-sm-8">
-										<input type="text" class="form-control form-control" id="fNameUser">
-										<p class="hide" id=""></p>
-									</div>
-									<div class="col-sm-4"><label>นามสกุล : </label></div>
-									<div class="col-sm-8">
-										<input type="text" class="form-control form-control" id="lNameUser">
-										<p class="hide" id=""></p>
-									</div>
-									<div class="col-sm-4"><label>เบอร์ติดต่อ : </label></div>
-									<div class="col-sm-8">
-										<input type="text" OnKeyPress="return chkNumber(this)" class="form-control form-con
-											trol" id="tel" maxlength="10">
-										<p class="hide" id=""></p>
-									</div>
-									<div class="col-sm-4"><label>อีเมลล์(ผู้ใช้งาน) : </label></div>
-									<div class="col-sm-8">
-										<input type="email" class="form-control form-control" id="emailUser">
-										<p class="hide" id=""></p>
-									</div>
-									<div class="col-sm-4"><label>ตำแหน่ง : </label></div>
-									<div class="col-sm-8">
-										<input type="text" class="form-control form-control" id="positionUser" disabled>
-										<p class="hide" id=""></p>
-									</div>
-
-									<div class="col-sm-12"><label><b>แก้ไขรหัสผ่าน</b></label></div>
-									<div class="col-sm-4"><label>รหัสผ่านเดิม : </label></div>
-									<div class="col-sm-8">
-										<input type="password" class="form-control form-control" id="passwordUser"
-											disabled>
-										<p class="hide" id=""></p>
-									</div>
-									<div class="col-sm-4"><label>รหัสผ่านใหม่ : </label></div>
-									<div class="col-sm-8">
-										<input type="password" class="form-control form-control" id="passwordNew">
-										<p class="hide" id=""></p>
-									</div>
-									<div class="col-sm-4"><label>ยืนยันรหัสผ่าน : </label></div>
-									<div class="col-sm-8">
-										<input type="password" class="form-control form-control" id="passwordNew2">
-										<p class="hide" id=""></p>
-									</div>
-								</div>
-							</div>
-						</div> -->
 						<div class="col-lg-12">
 							<div class="card-body">
 								<div class="table-responsive col-sm-12">
@@ -178,19 +126,19 @@
 									<div class="col-sm-4"><label>ตำแหน่ง : </label></div>
 									<div class="col-sm-8">
 										<input type="text" class="form-control form-control" id="positionAdd" disabled>
-										<p class="hide" id="error-positi"></p>
+										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>เบอร์ติดต่อ</label></div>
 									<div class="col-sm-8">
 										<input type="text" OnKeyPress="return chkNumber(this)" class="form-control form-con
 											trol" id="telAdd" maxlength="10" placeholder="เบอร์ติดต่อ">
-										<p class="hide" id="error-tel"></p>
+										<p class="hide" id=""></p>
 									</div>
 									<div class="col-sm-4"><label>ที่อยู่</label></div>
 									<div class="col-sm-8">
 										<textarea class="form-control" id="addressAdd" placeholder="ที่อยู่"
 											style="height: 100px"></textarea>
-										<p class="hide" id="error-address"></p>
+										<p class="hide" id=""></p>
 									</div>
 								</div>
 							</div>
