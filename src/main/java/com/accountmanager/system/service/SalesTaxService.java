@@ -58,7 +58,7 @@ public class SalesTaxService {
 
     public void genSalesTaxPDF(HttpServletResponse response,String type, String userId, String startDate, String endDate) {
 
-        Resource resource = context.getResource("classpath:reports/SalesTax.jrxml");
+        Resource resource = context.getResource("classpath:reports/reportSaleTax.jrxml");
         InputStream inputStream = null;
         try {
             inputStream = resource.getInputStream();
@@ -96,7 +96,7 @@ public class SalesTaxService {
 
     public void genReportBuyTaxPDF(HttpServletResponse response,String type, String userId, String startDate, String endDate) {
 
-        Resource resource = context.getResource("classpath:reports/PurchaseTax.jrxml");
+        Resource resource = context.getResource("classpath:reports/reportBuyTax.jrxml");
         InputStream inputStream = null;
         try {
             inputStream = resource.getInputStream();
