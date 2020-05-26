@@ -758,18 +758,11 @@ function tableTaxInvoice() {
                                         <option value="" style="color: black">ตัวเลือก</option/>\n\
                                         <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                                     </select>';
-                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + false + "'" + ')"><i  class="fas fa-edit"></i></button>\n\
-                                //        <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.id + "'" + ')"><i class="fas fa-trash"></i></button></div>\n\
-                                //        <button hidden type="button" class="btn btn-primary btn-sm" onclick="><i  class="fas fa-print"></i></button></div>';
                             } else if (row.status == 'อนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
                                         <option value="" style="color: black">ตัวเลือก</option/>\n\
                                         <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                                     </select>';
-                                // return '<button hidden type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')"><i class="fas fa-edit"></i></button>\n\
-                                // <button hidden type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')><i  class="fas fa-trash"></i></button></div>\n\
-                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>';
-                                // <button type="button" class="btn btn-info btn-sm" onclick="updateQuotation(' + "'" + full.id + "','" + true + "'" + ')"><i class="fas fa-clone"></i></button></div>';
                             } else if (row.status == 'รออนุมัติ') {
                                 return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
                                         <option value="" style="color: black">ตัวเลือก</option/>\n\
@@ -777,9 +770,6 @@ function tableTaxInvoice() {
                                         <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                                         <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                                     </select>';
-                                // return '<button type="button" class="btn btn-warning btn-sm" onclick="updateQuotation(' + "'" + row.id + "','" + false + "'" + ')""><i class="fas fa-edit"></i></button>\n\
-                                // <button type="button" class="btn btn-primary btn-sm" onclick="printPDF(' + "'" + row.id + "'" + ')" data-toggle="modal" data-target="#MyModalPrintPDF"><i class="fas fa-print"></i></button></div>\n\
-                                // <button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + row.id + "'" + ')"><i class="fas fa-trash"></i></button></div>';
                             }
                         }
                     }

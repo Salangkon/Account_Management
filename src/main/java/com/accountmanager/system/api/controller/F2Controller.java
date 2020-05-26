@@ -222,6 +222,7 @@ public class F2Controller {
 	@PostMapping("/update-status/{id}/{status}")
 	public F2Model updateById(@PathVariable("id") String id, @PathVariable("status") String status) {
 		F2Model f2Model = f2Repo.findById(id);
+		List<Journal> journals = journalRepo.findByF2Id(f2Model.getId());
 
 		// Convert Date to Timestamp
 		Date date = new Date();
@@ -231,28 +232,29 @@ public class F2Controller {
 		switch (status) {
 		case "0":
 			f2Model.setStatus("รออนุมัติ");
+			for (Journal journal : journals) {
+				journalController.updateById(journal.getId(), "1");
+			}
 			break;
 		case "2":
 			f2Model.setStatus("อนุมัติ");
 			break;
 		case "3":
 			f2Model.setStatus("ไม่อนุมัติ");
+			for (Journal journal : journals) {
+				journalController.updateById(journal.getId(), "2");
+			}
 			break;
 		case "5":
 			f2Model.setStatus("ชำระเงินแล้ว");
-//			if (journalRepo.findByF2IdAndType(f2Model.getId(), "PV") == null) {
 			ReceiveReport(f2Model, "PV");
-//			}
 			break;
 		case "6":
 			f2Model.setStatus("ชำระเงินแล้ว");
-//			if (journalRepo.findByF2IdAndType(f2Model.getId(), "PV") == null) {
 			Expenses(f2Model, "PV");
-//			}
 			break;
 		case "7":
 			f2Model.setStatus("ไม่อนุมัติ");
-			List<Journal> journals = journalRepo.findByF2Id(f2Model.getId());
 			for (Journal journal : journals) {
 				journalController.updateById(journal.getId(), "2");
 			}
