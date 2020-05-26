@@ -234,6 +234,7 @@ public class F2Controller {
 			f2Model.setStatus("รออนุมัติ");
 			for (Journal journal : journals) {
 				journalController.updateById(journal.getId(), "1");
+				updateCreditDebit(journal);
 			}
 			break;
 		case "2":
@@ -243,6 +244,7 @@ public class F2Controller {
 			f2Model.setStatus("ไม่อนุมัติ");
 			for (Journal journal : journals) {
 				journalController.updateById(journal.getId(), "2");
+				updateCreditDebit(journal);
 			}
 			break;
 		case "5":
@@ -257,10 +259,31 @@ public class F2Controller {
 			f2Model.setStatus("ไม่อนุมัติ");
 			for (Journal journal : journals) {
 				journalController.updateById(journal.getId(), "2");
+				updateCreditDebit(journal);
 			}
 			break;
 		}
 		return f2Repo.save(f2Model);
+	}
+
+	private void updateCreditDebit(Journal journal) {
+		Journal journals = new Journal();
+		journals = journal;
+		
+		List<JournalList> journalLists = new ArrayList<JournalList>();
+		for (JournalList list : journal.getJournalLists()) {
+			JournalList journalList = new JournalList();
+			journalList.setCredit(list.getDebit());
+			journalList.setDebit(list.getCredit());
+			journalList.setChartAccountId(list.getChartAccountId());
+			journalList.setDetail(list.getDetail());
+			journalList.setId(list.getId());
+			journalList.setJournalId(list.getJournalId());
+			journalLists.add(journalList);
+		}
+		journals.setJournalLists(journalLists);
+		
+		journalRepo.save(journals);
 	}
 
 	@PostMapping("/add-update")
