@@ -122,6 +122,9 @@ function tableJournal() {
                     {
                         'data': 'sumCredit',
                         "sWidth": "10%",
+                        "mRender": function (data, type, row, index, full) {
+                            return parseFloat(row.sumCredit).toFixed(0).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        }
                     },
                     {
                         'data': 'date',

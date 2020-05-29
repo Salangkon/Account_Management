@@ -35,7 +35,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.accountmanager.system.model.Company;
 import com.accountmanager.system.model.DBFile;
 import com.accountmanager.system.model.Directory;
-import com.accountmanager.system.model.TaxReport;
 import com.accountmanager.system.model.User;
 import com.accountmanager.system.repository.DBFileRepository;
 import com.accountmanager.system.repository.DirectoryRepository;

@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * The persistent class for the category_expenses_mapping database table.
+ * 
+ */
 @Entity
 @Table(name = "category_expenses_mapping")
 public class CategoryExpensesMapping {
@@ -11,38 +15,41 @@ public class CategoryExpensesMapping {
 	@Id
 	private String id;
 
-	private String name;
+	private int level;
 
 	private String mapping;
 
-	private int level;
+	private String name;
+
+	public CategoryExpensesMapping() {
+	}
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public String getMapping() {
-		return mapping;
-	}
-
-	public void setMapping(String mapping) {
-		this.mapping = mapping;
-	}
-
 	public int getLevel() {
-		return level;
+		return this.level;
 	}
 
 	public void setLevel(int level) {
 		this.level = level;
 	}
 
+	public String getMapping() {
+		return this.mapping;
+	}
+
+	public void setMapping(String mapping) {
+		this.mapping = mapping;
+	}
+
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {

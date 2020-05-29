@@ -78,6 +78,7 @@ public class LoginController {
 	private HashMap<String, String> loginUsaveUpdateCompany(@RequestBody Company company) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		try {
+			System.err.println(mapper.writeValueAsString(company));
 			companyRepo.save(company);
 			map.put("res", "pass");
 		} catch (Exception e) {
@@ -103,6 +104,7 @@ public class LoginController {
 	@PostMapping("/register")
 	private HashMap<String, String> register(@RequestBody Company companys) throws JsonProcessingException {
 		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("res", "pass");
 		try {
 			for (User user : companys.getUsers()) {
 				System.err.println(mapper.writeValueAsString(user));
@@ -119,11 +121,8 @@ public class LoginController {
 					companyRepo.save(companys);
 
 					userRepo.save(user);
-
-					map.put("res", "pass");
 				}
 			}
-
 		} catch (Exception e) {
 			map.put("res", "false");
 			e.printStackTrace();

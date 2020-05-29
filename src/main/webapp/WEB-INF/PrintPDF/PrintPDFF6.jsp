@@ -53,7 +53,7 @@
                             <table style="width: 100%;">
                                 <tr>
                                     <td style="width: 35%; color: purple;">ผู้จัดทำ/Preparer</td>
-                                    <td style="width: 65%;" id=""></td>
+                                    <td style="width: 65%;" id="nameF6PDF"></td>
                                 </tr>
                             </table>
                         </td>
@@ -72,24 +72,24 @@
                         </td>
                     </tr>
                 </table>
-                <table id="" style="width: 100%;">
+                <table style="width: 100%;">
                     <tr>
-                        <td style="width: 15%;text-align: center;border: 1px solid black">รหัสบัญชี<br>Code</td>
-                        <td style="width: 45%;text-align: center;border: 1px solid black">ชื่อบัญชี<br>Account Name</td>
-                        <td style="width: 20%;text-align: center;border: 1px solid black">เดบิค<br>Debit</td>
-                        <td style="width: 20%;text-align: center;border: 1px solid black">เครดิต<br>Credit</td>
+                        <td style="width: 15%;border: 1px solid black">รหัสบัญชี<br>Code</td>
+                        <td style="width: 45%;border: 1px solid black">ชื่อบัญชี<br>Account Name</td>
+                        <td style="width: 20%;text-align: right;border: 1px solid black">เดบิค<br>Debit</td>
+                        <td style="width: 20%;text-align: right;border: 1px solid black">เครดิต<br>Credit</td>
                     </tr>
                     <tr style="height: 500px;">
-                        <td style="border: 1px solid black"></td>
-                        <td style="border: 1px solid black"></td>
-                        <td style="border: 1px solid black"></td>
-                        <td style="border: 1px solid black"></td>
+                        <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFPassCode"></table></td>
+                        <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFText"></table></td>
+                        <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFDebit"></table></td>
+                        <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFCredit"></table></td>
                     </tr>
                     <tr style="height: 10px;">
                         <td style="border: 1px solid black"></td>
                         <td style="text-align: right;border: 1px solid black">รวมทั้งสิ้น/Grand total</td>
-                        <td style="border: 1px solid black"></td>
-                        <td style="border: 1px solid black"></td>
+                        <td style="border: 1px solid black" id="sumDebitPDF"></td>
+                        <td style="border: 1px solid black" id="sumCreditPDF"></td>
                     </tr>
                     <tr style="height: 10px;">
                         <td colspan="4" style="border: 1px solid black">หมายเหตุ/Remark </td>

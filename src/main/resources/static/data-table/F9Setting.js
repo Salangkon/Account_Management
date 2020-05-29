@@ -69,7 +69,7 @@ function update() {
 
     var data = {
         companyName: $('#company').val(),
-        companyId: $('#companyId').val(),
+        companyId: companyId,
         address: $('#address').val(),
         companyType: $('#companyType').val(),
         department: departmentData,
@@ -80,7 +80,6 @@ function update() {
         logo: logo,
     }
     console.log(JSON.stringify(data));
-    alert('บันทึกเรียบร้อย')
     document.getElementById("preview").src = "\\img\\" + logo;
     document.getElementById("myImg").src = "\\img\\" + logo;
     $.ajax({
@@ -91,6 +90,7 @@ function update() {
         dataType: "json",
         success: function (result) {
             if (result.res == 'pass') {
+                alert('บันทึกเรียบร้อย')
                 window.location.href = "/setting";
             } else {
                 alert('บันทึก ไม่สำเร็จ..')

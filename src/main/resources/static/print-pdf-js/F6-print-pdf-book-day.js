@@ -6,6 +6,8 @@ function printPDF(id) {
         dataType: "json",
         success: function (msg) {
             console.log('msg PDF :: ', JSON.stringify(msg));
+            user(msg.createBy);
+
             if (msg.type == 'JV') {
                 $('#titleTHPrint').text("สมุดรายวันทั่วไป")
                 $('#titleENPrint').text("Journal voucher")
@@ -23,22 +25,102 @@ function printPDF(id) {
                 $('#titleENPrint').text("Receipt voucher ")
             }
             $('#datePrint').text(formatDMY(msg.date)),
-            $('#referenceDocumentPrint').text(msg.referenceDocument),
-            $('#documentCodePrint').text(msg.documentCode),
-            $('#descriptionPrint').text(msg.description),
-
-            customerList(msg.companyId);
-
-            $('#typePDF11').text(),
-            $('#idPDF').text(msg.id),
-                
+                $('#referenceDocumentPrint').text(msg.referenceDocument),
+                $('#documentCodePrint').text(msg.documentCode),
+                $('#descriptionPrint').text(msg.description),
+                $('#typePDF11').text(),
+                $('#idPDF').text(msg.id),
                 $('#sumDebitPDF').text(parseFloat(msg.sumDebit).toFixed(2)),
                 $('#sumCreditPDF').text(parseFloat(msg.sumCredit).toFixed(2))
+
+
+            msg.journalLists.forEach(value => {
+                chartAccountCode(value.chartAccountId)
+            });
+            msg.journalLists.forEach(value => {
+                chartAccountName(value.chartAccountId)
+            });
+
+
+            var numberCredit = 0;
+            var tablePrintPDFCredit = [];
+            $('.tablePrintPDFCreditDefault').remove();
+            msg.journalLists.forEach(value => {
+                numberCredit++;
+                tablePrintPDFCredit += '<tr class="tablePrintPDFCreditDefault">'
+                tablePrintPDFCredit += '<td>' + value.debit + '</td>'
+                tablePrintPDFCredit += '</tr>'
+            });
+            $('#tablePrintPDFCredit').append(tablePrintPDFCredit);
+
+            var numberDebit = 0;
+            var tablePrintPDFDebit = [];
+            $('.tablePrintPDFDebitDefault').remove();
+            msg.journalLists.forEach(value => {
+                numberDebit++;
+                tablePrintPDFDebit += '<tr class="tablePrintPDFDebitDefault">'
+                tablePrintPDFDebit += '<td>' + value.credit + '</td>'
+                tablePrintPDFDebit += '</tr>'
+            });
+            $('#tablePrintPDFDebit').append(tablePrintPDFDebit);
+
         }
     })
 }
 
-function customerList(companyId) {
+function chartAccountCode(id) {
+    var number = 0;
+    var tablePrintPDF = [];
+    $('.tablePrintPDFDefault').remove();
+    $.ajax({
+        type: "GET",
+        url: "/api-chart-account/get-by-id/" + id,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            console.log("passCodeRes :: " + msg.passCode);
+            number++;
+            tablePrintPDF += '<tr class="tablePrintPDFDefault">'
+            tablePrintPDF += '<td>' + msg.passCode + '</td>'
+            tablePrintPDF += '</tr>'
+            $('#tablePrintPDFPassCode').append(tablePrintPDF);
+        }
+    });
+}
+
+function chartAccountName(id) {
+    var number = 0;
+    var tablePrintPDF = [];
+    $('.tablePrintPDFDefault').remove();
+    $.ajax({
+        type: "GET",
+        url: "/api-chart-account/get-by-id/" + id,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            console.log("passCodeRes :: " + msg.passCode);
+            number++;
+            tablePrintPDF += '<tr class="tablePrintPDFDefault">'
+            tablePrintPDF += '<td>' + msg.text + '</td>'
+            tablePrintPDF += '</tr>'
+            $('#tablePrintPDFText').append(tablePrintPDF);
+        }
+    });
+}
+
+
+function user(userId) {
+    console.log("userId :: " + userId);
+
+    $.ajax({
+        type: "GET",
+        url: "/api-login/seting-user/" + userId,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            $('#nameF6PDF').text(" " + msg.fName + " " + msg.lName)
+        }
+    })
 }
 
 function formatDMY(ts) {
