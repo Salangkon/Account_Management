@@ -126,8 +126,8 @@
 							<div class="col-sm-1">
 								<div class="p-1">
 									<div class="form-group row">
-										<a href="#"><i class="fas fa-2x fa-print" style="margin-right: 10px;"></i></a>
-										<a href="#"><i class="fas fa-2x fa-download"></i></a>
+										<!-- <a href="#"><i class="fas fa-2x fa-print" style="margin-right: 10px;"></i></a>
+										<a href="#"><i class="fas fa-2x fa-download"></i></a> -->
 									</div>
 								</div>
 							</div>
