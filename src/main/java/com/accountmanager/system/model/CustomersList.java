@@ -53,6 +53,8 @@ public class CustomersList implements Serializable {
 
 	private String tel;
 
+	private String company;
+
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -70,6 +72,14 @@ public class CustomersList implements Serializable {
 	private Date updateBy;
 
 	public CustomersList() {
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	public String getCompanyId() {
