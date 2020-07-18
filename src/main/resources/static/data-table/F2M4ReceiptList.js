@@ -69,7 +69,7 @@ $(document).ready(function () {
     })
 
     tableReceipt();
-    dataCustomer(null);
+    // dataCustomer(null);
     tableCreateReceipt1(null);
 }); // end document
 
@@ -279,7 +279,7 @@ function updateStatus(id, status) {
 function dataCustomer(companyId) {
     $.ajax({
         type: "GET",
-        url: "/api/customers-list",
+        url: "/api/customers-list/name/" + $('#setCompanyId').val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {

@@ -443,7 +443,7 @@ function deleteId(id) {
 function dataCustomer(companyId) {
     $.ajax({
         type: "GET",
-        url: "/api/customers-list",
+        url: "/api/customers-list/name/" + $('#setCompanyId').val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {

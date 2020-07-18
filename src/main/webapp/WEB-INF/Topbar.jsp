@@ -47,6 +47,7 @@
 		<input id="position" value="<%=user.getPosition() %>" hidden>
 		<input id="status" value="<%=user.getStatus() %>" hidden>
 		<input id="createBy" value="<%=user.getId() %>" hidden>
+		<input id="setCompanyId" value="<%=user.getCompanys().getCompanyId() %>" hidden>
 		
 		<div class="topbar-divider d-none d-sm-block"></div>
 

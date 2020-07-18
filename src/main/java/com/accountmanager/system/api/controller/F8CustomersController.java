@@ -1,5 +1,7 @@
 package com.accountmanager.system.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +30,10 @@ public class F8CustomersController {
 		return customersListRepo.findOne(customersId);
 	}
 	
-	@GetMapping("/customers-list/name/{companyName}")
-	public CustomersList customersListName(@PathVariable("companyName") String companyName) {
-		System.err.println(companyName);
-		return customersListRepo.findByCompanyName(companyName);
+	@GetMapping("/customers-list/name/{company}")
+	public List<CustomersList> customersListName(@PathVariable("company") String company) {
+		System.err.println("company :: " + company);
+		return customersListRepo.findByCompany(company);
 	}
 
 	@PostMapping("/add-update-customers-list")

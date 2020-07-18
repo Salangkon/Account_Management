@@ -4,7 +4,7 @@ $(document).ready(function () {
 		"order": [
 			[4, 'desc']
 		],
-		"sAjaxSource": "/api/customers-list",
+		"sAjaxSource": "/api/customers-list/name/" + $('#setCompanyId').val(),
 		"iDisplayLength": 10,
 		"sAjaxDataProp": "",
 		dom: 'Blfrtip',
@@ -78,6 +78,7 @@ $(document).ready(function () {
 				taxId: $('#taxId').val(),
 				tel: $('#tel').val(),
 				createBy: $('#createBy').val(), //สร้างโดย
+				company: $('#setCompanyId').val(),				
 			}
 
 			console.log(JSON.stringify(customers));
