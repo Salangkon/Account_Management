@@ -76,8 +76,8 @@
                     <tr>
                         <td style="width: 15%;border: 1px solid black">รหัสบัญชี<br>Code</td>
                         <td style="width: 45%;border: 1px solid black">ชื่อบัญชี<br>Account Name</td>
-                        <td style="width: 20%;text-align: right;border: 1px solid black">เดบิค<br>Debit</td>
-                        <td style="width: 20%;text-align: right;border: 1px solid black">เครดิต<br>Credit</td>
+                        <td style="width: 20%;text-align: center;border: 1px solid black">เดบิค<br>Debit</td>
+                        <td style="width: 20%;text-align: center;border: 1px solid black">เครดิต<br>Credit</td>
                     </tr>
                     <tr style="height: 500px;">
                         <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFPassCode"></table></td>
