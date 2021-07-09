@@ -131,17 +131,25 @@
 							<div class="col-lg-5">
 								<div class="p-3">
 									<div class="form-group row">
+									
 										<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 										<div class="col-sm-8">
 											<input id="id" hidden>
-											<select class="form-control" style="margin-top: 10px;"
-												placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน" id="customers">
-												<option value=""> ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน
-												</option>
+											<select id="customers" class="selectpicker"
+												data-live-search="true"
+												title="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน"
+												style="margin-top: 10px;">
+												<%
+													for (int i = 0; i < customers.size(); i++) {
+												%>
+												<option value="<%=customers.get(i).getCompanyId()%>"><%=customers.get(i).getCompanyName()%></option>
+												<%
+													}
+												%>
 											</select>
-											<p class="hide" id="error-customers">กรุณาเลือก
-												ชื่อลูกค้า</p>
+											<p class="hide" id="error-customers">กรุณาเลือก ชื่อลูกค้า</p>
 										</div>
+
 										<div class="col-sm-4"><label>ที่อยู่</label></div>
 										<div class="col-sm-8">
 											<textarea class="form-control" style="height: 110px" id="address"

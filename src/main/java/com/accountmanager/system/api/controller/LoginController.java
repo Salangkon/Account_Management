@@ -1,6 +1,7 @@
 package com.accountmanager.system.api.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accountmanager.system.model.Company;
+import com.accountmanager.system.model.CustomersList;
 import com.accountmanager.system.model.User;
 import com.accountmanager.system.repository.CompanyRepository;
+import com.accountmanager.system.repository.CustomersListRepository;
 import com.accountmanager.system.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +33,8 @@ public class LoginController {
 	UserRepository userRepo;
 	@Autowired
 	CompanyRepository companyRepo;
+	@Autowired
+	CustomersListRepository customersListRepo;
 
 	@PostMapping("/login")
 	private HashMap<String, String> loginUser(@RequestBody HashMap<String, String> user, Model model,
@@ -43,6 +48,8 @@ public class LoginController {
 				if (checkUser.getStatus().equals("Y")) {
 					res.put("res", "pass");
 					request.getSession().setAttribute("user", checkUser);
+					List<CustomersList> customers = customersListRepo.findByCompany(checkUser.getCompanyId());
+					request.getSession().setAttribute("customers", customers);
 					model.addAttribute("messessError", "S");
 				} else {
 					res.put("res", "ban");

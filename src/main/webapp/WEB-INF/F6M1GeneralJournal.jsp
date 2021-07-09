@@ -20,13 +20,13 @@
 		}
 
 		[x-placement=bottom-start] {
-			position: relative !important;
+			/* position: relative !important; */
 			top: -37px !important;
 			margin-top: -40px !important;
 		}
 
 		[x-placement=top-start] {
-			position: relative !important;
+			/* position: relative !important; */
 			top: 2.5rem !important;
 			margin-top: -40px !important;
 		}
@@ -124,7 +124,27 @@
 											<input id="id" hidden>
 											<div class="col-sm-5 mb-3 mb-sm-0">
 												<div class="form-group row">
-													<div class="col-sm-4">
+												
+													<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
+													<div class="col-sm-8">
+														<input id="id" hidden>
+														<select id="customers" class="selectpicker"
+															data-live-search="true"
+															title="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน"
+															style="margin-top: 10px;">
+															<%
+																for (int i = 0; i < customers.size(); i++) {
+															%>
+															<option value="<%=customers.get(i).getCompanyId()%>"><%=customers.get(i).getCompanyName()%></option>
+															<%
+																}
+															%>
+														</select>
+														<div hidden class="invalid" id="invalid-customers">
+															กรุณาระบุเลขที่เอกสาร
+														</div>
+													</div>
+													<!-- <div class="col-sm-4">
 														<label>ชื่อลูกค้า* : </label>
 													</div>
 													<div class="col-sm-8">
@@ -136,7 +156,7 @@
 														<div hidden class="invalid" id="invalid-customers">
 															กรุณาระบุเลขที่เอกสาร
 														</div>
-													</div>
+													</div> -->
 													<div class="col-sm-4">
 														<label>คำอธิบาย : </label>
 													</div>

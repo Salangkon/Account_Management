@@ -2,6 +2,8 @@ package com.accountmanager.system.api.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,23 +26,25 @@ public class F8CustomersController {
 	public Iterable<CustomersList> customersList() {
 		return customersListRepo.findAll();
 	}
-	
+
 	@GetMapping("/customers-list/{customersId}")
 	public CustomersList customersList(@PathVariable("customersId") String customersId) {
 		return customersListRepo.findOne(customersId);
 	}
-	
+
 	@GetMapping("/customers-list/name/{company}")
-	public List<CustomersList> customersListName(@PathVariable("company") String company) {
+	public List<CustomersList> customersListName(@PathVariable("company") String company, HttpServletRequest request) {
 		System.err.println("company :: " + company);
-		return customersListRepo.findByCompany(company);
+		List<CustomersList> customers = customersListRepo.findByCompany(company);
+		request.getSession().setAttribute("customers", customers);
+		return customers;
 	}
 
 	@PostMapping("/add-update-customers-list")
 	public CustomersList addUpdatecustomersList(@RequestBody CustomersList customersList) {
 		return customersListRepo.save(customersList);
 	}
-	
+
 	@DeleteMapping("/delete-customers-list/{companyId}")
 	public String deletecustomersList(@PathVariable("companyId") String companyId) {
 		String result = "Success";
