@@ -65,7 +65,9 @@ public class LoginController {
 
 	@PostMapping("/seting")
 	private User seting(@RequestBody HashMap<String, String> user, Model model, HttpServletRequest request) {
-		return userRepo.findByIdAndPassword(user.get("id"), user.get("password"));
+		User checkUser = userRepo.findByIdAndPassword(user.get("id"), user.get("password"));
+		request.getSession().setAttribute("user", checkUser);
+		return checkUser;
 	}
 
 	@PostMapping("save-update")

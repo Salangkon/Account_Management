@@ -41,7 +41,11 @@ public class CustomersList implements Serializable {
 	@Column(name = "customer_name")
 	private String customerName;
 
-	private String department;
+	@Column(name = "department_pass")
+	private String departmentPass;
+
+	@Column(name = "department_name")
+	private String departmentName;
 
 	private String email;
 
@@ -122,12 +126,20 @@ public class CustomersList implements Serializable {
 		this.customerName = customerName;
 	}
 
-	public String getDepartment() {
-		return this.department;
+	public String getDepartmentPass() {
+		return departmentPass;
 	}
 
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setDepartmentPass(String departmentPass) {
+		this.departmentPass = departmentPass;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
 	}
 
 	public String getEmail() {
