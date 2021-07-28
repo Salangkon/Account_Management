@@ -51,11 +51,11 @@ $('#tableCreateTaxInvoiceDisplay').on('keyup', 'input', function () {
         }
     }
     discountPrice = parseFloat(sum);
-    $('#price').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
+    $('#price').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/);
     $('#priceDisplay').text(parseFloat(sum).toFixed(2));
 
     discountPrice1 = parseFloat(sum);
-    $('#price1').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/ );
+    $('#price1').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/);
     $('#priceDisplay1').text(parseFloat(sum).toFixed(2));
     myFunction();
 });
@@ -172,34 +172,43 @@ function updateQuotation(id, TaxInvoice) {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                $('#id').val(msg.id), //เลขที่เอกสาร
-                    $('#departmentId').val(msg.departmentId), //เลขที่เอกสาร
-                    $('#status').val(msg.type), //สถานะ
-                    $('#status').val(msg.status), //สถานะ
-                    $('#statusVat').val(msg.statusVat), //สถานะ ภาษี
-                    // ไม่รวมภาษี
-                    $('#discount').val(msg.discount), //ส่วนลด
-                    $('#price').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
-                    $('#priceDisplay').text(parseFloat(msg.price).toFixed(2)), //รวมเป็นเงิน
-                    $('#productPriceAll').text(parseFloat(msg.productPriceAll).toFixed(2)), //ราคาสินค้าทั้งหมด
-                    $('#discountPrice').text(parseFloat(msg.discountPrice).toFixed(2)), //ราคาหักส่วนลด
-                    $('#discountProductPrice').text(parseFloat(msg.discountProductPrice).toFixed(2)), //
-                    $('#vat').text(parseFloat(msg.vat).toFixed(2)), //ภาษีมูลค่าเพิ่ม
-                    // รวมภาษี
-                    $('#discount1').val(msg.discount1), //ส่วนลด
-                    $('#price1').text(parseFloat(msg.price1).toFixed(2)), //รวมเป็นเงิน
-                    $('#priceDisplay1').text(parseFloat(msg.price1).toFixed(2)), //รวมเป็นเงิน
-                    $('#productPriceAll1').text(parseFloat(msg.productPriceAll1).toFixed(2)), //ราคาสินค้าทั้งหมด
-                    $('#discountPrice1').text(parseFloat(msg.discountPrice1).toFixed(2)), //ราคาหักส่วนลด
-                    $('#discountProductPrice1').text(parseFloat(msg.discountProductPrice1).toFixed(2)), //
-                    $('#discountProductPriceSum1').text(parseFloat(msg.discountProductPrice1).toFixed(2)), //
-                    $('#vat1').text(parseFloat(msg.vat1).toFixed(2)), //ภาษีมูลค่าเพิ่ม
+                $('#id').val(msg.id); //เลขที่เอกสาร
+                $('#departmentId').val(msg.departmentId); //เลขที่เอกสาร
+                $('#status').val(msg.type); //สถานะ
+                $('#status').val(msg.status); //สถานะ
+                $('#statusVat').val(msg.statusVat); //สถานะ ภาษี
 
-                    $('#note').val(msg.note), //หมาบเหตุ
-                    $('#date').val(msg.date), //วันที่
-                    $('#dateEnd').val(msg.dateEnd), //วันที่_ครบกำหนด
-                    $('#referenceDocument').val(msg.referenceDocument), //เลขที่เอกสาร
-                    $('#statusVat').val(msg.statusVat)
+                //ข้อมูลลูกค้า
+                $('#customers').val(msg.customerName); //ชื่อบริษัทลูกค้า
+                $('#departmentPass').val(msg.departmentPass); //รหัสสาขา
+                $('#departmentName').val(msg.departmentName); //ชื่อสาขา
+                $('#address').val(msg.address);
+                $('#taxId').val(msg.taxId); //ที่อยู่
+
+                // ไม่รวมภาษี
+                $('#discount').val(msg.discount); //ส่วนลด
+                $('#price').text(parseFloat(msg.price).toFixed(2)); //รวมเป็นเงิน
+                $('#priceDisplay').text(parseFloat(msg.price).toFixed(2)); //รวมเป็นเงิน
+                $('#productPriceAll').text(parseFloat(msg.productPriceAll).toFixed(2)); //ราคาสินค้าทั้งหมด
+                $('#discountPrice').text(parseFloat(msg.discountPrice).toFixed(2)); //ราคาหักส่วนลด
+                $('#discountProductPrice').text(parseFloat(msg.discountProductPrice).toFixed(2)); //
+                $('#vat').text(parseFloat(msg.vat).toFixed(2)); //ภาษีมูลค่าเพิ่ม
+
+                // รวมภาษี
+                $('#discount1').val(msg.discount1); //ส่วนลด
+                $('#price1').text(parseFloat(msg.price1).toFixed(2)); //รวมเป็นเงิน
+                $('#priceDisplay1').text(parseFloat(msg.price1).toFixed(2)); //รวมเป็นเงิน
+                $('#productPriceAll1').text(parseFloat(msg.productPriceAll1).toFixed(2)); //ราคาสินค้าทั้งหมด
+                $('#discountPrice1').text(parseFloat(msg.discountPrice1).toFixed(2)); //ราคาหักส่วนลด
+                $('#discountProductPrice1').text(parseFloat(msg.discountProductPrice1).toFixed(2)); //
+                $('#discountProductPriceSum1').text(parseFloat(msg.discountProductPrice1).toFixed(2)); //
+                $('#vat1').text(parseFloat(msg.vat1).toFixed(2)); //ภาษีมูลค่าเพิ่ม
+
+                $('#note').val(msg.note); //หมาบเหตุ
+                $('#date').val(msg.date); //วันที่
+                $('#dateEnd').val(msg.dateEnd); //วันที่_ครบกำหนด
+                $('#referenceDocument').val(msg.referenceDocument); //เลขที่เอกสาร
+                $('#statusVat').val(msg.statusVat)
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
                     document.getElementById("statusVat2").hidden = true;
@@ -223,7 +232,14 @@ function updateQuotation(id, TaxInvoice) {
                         document.getElementById("myCheck2").checked = true;
                         break;
                 }
-                dataCustomer(msg.companyId)
+                if (msg.officeType == 1) {
+                    document.getElementById("officeType1").checked = true;
+                    CheckOffice("1");
+                } else {
+                    document.getElementById("officeType2").checked = true;
+                    CheckOffice("2");
+                }
+                // dataCustomer(msg.companyId)
                 tableCreateTaxInvoice1(msg.id);
             }
         })
@@ -232,35 +248,43 @@ function updateQuotation(id, TaxInvoice) {
         tableCreateTaxInvoice1(null);
         dataCustomer(null);
 
-        $('#id').val(""), //เลขที่เอกสาร
-            // $('#departmentId').val(""), //เลขที่เอกสาร
-            $('#price').text(""), //รวมเป็นเงิน
-            $('#priceDisplay').text(""), //รวมเป็นเงิน
-            $('#productPriceAll').text(""), //ราคาสินค้าทั้งหมด
-            $('#discount').val(""), //ส่วนลด
-            $('#discountPrice').text(""), //ราคาหักส่วนลด
-            $('#discountProductPrice').text(""), //
-            $('#vat').text(""), //ภาษีมูลค่าเพิ่ม
-            $('#note').val(""), //หมาบเหตุ
-            $('#date').val(document.getElementById('date').value), //วันที่
-            $('#dateEnd').val(""), //วันที่_ครบกำหนด
-            $('#referenceDocument').val(""), //เลขที่เอกสาร
-            $('#statusVat').val("1")
+        $('#id').val(""); //เลขที่เอกสาร
+        // $('#departmentId').val(""); //เลขที่เอกสาร
+        $('#price').text(""); //รวมเป็นเงิน
+        $('#priceDisplay').text(""); //รวมเป็นเงิน
+        $('#productPriceAll').text(""); //ราคาสินค้าทั้งหมด
+        $('#discount').val(""); //ส่วนลด
+        $('#discountPrice').text(""); //ราคาหักส่วนลด
+        $('#discountProductPrice').text(""); //
+        $('#vat').text(""); //ภาษีมูลค่าเพิ่ม
+        $('#note').val(""); //หมาบเหตุ
+        $('#date').val(document.getElementById('date').value); //วันที่
+        $('#dateEnd').val(""); //วันที่_ครบกำหนด
+        $('#referenceDocument').val(""); //เลขที่เอกสาร
+        $('#statusVat').val("1")
         document.getElementById("statusVat2").hidden = true;
 
+        //ข้อมูลลูกค้า
+        $('#customers').val(""); //ชื่อบริษัทลูกค้า
+        $('#departmentPass').val("");//รหัสสาขา
+        $('#departmentName').val(""); //ชื่อสาขา
+        $('#officeType').val(""); //สาขา
+        $('#address').val(""); //ที่อยู่
+        $('#taxId').val(""); //ที่อยู่
+
         // ไม่รวมภาษี
-        $('#discount').val(), //ส่วนลด
-            $('#discountPrice').text(parseFloat(0).toFixed(2));
+        $('#discount').val(); //ส่วนลด
+        $('#discountPrice').text(parseFloat(0).toFixed(2));
         $('#discountProductPrice').text(parseFloat(0).toFixed(2));
         $('#vat').text(parseFloat(0).toFixed(2));
         $('#price').text(parseFloat(0).toFixed(2));
         $('#productPriceAll').text(parseFloat(0).toFixed(2));
         // รวมภาษี
-        $('#discount1').val(), //ส่วนลด
-            $('#discountPrice1').text(parseFloat(0).toFixed(2));
+        $('#discount1').val(); //ส่วนลด
+        $('#discountPrice1').text(parseFloat(0).toFixed(2));
         $('#discountProductPrice1').text(parseFloat(0).toFixed(2));
-        $('#discountProductPriceSum1').text(parseFloat(0).toFixed(2)), //
-            $('#vat1').text(parseFloat(0).toFixed(2));
+        $('#discountProductPriceSum1').text(parseFloat(0).toFixed(2)); //
+        $('#vat1').text(parseFloat(0).toFixed(2));
         $('#price1').text(parseFloat(0).toFixed(2));
         $('#productPriceAll1').text(parseFloat(0).toFixed(2));
 
@@ -293,6 +317,15 @@ function updateStatus(id, status) {
     });
 }
 
+function CheckOffice(officeType) {
+    if (officeType == 1) {
+        document.getElementById("officeTypeCheck").hidden = true;
+    } else {
+        document.getElementById("officeTypeCheck").hidden = false;
+    }
+    console.log("CheckOffice :: " + officeType);
+}
+
 function dataCustomer(companyId) {
     $.ajax({
         type: "GET",
@@ -318,14 +351,17 @@ function dataCustomer(companyId) {
                             if (msg.officeType == 1) {
                                 $('#customersNamePrint').text(msg.customerName + " ( สำนักงานใหญ่ )");
                                 document.getElementById("officeType1").checked = true;
+                                CheckOffice("1");
                             } else {
                                 $('#customersNamePrint').text(msg.customerName + " ( " + msg.department + " )");
                                 document.getElementById("officeType2").checked = true;
+                                CheckOffice("2");
                             }
                         }
                     });
                 }
             } else {
+                CheckOffice("1");
                 $('#customers').val("");
                 $('#address').val("");
                 $('#taxId').val("");
@@ -375,86 +411,86 @@ function tableCreateTaxInvoice1(id) {
         "bAutoWidth": false,
         "sAjaxDataProp": "",
         "aoColumns": [{
-                "sWidth": "5%",
-                "mRender": function (data,
-                    type, row, index) {
-                    index.row++;
-                    return '<div style="text-align: center"> ' + index.row + '</div>';
-                }
-            }, {
-                "sWidth": "60%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.product != null && row.productDetail != null) {
-                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
+            "sWidth": "5%",
+            "mRender": function (data,
+                type, row, index) {
+                index.row++;
+                return '<div style="text-align: center"> ' + index.row + '</div>';
+            }
+        }, {
+            "sWidth": "60%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.product != null && row.productDetail != null) {
+                    return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
                         <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า">' + row.productDetail + ' </textarea></div>';
-                    } else if (row.product != null) {
-                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
+                } else if (row.product != null) {
+                    return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value="' + row.product + '"/></div>\n\
                         <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
-                    } else if (row.productDetail != null) {
-                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
+                } else if (row.productDetail != null) {
+                    return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
                         <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า">' + row.productDetail + '</textarea></div>';
-                    } else {
-                        return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
+                } else {
+                    return '<div><input class="form-control" style="height: 7mm" type="text" name="" id="product' + index.row + '" value=""/></div>\n\
                         <div><textarea class="form-control" id="productDetail' + index.row + '" style="height: 40px" placeholder="เพิ่มรายละเอียดสินค้า"></textarea></div>';
-                    }
+                }
 
-                }
-            },
-            {
-                "sWidth": "10%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.productNumber != null) {
-                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
-                            index.row +
-                            '" value="' + row.productNumber + '"/>';
-                    } else {
-                        return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
-                            index.row +
-                            '" value="1"/>';
-                    }
-                }
-            },
-            {
-                "sWidth": "10%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.productPrice != null) {
-                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
-                            index.row +
-                            '" value="' + row.productPrice + '"/>';
-                    } else {
-                        return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
-                            index.row +
-                            '" value=""/>';
-                    }
-                }
-            },
-            {
-                "mData": "",
-                "sWidth": "10%",
-                "mRender": function (data,
-                    type, row, index) {
-                    if (row.productSumPrice != null) {
-                        return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
-                            index.row +
-                            '" value="' + row.productSumPrice + '" disabled/>';
-                    } else {
-                        return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
-                            index.row +
-                            '" value="" disabled/>';
-                    }
-                }
-            },
-            {
-                "mData": "",
-                "sWidth": "5px",
-                "mRender": function (data,
-                    type, row, index) {
-                    return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+            }
+        },
+        {
+            "sWidth": "10%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.productNumber != null) {
+                    return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
+                        index.row +
+                        '" value="' + row.productNumber + '"/>';
+                } else {
+                    return '<input class="form-control number1" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productNumber' +
+                        index.row +
+                        '" value="1"/>';
                 }
             }
+        },
+        {
+            "sWidth": "10%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.productPrice != null) {
+                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
+                        index.row +
+                        '" value="' + row.productPrice + '"/>';
+                } else {
+                    return '<input class="form-control number2" OnKeyPress="return chkNumber(this)" style="width: 120px;height: 7mm" type="text" name="allowence" id="productPrice' +
+                        index.row +
+                        '" value=""/>';
+                }
+            }
+        },
+        {
+            "mData": "",
+            "sWidth": "10%",
+            "mRender": function (data,
+                type, row, index) {
+                if (row.productSumPrice != null) {
+                    return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                        index.row +
+                        '" value="' + row.productSumPrice + '" disabled/>';
+                } else {
+                    return '<input class="form-control sum1" style="width: 120px;height: 7mm;text-align: center" type="text" name="rentDateSum" id="productSumPrice' +
+                        index.row +
+                        '" value="" disabled/>';
+                }
+            }
+        },
+        {
+            "mData": "",
+            "sWidth": "5px",
+            "mRender": function (data,
+                type, row, index) {
+                return '<div style="text-align:center"><a class="fas fa-trash" style="cursor: pointer;color: red"></a></div>';
+            }
+        }
         ]
     });
 
@@ -512,18 +548,36 @@ function remove() {
     tableCreateTaxInvoice.rows('.selected').remove().draw();
 }
 
+var officeType;
+$("#officeType1").change(function () {
+    officeType = 1;
+});
+$("#officeType2").change(function () {
+    officeType = 2;
+});
+
 function saveCreateQuotation() {
     var pass = true;
     pass = validateInput();
 
     if (pass) {
         var insertTaxInvoice = {
+
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
             type: "TaxInvoice", //ประเภท
             status: "รออนุมัติ", //สถานะ
             statusVat: $('#statusVat').val(), //สถานะ ภาษี
+
+            //ข้อมูลลูกค้า
+            customerName: $('#customers').val(), //ชื่อบริษัทลูกค้า
+            departmentPass: $('#departmentPass').val(), //รหัสสาขา
+            departmentName: $('#departmentName').val(), //ชื่อสาขา
+            officeType: officeType, //สาขา
+            address: $('#address').val(), //ที่อยู่
+            taxId: $('#taxId').val(), //ที่อยู่
+
             // ไม่รวมภาษี
             price: $('#price').text(), //รวมเป็นเงิน
             productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
@@ -531,6 +585,7 @@ function saveCreateQuotation() {
             discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
             discountProductPrice: $('#discountProductPrice').text(), //
             vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+
             // รวมภาษี
             price1: $('#price1').text(), //รวมเป็นเงิน
             productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
@@ -699,80 +754,80 @@ function tableTaxInvoice() {
                     [0, "desc"]
                 ],
                 "aoColumns": [{
-                        'data': 'date',
-                        "className": "text-center",
-                        "sWidth": "8%",
-                    },
-                    {
-                        'data': 'departmentId',
-                        "sWidth": "13%",
-                        "mRender": function (data,
-                            type, row, index, full) {
-                            return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + null + "'" + ')">' + row.departmentId + '</a>';
-                        }
-                    },
-                    {
-                        'data': 'companyId',
-                        "sWidth": "40%",
-                    },
-                    {
-                        'data': '',
-                        "sWidth": "13%",
-                        "mRender": function (data,
-                            type, row, index, full) {
-                            return row.productPriceAll.toFixed(2);
-                        }
-                    },
-                    {
-                        'data': '',
-                        "className": "text-center",
-                        "sWidth": "10%",
-                        "mRender": function (data, type, row, index, full) {
-                            if (row.status == 'รออนุมัติ') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                    'data': 'date',
+                    "className": "text-center",
+                    "sWidth": "8%",
+                },
+                {
+                    'data': 'departmentId',
+                    "sWidth": "13%",
+                    "mRender": function (data,
+                        type, row, index, full) {
+                        return '<a style="cursor: pointer;color: blue;" onclick="updateQuotation(' + "'" + row.id + "','" + null + "'" + ')">' + row.departmentId + '</a>';
+                    }
+                },
+                {
+                    'data': 'customerName',
+                    "sWidth": "40%",
+                },
+                {
+                    'data': '',
+                    "sWidth": "13%",
+                    "mRender": function (data,
+                        type, row, index, full) {
+                        return row.productPriceAll.toFixed(2);
+                    }
+                },
+                {
+                    'data': '',
+                    "className": "text-center",
+                    "sWidth": "10%",
+                    "mRender": function (data, type, row, index, full) {
+                        if (row.status == 'รออนุมัติ') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                                     <option value="0' + row.id + '" style="color: black">รอดำเนินการ</option/>\n\
                                     <option value="2' + row.id + '" style="color: green">วางบิลแล้ว</option/>\n\
                                     <option value="5' + row.id + '" style="color: blue">สร้างใบเสร็จ</option/>\n\
                                     <option value="3' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                     </select>';
-                            } else if (row.status == 'อนุมัติ') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                        } else if (row.status == 'อนุมัติ') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
                                     <option style="color: black">ดำเนิการเเล้ว</option/>\n\
                                     <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                     </select>';
-                            } else if (row.status == 'ไม่อนุมัติ') {
-                                return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
+                        } else if (row.status == 'ไม่อนุมัติ') {
+                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: red">ไม่อนุมัติ</option/>\n\
                                     <option value="0' + row.id + '" style="color: green">รีเซต</option/>\n\
                                     </select>';
-                            }
                         }
-                    },
-                    {
-                        'data': '',
-                        "className": "text-center",
-                        "sWidth": "13%",
-                        "mRender": function (data, type, row) {
-                            if (row.status == 'ไม่อนุมัติ') {
-                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                    }
+                },
+                {
+                    'data': '',
+                    "className": "text-center",
+                    "sWidth": "13%",
+                    "mRender": function (data, type, row) {
+                        if (row.status == 'ไม่อนุมัติ') {
+                            return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
                                         <option value="" style="color: black">ตัวเลือก</option/>\n\
                                         <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                                     </select>';
-                            } else if (row.status == 'อนุมัติ') {
-                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                        } else if (row.status == 'อนุมัติ') {
+                            return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
                                         <option value="" style="color: black">ตัวเลือก</option/>\n\
                                         <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                                     </select>';
-                            } else if (row.status == 'รออนุมัติ') {
-                                return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
+                        } else if (row.status == 'รออนุมัติ') {
+                            return '<select class="form-control form-control-sm" onchange="changeStatus(value)" style="color: black">\n\
                                         <option value="" style="color: black">ตัวเลือก</option/>\n\
                                         <option value="1' + row.id + '" style="color: green">แก้ไขเอกสาร</option/>\n\
                                         <option value="2' + row.id + '" style="color: blue">พิมพ์เอกสาร</option/>\n\
                                         <option value="3' + row.id + '" style="color: red">ลบเอกสาร</option/>\n\
                                     </select>';
-                            }
                         }
                     }
+                }
                 ]
             });
         }
@@ -800,14 +855,14 @@ function changeStatus($i) {
 
 function deleteId(id) {
     swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this imaginary file!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        },
+        title: "Are you sure?",
+        text: "Your will not be able to recover this imaginary file!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    },
         function () {
             $.ajax({
                 url: '/api-f2/delete-f2/' + id,

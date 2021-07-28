@@ -146,7 +146,8 @@
 												<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 												<div class="col-sm-8">
 													<input id="id" hidden>
-													<select id="customers" class="selectpicker" data-live-search="true"
+													<input id="setType" value="2" hidden>
+													<!-- <select id="customers" class="selectpicker" data-live-search="true"
 														title="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน"
 														style="margin-top: 10px;">
 														<% for (int i=0; i < customers.size(); i++) { %>
@@ -154,7 +155,14 @@
 																<%=customers.get(i).getCompanyName()%>
 															</option>
 															<% } %>
-													</select>
+													</select> -->
+													<form autocomplete="off">
+														<div class="autocomplete" style="width: 100%;">
+															<input class="form-control form-control" id="customers"
+																type="text" name="customers"
+																placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน">
+														</div>
+													</form>
 													<p class="hide" id="error-customers">กรุณาเลือก ชื่อลูกค้า</p>
 												</div>
 												<div class="col-sm-4"><label>ที่อยู่</label></div>
@@ -164,16 +172,32 @@
 												</div>
 												<div class="col-sm-4"><label>เลขประจำตัวผู้เสียภาษี</label></div>
 												<div class="col-sm-8">
-													<input type="text" style="margin-top: 10px;"
+													<input type="text" style="margin-top: 10px;" maxlength="13" OnKeyPress="return chkNumber(this)" 
 														class="form-control form-control" id="taxId"
 														placeholder="เลขประจำตัวผู้เสียภาษี" id="taxId">
 												</div>
-												<div class="col-sm-4"><label>สำนักงาน / สาขาที่ </label></div>
+												<div class="col-sm-4">
+													<label>สำนักงาน / สาขาที่ </label>
+												</div>
 												<div class="col-sm-8" style="margin-top: 6px;">
 													<input style="margin-top: 10px;" type="radio" name="officeType"
-														id="officeType1"> สำนักงานใหญ่
-													<input style="margin-top: 10px;" type="radio" name="officeType"
-														id="officeType2"> สาขาที่
+														id="officeType1" onclick="CheckOffice(1)" value="1">
+													สำนักงานใหญ่ <input style="margin-top: 10px;" type="radio"
+														name="officeType" id="officeType2" onclick="CheckOffice(2)"
+														value="2"> สาขาที่
+												</div>
+												<div class="col-sm-4"></div>
+												<div class="col-sm-8" id="officeTypeCheck">
+													<div class="input-group input-group-sm mb-3">
+														<input type="text" class="form-control" placeholder="รหัสสาขา"
+															aria-describedby="inputGroup-sizing-sm" id="departmentPass">
+														<input type="text" class="form-control" placeholder="ชื่อสาขา"
+															aria-describedby="inputGroup-sizing-sm" id="departmentName">
+													</div>
+													<p class="hide" id="error-departmentPass">กรุณากรอก
+														รหัสสาขา</p>
+													<p class="hide" id="error-departmentName">กรุณากรอก
+														ชื่อสาขา</p>
 												</div>
 											</div>
 										</div>

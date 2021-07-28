@@ -9,7 +9,8 @@
 		<%@include file="/WEB-INF/Extensions/css.jsp" %>
 			<script src="/data-table/F8CustomersList.js" type="text/javascript"></script>
 			<style>
-				input {
+				input,
+				select {
 					margin-top: 13px;
 				}
 
@@ -70,6 +71,7 @@
 											<table id="customersList" class="table table-sm table-hover" width="100%">
 												<thead class="bg-gradient-primary" style="color: white;">
 													<tr>
+														<th>รายชื่อ</th>
 														<th>ชื่อบริษัท</th>
 														<th>เบอร์ติดต่อ</th>
 														<th>E-mail</th>
@@ -111,15 +113,25 @@
 							<div class="col-lg-7">
 								<div class="p-3">
 									<div class="form-group row">
-										<div class="col-sm-4"><label>ประเภท</label></div>
+										<div class="col-sm-4"><label>ประเภทรายชื่อ</label></div>
+										<div class="col-sm-8">
+											<select class="form-control" id="type">
+												<option value="0">ประเภทรายชื่อ</option>
+												<option value="1">ลูกค้า</option>
+												<option value="2">ผู้จำหน่าย</option>
+											</select>
+											<p class="hide" id="error-type">กรุณาเลือก
+												ประเภทรายชื่อ</p>
+										</div>
+										<div class="col-sm-4"><label>ประเภทธุระกิจ</label></div>
 										<div class="col-sm-8">
 											<select class="form-control" id="companyType">
-												<option value="0">ประเภท</option>
+												<option value="0">ประเภทธุระกิจ</option>
 												<option value="1">นิติบุคคล</option>
 												<option value="2">บุคคลธรรมดา</option>
 											</select>
 											<p class="hide" id="error-companyType">กรุณาเลือก
-												ประเภท</p>
+												ประเภทธุระกิจ</p>
 										</div>
 										<div class="col-sm-4"><label>รหัสผู้ติดต่อ</label></div>
 										<div class="col-sm-8">
@@ -146,7 +158,7 @@
 											<label>เลขประจำตัวผู้เสียภาษี</label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control form-control" id="taxId"
+											<input type="text" class="form-control form-control" id="taxId"  maxlength="13" OnKeyPress="return chkNumber(this)" 
 												placeholder="เลขประจำตัวผู้เสียภาษี">
 											<p class="hide" id="error-taxId">กรุณากรอก
 												เลขประจำตัวผู้เสียภาษี</p>

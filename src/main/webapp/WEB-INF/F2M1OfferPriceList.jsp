@@ -144,40 +144,62 @@
 												<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 												<div class="col-sm-8">
 													<input id="id" hidden>
-													<select id="customers" class="selectpicker" data-live-search="true"
+													<input id="setType" value="1" hidden>
+													<!-- <select id="customers" class="selectpicker" data-live-search="true"
 														title="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน"
 														style="margin-top: 10px;">
 														<% for (int i=0; i < customers.size(); i++) { %>
-															<option value="<%=customers.get(i).getCompanyId()%>">
+															<option value="<%=customers.get(i).getCompanyName()%>">
 																<%=customers.get(i).getCompanyName()%>
 															</option>
 															<% } %>
-													</select>
+													</select> -->
+													<form autocomplete="off">
+														<div class="autocomplete" style="width: 100%;">
+															<input class="form-control form-control" id="customers"
+																type="text" name="customers"
+																placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน">
+														</div>
+													</form>
 													<p class="hide" id="error-customers">กรุณาเลือก ชื่อลูกค้า</p>
 												</div>
 												<div class="col-sm-4">
 													<label>ที่อยู่</label>
 												</div>
 												<div class="col-sm-8">
-													<textarea class="form-control" style="height: 110px" id="address"
-													></textarea>
+													<textarea class="form-control" style="height: 110px"
+														id="address"></textarea>
 												</div>
 												<div class="col-sm-4">
 													<label>เลขประจำตัวผู้เสียภาษี</label>
 												</div>
 												<div class="col-sm-8">
-													<input type="text" style="margin-top: 10px;"
-														class="form-control form-control" id="taxId" 
-														placeholder="เลขประจำตัวผู้เสียภาษี" ame="taxId">
+													<input type="text" style="margin-top: 10px;" maxlength="13" OnKeyPress="return chkNumber(this)"
+														class="form-control form-control" id="taxId"
+														placeholder="เลขประจำตัวผู้เสียภาษี">
 												</div>
 												<div class="col-sm-4">
 													<label>สำนักงาน / สาขาที่ </label>
 												</div>
 												<div class="col-sm-8" style="margin-top: 6px;">
 													<input style="margin-top: 10px;" type="radio" name="officeType"
-														id="officeType1">
+														id="officeType1" onclick="CheckOffice(1)" value="1">
 													สำนักงานใหญ่ <input style="margin-top: 10px;" type="radio"
-														name="officeType" id="officeType2"> สาขาที่
+														name="officeType" id="officeType2" onclick="CheckOffice(2)"
+														value="2"> สาขาที่
+												</div>
+												<div class="col-sm-4"></div>
+												<div class="col-sm-8" id="officeTypeCheck">
+													<div class="input-group input-group-sm mb-3">
+														<input type="text" class="form-control" placeholder="รหัสสาขา"
+															aria-describedby="inputGroup-sizing-sm" id="departmentPass">
+														<input type="text" class="form-control" placeholder="ชื่อสาขา"
+															aria-describedby="inputGroup-sizing-sm" id="departmentName">
+													</div>
+													<p class="hide" id="error-departmentPass">กรุณากรอก
+														รหัสสาขา</p>
+													<p class="hide" id="error-departmentName">กรุณากรอก
+														ชื่อสาขา</p>
 												</div>
 											</div>
 										</div>
@@ -271,12 +293,12 @@
 														<div class="col-sm-3">
 															<!-- ไม่รวมภาษี -->
 															<div class="form-group row" id="statusVat1">
-																<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
-																<div class="col-sm-6">
+																<div class="col-sm-7 text-primary">รวมเป็นเงิน</div>
+																<div class="col-sm-5">
 																	<p id="price">0.00</p>
 																</div>
 
-																<div class="col-sm-6 text-primary">
+																<div class="col-sm-7 text-primary">
 																	<div class="input-group input-group-sm mb-3">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">ส่วนลด</span>
@@ -286,45 +308,46 @@
 																			style="width: 40px; text-align: center;"
 																			OnKeyPress="return chkNumber(this)"
 																			onkeyup="myFunction()" maxlength="3">
-																		<div class="input-group-append">
-																			<span class="input-group-text">%</span>
+																		<div class="input-group-append" >
+																			<span class="input-group-text" id="discountFlgT" style="cursor: pointer;" onclick="myDiscountFlg(true)">%</span>
+																			<span class="input-group-text" id="discountFlgF" style="cursor: pointer;" onclick="myDiscountFlg(false)">บาท</span>
 																		</div>
 																	</div>
 																</div>
 
-																<div class="col-sm-6">
+																<div class="col-sm-5">
 																	<p id="discountPrice">0.00</p>
 																</div>
 
-																<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด
+																<div class="col-sm-7 text-primary">ราคาหลังหักส่วนลด
 																</div>
-																<div class="col-sm-6" class="form-control">
+																<div class="col-sm-5" class="form-control">
 																	<p id="discountProductPrice">0.00</p>
 																</div>
 
-																<div class="col-sm-6 text-primary">
+																<div class="col-sm-7 text-primary">
 																	<input class="form-check-input" type="checkbox"
 																		id="myCheck1" onclick="myFunction()">
 																	ภาษีมูลค่าเพิ่ม 7%
 																</div>
-																<div class="col-sm-6">
-																	<p id="vat">0.00</p>
+																<div class="col-sm-5">
+																	<p id="vat">00.00</p>
 																</div>
 
-																<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น
+																<div class="col-sm-7 text-primary">จำนวนเงินทั้งสิ้น
 																</div>
-																<div class="col-sm-6">
+																<div class="col-sm-5">
 																	<p id="productPriceAll">0.00</p>
 																</div>
 															</div>
 															<!-- รวมภาษี -->
 															<div class="form-group row" id="statusVat2">
-																<div class="col-sm-6 text-primary">รวมเป็นเงิน</div>
-																<div class="col-sm-6">
+																<div class="col-sm-7 text-primary">รวมเป็นเงิน</div>
+																<div class="col-sm-5">
 																	<p id="price1">0.00</p>
 																</div>
 
-																<div class="col-sm-6 text-primary">
+																<div class="col-sm-7 text-primary">
 																	<div class="input-group input-group-sm mb-3">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">ส่วนลด</span>
@@ -335,38 +358,39 @@
 																			OnKeyPress="return chkNumber(this)"
 																			onkeyup="myFunction()" maxlength="3">
 																		<div class="input-group-append">
-																			<span class="input-group-text">%</span>
+																			<span class="input-group-text" id="discountFlgT" style="cursor: pointer;" onclick="myDiscountFlg1(true)">%</span>
+																			<span class="input-group-text" id="discountFlgF" style="cursor: pointer;" onclick="myDiscountFlg1(false)">บาท</span>
 																		</div>
 																	</div>
 																</div>
 
-																<div class="col-sm-6">
+																<div class="col-sm-5">
 																	<p id="discountPrice1">0.00</p>
 																</div>
 
-																<div class="col-sm-6 text-primary">ราคาหลังหักส่วนลด
+																<div class="col-sm-7 text-primary">ราคาหลังหักส่วนลด
 																</div>
-																<div class="col-sm-6" class="form-control">
+																<div class="col-sm-5" class="form-control">
 																	<p id="discountProductPrice1">0.00</p>
 																</div>
 
-																<div class="col-sm-6 text-primary">จำนวนเงินทั้งสิ้น
+																<div class="col-sm-7 text-primary">จำนวนเงินทั้งสิ้น
 																</div>
-																<div class="col-sm-6">
+																<div class="col-sm-5">
 																	<p id="discountProductPriceSum1">0.00</p>
 																</div>
 																<hr size="20" width="100%" color="red" align="center">
-																<div class="col-sm-6 text-primary">
+																<div class="col-sm-7 text-primary">
 																	<input class="form-check-input" type="checkbox"
 																		id="myCheck2" onclick="myFunction()">
 																	ภาษีมูลค่าเพิ่ม 7%
 																</div>
-																<div class="col-sm-6">
+																<div class="col-sm-5">
 																	<p id="vat1">0.00</p>
 																</div>
 
-																<div class="col-sm-6 text-primary">ราคาไม่รวมภาษี</div>
-																<div class="col-sm-6">
+																<div class="col-sm-7 text-primary">ราคาไม่รวมภาษี</div>
+																<div class="col-sm-5">
 																	<p id="productPriceAll1">0.00</p>
 																</div>
 															</div>
@@ -412,7 +436,6 @@
 						</div>
 					</div>
 				</div>
-
 
 				<!-- script -->
 				<%@include file="/WEB-INF/Extensions/js.jsp" %>

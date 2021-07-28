@@ -7,12 +7,22 @@ $(document).ready(function () {
 		"sAjaxSource": "/api/customers-list/name/" + $('#setCompanyId').val(),
 		"iDisplayLength": 10,
 		"sAjaxDataProp": "",
-		dom: 'Blfrtip',
-		buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
+		// dom: 'Blfrtip',
+		// buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
 		// buttons: [
 		// 	'copy', 'csv', 'excel', 'pdf', 'print'
 		// ],
 		"aoColumns": [{
+			"mData": "type",
+			"sWidth": "80px",
+			"mRender": function (data, type, row, index, full) {
+				if (row.type == '1') {
+					return  '<b style="color: green;"> ลูกค้า </b>';
+				} else if (row.type == '2') {
+					return '<b style="color: red;"> ผู้จำหน่าย </b>';
+				}
+			}
+		}, {
 			"mData": "companyName",
 			"sWidth": "260px"
 		},
@@ -30,17 +40,17 @@ $(document).ready(function () {
 				if (row.companyType == '0') {
 					return '';
 				} else if (row.companyType == '1') {
-					return 'นิติบุุคล';
+					return '<b style="color: blueviolet;"> นิติบุุคล </b>';
 				} else if (row.companyType == '2') {
-					return 'บุคคลธรรมดา';
+					return '<b style="color: darkgreen;"> บุคคลธรรมดา </b>';
 				}
 			}
 		}, {
 			"mData": "created_date",
 			"className": "text-center",
-			"sWidth": "60px",
+			"sWidth": "70px",
 			"mRender": function (data, type, full) {
-				return '<div align="center"> ' + new Date(full.created_date).toLocaleDateString("en-US") + '</div>'
+				return '<div align="center" style="color: blue;"> ' + new Date(full.created_date).toLocaleString("th-TH") + '</div>'
 			}
 		}, {
 			"sWidth": "60px",
@@ -79,6 +89,7 @@ $(document).ready(function () {
 				companyId: $('#companyId').val(),
 				address: $('#address').val(),
 				companyName: $('#companyName').val(),
+				type: $('#type').val(),
 				companyType: $('#companyType').val(),
 				customerName: $('#customerName').val(),
 				departmentPass: departmentPass,
@@ -202,6 +213,14 @@ $(document).ready(function () {
 			$('#error-companyType').addClass("hide")
 		}
 
+		if ('0' == $('#type').val()) {
+			companyType.focus()
+			$('#error-type').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-type').addClass("hide")
+		}
+
 		return pass;
 	} // end validate
 });
@@ -255,6 +274,7 @@ function update(companyId) {
 		$('#companyId').val("");
 		document.getElementById("companyId").disabled = false;
 		$('#companyName').val("");
+		$('#type').val("0");
 		$('#companyType').val("0");
 		$('#departmentPass').val("");
 		$('#departmentName').val("");
@@ -287,6 +307,7 @@ function update(companyId) {
 				$('#companyId').val(msg.companyId);
 				document.getElementById("companyId").disabled = true;
 				$('#companyName').val(msg.companyName);
+				$('#type').val(msg.type);
 				$('#companyType').val(msg.companyType);
 				$('#departmentPass').val(msg.departmentPass);
 				$('#departmentName').val(msg.departmentName);

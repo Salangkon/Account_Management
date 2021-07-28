@@ -56,6 +56,8 @@ public class F2Controller {
 	F6JournalController journalController;
 	@Autowired
 	CategoryExpensesMappingRepository categoryExpensesMappingRepo;
+	@Autowired
+	F8CustomersController customersContr;
 
 	@GetMapping("/get-f2ListRepo-by-id/{id}")
 	public List<F2ListModel> getByIdF2ListRepo(@PathVariable("id") String id) {
@@ -159,9 +161,9 @@ public class F2Controller {
 
 		for (F2Model f2Model : f2Models) {
 			F2Model model = new F2Model();
-			CustomersList customers = customersListRepo.findOne(f2Model.getCompanyId());
+//			CustomersList customers = customersListRepo.findOne(f2Model.getCompanyId());
 			model = f2Model;
-			model.setCompanyId(customers.getCompanyName());
+//			model.setCompanyId(customers.getCompanyName());
 			if (f2Model.getUpdateDate() == null) {
 				f2Model.setUpdateDate(f2Model.getCreateDate());
 			}
@@ -293,6 +295,33 @@ public class F2Controller {
 
 		List<F2ListModel> f2ListModels = new ArrayList<>();
 
+		//check customer 
+		CustomersList customersList = customersListRepo.findByCompanyName(f2Model.getCustomerName());
+		if (customersList == null) {
+			CustomersList setCustomersList = new CustomersList();
+			setCustomersList.setCompanyName(f2Model.getCustomerName());
+			setCustomersList.setAddress(f2Model.getAddress());;
+			setCustomersList.setTaxId(f2Model.getTaxId());;
+			setCustomersList.setOfficeType(f2Model.getOfficeType());
+			setCustomersList.setDepartmentName(f2Model.getDepartmentName());;
+			setCustomersList.setDepartmentPass(f2Model.getDepartmentPass());;
+			setCustomersList.setCreateBy(f2Model.getCreateBy());
+			setCustomersList.setTel("");
+			setCustomersList.setEmail("");
+			setCustomersList.setCompanyType("1");
+			switch (f2Model.getType()) {
+			case "Quotation":
+			case "Biiling":
+			case "TaxInvoice":
+			case "Receipt":
+				setCustomersList.setType("1");
+				break;
+			default:
+				setCustomersList.setType("2");
+				break;
+			}
+			customersContr.addUpdatecustomersList(setCustomersList);
+		}
 		try {
 			if (f2Model.getId() == null || f2Model.getId().equals("")) {
 				f2Model.setId(UUID.randomUUID().toString());
@@ -344,13 +373,13 @@ public class F2Controller {
 	public void ReceiveReport(F2Model f2Model, String passId) {
 		System.err.println(passId);
 		Journal journal = new Journal();
-		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-		journal.setDescription(
-				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+//		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+//		journal.setDescription(
+//				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
 		journal.setReferenceDocument("");
 		journal.setType(passId);
 		journal.setStatus("1");
-		journal.setCompanyId(f2Model.getCompanyId());
+//		journal.setCompanyId(f2Model.getCompanyId());
 		journal.setDate(f2Model.getDateEnd());
 		journal.setF2Id(f2Model.getId());
 		journal.setCreateDate(new Timestamp(new Date().getTime()));
@@ -448,13 +477,13 @@ public class F2Controller {
 	public void TaxInvoice(F2Model f2Model, String passId) {
 		System.err.println(passId);
 		Journal journal = new Journal();
-		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-		journal.setDescription(
-				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+//		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+//		journal.setDescription(
+//				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
 		journal.setReferenceDocument("");
 		journal.setType(passId);
 		journal.setStatus("1");
-		journal.setCompanyId(f2Model.getCompanyId());
+//		journal.setCompanyId(f2Model.getCompanyId());
 		journal.setDate(f2Model.getDateEnd());
 		journal.setF2Id(f2Model.getId());
 		journal.setCreateDate(new Timestamp(new Date().getTime()));
@@ -501,13 +530,13 @@ public class F2Controller {
 	public void Receipt(F2Model f2Model, String passId) {
 		System.err.println(passId);
 		Journal journal = new Journal();
-		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-		journal.setDescription(
-				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+//		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+//		journal.setDescription(
+//				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
 		journal.setReferenceDocument("");
 		journal.setType(passId);
 		journal.setStatus("1");
-		journal.setCompanyId(f2Model.getCompanyId());
+//		journal.setCompanyId(f2Model.getCompanyId());
 		journal.setDate(f2Model.getDateEnd());
 		journal.setF2Id(f2Model.getId());
 		journal.setCreateDate(new Timestamp(new Date().getTime()));
@@ -548,13 +577,13 @@ public class F2Controller {
 		System.err.println(passId);
 		Journal journal = new Journal();
 		try {
-			CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-			journal.setDescription(
-					"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+//			CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
+//			journal.setDescription(
+//					"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
 			journal.setReferenceDocument("");
 			journal.setType(passId);
 			journal.setStatus("1");
-			journal.setCompanyId(f2Model.getCompanyId());
+//			journal.setCompanyId(f2Model.getCompanyId());
 			journal.setDate(f2Model.getDateEnd());
 			journal.setF2Id(f2Model.getId());
 			journal.setCreateDate(new Timestamp(new Date().getTime()));
@@ -574,8 +603,8 @@ public class F2Controller {
 						data.put("pice", String.valueOf(f2ListModel.getProductSumPrice()));
 						mappings.add(data);
 					}
-					ChartAccountId = categoryExpensesMappingRopo(mappings, customersList.getCompanyName(),
-							f2Model.getDepartmentId());
+//					ChartAccountId = categoryExpensesMappingRopo(mappings, customersList.getCompanyName(),
+//							f2Model.getDepartmentId());
 
 					for (HashMap<String, String> mapping : ChartAccountId) {
 						JournalList journalList = new JournalList();
@@ -614,8 +643,8 @@ public class F2Controller {
 						data.put("pice", String.valueOf(f2ListModel.getProductSumPrice()));
 						mappings.add(data);
 					}
-					ChartAccountId = categoryExpensesMappingRopoPV(mappings, customersList.getCompanyName(),
-							f2Model.getDepartmentId());
+//					ChartAccountId = categoryExpensesMappingRopoPV(mappings, customersList.getCompanyName(),
+//							f2Model.getDepartmentId());
 
 					for (HashMap<String, String> mapping : ChartAccountId) {
 						JournalList journalList = new JournalList();
@@ -624,8 +653,8 @@ public class F2Controller {
 						case "1":
 							journalList.setCredit(0);
 							journalList.setDebit(Float.parseFloat(mapping.get("pice")));
-							journalList.setDetail("ชำระค่า ส่งเสริมการขาย ให้แก่ " + customersList.getCompanyName()
-									+ " #" + f2Model.getDepartmentId());
+//							journalList.setDetail("ชำระค่า ส่งเสริมการขาย ให้แก่ " + customersList.getCompanyName()
+//									+ " #" + f2Model.getDepartmentId());
 							break;
 						case "2":
 							journalList.setCredit(f2Model.getProductPriceAll());

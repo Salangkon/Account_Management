@@ -70,7 +70,7 @@
 									<div class="col-sm-4">
 										<label>เลขประจำตัวผู้เสียภาษี</label></div>
 									<div class="col-sm-8">
-										<input type="text" class="form-control form-control" id="taxId"
+										<input type="text" class="form-control form-control" id="taxId" OnKeyPress="return chkNumber(this)"
 											placeholder="เลขประจำตัวผู้เสียภาษี" maxlength="13">
 										<p class="hide" id="error-taxId"></p>
 									</div>

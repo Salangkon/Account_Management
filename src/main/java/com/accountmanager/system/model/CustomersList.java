@@ -59,6 +59,8 @@ public class CustomersList implements Serializable {
 
 	private String company;
 
+	private String type;
+
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -204,6 +206,14 @@ public class CustomersList implements Serializable {
 
 	public void setUpdated_date(Date updated_date) {
 		this.updated_date = updated_date;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }
