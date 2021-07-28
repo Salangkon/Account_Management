@@ -40,42 +40,42 @@
 			<staticText>
 				<reportElement x="0" y="57" width="40" height="23" uuid="8d06de81-66a0-4aa9-9f7f-d2ea54f2530b"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ชื่อบริษัท :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="80" width="70" height="23" uuid="55405302-5c9b-452e-9840-c070df222f92"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ชื่อผู้ประกอบการ :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="103" width="30" height="23" uuid="c9bbe3f3-6f71-4b50-9e62-1da1f9fc319f"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ที่อยู่ :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="701" y="57" width="50" height="22" uuid="ab24c3fb-009d-4ace-aa42-415c34999ad3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[หน้าที่]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="639" y="79" width="160" height="22" uuid="abef2c91-5182-4c0a-b1c7-7b4b0f0b0a0a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[[ ] สำนักงานใหญ่ [ ] สาขา]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="560" y="102" width="120" height="22" uuid="657e68dd-5e37-4e2e-9737-3bc7d4ac7a51"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[เลขประจำตัวผู้เสียภาษี :]]></text>
 			</staticText>
@@ -87,30 +87,30 @@
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="40" y="57" width="340" height="23" uuid="7b9417f2-b817-42b4-9187-5fc18d735b46"/>
+				<reportElement x="48" y="57" width="432" height="23" uuid="7b9417f2-b817-42b4-9187-5fc18d735b46"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportSource}.getCompanys().getCompanyName()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="70" y="80" width="310" height="23" uuid="48ed8339-3da6-4c9f-9abe-8d50c44bf0d1"/>
+				<reportElement x="70" y="80" width="410" height="23" uuid="48ed8339-3da6-4c9f-9abe-8d50c44bf0d1"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportSource}.getCompanys().getCompanyName()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="30" y="103" width="350" height="23" uuid="0d02746e-8977-40d0-b8be-30ea0984fb65"/>
+				<reportElement x="30" y="103" width="450" height="23" uuid="0d02746e-8977-40d0-b8be-30ea0984fb65"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportSource}.getCompanys().getAddress()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="680" y="102" width="120" height="22" uuid="2c3fbe56-4a83-4a63-9b4c-73627bb31c46"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportSource}.getCompanys().getTaxId()]]></textFieldExpression>
 			</textField>
@@ -139,7 +139,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[จำนวนเงินภาษี]]></text>
 			</staticText>
@@ -150,7 +150,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ผู้ซื้อสินค้า/ผู้รับบริการ]]></text>
 			</staticText>
@@ -161,7 +161,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ลำดับ]]></text>
 			</staticText>
@@ -172,7 +172,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ใบกำกับภาษี 
 เล่มที่/เลขที่]]></text>
@@ -184,7 +184,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[เลขที่เอกสาร]]></text>
 			</staticText>
@@ -195,7 +195,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[รวม]]></text>
 			</staticText>
@@ -206,7 +206,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ผู้ซื้อสินค้า/ผู้รับบริการ]]></text>
 			</staticText>
@@ -217,7 +217,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[วันที่]]></text>
 			</staticText>
@@ -228,56 +228,56 @@
 			<textField>
 				<reportElement x="725" y="0" width="77" height="23" uuid="8a90642e-f0f3-442c-ab57-514750d5696f"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{productPriceAll}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="310" y="0" width="200" height="23" uuid="400708d2-e403-4057-a599-fe594f96d5eb"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="30" y="0" width="70" height="23" uuid="2f20dcc2-976d-4532-9a2a-f8126e763b47"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="100" y="0" width="100" height="23" uuid="72edaddd-04b0-46ca-bd17-5050e40f6575"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{departmentId}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="639" y="0" width="86" height="23" uuid="7bb7c0a5-3276-4971-81d9-a7b8d35f280a"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{priceVat}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="30" height="23" uuid="32351c3d-199e-49a4-958a-94fd2942e5a4"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="510" y="0" width="129" height="23" uuid="f745cadf-f6bd-4a8b-9cca-eb49b85b5f5c"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="200" y="0" width="110" height="23" uuid="7c8d2081-62c0-4ec4-a154-2fd198556fc3"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
+					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{referenceDocument}]]></textFieldExpression>
 			</textField>
@@ -294,35 +294,35 @@
 			<staticText>
 				<reportElement x="0" y="0" width="48" height="23" uuid="e9d12243-9432-4ea4-a33b-b96ba9a0f60d"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[รวมทั้งสิ้น]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="410" y="0" width="100" height="22" uuid="a0d9b7dd-ea40-4b25-992e-77c0f1ece4f4"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[รวมมูลค่า]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="510" y="0" width="129" height="22" uuid="0633d7f9-d199-475d-b27c-0903f6ae9fdb"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sumPrice}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="639" y="0" width="86" height="22" uuid="8d9a1000-8bad-4545-8d63-d18d90361c1b"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sumPriceVat}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="725" y="0" width="77" height="22" uuid="8928b8f4-6255-4b09-a5c1-2c89e6965bd9"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sumProductPriceAll}]]></textFieldExpression>
 			</textField>
@@ -335,49 +335,49 @@
 			<staticText>
 				<reportElement x="72" y="0" width="90" height="23" uuid="803d0aa3-7a56-4fe3-adf4-6c15c317e384"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[รายการ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="48" y="0" width="24" height="23" uuid="da54339b-2ad0-41a6-bdca-d08eecaf38b8"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="560" y="22" width="78" height="23" uuid="6f3512ef-b5cb-4e0a-9407-943e3e7e7ce1"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[รายการ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="410" y="23" width="100" height="22" uuid="aca76a97-6a76-4b66-9099-f4cb03ebe6b2"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[รวมทั้งสิ้น]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="510" y="23" width="50" height="21" uuid="34d49cd0-2f5a-4e9d-806f-eb2e8f7ec0cf"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="360" y="46" width="148" height="22" uuid="2975bb9e-8284-4c8c-b553-75325c7e83d3"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[รวมมูลค่าภาษีอัตราศูนย์]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="510" y="46" width="90" height="22" uuid="f04d4c19-4897-4894-b9eb-efd8af68ae3d"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH Sarabun New" size="16" isBold="true"/>
+					<font fontName="TH Sarabun New" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[0 รายการ]]></text>
 			</staticText>

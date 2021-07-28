@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 7.2.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Purchase tax" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aea946c1-cde6-4452-8549-818a642d4618">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -87,14 +87,14 @@
 				<textFieldExpression><![CDATA[$V{COLUMN_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="30" y="60" width="240" height="20" uuid="1a34c046-fc34-41ca-82ff-5c43a4079f73"/>
+				<reportElement x="30" y="60" width="350" height="20" uuid="1a34c046-fc34-41ca-82ff-5c43a4079f73"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH Sarabun New" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportSource}.getCompanys().getCompanyName()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="60" y="80" width="200" height="20" uuid="dd584236-fd28-4106-8822-23b9cef16c02"/>
+				<reportElement x="60" y="80" width="320" height="20" uuid="dd584236-fd28-4106-8822-23b9cef16c02"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Angsana New" size="12"/>
 				</textElement>
