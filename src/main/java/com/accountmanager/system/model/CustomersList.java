@@ -41,7 +41,11 @@ public class CustomersList implements Serializable {
 	@Column(name = "customer_name")
 	private String customerName;
 
-	private String department;
+	@Column(name = "department_pass")
+	private String departmentPass;
+
+	@Column(name = "department_name")
+	private String departmentName;
 
 	private String email;
 
@@ -54,6 +58,8 @@ public class CustomersList implements Serializable {
 	private String tel;
 
 	private String company;
+
+	private String type;
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -122,12 +128,20 @@ public class CustomersList implements Serializable {
 		this.customerName = customerName;
 	}
 
-	public String getDepartment() {
-		return this.department;
+	public String getDepartmentPass() {
+		return departmentPass;
 	}
 
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setDepartmentPass(String departmentPass) {
+		this.departmentPass = departmentPass;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
 	}
 
 	public String getEmail() {
@@ -192,6 +206,14 @@ public class CustomersList implements Serializable {
 
 	public void setUpdated_date(Date updated_date) {
 		this.updated_date = updated_date;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

@@ -17,8 +17,46 @@
 <!-- bootstrap 4 datepicker -->
 <!-- <link href="/data-table/css/gijgo.min.css" rel="stylesheet" type="text/css"> -->
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/tree/themes/default/style.min.css" rel="stylesheet" type="text/css" >
-<link rel="stylesheet" href="/css/A4.css" rel="stylesheet" type="text/css" >
+<link rel="stylesheet" href="/tree/themes/default/style.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/A4.css" rel="stylesheet" type="text/css">
+
+<style>
+	/*the container must be positioned relative:*/
+	.autocomplete {
+		position: relative;
+		display: inline-block;
+	}
+
+	.autocomplete-items {
+		position: absolute;
+		border: 1px solid #d4d4d4;
+		border-bottom: none;
+		border-top: none;
+		z-index: 99;
+		/*position the autocomplete items to be the same width as the container:*/
+		top: 100%;
+		left: 0;
+		right: 0;
+	}
+
+	.autocomplete-items div {
+		padding: 10px;
+		cursor: pointer;
+		background-color: #fff;
+		border-bottom: 1px solid #d4d4d4;
+	}
+
+	/*when hovering an item:*/
+	.autocomplete-items div:hover {
+		background-color: #e9e9e9;
+	}
+
+	/*when navigating through the items using the arrow keys:*/
+	.autocomplete-active {
+		background-color: DodgerBlue !important;
+		color: #ffffff;
+	}
+</style>
 
 <style type="text/css">
 	.icon-color {
@@ -28,12 +66,10 @@
 	.triangle {
 		width: 0px;
 		height: 00px;
-		border-top: 100px solid purple;
+		border-top: 70px solid purple;
 		border-right: 0px solid transparent;
 		/* ซ่อนขอบขวา */
-		border-left: 100px solid transparent;
-		/* ซ่อนขอบซ้าย */
-		text-alinght: right;
+		border-left: 70px solid transparent;
 	}
 </style>
 

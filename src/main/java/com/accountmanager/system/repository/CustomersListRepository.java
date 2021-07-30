@@ -8,8 +8,10 @@ import com.accountmanager.system.model.CustomersList;
 
 public interface CustomersListRepository extends CrudRepository<CustomersList, String> {
 
-	List<CustomersList> findByCompanyName(String companyName);
+	CustomersList findByCompanyName(String companyName);
 
 	List<CustomersList> findByCompany(String company);
+
+	List<CustomersList> findByCompanyAndType(String company, String type);
 
 }

@@ -159,7 +159,7 @@ public class TaxReportController {
 					taxReport.setPriceVat(f2Model.getVat1());
 					taxReport.setProductPriceAll(f2Model.getProductPriceAll1());
 				}
-				taxReport.setCompany(f2Model.getCompanyId());
+//				taxReport.setCompany(f2Model.getCompanyId());
 				taxReport.setCreateDate(ts);
 				taxReport.setUpdateDate(ts);
 			}

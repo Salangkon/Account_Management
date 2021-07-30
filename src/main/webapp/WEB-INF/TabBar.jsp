@@ -101,9 +101,9 @@
 	</li>
 
 	<!-- จัดเก็ยไฟล์ -->
-	<li class="nav-item"><a class="nav-link icon-color" href="/file-storage">
+	<!-- <li class="nav-item"><a class="nav-link icon-color" href="/file-storage">
 			<i class="fas fa-fw fa-address-book"></i> <span>จัดเก็บไฟล์เอกสาร</span></a>
-	</li>
+	</li> -->
 
 	<!-- ตั้งค่า -->
 	<li class="nav-item" id="statusTabBar">

@@ -25,8 +25,8 @@ public class F2Model implements Serializable {
 	@Id
 	private String id;
 
-	@Column(name = "company_id")
-	private String companyId;
+//	@Column(name = "company_id")
+//	private String companyId;
 
 	@Column(name = "type")
 	private String type;
@@ -77,6 +77,23 @@ public class F2Model implements Serializable {
 	@Column(name = "product_price_all1")
 	private float productPriceAll1;
 
+	@Column(name = "customer_name")
+	private String customerName;
+
+	@Column(name = "department_pass")
+	private String departmentPass;
+
+	@Column(name = "department_name")
+	private String departmentName;
+
+	@Column(name = "office_type")
+	private int officeType;
+
+	private String address;
+
+	@Column(name = "tax_id")
+	private String taxId;
+
 	@CreatedBy
 	@Column(name = "create_by")
 	private String createBy;
@@ -97,6 +114,9 @@ public class F2Model implements Serializable {
 
 	private float vat1;
 
+	@Column(name = "discount_flg")
+	private Boolean discountFlg;
+
 	@Column(name = "reference_document")
 	private String referenceDocument;
 
@@ -115,13 +135,13 @@ public class F2Model implements Serializable {
 		this.id = id;
 	}
 
-	public String getCompanyId() {
-		return this.companyId;
-	}
+//	public String getCompanyId() {
+//		return this.companyId;
+//	}
 
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
-	}
+//	public void setCompanyId(String companyId) {
+//		this.companyId = companyId;
+//	}
 
 	public String getType() {
 		return type;
@@ -335,6 +355,62 @@ public class F2Model implements Serializable {
 
 	public void setReferenceDocument(String referenceDocument) {
 		this.referenceDocument = referenceDocument;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getDepartmentPass() {
+		return departmentPass;
+	}
+
+	public void setDepartmentPass(String departmentPass) {
+		this.departmentPass = departmentPass;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public int getOfficeType() {
+		return officeType;
+	}
+
+	public void setOfficeType(int officeType) {
+		this.officeType = officeType;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
+
+	public Boolean getDiscountFlg() {
+		return discountFlg;
+	}
+
+	public void setDiscountFlg(Boolean discountFlg) {
+		this.discountFlg = discountFlg;
 	}
 
 }

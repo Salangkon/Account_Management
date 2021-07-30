@@ -41,7 +41,7 @@
 									</table>
 									<table style="width: 100%;">
 										<tr>
-											<th style="width: 50%;">Manager Account</th>
+											<th style="width: 50%;"></th>
 											<td style="width: 15%; color: purple;">วันครบกำหนด</td>
 											<td style="width: 35%;" id="dateEndPrint"></td>
 										</tr>
@@ -49,8 +49,8 @@
 									<table style="width: 100%;">
 										<tr>
 											<th style="width: 50%; color: orangered;">ลูกค้า</th>
-											<td style=" width: 15%; color: purple;">ผู้ขาย</td>
-											<td style="width: 35%;">Management Account</td>
+											<td style=" width: 15%; color: purple;"></td>
+											<td style="width: 35%;"></td>
 										</tr>
 									</table>
 									<table style="width: 100%;">

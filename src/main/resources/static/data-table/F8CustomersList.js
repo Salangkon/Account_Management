@@ -7,54 +7,64 @@ $(document).ready(function () {
 		"sAjaxSource": "/api/customers-list/name/" + $('#setCompanyId').val(),
 		"iDisplayLength": 10,
 		"sAjaxDataProp": "",
-		dom: 'Blfrtip',
-		buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
+		// dom: 'Blfrtip',
+		// buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
 		// buttons: [
 		// 	'copy', 'csv', 'excel', 'pdf', 'print'
 		// ],
 		"aoColumns": [{
-				"mData": "companyName",
-				"sWidth": "260px"
-			},
-			{
-				"mData": "tel",
-				"className": "text-center",
-				"sWidth": "60px"
-			}, {
-				"mData": "email",
-				"sWidth": "60px"
-			}, {
-				"mData": "",
-				"sWidth": "60px",
-				"mRender": function (data, type, row, index, full) {
-					if (row.companyType == '0') {
-						return '';
-					} else if (row.companyType == '1') {
-						return 'นิติบุุคล';
-					} else if (row.companyType == '2') {
-						return 'บุคคลธรรมดา';
-					}
-				}
-			}, {
-				"mData": "created_date",
-				"className": "text-center",
-				"sWidth": "60px",
-				"mRender": function (data, type, full) {
-					return '<div align="center"> ' + new Date(full.created_date).toLocaleDateString("en-US") + '</div>'
-				}
-			}, {
-				"sWidth": "60px",
-				"className": "text-center",
-				"mRender": function (data, type, full) {
-					return '<div align="center">' +
-						'<button type="button" class="btn btn-warning btn-sm"data-toggle="modal" data-target="#myModal" onclick="update(' + "'" + full.companyId + "'" + ')"><i class="fas fa-edit"></i></button> ' +
-						'<button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.companyId + "'" + ')"><i class="fas fa-trash"></i></button></div>'
+			"mData": "type",
+			"sWidth": "80px",
+			"mRender": function (data, type, row, index, full) {
+				if (row.type == '1') {
+					return  '<b style="color: green;"> ลูกค้า </b>';
+				} else if (row.type == '2') {
+					return '<b style="color: red;"> ผู้จำหน่าย </b>';
 				}
 			}
+		}, {
+			"mData": "companyName",
+			"sWidth": "260px"
+		},
+		{
+			"mData": "tel",
+			"className": "text-center",
+			"sWidth": "60px"
+		}, {
+			"mData": "email",
+			"sWidth": "60px"
+		}, {
+			"mData": "",
+			"sWidth": "60px",
+			"mRender": function (data, type, row, index, full) {
+				if (row.companyType == '0') {
+					return '';
+				} else if (row.companyType == '1') {
+					return '<b style="color: blueviolet;"> นิติบุุคล </b>';
+				} else if (row.companyType == '2') {
+					return '<b style="color: darkgreen;"> บุคคลธรรมดา </b>';
+				}
+			}
+		}, {
+			"mData": "created_date",
+			"className": "text-center",
+			"sWidth": "70px",
+			"mRender": function (data, type, full) {
+				return '<div align="center" style="color: blue;"> ' + new Date(full.created_date).toLocaleString("th-TH") + '</div>'
+			}
+		}, {
+			"sWidth": "60px",
+			"className": "text-center",
+			"mRender": function (data, type, full) {
+				return '<div align="center">' +
+					'<button type="button" class="btn btn-warning btn-sm"data-toggle="modal" data-target="#myModal" onclick="update(' + "'" + full.companyId + "'" + ')"><i class="fas fa-edit"></i></button> ' +
+					'<button type="button" class="btn btn-danger btn-sm" onclick="deleteId(' + "'" + full.companyId + "'" + ')"><i class="fas fa-trash"></i></button></div>'
+			}
+		}
 		]
 	});
 
-	var officeType = 1;
+	var officeType;
 	$("#officeType1").change(function () {
 		officeType = 1;
 	});
@@ -66,19 +76,30 @@ $(document).ready(function () {
 		pass = validateInput();
 		console.log("pass :: ", pass);
 		if (pass) {
+
+			if (officeType == 1) {
+				departmentPass = "";
+				departmentName = "";
+			} else {
+				departmentPass = $('#departmentPass').val();
+				departmentName = $('#departmentName').val();
+			}
+
 			var customers = {
 				companyId: $('#companyId').val(),
 				address: $('#address').val(),
 				companyName: $('#companyName').val(),
+				type: $('#type').val(),
 				companyType: $('#companyType').val(),
 				customerName: $('#customerName').val(),
-				department: $('#department').val(),
+				departmentPass: departmentPass,
+				departmentName: departmentName,
 				email: $('#emailCus').val(),
 				officeType: officeType,
 				taxId: $('#taxId').val(),
 				tel: $('#tel').val(),
 				createBy: $('#createBy').val(), //สร้างโดย
-				company: $('#setCompanyId').val(),				
+				company: $('#setCompanyId').val(),
 			}
 
 			console.log(JSON.stringify(customers));
@@ -90,11 +111,11 @@ $(document).ready(function () {
 				dataType: "json",
 				success: function (data) {
 					swal({
-							title: "บันทึก สำเร็จ",
-							type: "success",
-							confirmButtonClass: "btn-success",
-							confirmButtonText: "ตกลง",
-						},
+						title: "บันทึก สำเร็จ",
+						type: "success",
+						confirmButtonClass: "btn-success",
+						confirmButtonText: "ตกลง",
+					},
 						function () {
 							window.location.href = "/customers-list";
 						});
@@ -110,37 +131,45 @@ $(document).ready(function () {
 	function validateInput() {
 		var pass = true;
 
-		if ('' == $('#tel').val()) {
-			tel.focus()
-			$('#error-tel').removeClass("hide")
-			pass = false;
-		} else {
-			$('#error-tel').addClass("hide")
-		}
+		// if ('' == $('#tel').val()) {
+		// 	tel.focus()
+		// 	$('#error-tel').removeClass("hide")
+		// 	pass = false;
+		// } else {
+		// 	$('#error-tel').addClass("hide")
+		// }
 
-		if ('' == $('#emailCus').val()) {
-			emailCus.focus()
-			$('#error-emailCus').removeClass("hide")
-			pass = false;
-		} else {
-			$('#error-emailCus').addClass("hide")
-		}
+		// if ('' == $('#emailCus').val()) {
+		// 	emailCus.focus()
+		// 	$('#error-emailCus').removeClass("hide")
+		// 	pass = false;
+		// } else {
+		// 	$('#error-emailCus').addClass("hide")
+		// }
 
-		if ('' == $('#customerName').val()) {
-			customerName.focus()
-			$('#error-customerName').removeClass("hide")
-			pass = false;
-		} else {
-			$('#error-customerName').addClass("hide")
-		}
+		// if ('' == $('#customerName').val()) {
+		// 	customerName.focus()
+		// 	$('#error-customerName').removeClass("hide")
+		// 	pass = false;
+		// } else {
+		// 	$('#error-customerName').addClass("hide")
+		// }
 
 		if ('2' == officeType) {
-			if ('' == $('#department').val()) {
-				department.focus()
-				$('#error-department').removeClass("hide")
+			if ('' == $('#departmentPass').val()) {
+				departmentPass.focus()
+				$('#error-departmentPass').removeClass("hide")
 				pass = false;
 			} else {
-				$('#error-department').addClass("hide")
+				$('#error-departmentPass').addClass("hide")
+			}
+
+			if ('' == $('#departmentName').val()) {
+				departmentName.focus()
+				$('#error-departmentName').removeClass("hide")
+				pass = false;
+			} else {
+				$('#error-departmentName').addClass("hide")
 			}
 		}
 
@@ -184,6 +213,14 @@ $(document).ready(function () {
 			$('#error-companyType').addClass("hide")
 		}
 
+		if ('0' == $('#type').val()) {
+			companyType.focus()
+			$('#error-type').removeClass("hide")
+			pass = false;
+		} else {
+			$('#error-type').addClass("hide")
+		}
+
 		return pass;
 	} // end validate
 });
@@ -200,14 +237,14 @@ function CheckOffice(officeType) {
 function deleteId(companyId) {
 	console.log(companyId);
 	swal({
-			title: "Are you sure?",
-			text: "Your will not be able to recover this imaginary file!",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonClass: "btn-danger",
-			confirmButtonText: "Yes, delete it!",
-			closeOnConfirm: false
-		},
+		title: "Are you sure?",
+		text: "Your will not be able to recover this imaginary file!",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		confirmButtonText: "Yes, delete it!",
+		closeOnConfirm: false
+	},
 		function () {
 			$.ajax({
 				url: '/api/delete-customers-list/' + companyId,
@@ -237,8 +274,10 @@ function update(companyId) {
 		$('#companyId').val("");
 		document.getElementById("companyId").disabled = false;
 		$('#companyName').val("");
+		$('#type').val("0");
 		$('#companyType').val("0");
-		$('#department').val("");
+		$('#departmentPass').val("");
+		$('#departmentName').val("");
 		$('#customerName').val("");
 		$('#address').val("");
 		$('#emailCus').val("");
@@ -268,8 +307,10 @@ function update(companyId) {
 				$('#companyId').val(msg.companyId);
 				document.getElementById("companyId").disabled = true;
 				$('#companyName').val(msg.companyName);
+				$('#type').val(msg.type);
 				$('#companyType').val(msg.companyType);
-				$('#department').val(msg.department);
+				$('#departmentPass').val(msg.departmentPass);
+				$('#departmentName').val(msg.departmentName);
 				$('#customerName').val(msg.customerName);
 				$('#address').val(msg.address);
 				$('#emailCus').val(msg.email);
