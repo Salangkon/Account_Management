@@ -91,10 +91,10 @@ function myDiscountFlg(flg) {
         }
         document.getElementById("discountFlgT").hidden = true;
         document.getElementById("discountFlgF").hidden = false;
-        document.getElementById("discountFlgT1").hidden = false;
-        document.getElementById("discountFlgF1").hidden = true;
         // document.getElementById("discountFlgT1").hidden = false;
         // document.getElementById("discountFlgF1").hidden = true;
+        document.getElementById("discountFlgT1").hidden = false;
+        document.getElementById("discountFlgF1").hidden = true;
         discountFlg = "1";
     } else {
         var discount = document.getElementById("discount").value;
@@ -105,6 +105,28 @@ function myDiscountFlg(flg) {
         document.getElementById("discountFlgF").hidden = true;
         // document.getElementById("discountFlgT1").hidden = false;
         // document.getElementById("discountFlgF1").hidden = true;
+        document.getElementById("discountFlgT1").hidden = false;
+        document.getElementById("discountFlgF1").hidden = true;
+        discountFlg = "2";
+    }
+    myFunction();
+}
+
+function myDiscountFlg1(flg) {
+    console.log("discountFlg1: " + flg);
+    if (flg == "1") {
+        var discount = document.getElementById("discount").value;
+        if (discount == '') {
+            document.getElementById("discount").value = '';
+        }
+        document.getElementById("discountFlgT1").hidden = true;
+        document.getElementById("discountFlgF1").hidden = false;
+        discountFlg = "1";
+    } else {
+        var discount = document.getElementById("discount").value;
+        if (discount == '') {
+            document.getElementById("discount").value = '';
+        }
         document.getElementById("discountFlgT1").hidden = false;
         document.getElementById("discountFlgF1").hidden = true;
         discountFlg = "2";
@@ -204,6 +226,7 @@ function statusVatFlg($i) {
         discountFlg = '1';
     }
     myDiscountFlg(discountFlg);
+    myDiscountFlg1(discountFlg);
 } // end update status vat
 
 // update status
@@ -413,6 +436,8 @@ function updateQuotation(id, flg) {
         discountFlg = "1";
         document.getElementById("discountFlgT").hidden = false;
         document.getElementById("discountFlgF").hidden = true;
+        document.getElementById("discountFlgT1").hidden = false;
+        document.getElementById("discountFlgF1").hidden = true;
 
 
         CheckOffice("1");
