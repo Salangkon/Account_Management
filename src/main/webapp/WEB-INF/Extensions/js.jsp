@@ -72,7 +72,7 @@
 						(or any other open lists of autocompleted values:*/
 						$.ajax({
 							type: "GET",
-							url: "/api/customers-list/company-name/" + this.getElementsByTagName("input")[0].value,
+							url: "/api/customers-list/company-name/" + this.getElementsByTagName("input")[0].value + "/" + $('#setCompanyId').val(),
 							contentType: "application/json; charset=utf-8",
 							dataType: "json",
 							success: function (msg) {

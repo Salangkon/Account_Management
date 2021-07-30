@@ -98,7 +98,7 @@ public class F2Controller {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyMMdd", Locale.US);
 		String date = simpleDateFormat.format(new Date());
 		// search number generate
-		String num = "%" + type + date + "%";
+		String num = type + date + "%";
 
 		String gen = null;
 		gen = f2Repo.findByDepartmentIdLike(num);
@@ -374,12 +374,11 @@ public class F2Controller {
 		System.err.println(passId);
 		Journal journal = new Journal();
 //		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-//		journal.setDescription(
-//				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+		journal.setDescription("ค่าซื้อ บริการ จาก " + f2Model.getCustomerName() + " #" + f2Model.getDepartmentId());
 		journal.setReferenceDocument("");
 		journal.setType(passId);
 		journal.setStatus("1");
-//		journal.setCompanyId(f2Model.getCompanyId());
+		journal.setCompanyId(f2Model.getCustomerName());
 		journal.setDate(f2Model.getDateEnd());
 		journal.setF2Id(f2Model.getId());
 		journal.setCreateDate(new Timestamp(new Date().getTime()));
@@ -419,7 +418,7 @@ public class F2Controller {
 					List<String> ChartAccountId = new ArrayList<String>();
 					ChartAccountId.add("d1d70beb-41c0-4f7b-9949-ef8a2574672e");
 					ChartAccountId.add("530e91d5-46ab-4cc4-9452-0787f688879b");
-					ChartAccountId.add("6ffc89bc-48bc-4d5e-b8f2-65c88a10429b");
+					ChartAccountId.add("471bd336-ae63-4a03-b324-ba3a8bd7ce91");
 					for (String string : ChartAccountId) {
 						JournalList journalList = new JournalList();
 
@@ -435,7 +434,7 @@ public class F2Controller {
 							journalList.setDebit(f2Model.getVat());
 							journalList.setDetail(journal.getDescription());
 							break;
-						case "6ffc89bc-48bc-4d5e-b8f2-65c88a10429b":
+						case "471bd336-ae63-4a03-b324-ba3a8bd7ce91":
 							journalList.setCredit(f2Model.getPrice());
 							journalList.setDebit(0);
 							journalList.setDetail(journal.getDescription());
@@ -478,12 +477,11 @@ public class F2Controller {
 		System.err.println(passId);
 		Journal journal = new Journal();
 //		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-//		journal.setDescription(
-//				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+		journal.setDescription("ค่าซื้อ บริการ จาก " + f2Model.getCustomerName() + " #" + f2Model.getDepartmentId());
 		journal.setReferenceDocument("");
 		journal.setType(passId);
 		journal.setStatus("1");
-//		journal.setCompanyId(f2Model.getCompanyId());
+		journal.setCompanyId(f2Model.getCustomerName());
 		journal.setDate(f2Model.getDateEnd());
 		journal.setF2Id(f2Model.getId());
 		journal.setCreateDate(new Timestamp(new Date().getTime()));
@@ -531,12 +529,11 @@ public class F2Controller {
 		System.err.println(passId);
 		Journal journal = new Journal();
 //		CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-//		journal.setDescription(
-//				"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+		journal.setDescription("ค่าซื้อ บริการ จาก " + f2Model.getCustomerName() + " #" + f2Model.getDepartmentId());
 		journal.setReferenceDocument("");
 		journal.setType(passId);
 		journal.setStatus("1");
-//		journal.setCompanyId(f2Model.getCompanyId());
+		journal.setCompanyId(f2Model.getCustomerName());
 		journal.setDate(f2Model.getDateEnd());
 		journal.setF2Id(f2Model.getId());
 		journal.setCreateDate(new Timestamp(new Date().getTime()));
@@ -578,12 +575,11 @@ public class F2Controller {
 		Journal journal = new Journal();
 		try {
 //			CustomersList customersList = customersListRepo.findOne(f2Model.getCompanyId());
-//			journal.setDescription(
-//					"ค่าซื้อ บริการ จาก " + customersList.getCompanyName() + " #" + f2Model.getDepartmentId());
+			journal.setDescription("ค่าซื้อ บริการ จาก " + f2Model.getCustomerName() + " #" + f2Model.getDepartmentId());
 			journal.setReferenceDocument("");
 			journal.setType(passId);
 			journal.setStatus("1");
-//			journal.setCompanyId(f2Model.getCompanyId());
+			journal.setCompanyId(f2Model.getCustomerName());
 			journal.setDate(f2Model.getDateEnd());
 			journal.setF2Id(f2Model.getId());
 			journal.setCreateDate(new Timestamp(new Date().getTime()));
@@ -603,8 +599,7 @@ public class F2Controller {
 						data.put("pice", String.valueOf(f2ListModel.getProductSumPrice()));
 						mappings.add(data);
 					}
-//					ChartAccountId = categoryExpensesMappingRopo(mappings, customersList.getCompanyName(),
-//							f2Model.getDepartmentId());
+					ChartAccountId = categoryExpensesMappingRopo(mappings, f2Model.getCustomerName(), f2Model.getDepartmentId());
 
 					for (HashMap<String, String> mapping : ChartAccountId) {
 						JournalList journalList = new JournalList();
@@ -643,8 +638,8 @@ public class F2Controller {
 						data.put("pice", String.valueOf(f2ListModel.getProductSumPrice()));
 						mappings.add(data);
 					}
-//					ChartAccountId = categoryExpensesMappingRopoPV(mappings, customersList.getCompanyName(),
-//							f2Model.getDepartmentId());
+					ChartAccountId = categoryExpensesMappingRopoPV(mappings, f2Model.getCustomerName(),
+							f2Model.getDepartmentId());
 
 					for (HashMap<String, String> mapping : ChartAccountId) {
 						JournalList journalList = new JournalList();
@@ -653,8 +648,8 @@ public class F2Controller {
 						case "1":
 							journalList.setCredit(0);
 							journalList.setDebit(Float.parseFloat(mapping.get("pice")));
-//							journalList.setDetail("ชำระค่า ส่งเสริมการขาย ให้แก่ " + customersList.getCompanyName()
-//									+ " #" + f2Model.getDepartmentId());
+							journalList.setDetail("ชำระค่า ส่งเสริมการขาย ให้แก่ " + f2Model.getCustomerName()
+									+ " #" + f2Model.getDepartmentId());
 							break;
 						case "2":
 							journalList.setCredit(f2Model.getProductPriceAll());

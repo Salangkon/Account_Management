@@ -545,6 +545,14 @@ function saveCreateQuotation() {
 
     if (pass) {
         var insertReceipt = {
+            //ข้อมูลลูกค้า
+            customerName: $('#customers').val(), //ชื่อบริษัทลูกค้า
+            departmentPass: $('#departmentPass').val(), //รหัสสาขา
+            departmentName: $('#departmentName').val(), //ชื่อสาขา
+            officeType: officeType, //สาขา
+            address: $('#address').val(), //ที่อยู่
+            taxId: $('#taxId').val(), //ที่อยู่
+
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร
@@ -690,10 +698,11 @@ function tableReceipt() {
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\
                                     </select>';
                         } else if (row.status == 'อนุมัติ') {
-                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
-                                    <option style="color: black">ดำเนิการเเล้ว</option/>\n\
-                                    <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
-                                    </select>';
+                            return '<div class="form-control form-control-sm" style="background-color: greenyellow;color: green;text-align: center;">ดำเนินการเเล้ว</div>'
+                            // return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                            //         <option style="color: black">ดำเนินการเเล้ว</option/>\n\
+                            //         <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
+                            //         </select>';
                         } else if (row.status == 'ไม่อนุมัติ') {
                             return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: black">ยกเลิก</option/>\n\

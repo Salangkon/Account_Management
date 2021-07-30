@@ -54,10 +54,10 @@ public class F8CustomersController {
 		return customers;
 	}
 	
-	@GetMapping("/customers-list/company-name/{companyName}")
-	public CustomersList customersListCompanyName(@PathVariable("companyName") String companyName) {
+	@GetMapping("/customers-list/company-name/{companyName}/{company}")
+	public CustomersList customersListCompanyName(@PathVariable("companyName") String companyName, @PathVariable("company") String company) {
 		System.err.println("Company Name :: " + companyName);
-		CustomersList customers = customersListRepo.findByCompanyName(companyName);
+		CustomersList customers = customersListRepo.findByCompanyNameAndCompany(companyName, company);
 		return customers;
 	}
 

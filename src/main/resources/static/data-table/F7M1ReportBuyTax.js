@@ -97,13 +97,13 @@ function reportBuyTax() {
                         type, row, index) {
                         return parseFloat(row.productPriceAll).toFixed(2);
                     }
-                }, ]
+                },]
             });
         }
     });
 }; // END tableQuotation
 
 function reportBuyTaxPrint() {
-    window.open("/api/report/type/reportBuyTax/userid/" + $('#createBy').val() + "/startDate/0/endDate/0/รายงานภาษี");
+    window.open("/api/report/type/reportBuyTax/userid/" + $('#createBy').val() + "/startDate/" + fromDate + "/endDate/" + toDate + "/รายงานภาษี");
     // window.location.href = "/api/report/type/reportBuyTax/userid/s1/startDate/0/endDate/0/รายงานภาษี";
 }

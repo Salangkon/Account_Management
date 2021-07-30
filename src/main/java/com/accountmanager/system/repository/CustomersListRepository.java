@@ -14,4 +14,6 @@ public interface CustomersListRepository extends CrudRepository<CustomersList, S
 
 	List<CustomersList> findByCompanyAndType(String company, String type);
 
+	CustomersList findByCompanyNameAndCompany(String companyName, String company);
+
 }

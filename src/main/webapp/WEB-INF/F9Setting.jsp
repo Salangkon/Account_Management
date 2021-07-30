@@ -85,8 +85,8 @@
 										</div>
 										<div id="department">
 											<div class="input-group input-group-sm mb-3">
-												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentName" placeholder="รหัสสาขา">
-												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentPass" placeholder="ชื่อสาขา">
+												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentPass" placeholder="รหัสสาขา">
+												<input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" id="departmentName" placeholder="ชื่อสาขา">
 											</div>
 											<p class="hide" id="error-department"></p>
 										</div>

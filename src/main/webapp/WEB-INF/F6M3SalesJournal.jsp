@@ -7,7 +7,7 @@
 		<title>Report Quotidia</title>
 
 		<%@include file="/WEB-INF/Extensions/css.jsp" %>
-			<style>
+			<!-- <style>
 				.col-sm-4,
 				.col-sm-8 {
 					text-align: right;
@@ -33,6 +33,26 @@
 					/* position: relative !important; */
 					top: 2.5rem !important;
 					margin-top: -40px !important;
+				}
+			</style> -->
+			<style>
+				label,
+				textarea,
+				.input-top {
+					margin-top: 10px;
+				}
+
+				.col-sm-3,
+				.col-sm-4 {
+					text-align: right;
+				}
+
+				p {
+					color: red;
+				}
+
+				.hide {
+					display: none;
 				}
 			</style>
 	</head>
@@ -112,7 +132,7 @@
 
 							<!-- Modal Header -->
 							<div class="modal-header">
-								<h4 class="modal-title">สร้างสมุดรายวัน</h4>
+								<h4 class="modal-title">สมุดรายวันขาย</h4>
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 
@@ -137,7 +157,8 @@
 															<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
 															<div class="col-sm-8">
 																<input id="id" hidden>
-																<select id="customers" class="selectpicker"
+																<input id="setType" value="1" hidden>
+																<!-- <select id="customers" class="selectpicker"
 																	data-live-search="true"
 																	title="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน"
 																	style="margin-top: 10px;">
@@ -147,9 +168,16 @@
 																			<%=customers.get(i).getCompanyName()%>
 																		</option>
 																		<% } %>
-																</select>
+																</select> -->
+																<form autocomplete="off">
+																	<div class="autocomplete" style="width: 100%;">
+																		<input class="form-control form-control" id="customers"
+																			type="text" name="customers"
+																			placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน">
+																	</div>
+																</form>
 																<div hidden class="invalid" id="invalid-customers">
-																	กรุณาระบุเลขที่เอกสาร
+																	กรุณาระบุชื่อลูกค้า
 																</div>
 															</div>
 															<div class="col-sm-4">
@@ -179,7 +207,7 @@
 																<label>เลขที่เอกสาร* : </label>
 															</div>
 															<div class="col-sm-8">
-																<input class="form-control" id="referenceDocument"
+																<input class="form-control" id="type"
 																	placeholder="เลขที่เอกสาร">
 																<div hidden class="invalid"
 																	id="invalid-referenceDocument">

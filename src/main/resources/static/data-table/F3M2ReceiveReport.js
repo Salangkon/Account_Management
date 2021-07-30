@@ -550,6 +550,14 @@ function saveCreateQuotation() {
 
     if (pass) {
         var insertQuotation = {
+            //ข้อมูลลูกค้า
+            customerName: $('#customers').val(), //ชื่อบริษัทลูกค้า
+            departmentPass: $('#departmentPass').val(), //รหัสสาขา
+            departmentName: $('#departmentName').val(), //ชื่อสาขา
+            officeType: officeType, //สาขา
+            address: $('#address').val(), //ที่อยู่
+            taxId: $('#taxId').val(), //ที่อยู่
+            
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
             departmentId: $('#departmentId').val(), //เลขที่เอกสาร

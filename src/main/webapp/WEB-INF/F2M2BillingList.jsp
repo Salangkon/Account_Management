@@ -118,7 +118,7 @@
 							<!-- Modal Header -->
 							<div class="modal-header">
 								<h4 class="modal-title" id="biilingFlgTitle">สร้างใบวางบิล</h4>
-								<h4 class="modal-title" id="taxInvoiceFlgTitle">สร้างใบใบกำกับภาษี</h4>
+								<h4 class="modal-title" id="taxInvoiceFlgTitle">สร้างใบกำกับภาษี</h4>
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 

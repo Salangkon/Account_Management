@@ -11,14 +11,31 @@ function printPDF(id) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            $('#departmentIdPrint').text(msg.departmentId), //เลขที่เอกสาร
-                $('#status').text(msg.status), //สถานะ
-                $('#notePrint').text(msg.note), //หมาบเหตุ
-                $('#datePrint').text(msg.date), //วันที่
-                $('#dateEndPrint').text(msg.dateEnd), //วันที่_ครบกำหนด
-                $('#statusVatPrint').text(msg.statusVat), //วันที่_ครบกำหนด
-                // ไม่รวมภาษี
-                $('#pricePrint').text(msg.price), //รวมเป็นเงิน
+            ///////NEW//////
+            var getCompanys = document.getElementById("getCompanys").value;
+            var getDepartment = document.getElementById("getDepartment").value;
+            var getDepartmentPass = document.getElementById("getDepartmentPass").value;
+            if (getDepartment == 1) {
+                $('#getCompanysPrint').text(getCompanys + " (สำนักงานใหญ่)");
+            } else {
+                $('#getCompanysPrint').text(getCompanys + " (" + getDepartmentPass + ")");
+            };
+            if (msg.officeType == 1) {
+                $('#customersNamePrint').text(msg.customerName + " (สำนักงานใหญ่)");
+            } else {
+                $('#customersNamePrint').text(msg.customerName + " (" + msg.departmentPass + ")");
+            };
+            $('#addressPrint').text(msg.address);
+            $('#taxIdPrint').text("เลขประจำตัวผู้เสียภาษี " + msg.taxId);
+
+            $('#departmentIdPrint').text(msg.departmentId); //เลขที่เอกสาร
+            $('#status').text(msg.status); //สถานะ
+            $('#notePrint').text(msg.note); //หมาบเหตุ
+            $('#datePrint').text(msg.date); //วันที่
+            $('#dateEndPrint').text(msg.dateEnd); //วันที่_ครบกำหนด
+            $('#statusVatPrint').text(msg.statusVat); //วันที่_ครบกำหนด
+            // ไม่รวมภาษี
+            $('#pricePrint').text(msg.price), //รวมเป็นเงิน
                 $('#priceDisplayPrint').text(parseFloat(msg.price).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //รวมเป็นเงิน
                 $('#productPriceAllPrint').text(parseFloat(msg.productPriceAll).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " บาท"), //ราคาสินค้าทั้งหมด
                 $('#discountPrint').text(msg.discount + " %"), //ส่วนลด

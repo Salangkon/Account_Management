@@ -9,7 +9,13 @@
 					<th style="vertical-align: top">
 						<table style="width: 100%; text-align: center;">
 							<tr>
-								<th style="width: 60%;padding-top: 50px; text-align: left;"><%=user.getCompanys().getCompanyName()%></th>
+								<input hidden type="text" id="getCompanys" value="<%=user.getCompanys().getCompanyName()%>">
+								<input hidden type="text" id="getDepartment" value="<%=user.getCompanys().getDepartment()%>">
+								<input hidden type="text" id="getDepartmentPass" value="<%=user.getCompanys().getDepartmentPass()%>">
+								
+								<th style="width: 60%;padding-top: 50px; text-align: left;" id="getCompanysPrint">
+									<!-- <%=user.getCompanys().getCompanyName()%> (สำนักงานใหญ่) -->
+								</th>
 								<th style="width: 35%;">
 									<h4 style="color: purple;">
 										<b>ใบเสนอราคา</b>
@@ -52,7 +58,7 @@
 						</table>
 						<table style="width: 100%;">
 							<tr>
-								<td style="width: 60%;" id="customersPrint"></td>
+								<td style="width: 60%;" id="customersNamePrint"></td>
 								<td style="width: 35%;">
 									
 								</td>
@@ -62,7 +68,7 @@
 						</table>
 						<table style="width: 100%;">
 							<tr>
-								<td style="width: 50%;" id="customersNamePrint"></td>
+								<td style="width: 50%;" id="addressPrint"></td>
 								<td style="width: 50%;"></td>
 							</tr>
 						</table>

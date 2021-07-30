@@ -9,14 +9,20 @@
 					<th style="vertical-align: top">
 						<table style="width: 100%; text-align: center;">
 							<tr>
-								<th style="width: 50%;"></th>
-								<th style="width: 40%;">
+								<input hidden type="text" id="getCompanys" value="<%=user.getCompanys().getCompanyName()%>">
+								<input hidden type="text" id="getDepartment" value="<%=user.getCompanys().getDepartment()%>">
+								<input hidden type="text" id="getDepartmentPass" value="<%=user.getCompanys().getDepartmentPass()%>">
+								
+								<th style="width: 60%;padding-top: 50px; text-align: left;" id="getCompanysPrint">
+									<!-- <%=user.getCompanys().getCompanyName()%> (สำนักงานใหญ่) -->
+								</th>
+								<th style="width: 35%;">
 									<h4 style="color: purple;">
 										<b>ใบกำกับภาษี</b>
 									</h4>
 									<hr>
 								</th>
-								<th style="width: 10%;">
+								<th style="width: 5%;">
 									<h4 style="color: purple;">
 										<div class="triangle"></div>
 									</h4>
@@ -24,45 +30,45 @@
 						</table>
 						<table style="width: 100%;">
 							<tr>
-								<td style="width: 50%;"></td>
+								<td style="width: 60%;"><%=user.getCompanys().getAddress()%></td>
 								<td style="width: 15%; color: purple;">เลขที่</td>
 								<td style="width: 35%;" id="departmentIdPrint"></td>
 							</tr>
 						</table>
 						<table style="width: 100%;">
 							<tr>
-								<td style="width: 50%;"></td>
+								<td style="width: 60%;">เลขประจำตัวผู้เสียภาษี <%=user.getCompanys().getTaxId()%></td>
 								<td style="width: 15%; color: purple;">วันที่</td>
 								<td style="width: 35%;" id="datePrint"></td>
 							</tr>
 						</table>
 						<table style="width: 100%;">
 							<tr>
-								<th style="width: 50%;"></th>
+								<th style="width: 60%;"></th>
 								<td style="width: 15%; color: purple;">วันครบกำหนด</td>
 								<td style="width: 35%;" id="dateEndPrint"></td>
 							</tr>
 						</table>
 						<table style="width: 100%;">
 							<tr>
-								<th style="width: 50%; color: orangered;">ลูกค้า</th>
-								<td style=" width: 15%; color: purple;"></td>
-								<td style="width: 35%;"></td>
+								<th style="width: 57%; color: orangered;">ลูกค้า</th>
+								<td style="width: 34%;"><hr></td>
+								<td style="width: 9%;"></td>
 							</tr>
 						</table>
 						<table style="width: 100%;">
 							<tr>
-								<td style="width: 50%;" id="customersPrint"></td>
-								<td style="width: 40%;">
-									<hr>
+								<td style="width: 60%;" id="customersNamePrint"></td>
+								<td style="width: 35%;">
+									
 								</td>
-								<td style="width: 10%;">
+								<td style="width: 5%;">
 								</td>
 							</tr>
 						</table>
 						<table style="width: 100%;">
 							<tr>
-								<td style="width: 50%;" id="customersNamePrint"></td>
+								<td style="width: 50%;" id="addressPrint"></td>
 								<td style="width: 50%;"></td>
 							</tr>
 						</table>
@@ -99,7 +105,8 @@
 							</table>
 							<table style="width: 100%;">
 								<tr>
-									<td style="width: 85%;text-align: right; color: orangered;">จำนวนเงินหลังหักส่วนลด
+									<td style="width: 85%;text-align: right; color: orangered;">
+										จำนวนเงินหลังหักส่วนลด
 									<td>
 									<td style="width: 15%;text-align: right;" id="discountProductPricePrint">0</td>
 								</tr>
@@ -113,7 +120,8 @@
 							</table>
 							<table style="width: 100%;">
 								<tr>
-									<td style="width: 85%;text-align: right; color: orangered;">จำนวนเงินทั้งสิ้น</td>
+									<td style="width: 85%;text-align: right; color: orangered;">จำนวนเงินทั้งสิ้น
+									</td>
 									<td style="width: 15%;text-align: right;" id="productPriceAllPrint">0</td>
 								</tr>
 							</table>
@@ -141,7 +149,8 @@
 							</table>
 							<table style="width: 100%;">
 								<tr>
-									<td style="width: 85%;text-align: right; color: orangered;">จำนวนเงินหลังหักส่วนลด
+									<td style="width: 85%;text-align: right; color: orangered;">
+										จำนวนเงินหลังหักส่วนลด
 									<td>
 									<td style="width: 15%;text-align: right;" id="discountProductPricePrint1">0</td>
 								</tr>
@@ -161,7 +170,8 @@
 							</table>
 							<table style="width: 100%;">
 								<tr>
-									<td style="width: 85%;text-align: right; color: orangered;">จำนวนเงินทั้งสิ้น</td>
+									<td style="width: 85%;text-align: right; color: orangered;">จำนวนเงินทั้งสิ้น
+									</td>
 									<td style="width: 15%;text-align: right;" id="sumPricePrint1">0</td>
 								</tr>
 							</table>
@@ -200,7 +210,7 @@
 					</th>
 				</tr>
 			</table>
-			
+
 		</div>
 	</div>
 </div>

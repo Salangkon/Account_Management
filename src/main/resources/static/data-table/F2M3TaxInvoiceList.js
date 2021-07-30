@@ -207,8 +207,15 @@ function updateQuotation(id, TaxInvoice) {
                 $('#note').val(msg.note); //หมาบเหตุ
                 $('#date').val(msg.date); //วันที่
                 $('#dateEnd').val(msg.dateEnd); //วันที่_ครบกำหนด
-                $('#referenceDocument').val(msg.referenceDocument); //เลขที่เอกสาร
                 $('#statusVat').val(msg.statusVat)
+                switch (TaxInvoice) {
+                    case "taxInvoiceFlg":
+                        $('#referenceDocument').val(msg.departmentId); //เลขที่เอกสาร
+                        break;
+                    default:
+                        $('#referenceDocument').val(msg.referenceDocument); //เลขที่เอกสาร
+                        break;
+                }
                 if (msg.statusVat == 1) {
                     document.getElementById("statusVat1").hidden = false;
                     document.getElementById("statusVat2").hidden = true;
@@ -562,6 +569,13 @@ function saveCreateQuotation() {
 
     if (pass) {
         var insertTaxInvoice = {
+            //ข้อมูลลูกค้า
+            customerName: $('#customers').val(), //ชื่อบริษัทลูกค้า
+            departmentPass: $('#departmentPass').val(), //รหัสสาขา
+            departmentName: $('#departmentName').val(), //ชื่อสาขา
+            officeType: officeType, //สาขา
+            address: $('#address').val(), //ที่อยู่
+            taxId: $('#taxId').val(), //ที่อยู่
 
             id: $('#id').val(), //ลูกค้า
             companyId: $('#customers').val(), //ลูกค้า
@@ -653,12 +667,21 @@ function saveCreateQuotationReceipt() {
         success: function (msg) {
             if (pass) {
                 var insertTaxInvoice = {
+                    //ข้อมูลลูกค้า
+                    customerName: $('#customers').val(), //ชื่อบริษัทลูกค้า
+                    departmentPass: $('#departmentPass').val(), //รหัสสาขา
+                    departmentName: $('#departmentName').val(), //ชื่อสาขา
+                    officeType: officeType, //สาขา
+                    address: $('#address').val(), //ที่อยู่
+                    taxId: $('#taxId').val(), //ที่อยู่
+
                     // id: $('#id').val(), //ลูกค้า
                     companyId: $('#customers').val(), //ลูกค้า
                     departmentId: msg, //เลขที่เอกสาร
                     type: "Receipt", //ประเภท
                     status: "รออนุมัติ", //สถานะ
                     statusVat: $('#statusVat').val(), //สถานะ ภาษี
+
                     // ไม่รวมภาษี
                     price: $('#price').text(), //รวมเป็นเงิน
                     productPriceAll: $('#productPriceAll').text(), //ราคาสินค้าทั้งหมด
@@ -666,6 +689,7 @@ function saveCreateQuotationReceipt() {
                     discountPrice: $('#discountPrice').text(), //ราคาหักส่วนลด
                     discountProductPrice: $('#discountProductPrice').text(), //
                     vat: $('#vat').text(), //ภาษีมูลค่าเพิ่ม
+
                     // รวมภาษี
                     price1: $('#price1').text(), //รวมเป็นเงิน
                     productPriceAll1: $('#productPriceAll1').text(), //ราคาสินค้าทั้งหมด
@@ -700,6 +724,7 @@ function saveCreateQuotationReceipt() {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {
+                        changeFunc("2" + $('#id').val());
                         window.location.href = "/receipt-list";
                     }
                 });
@@ -791,10 +816,11 @@ function tableTaxInvoice() {
                                     <option value="3' + row.id + '" style="color: red">ยกเลิก</option/>\n\
                                     </select>';
                         } else if (row.status == 'อนุมัติ') {
-                            return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
-                                    <option style="color: black">ดำเนิการเเล้ว</option/>\n\
-                                    <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
-                                    </select>';
+                            return '<div class="form-control form-control-sm" style="background-color: greenyellow;color: green;text-align: center;">ดำเนินการเเล้ว</div>'
+                            // <select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: black">\n\
+                            //         <option style="color: black">ดำเนินการเเล้ว</option/>\n\
+                            //         <option value="0' + row.id + '" style="color: red">ยกเลิก</option/>\n\
+                            //         </select>';
                         } else if (row.status == 'ไม่อนุมัติ') {
                             return '<select class="form-control form-control-sm" onchange="changeFunc(value)" style="color: red">\n\
                                     <option value="3' + row.id + '" style="color: red">ไม่อนุมัติ</option/>\n\
