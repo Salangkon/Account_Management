@@ -115,7 +115,7 @@ public class F2Model implements Serializable {
 	private float vat1;
 
 	@Column(name = "discount_flg")
-	private Boolean discountFlg;
+	private String discountFlg;
 
 	@Column(name = "reference_document")
 	private String referenceDocument;
@@ -405,11 +405,11 @@ public class F2Model implements Serializable {
 		this.taxId = taxId;
 	}
 
-	public Boolean getDiscountFlg() {
+	public String getDiscountFlg() {
 		return discountFlg;
 	}
 
-	public void setDiscountFlg(Boolean discountFlg) {
+	public void setDiscountFlg(String discountFlg) {
 		this.discountFlg = discountFlg;
 	}
 
