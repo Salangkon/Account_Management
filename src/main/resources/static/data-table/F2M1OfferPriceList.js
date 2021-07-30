@@ -91,10 +91,6 @@ function myDiscountFlg(flg) {
         }
         document.getElementById("discountFlgT").hidden = true;
         document.getElementById("discountFlgF").hidden = false;
-        // document.getElementById("discountFlgT1").hidden = false;
-        // document.getElementById("discountFlgF1").hidden = true;
-        document.getElementById("discountFlgT1").hidden = false;
-        document.getElementById("discountFlgF1").hidden = true;
         discountFlg = "1";
     } else {
         var discount = document.getElementById("discount").value;
@@ -103,10 +99,6 @@ function myDiscountFlg(flg) {
         }
         document.getElementById("discountFlgT").hidden = false;
         document.getElementById("discountFlgF").hidden = true;
-        // document.getElementById("discountFlgT1").hidden = false;
-        // document.getElementById("discountFlgF1").hidden = true;
-        document.getElementById("discountFlgT1").hidden = false;
-        document.getElementById("discountFlgF1").hidden = true;
         discountFlg = "2";
     }
     myFunction();
@@ -141,6 +133,9 @@ function myFunction() {
     console.log("discount:" + discount);
     console.log("discountPrice T :" + discountFlg);
     if (discountFlg == '1') {
+        if (discount == "") {
+            discount = 0;
+        }
         $('#discountPrice').text(parseFloat(discount).toFixed(2));
         $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
         productPriceAll = discountPrice - discount;
@@ -176,8 +171,12 @@ function myFunction() {
     var productPriceAll1 = 0;
     var discount1 = document.getElementById("discount1").value;
     console.log("price1: " + $('#price1').text());
+    console.log("discount1: " +discount1);
     if ($('#price1').text() != 0) {
         if (discountFlg == '1') {
+            if (discount1 == "") {
+                discount1 = 0;
+            }
             $('#discountPrice1').text(parseFloat(discount1).toFixed(2));
             productPriceAll1 = discountPrice1 - discount1;
             $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
