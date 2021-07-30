@@ -309,8 +309,8 @@
 																			OnKeyPress="return chkNumber(this)"
 																			onkeyup="myFunction()" maxlength="3">
 																		<div class="input-group-append" >
-																			<span class="input-group-text" id="discountFlgT" style="cursor: pointer;" onclick="myDiscountFlg(true)">%</span>
-																			<span class="input-group-text" id="discountFlgF" style="cursor: pointer;" onclick="myDiscountFlg(false)">บาท</span>
+																			<span class="input-group-text" id="discountFlgT" style="cursor: pointer;" onclick="myDiscountFlg('1')">%</span>
+																			<span class="input-group-text" id="discountFlgF" style="cursor: pointer;" onclick="myDiscountFlg('2')">บาท</span>
 																		</div>
 																	</div>
 																</div>
@@ -358,8 +358,8 @@
 																			OnKeyPress="return chkNumber(this)"
 																			onkeyup="myFunction()" maxlength="3">
 																		<div class="input-group-append">
-																			<span class="input-group-text" id="discountFlgT" style="cursor: pointer;" onclick="myDiscountFlg1(true)">%</span>
-																			<span class="input-group-text" id="discountFlgF" style="cursor: pointer;" onclick="myDiscountFlg1(false)">บาท</span>
+																			<span class="input-group-text" id="discountFlgT1" style="cursor: pointer;" onclick="myDiscountFlg('1')">%</span>
+																			<span class="input-group-text" id="discountFlgF1" style="cursor: pointer;" onclick="myDiscountFlg('2')">บาท</span>
 																		</div>
 																	</div>
 																</div>
