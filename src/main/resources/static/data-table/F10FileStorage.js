@@ -121,27 +121,28 @@ function getDownload(id) {
 
 function getDeleteFile(id) {
     swal({
-        title: "Are you sure?",
-        text: "Your will not be able to recover this imaginary file!",
+        title: "ยืนยันการลบข้อมูล",
+        text: "คุณกำลังลบข้อมูล, ต้องการดำเนินต่อหรือไม่?",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "ลบข้อมูล",
+        cancelButtonText: "ปิด",
         closeOnConfirm: false
     },
-    function () {
-        $.ajax({
-            url: '/delete-file/' + id,
-            type: 'DELETE',
-            success: function (result) {
-                if (result) {
-                    window.location.href = "/file-storage";
-                } else {
-                    alert("Delete Fail!!!");
+        function () {
+            $.ajax({
+                url: '/delete-file/' + id,
+                type: 'DELETE',
+                success: function (result) {
+                    if (result) {
+                        window.location.href = "/file-storage";
+                    } else {
+                        alert("Delete Fail!!!");
+                    }
                 }
-            }
+            });
         });
-    });
 }
 
 function changeFunc($i) {
@@ -186,14 +187,15 @@ function updateFile(id) {
 
 function deleteFile(id) {
     swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this imaginary file!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        },
+        title: "ยืนยันการลบข้อมูล",
+        text: "คุณกำลังลบข้อมูล, ต้องการดำเนินต่อหรือไม่?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "ลบข้อมูล",
+        cancelButtonText: "ปิด",
+        closeOnConfirm: false
+    },
         function () {
             $.ajax({
                 url: '/delete-directory/' + id,

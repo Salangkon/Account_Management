@@ -143,7 +143,7 @@
 									<div class="col-lg-5">
 										<div class="p-3">
 											<div class="form-group row">
-												<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
+												<div class="col-sm-4"><label>ชื่อผู้จำหน่าย</label></div>
 												<div class="col-sm-8">
 													<input id="id" hidden>
 													<input id="setType" value="2" hidden>

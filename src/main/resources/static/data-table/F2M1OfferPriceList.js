@@ -775,7 +775,7 @@ function saveCreateQuotation() {
             insertQuotation.f2ListModels.push(d)
         }
 
-        console.log(JSON.stringify(insertQuotation));
+        console.log("Add-Update: ", JSON.stringify(insertQuotation), officeType);
 
         $.ajax({
             type: 'POST',
@@ -1023,9 +1023,11 @@ function tableQuotation() {
                 {
                     'data': '',
                     "sWidth": "13%",
+                    "className": "text-right",
                     "mRender": function (data,
                         type, row, index, full) {
-                        return row.productPriceAll.toFixed(2);
+                        return '<div style="margin-right: 30px;">' + parseFloat(row.productPriceAll).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + '</div>';
+                        // return row.productPriceAll.toFixed(2);
                     }
                 },
                 {
@@ -1106,12 +1108,13 @@ function changeStatus($i) {
 
 function deleteId(id) {
     swal({
-        title: "Are you sure?",
-        text: "Your will not be able to recover this imaginary file!",
+        title: "ยืนยันการลบข้อมูล",
+        text: "คุณกำลังลบข้อมูล, ต้องการดำเนินต่อหรือไม่?",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "ลบข้อมูล",
+        cancelButtonText: "ปิด",
         closeOnConfirm: false
     },
         function () {

@@ -84,6 +84,13 @@ public class F2Controller {
 					f2ListRepo.delete(f2ListModel);
 				}
 			}
+			List<Journal> journals = journalRepo.findByF2Id(id);
+			for (Journal journal : journals) {
+				for (JournalList journalList : journal.getJournalLists()) {
+					journalListRepo.delete(journalList);
+				}
+				journalRepo.delete(journal);
+			}
 			f2Repo.delete(id);
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -426,7 +433,7 @@ public class F2Controller {
 						switch (string) {
 						case "d1d70beb-41c0-4f7b-9949-ef8a2574672e":
 							journalList.setCredit(0);
-							journalList.setDebit(f2Model.getProductPriceAll());
+							journalList.setDebit(f2Model.getPrice());
 							journalList.setDetail(journal.getDescription());
 							break;
 						case "530e91d5-46ab-4cc4-9452-0787f688879b":
@@ -435,7 +442,7 @@ public class F2Controller {
 							journalList.setDetail(journal.getDescription());
 							break;
 						case "471bd336-ae63-4a03-b324-ba3a8bd7ce91":
-							journalList.setCredit(f2Model.getPrice());
+							journalList.setCredit(f2Model.getProductPriceAll());
 							journalList.setDebit(0);
 							journalList.setDetail(journal.getDescription());
 							break;

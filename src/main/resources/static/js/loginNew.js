@@ -56,7 +56,7 @@ function registerUser() {
             users: [{
                 id: $('#idReg').val(),
                 password: $('#passReg').val(),
-                fName: $('#lNameReg').val(),
+                fName: $('#fNameReg').val(),
                 lName: $('#lNameReg').val(),
                 email: $('#emailReg').val(),
                 address: "",

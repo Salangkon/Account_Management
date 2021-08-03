@@ -56,9 +56,20 @@ public class F8CustomersController {
 	
 	@GetMapping("/customers-list/company-name/{companyName}/{company}")
 	public CustomersList customersListCompanyName(@PathVariable("companyName") String companyName, @PathVariable("company") String company) {
-		System.err.println("Company Name :: " + companyName);
+		System.err.println("Company Name :: " + companyName + " | company: " + company);
 		CustomersList customers = customersListRepo.findByCompanyNameAndCompany(companyName, company);
 		return customers;
+	}
+	
+	@GetMapping("/customers-list/check-company-name/{companyName}/{company}")
+	public String customersListCheckCompanyName(@PathVariable("companyName") String companyName, @PathVariable("company") String company) {
+		String resp = "F";
+		System.err.println("Company Name :: " + companyName + " | company: " + company);
+		CustomersList customers = customersListRepo.findByCompanyNameAndCompany(companyName, company);
+		if (customers != null) {
+			resp = "S";
+		}
+		return resp;
 	}
 
 	@PostMapping("/add-update-customers-list")

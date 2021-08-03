@@ -69,15 +69,15 @@ function saveCreate() {
                 confirmButtonClass: "btn-success",
                 confirmButtonText: "ตกลง",
             },
-            function () {
-                window.location.href = "/chart-accounts";
-            });
+                function () {
+                    window.location.href = "/chart-accounts";
+                });
         },
         failure: function (errMsg) {
             alert(errMsg);
         }
     });
-    
+
 }
 
 function tabelAll() {
@@ -87,18 +87,18 @@ function tabelAll() {
         "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all",
         "sAjaxDataProp": "",
         "aoColumns": [{
-                "mData": "passCode",
-                "className": "text-center",
-                "sWidth": "15%"
-            },
-            {
-                "mData": "text",
-                "sWidth": "55%"
-            },
-            {
-                "mData": "accountCategory",
-                "sWidth": "30%"
-            }
+            "mData": "passCode",
+            "className": "text-center",
+            "sWidth": "15%"
+        },
+        {
+            "mData": "text",
+            "sWidth": "55%"
+        },
+        {
+            "mData": "accountCategory",
+            "sWidth": "30%"
+        }
         ]
     });
     tabelAll = $('#tabelAllT2').DataTable({
@@ -107,18 +107,18 @@ function tabelAll() {
         "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/bc76ab41-13d1-4fd0-8c45-ef0e4ccf2873",
         "sAjaxDataProp": "",
         "aoColumns": [{
-                "mData": "passCode",
-                "className": "text-center",
-                "sWidth": "15%"
-            },
-            {
-                "mData": "text",
-                "sWidth": "55%"
-            },
-            {
-                "mData": "accountCategory",
-                "sWidth": "30%"
-            }
+            "mData": "passCode",
+            "className": "text-center",
+            "sWidth": "15%"
+        },
+        {
+            "mData": "text",
+            "sWidth": "55%"
+        },
+        {
+            "mData": "accountCategory",
+            "sWidth": "30%"
+        }
         ]
     });
     tabelAll = $('#tabelAllT3').DataTable({
@@ -127,18 +127,18 @@ function tabelAll() {
         "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/1677d9a5-5fcd-4a4d-b31f-1ada25d51c83",
         "sAjaxDataProp": "",
         "aoColumns": [{
-                "mData": "passCode",
-                "className": "text-center",
-                "sWidth": "15%"
-            },
-            {
-                "mData": "text",
-                "sWidth": "55%"
-            },
-            {
-                "mData": "accountCategory",
-                "sWidth": "30%"
-            }
+            "mData": "passCode",
+            "className": "text-center",
+            "sWidth": "15%"
+        },
+        {
+            "mData": "text",
+            "sWidth": "55%"
+        },
+        {
+            "mData": "accountCategory",
+            "sWidth": "30%"
+        }
         ]
     });
     tabelAll = $('#tabelAllT4').DataTable({
@@ -147,18 +147,18 @@ function tabelAll() {
         "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/f27a6462-b136-4285-ad06-ce7fd0c1ba27",
         "sAjaxDataProp": "",
         "aoColumns": [{
-                "mData": "passCode",
-                "className": "text-center",
-                "sWidth": "15%"
-            },
-            {
-                "mData": "text",
-                "sWidth": "55%"
-            },
-            {
-                "mData": "accountCategory",
-                "sWidth": "30%"
-            }
+            "mData": "passCode",
+            "className": "text-center",
+            "sWidth": "15%"
+        },
+        {
+            "mData": "text",
+            "sWidth": "55%"
+        },
+        {
+            "mData": "accountCategory",
+            "sWidth": "30%"
+        }
         ]
     });
     tabelAll = $('#tabelAllT5').DataTable({
@@ -167,18 +167,18 @@ function tabelAll() {
         "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/b48f2ebe-1a18-4001-9999-754ffa1171da",
         "sAjaxDataProp": "",
         "aoColumns": [{
-                "mData": "passCode",
-                "className": "text-center",
-                "sWidth": "15%"
-            },
-            {
-                "mData": "text",
-                "sWidth": "55%"
-            },
-            {
-                "mData": "accountCategory",
-                "sWidth": "30%"
-            }
+            "mData": "passCode",
+            "className": "text-center",
+            "sWidth": "15%"
+        },
+        {
+            "mData": "text",
+            "sWidth": "55%"
+        },
+        {
+            "mData": "accountCategory",
+            "sWidth": "30%"
+        }
         ]
     });
     tabelAll = $('#tabelAllT6').DataTable({
@@ -187,18 +187,18 @@ function tabelAll() {
         "sAjaxSource": "/api-chart-account/get-chartAccount-lv-all-by/c6e2cf4a-67bd-420e-a5f8-9d2c0c3a040d",
         "sAjaxDataProp": "",
         "aoColumns": [{
-                "mData": "passCode",
-                "className": "text-center",
-                "sWidth": "15%"
-            },
-            {
-                "mData": "text",
-                "sWidth": "55%"
-            },
-            {
-                "mData": "accountCategory",
-                "sWidth": "30%"
-            }
+            "mData": "passCode",
+            "className": "text-center",
+            "sWidth": "15%"
+        },
+        {
+            "mData": "text",
+            "sWidth": "55%"
+        },
+        {
+            "mData": "accountCategory",
+            "sWidth": "30%"
+        }
         ]
     });
 }
@@ -233,15 +233,15 @@ function jsonCharAccount() {
                                     $('#passCode').val(""),
                                     $('#text').val(""),
                                     $('#detail').val(""),
-                                $('#textDisplay').text(""),
-                                document.getElementById("statusDelete").hidden = true;
+                                    $('#textDisplay').text(""),
+                                    document.getElementById("statusDelete").hidden = true;
 
                                 document.getElementById("save").hidden = false;
                                 document.getElementById("edit").hidden = true;
                                 document.getElementById("passCode").disabled = false;
                                 document.getElementById("text").disabled = false;
                                 document.getElementById("detail").disabled = false;
-                            } else {                
+                            } else {
                                 $('#id').val(res.id),
                                     $('#text').val(res.text),
                                     $('#passCode').val(res.passCode),
@@ -266,8 +266,8 @@ function jsonCharAccount() {
                         $('#passCode').val(""),
                         $('#text').val(""),
                         $('#detail').val(""),
-                    $('#textDisplay').text(""),
-                    document.getElementById("statusDelete").hidden = true;
+                        $('#textDisplay').text(""),
+                        document.getElementById("statusDelete").hidden = true;
 
                     document.getElementById("save").hidden = true;
                     document.getElementById("edit").hidden = true;
@@ -356,14 +356,15 @@ function hiddenCondition(Text) {
 function deleteId() {
     console.log("dalete :: " + $('#id').val(),);
     swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this imaginary file!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        },
+        title: "ยืนยันการลบข้อมูล",
+        text: "คุณกำลังลบข้อมูล, ต้องการดำเนินต่อหรือไม่?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "ลบข้อมูล",
+        cancelButtonText: "ปิด",
+        closeOnConfirm: false
+    },
         function () {
             $.ajax({
                 url: '/api-chart-account/delete-by-id/' + $('#id').val(),

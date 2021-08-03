@@ -17,7 +17,7 @@ $(document).ready(function () {
 			"sWidth": "80px",
 			"mRender": function (data, type, row, index, full) {
 				if (row.type == '1') {
-					return  '<b style="color: green;"> ลูกค้า </b>';
+					return '<b style="color: green;"> ลูกค้า </b>';
 				} else if (row.type == '2') {
 					return '<b style="color: red;"> ผู้จำหน่าย </b>';
 				}
@@ -104,33 +104,66 @@ $(document).ready(function () {
 
 			console.log(JSON.stringify(customers));
 			$.ajax({
-				type: "POST",
-				url: "/api/add-update-customers-list",
-				data: JSON.stringify(customers),
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function (data) {
-					swal({
-						title: "บันทึก สำเร็จ",
-						type: "success",
-						confirmButtonClass: "btn-success",
-						confirmButtonText: "ตกลง",
-					},
-						function () {
-							window.location.href = "/customers-list";
+				type: 'GET',
+				url: "/api/customers-list/check-company-name/" + $('#companyName').val() + "/" + $('#setCompanyId').val(),
+				success: function (res) {
+					if (res == "S") {
+						var r = confirm("ชื่อบริษัทซ้ำ ต้องบันทึกหรือไม่?");
+						if (r == true) {
+							$.ajax({
+								type: "POST",
+								url: "/api/add-update-customers-list",
+								data: JSON.stringify(customers),
+								contentType: "application/json; charset=utf-8",
+								dataType: "json",
+								success: function (data) {
+									swal({
+										title: "บันทึก สำเร็จ",
+										type: "success",
+										confirmButtonClass: "btn-success",
+										confirmButtonText: "ตกลง",
+									},
+										function () {
+											window.location.href = "/customers-list";
+										});
+								},
+								failure: function (errMsg) {
+									alert(errMsg);
+								}
+							});
+						}
+					} else {
+						$.ajax({
+							type: "POST",
+							url: "/api/add-update-customers-list",
+							data: JSON.stringify(customers),
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (data) {
+								swal({
+									title: "บันทึก สำเร็จ",
+									type: "success",
+									confirmButtonClass: "btn-success",
+									confirmButtonText: "ตกลง",
+								},
+									function () {
+										window.location.href = "/customers-list";
+									});
+							},
+							failure: function (errMsg) {
+								alert(errMsg);
+							}
 						});
-				},
-				failure: function (errMsg) {
-					alert(errMsg);
+					}
 				}
-			});
+			})
+
 		}
 	}); // and save
 
 	// validate
 	function validateInput() {
 		var pass = true;
-
 		// if ('' == $('#tel').val()) {
 		// 	tel.focus()
 		// 	$('#error-tel').removeClass("hide")
@@ -237,12 +270,13 @@ function CheckOffice(officeType) {
 function deleteId(companyId) {
 	console.log(companyId);
 	swal({
-		title: "Are you sure?",
-		text: "Your will not be able to recover this imaginary file!",
+		title: "ยืนยันการลบข้อมูล",
+		text: "คุณกำลังลบข้อมูล, ต้องการดำเนินต่อหรือไม่?",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonClass: "btn-danger",
-		confirmButtonText: "Yes, delete it!",
+		confirmButtonText: "ลบข้อมูล",
+		cancelButtonText: "ปิด",
 		closeOnConfirm: false
 	},
 		function () {

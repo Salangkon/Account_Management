@@ -705,7 +705,7 @@ function saveCreateQuotationBilling() {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {
-                        changeFunc("2"+ $('#id').val());
+                        changeFunc("2" + $('#id').val());
                         window.location.href = "/receive-report";
                     }
                 });
@@ -780,9 +780,10 @@ function tableQuotation() {
                 {
                     'data': '',
                     "sWidth": "13%",
+                    "className": "text-right",
                     "mRender": function (data,
                         type, row, index, full) {
-                        return row.productPriceAll.toFixed(2);
+                        return '<div style="margin-right: 30px;">' + parseFloat(row.productPriceAll).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + '</div>';
                     }
                 },
                 {
@@ -872,12 +873,13 @@ function changeStatus($i) {
 
 function deleteId(id) {
     swal({
-        title: "Are you sure?",
-        text: "Your will not be able to recover this imaginary file!",
+        title: "ยืนยันการลบข้อมูล",
+        text: "คุณกำลังลบข้อมูล, ต้องการดำเนินต่อหรือไม่?",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "ลบข้อมูล",
+        cancelButtonText: "ปิด",
         closeOnConfirm: false
     },
         function () {

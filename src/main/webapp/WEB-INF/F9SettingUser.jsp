@@ -81,7 +81,7 @@
 						<h4 class="modal-title">เปลี่ยนแปลงผู้ใช้งาน</h4>
 					</div>
 					<div id="myDIV">
-						<h4 class="modal-title">เพิ่มรายผู้ใช้งาน</h4>
+						<h4 class="modal-title">ตั้งชื่อผู้ใช้งาน</h4>
 					</div>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>

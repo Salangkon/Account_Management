@@ -135,7 +135,7 @@ public class F6JournalController {
 	public Boolean delete(@PathVariable("id") String id) {
 		Boolean result = false;
 		try {
-			System.err.println(id);
+			System.err.println("delete journal: " + id);
 			Journal journal = journalRepo.findOne(id);
 			for (JournalList journalList : journal.getJournalLists()) {
 				journalListRepo.delete(journalList);
@@ -143,6 +143,27 @@ public class F6JournalController {
 			journalRepo.delete(journal);
 			result = true;
 		} catch (Exception e) {
+			result = false;
+		}
+		return result;
+	}
+	
+	@DeleteMapping("/deleteReset/{id}")
+	public Boolean deleteReset(@PathVariable("id") String id) {
+		Boolean result = false;
+		try {
+			System.err.println("delete journal: " + id);
+			List<Journal> journals = journalRepo.findByF2Id(id);
+			for (Journal journal : journals) {
+				for (JournalList journalList : journal.getJournalLists()) {
+					journalListRepo.delete(journalList);
+				}
+				journalRepo.delete(journal);
+			}
+	
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
 			result = false;
 		}
 		return result;

@@ -85,12 +85,14 @@
 									document.getElementById("officeType2").checked = false;
 									$('#departmentName').val("");
 									$('#departmentPass').val("");
+									officeType = 1;
 								} else {
 									document.getElementById("officeTypeCheck").hidden = false;
 									document.getElementById("officeType1").checked = false;
 									document.getElementById("officeType2").checked = true;
 									$('#departmentName').val(msg.departmentName);
 									$('#departmentPass').val(msg.departmentPass);
+									officeType = 2;
 								}
 							}
 						});

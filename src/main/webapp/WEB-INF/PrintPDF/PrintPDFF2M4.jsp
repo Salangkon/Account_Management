@@ -18,7 +18,7 @@
 								</th>
 								<th style="width: 35%;">
 									<h4 style="color: purple;">
-										<b>สร้างใบเสร็จรับเงิน</b>
+										<b>ใบเสร็จรับเงิน</b>
 									</h4>
 									<hr>
 								</th>

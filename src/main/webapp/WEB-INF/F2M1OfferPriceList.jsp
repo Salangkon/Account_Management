@@ -229,13 +229,13 @@
 													<input id="dateEnd" />
 													<p class="hide" id="error-dateEnd">กรุณาเลือก ครบกำหนด</p>
 												</div>
-												<div class="col-sm-4">
+												<!-- <div class="col-sm-4">
 													<label>เลขอ้างอิง</label>
 												</div>
 												<div class="col-sm-8">
 													<input class="form-control" style="margin-top: 10px;"
 														id="referenceDocument" placeholder="เลขอ้างอิง">
-												</div>
+												</div> -->
 												<div class="col-sm-4">
 													<label
 														style="margin-top: 50px; color: red;"><b>ราคาสินค้า</b></label>
