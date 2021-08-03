@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.2.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="10128cf6-327f-4714-9f0e-e85b01254c6f">
+	<parameter name="companyName" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="id" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="departmentId" class="java.lang.String"/>
+	<field name="price" class="java.lang.String"/>
+	<field name="priceVat" class="java.lang.String"/>
+	<field name="productPriceAll" class="java.lang.String"/>
+	<field name="referenceDocument" class="java.lang.String"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="createBy" class="java.lang.String"/>
+	<field name="createDate" class="java.lang.String"/>
+	<field name="updateBy" class="java.lang.String"/>
+	<field name="updateDate" class="java.lang.String"/>
+	<field name="company" class="java.lang.String"/>
+	<field name="f2Id" class="java.lang.String"/>
+	<field name="sumPrice" class="java.lang.String"/>
+	<field name="sumPriceVat" class="java.lang.String"/>
+	<field name="sumProductPriceAll" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="210" y="21" width="100" height="30" uuid="127a4c60-0388-4e96-93d1-41843fa78557"/>
+				<textFieldExpression><![CDATA[$F{departmentId}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

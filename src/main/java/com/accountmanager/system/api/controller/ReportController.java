@@ -26,6 +26,8 @@ public class ReportController {
     @Autowired
     SalesTaxService salesTaxService;
 
+
+
     @Autowired
     PurchaseTaxService purchaseTaxService;
 
@@ -36,11 +38,10 @@ public class ReportController {
     salesTaxService.genSalesTaxPDF(response, "ReportSaleTax", userid, startDate, endDate);
     }
 
-    @GetMapping(value = "/type/reportBuyTax/userid/{userid}/startDate/{startDate}/endDate/{endDate}/{header}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
-    public void genReportSaleTaxPDF(HttpServletResponse response,@PathVariable  String userid,@PathVariable  String startDate,@PathVariable String endDate,@PathVariable String header)
+    @GetMapping(value = "/type/reportBuyTax/userid/{userid}/startDate/{startDate}/endDate/{endDate}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void genReportSaleTaxPDF(HttpServletResponse response,@PathVariable  String userid,@PathVariable  String startDate,@PathVariable String endDate)
             throws Exception {
-                salesTaxService.genReportBuyTaxPDF(response, "ReportBuyTax", userid, startDate, endDate);;
+                salesTaxService.genReportBuyTaxPDF(response, "ReportBuyTax", "admin", "0", "0");
     }
 
     @GetMapping(value = "/purchasetax", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -56,4 +57,17 @@ public class ReportController {
             throws Exception {
                return salesTaxService.reportsTex("ReportBuyTax", "s1", "0", "0");
     }
+
+    @GetMapping(value = "textPdf")
+    public void textPdf(HttpServletResponse response){
+
+        purchaseTaxService.textPDF(response);
+    }
+    @GetMapping(value = "reportBuyTax")
+    public void genReportBuyTaxPDF(HttpServletResponse response ,String type,String userid,String startDate, String endDate)
+            throws Exception {
+
+        salesTaxService.genReportBuyTaxPDF(response, type, userid, startDate, endDate);
+    }
+
 }

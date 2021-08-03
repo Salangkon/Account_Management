@@ -72,4 +72,45 @@ public class PurchaseTaxService {
         }
         
     }
+    public void textPDF(HttpServletResponse response) {
+
+        Resource resource = context.getResource("classpath:reports/reportBuyTax.jrxml");
+        InputStream inputStream = null;
+        try {
+            inputStream = resource.getInputStream();
+            JasperReport report = JasperCompileManager.compileReport(inputStream);
+
+            Map<String, Object> params = new HashMap<>();
+//            params.put("reportSource",null);
+            params.put("dateform","8 สิงหาคม ปี 2564");
+            params.put("companyName","companyName");
+            params.put("address","address");
+            params.put("taxId","taxId");
+            params.put("sumPrice","sumPrice");
+            params.put("sumPriceVat","sumPriceVat");
+            params.put("countNo","countNo");
+            params.put("sumProductPriceAll","sumProductPriceAll");
+
+            JRDataSource dataSource = null;
+            dataSource = new JREmptyDataSource();
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
+            response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "inline; filename=FUND_"+".pdf");
+            JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+        } catch (IOException e) {
+            System.out.println(e);
+        } catch (JRException e) {
+            System.out.println(e);
+        }finally {
+            if(inputStream!=null){
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+
+    }
 }
