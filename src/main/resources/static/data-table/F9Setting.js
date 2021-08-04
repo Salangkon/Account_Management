@@ -61,43 +61,69 @@ function login() {
 }
 
 function update() {
-    var files = singleFileUploadInput.files;
-    if (singleFileUploadInput.files.length > 0) {
-        uploadSingleFile(files[0]);
-        logo = files[0].name;
+    pass = validateInput();
+
+    if (pass) {
+        var files = singleFileUploadInput.files;
+        if (singleFileUploadInput.files.length > 0) {
+            uploadSingleFile(files[0]);
+            logo = files[0].name;
+        }
+
+        var data = {
+            companyName: $('#company').val(),
+            companyId: companyId,
+            address: $('#address').val(),
+            companyType: $('#companyType').val(),
+            department: departmentData,
+            departmentName: $('#departmentName').val(),
+            departmentPass: $('#departmentPass').val(),
+            tel: $('#tel').val(),
+            taxId: $('#taxId').val(),
+            logo: logo,
+        }
+        console.log(JSON.stringify(data));
+        document.getElementById("preview").src = "\\img\\" + logo;
+        document.getElementById("myImg").src = "\\img\\" + logo;
+        $.ajax({
+            type: "POST",
+            url: "/api-login/save-update-company",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.res == 'pass') {
+                    alert('บันทึกเรียบร้อย')
+                    window.location.href = "/setting";
+                } else {
+                    alert('บันทึก ไม่สำเร็จ..')
+                }
+            }
+        });
+    }
+}; // update
+
+// validate
+function validateInput() {
+    var pass = true;
+
+    if ('' == $('#taxId').val()) {
+        taxId.focus()
+        $('#error-taxId').removeClass("hide")
+        pass = false;
+    } else {
+        if ($('#taxId').val().length < 13) {
+            taxId.focus()
+            $('#error-taxId-length').removeClass("hide")
+            pass = false;
+        } else {
+            $('#error-taxId-length').addClass("hide")
+        }
+        $('#error-taxId').addClass("hide")
     }
 
-    var data = {
-        companyName: $('#company').val(),
-        companyId: companyId,
-        address: $('#address').val(),
-        companyType: $('#companyType').val(),
-        department: departmentData,
-        departmentName: $('#departmentName').val(),
-        departmentPass: $('#departmentPass').val(),
-        tel: $('#tel').val(),
-        taxId: $('#taxId').val(),
-        logo: logo,
-    }
-    console.log(JSON.stringify(data));
-    document.getElementById("preview").src = "\\img\\" + logo;
-    document.getElementById("myImg").src = "\\img\\" + logo;
-    $.ajax({
-        type: "POST",
-        url: "/api-login/save-update-company",
-        data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            if (result.res == 'pass') {
-                alert('บันทึกเรียบร้อย')
-                window.location.href = "/setting";
-            } else {
-                alert('บันทึก ไม่สำเร็จ..')
-            }
-        }
-    });
-}; // update
+    return pass;
+} // end validate
 
 function uploadSingleFile(file) {
     var formData = new FormData();

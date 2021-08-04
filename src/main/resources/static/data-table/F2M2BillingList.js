@@ -27,6 +27,7 @@ function chkNumber(ele) {
 }
 
 var discountPrice = 0;
+var discountFlg;
 $('#tableCreateBiilingDisplay').on('keyup', 'input', function () {
     var sum1 = $(this).parent().parent().find('td')[4];
     var number1 = $(this).parent().parent().find('td')[2];
@@ -57,6 +58,15 @@ $('#tableCreateBiilingDisplay').on('keyup', 'input', function () {
     discountPrice1 = parseFloat(sum);
     $('#price1').text(parseFloat(sum).toFixed(2) /*.replace("," ,"").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")*/);
     $('#priceDisplay1').text(parseFloat(sum).toFixed(2));
+
+    var discount = document.getElementById("discount").value;
+    if (discount == '') {
+        document.getElementById("discount").value = 0;
+    }
+    if (discountFlg = '') {
+        discountFlg = '1';
+    }
+
     myFunction();
 });
 
@@ -73,47 +83,156 @@ $(document).ready(function () {
     tableCreateBiiling1(null);
 }); // end document
 
+function myDiscountFlg(flg) {
+    console.log("discountFlg: " + flg);
+    if (flg == "1") {
+        var discount = document.getElementById("discount").value;
+        if (discount == '') {
+            document.getElementById("discount").value = '';
+        }
+        document.getElementById("discountFlgT").hidden = true;
+        document.getElementById("discountFlgF").hidden = false;
+        discountFlg = "1";
+    } else {
+        var discount = document.getElementById("discount").value;
+        if (discount == '') {
+            document.getElementById("discount").value = '';
+        }
+        document.getElementById("discountFlgT").hidden = false;
+        document.getElementById("discountFlgF").hidden = true;
+        discountFlg = "2";
+    }
+    myFunction();
+}
+
+function myDiscountFlg1(flg) {
+    console.log("discountFlg1: " + flg);
+    if (flg == "1") {
+        var discount = document.getElementById("discount").value;
+        if (discount == '') {
+            document.getElementById("discount").value = '';
+        }
+        document.getElementById("discountFlgT1").hidden = true;
+        document.getElementById("discountFlgF1").hidden = false;
+        discountFlg = "1";
+    } else {
+        var discount = document.getElementById("discount").value;
+        if (discount == '') {
+            document.getElementById("discount").value = '';
+        }
+        document.getElementById("discountFlgT1").hidden = false;
+        document.getElementById("discountFlgF1").hidden = true;
+        discountFlg = "2";
+    }
+    myFunction();
+}
+
 function myFunction() {
     // ไม่รวมภาษี
     var productPriceAll = 0;
     var discount = document.getElementById("discount").value;
-    productPriceAll = discountPrice - (discountPrice * discount / 100)
-    $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
-    $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
-
-    var checkBox1 = document.getElementById("myCheck1");
-    // Get the output text
-    if (checkBox1.checked == true) {
-        $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
-        $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
+    console.log("discount:" + discount);
+    console.log("discountPrice T :" + discountFlg);
+    if (discountFlg == '1') {
+        if (discount == "") {
+            discount = 0;
+        }
+        $('#discountPrice').text(parseFloat(discount).toFixed(2));
+        $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
+        productPriceAll = discountPrice - discount;
+        $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
+        $('#discountProductPriceSum').text(parseFloat(productPriceAll).toFixed(2));
+        var checkBox1 = document.getElementById("myCheck1");
+        // Get the output text
+        if (checkBox1.checked == true) {
+            $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
+            $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
+        } else {
+            $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
+            $('#vat').text("00.00");
+        }
     } else {
-        $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
-        $('#vat').text("00.00");
+        $('#discountPrice').text(parseFloat(discountPrice * discount / 100).toFixed(2));
+        $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
+        productPriceAll = discountPrice - (discountPrice * discount / 100)
+        $('#discountProductPrice').text(parseFloat(productPriceAll).toFixed(2));
+        $('#discountProductPriceSum').text(parseFloat(productPriceAll).toFixed(2));
+        var checkBox1 = document.getElementById("myCheck1");
+        // Get the output text
+        if (checkBox1.checked == true) {
+            $('#productPriceAll').text(parseFloat(productPriceAll + (productPriceAll * 7 / 100)).toFixed(2));
+            $('#vat').text(parseFloat(productPriceAll * 7 / 100).toFixed(2));
+        } else {
+            $('#productPriceAll').text(parseFloat(productPriceAll).toFixed(2));
+            $('#vat').text("00.00");
+        }
     }
-
     // รวมภาษี
     var productPriceAll1 = 0;
     var discount1 = document.getElementById("discount1").value;
-    productPriceAll1 = discountPrice1 - (discountPrice1 * discount1 / 100)
-    $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
-    $('#discountProductPriceSum1').text(parseFloat(productPriceAll1).toFixed(2));
-    $('#discountPrice1').text(parseFloat(discountPrice1 * discount1 / 100).toFixed(2));
-
-    var checkBox2 = document.getElementById("myCheck2");
-    // Get the output text
-    if (checkBox2.checked == true) {
-        $('#productPriceAll1').text(parseFloat(productPriceAll1 - (productPriceAll1 * 7 / 100)).toFixed(2));
-        $('#vat1').text(parseFloat(productPriceAll1 * 7 / 100).toFixed(2));
-    } else {
-        $('#productPriceAll1').text(parseFloat(productPriceAll1).toFixed(2));
-        $('#vat1').text("00.00");
+    console.log("price1: " + $('#price1').text());
+    console.log("discount1: " + discount1);
+    if ($('#price1').text() != 0) {
+        if (discountFlg == '1') {
+            if (discount1 == "") {
+                discount1 = 0;
+            }
+            $('#discountPrice1').text(parseFloat(discount1).toFixed(2));
+            productPriceAll1 = discountPrice1 - discount1;
+            $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
+            $('#discountProductPriceSum1').text(parseFloat(productPriceAll1).toFixed(2));
+            var checkBox2 = document.getElementById("myCheck2");
+            // Get the output text
+            if (checkBox2.checked == true) {
+                $('#productPriceAll1').text(parseFloat(productPriceAll1 - (productPriceAll1 * 7 / 100)).toFixed(2));
+                $('#vat1').text(parseFloat(productPriceAll1 * 7 / 100).toFixed(2));
+            } else {
+                $('#productPriceAll1').text(parseFloat(productPriceAll1).toFixed(2));
+                $('#vat1').text("00.00");
+            }
+        } else {
+            $('#discountPrice1').text(parseFloat(discountPrice1 * discount1 / 100).toFixed(2));
+            productPriceAll1 = discountPrice1 - (discountPrice1 * discount1 / 100)
+            $('#discountProductPrice1').text(parseFloat(productPriceAll1).toFixed(2));
+            $('#discountProductPriceSum1').text(parseFloat(productPriceAll1).toFixed(2));
+            var checkBox2 = document.getElementById("myCheck2");
+            // Get the output text
+            if (checkBox2.checked == true) {
+                $('#productPriceAll1').text(parseFloat(productPriceAll1 - (productPriceAll1 * 7 / 100)).toFixed(2));
+                $('#vat1').text(parseFloat(productPriceAll1 * 7 / 100).toFixed(2));
+            } else {
+                $('#productPriceAll1').text(parseFloat(productPriceAll1).toFixed(2));
+                $('#vat1').text("00.00");
+            }
+        }
     }
 }
+
+// update status vat
+function statusVatFlg($i) {
+    switch ($i) {
+        case "1":
+            document.getElementById("statusVat2").hidden = true;
+            document.getElementById("statusVat1").hidden = false;
+            break;
+        case "2":
+            document.getElementById("statusVat1").hidden = true;
+            document.getElementById("statusVat2").hidden = false;
+            break;
+    }
+    if (discountFlg == '') {
+        discountFlg = '1';
+    }
+    myDiscountFlg(discountFlg);
+    myDiscountFlg1(discountFlg);
+} // end update status vat
 
 // update status
 function changeFunc($i) {
     var type = $i.slice(0, 1);
     var id = $i.substr(1, 100);
+    console.log(type, id);
+
     switch (type) {
         case "0":
             updateStatus(id, "0");
@@ -129,20 +248,6 @@ function changeFunc($i) {
             break;
     }
 } // end update status
-
-// update status vat
-function statusVatFlg($i) {
-    switch ($i) {
-        case "1":
-            document.getElementById("statusVat2").hidden = true;
-            document.getElementById("statusVat1").hidden = false;
-            break;
-        case "2":
-            document.getElementById("statusVat1").hidden = true;
-            document.getElementById("statusVat2").hidden = false;
-            break;
-    }
-} // end update status vat
 
 // update Quotation
 function updateQuotation(id, biiling) {
@@ -226,6 +331,24 @@ function updateQuotation(id, biiling) {
                     document.getElementById("statusVat1").hidden = true;
                     document.getElementById("statusVat2").hidden = false;
                 }
+                if (msg.officeType == 1) {
+                    document.getElementById("officeType1").checked = true;
+                    CheckOffice("1");
+                } else {
+                    document.getElementById("officeType2").checked = true;
+                    CheckOffice("2");
+                }
+                if (msg.discountFlg == "1") {
+                    document.getElementById("discountFlgT").hidden = true;
+                    document.getElementById("discountFlgF").hidden = false;
+                    document.getElementById("discountFlgT1").hidden = true;
+                    document.getElementById("discountFlgF1").hidden = false;
+                } else {
+                    document.getElementById("discountFlgT").hidden = false;
+                    document.getElementById("discountFlgF").hidden = true;
+                    document.getElementById("discountFlgT1").hidden = false;
+                    document.getElementById("discountFlgF1").hidden = true;
+                }
                 switch (msg.vat) {
                     case 0:
                         document.getElementById("myCheck1").checked = false;
@@ -241,13 +364,6 @@ function updateQuotation(id, biiling) {
                     default:
                         document.getElementById("myCheck2").checked = true;
                         break;
-                }
-                if (msg.officeType == 1) {
-                    document.getElementById("officeType1").checked = true;
-                    CheckOffice("1");
-                } else {
-                    document.getElementById("officeType2").checked = true;
-                    CheckOffice("2");
                 }
                 // dataCustomer(msg.companyId)
                 tableCreateBiiling1(msg.id);
@@ -271,7 +387,7 @@ function updateQuotation(id, biiling) {
         $('#date').val(document.getElementById('date').value); //วันที่
         $('#dateEnd').val(""); //วันที่_ครบกำหนด
         $('#referenceDocument').val(""); //เลขที่เอกสาร
-        $('#statusVat').val("1")
+        $('#statusVat').val("1");
         document.getElementById("statusVat2").hidden = true;
 
         //ข้อมูลลูกค้า
@@ -299,6 +415,13 @@ function updateQuotation(id, biiling) {
         $('#price1').text(parseFloat(0).toFixed(2));
         $('#productPriceAll1').text(parseFloat(0).toFixed(2));
 
+        discountFlg = "1";
+        document.getElementById("discountFlgT").hidden = false;
+        document.getElementById("discountFlgF").hidden = true;
+        document.getElementById("discountFlgT1").hidden = false;
+        document.getElementById("discountFlgF1").hidden = true;
+
+        CheckOffice("1");
         document.getElementById("myCheck1").checked = true;
         document.getElementById("myCheck2").checked = true;
     }
@@ -914,6 +1037,18 @@ function validateInput() {
         pass = false;
     } else {
         $('#error-date').addClass("hide")
+    }
+
+    if ('' != $('#taxId').val()) {
+        if ($('#taxId').val().length < 13) {
+            taxId.focus()
+            $('#error-taxId-length').removeClass("hide")
+            pass = false;
+        } else {
+            $('#error-taxId-length').addClass("hide")
+        }
+    } else {
+        $('#error-taxId-length').addClass("hide")
     }
 
     if ('' == $('#customers').val()) {

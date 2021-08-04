@@ -1152,6 +1152,18 @@ function validateInput() {
         $('#error-date').addClass("hide")
     }
 
+    if ('' != $('#taxId').val()) {
+        if ($('#taxId').val().length < 13) {
+            taxId.focus()
+            $('#error-taxId-length').removeClass("hide")
+            pass = false;
+        } else {
+            $('#error-taxId-length').addClass("hide")
+        }
+    } else {
+        $('#error-taxId-length').addClass("hide")
+    }
+
     if ('' == $('#customers').val()) {
         customers.focus()
         $('#error-customers').removeClass("hide")

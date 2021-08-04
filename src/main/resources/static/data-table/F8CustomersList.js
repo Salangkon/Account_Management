@@ -211,6 +211,13 @@ $(document).ready(function () {
 			$('#error-taxId').removeClass("hide")
 			pass = false;
 		} else {
+			if ($('#taxId').val().length < 13) {
+				taxId.focus()
+				$('#error-taxId-length').removeClass("hide")
+				pass = false;
+			} else {
+				$('#error-taxId-length').addClass("hide")
+			}
 			$('#error-taxId').addClass("hide")
 		}
 

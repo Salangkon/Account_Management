@@ -174,9 +174,12 @@
 													<label>เลขประจำตัวผู้เสียภาษี</label>
 												</div>
 												<div class="col-sm-8">
-													<input type="text" style="margin-top: 10px;" maxlength="13" OnKeyPress="return chkNumber(this)"
+													<input type="text" style="margin-top: 10px;" maxlength="13"
+														OnKeyPress="return chkNumber(this)"
 														class="form-control form-control" id="taxId"
 														placeholder="เลขประจำตัวผู้เสียภาษี">
+													<p class="hide" id="error-taxId-length">กรุณากรอก
+														เลขประจำตัวผู้เสียภาษีให้ครบ</p>
 												</div>
 												<div class="col-sm-4">
 													<label>สำนักงาน / สาขาที่ </label>
@@ -308,9 +311,15 @@
 																			style="width: 40px; text-align: center;"
 																			OnKeyPress="return chkNumber(this)"
 																			onkeyup="myFunction()" maxlength="3">
-																		<div class="input-group-append" >
-																			<span class="input-group-text" id="discountFlgT" style="cursor: pointer;" onclick="myDiscountFlg('1')">%</span>
-																			<span class="input-group-text" id="discountFlgF" style="cursor: pointer;" onclick="myDiscountFlg('2')">บาท</span>
+																		<div class="input-group-append">
+																			<span class="input-group-text"
+																				id="discountFlgT"
+																				style="cursor: pointer;"
+																				onclick="myDiscountFlg('1')">%</span>
+																			<span class="input-group-text"
+																				id="discountFlgF"
+																				style="cursor: pointer;"
+																				onclick="myDiscountFlg('2')">บาท</span>
 																		</div>
 																	</div>
 																</div>
@@ -358,8 +367,14 @@
 																			OnKeyPress="return chkNumber(this)"
 																			onkeyup="myFunction()" maxlength="3">
 																		<div class="input-group-append">
-																			<span class="input-group-text" id="discountFlgT1" style="cursor: pointer;" onclick="myDiscountFlg1('1')">%</span>
-																			<span class="input-group-text" id="discountFlgF1" style="cursor: pointer;" onclick="myDiscountFlg1('2')">บาท</span>
+																			<span class="input-group-text"
+																				id="discountFlgT1"
+																				style="cursor: pointer;"
+																				onclick="myDiscountFlg1('1')">%</span>
+																			<span class="input-group-text"
+																				id="discountFlgF1"
+																				style="cursor: pointer;"
+																				onclick="myDiscountFlg1('2')">บาท</span>
 																		</div>
 																	</div>
 																</div>

@@ -158,10 +158,13 @@
 											<label>เลขประจำตัวผู้เสียภาษี</label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control form-control" id="taxId"  maxlength="13" OnKeyPress="return chkNumber(this)" 
+											<input type="text" class="form-control form-control" id="taxId"
+												maxlength="13" OnKeyPress="return chkNumber(this)"
 												placeholder="เลขประจำตัวผู้เสียภาษี">
 											<p class="hide" id="error-taxId">กรุณากรอก
 												เลขประจำตัวผู้เสียภาษี</p>
+											<p class="hide" id="error-taxId-length">กรุณากรอก
+												เลขประจำตัวผู้เสียภาษีให้ครบ</p>
 										</div>
 										<div class="col-sm-4"><label>สำนักงาน / สาขาที่</label></div>
 										<div class="col-sm-8">

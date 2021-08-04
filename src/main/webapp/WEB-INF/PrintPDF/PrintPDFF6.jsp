@@ -82,14 +82,14 @@
                     <tr style="height: 500px;">
                         <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFPassCode"></table></td>
                         <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFText"></table></td>
-                        <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFDebit"></table></td>
-                        <td style="border: 1px solid black;vertical-align: top;"><table id="tablePrintPDFCredit"></table></td>
+                        <td style="border: 1px solid black;vertical-align: top;text-align: -webkit-right;"><table id="tablePrintPDFDebit" style="margin-right:  10px;"></table></td>
+                        <td style="border: 1px solid black;vertical-align: top;text-align: -webkit-right;"><table id="tablePrintPDFCredit" style="margin-right:  10px;"></table></td>
                     </tr>
-                    <tr style="height: 10px;">
+                    <tr style="height: 10px;margin-right: 10px;">
                         <td style="border: 1px solid black"></td>
                         <td style="text-align: right;border: 1px solid black">รวมทั้งสิ้น/Grand total</td>
-                        <td style="border: 1px solid black" id="sumDebitPDF"></td>
-                        <td style="border: 1px solid black" id="sumCreditPDF"></td>
+                        <td style="border: 1px solid black;text-align: right;" id="sumDebitPDF"></td>
+                        <td style="border: 1px solid black;text-align: right;" id="sumCreditPDF"></td>
                     </tr>
                     <tr style="height: 10px;">
                         <td colspan="4" style="border: 1px solid black">หมายเหตุ/Remark </td>

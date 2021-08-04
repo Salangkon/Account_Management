@@ -30,8 +30,8 @@ function printPDF(id) {
                 $('#descriptionPrint').text(msg.description),
                 $('#typePDF11').text(),
                 $('#idPDF').text(msg.id),
-                $('#sumDebitPDF').text(parseFloat(msg.sumDebit).toFixed(2)),
-                $('#sumCreditPDF').text(parseFloat(msg.sumCredit).toFixed(2))
+                $('#sumDebitPDF').text(parseFloat(msg.sumDebit).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")),
+                $('#sumCreditPDF').text(parseFloat(msg.sumCredit).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"))
 
 
             msg.journalLists.forEach(value => {
@@ -47,8 +47,8 @@ function printPDF(id) {
             $('.tablePrintPDFCreditDefault').remove();
             msg.journalLists.forEach(value => {
                 numberCredit++;
-                tablePrintPDFCredit += '<tr class="tablePrintPDFCreditDefault">'
-                tablePrintPDFCredit += '<td>' + value.debit + '</td>'
+                tablePrintPDFCredit += '<tr class="tablePrintPDFCreditDefault" style="text-align: right;">'
+                tablePrintPDFCredit += '<td>' + parseFloat(value.debit).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + '</td>'
                 tablePrintPDFCredit += '</tr>'
             });
             $('#tablePrintPDFCredit').append(tablePrintPDFCredit);
@@ -58,8 +58,8 @@ function printPDF(id) {
             $('.tablePrintPDFDebitDefault').remove();
             msg.journalLists.forEach(value => {
                 numberDebit++;
-                tablePrintPDFDebit += '<tr class="tablePrintPDFDebitDefault">'
-                tablePrintPDFDebit += '<td>' + value.credit + '</td>'
+                tablePrintPDFDebit += '<tr class="tablePrintPDFDebitDefault" style="text-align: right;">'
+                tablePrintPDFDebit += '<td>' + parseFloat(value.credit).toFixed(2).replace(",", "").replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + '</td>'
                 tablePrintPDFDebit += '</tr>'
             });
             $('#tablePrintPDFDebit').append(tablePrintPDFDebit);
