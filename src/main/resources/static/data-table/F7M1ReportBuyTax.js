@@ -115,8 +115,9 @@ function reportBuyTaxPrint() {
     }
     if (toDate = document.getElementById('toDate').value!=''){
         endDate = document.getElementById('toDate').value;
-        url="&endDate"+endDate;
+        url="&endDate="+endDate;
     }
+    console.log(url);
     window.open("/api/report/reportBuyTax?type=ReportBuyTax&userid=" + $('#createBy').val() + url);
 
 }

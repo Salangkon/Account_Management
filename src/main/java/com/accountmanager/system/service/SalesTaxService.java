@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ import com.accountmanager.system.model.Company;
 import com.accountmanager.system.model.ReportTex;
 import com.accountmanager.system.model.TaxReport;
 import com.accountmanager.system.model.User;
+import com.accountmanager.system.pojo.ReportResponseDTO;
 import com.accountmanager.system.pojo.TaxReportDTO;
 import com.accountmanager.system.repository.TaxReportRepository;
 import com.accountmanager.system.repository.UserRepository;
@@ -27,6 +30,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -118,15 +122,17 @@ public class SalesTaxService {
 
             Map<String, Object> params = new HashMap<>();
             User reportSource = userRepo.findOne(userId);
+            ReportResponseDTO dateTex = dataReport(type, userId, startDate, endDate);
+
             String monthTH ="";
             String dateForm="";
             String branch ="[ ] สำนักงานใหญ่ [ ] สาขา";
-            if (endDate!=null && endDate.length()>0){
-                LocalDate date = LocalDate.parse(endDate);
-                 monthTH = setMontrTh(date.getMonthValue());
-                dateForm =date.getDayOfMonth() +" "+monthTH+" ปี "+(date.getYear()+543);
-            }
-            params.put("dateform",dateForm);
+//            if (endDate!=null && endDate.length()>0){
+//                LocalDate date = LocalDate.parse(endDate);
+//                 monthTH = setMontrTh(date.getMonthValue());
+//                dateForm =date.getDayOfMonth() +" "+monthTH+" ปี "+(date.getYear()+543);
+//            }
+            params.put("dateform",dateTex.getDateForm());
             params.put("companyName",reportSource.getCompanys().getCompanyName());
             params.put("address",reportSource.getCompanys().getAddress());
             params.put("taxId",reportSource.getCompanys().getTaxId());
@@ -134,24 +140,26 @@ public class SalesTaxService {
                 branch ="[/] สำนักงานใหญ่ [ ] สาขา";
             }else if(reportSource.getCompanys().getCompanyType().equals("2")){
                 branch="[ ] สำนักงานใหญ่ [/] สาขา";
+            }else {
+                branch="[ ] สำนักงานใหญ่ [ ] สาขา";
             }
             params.put("branch",branch);
-            params.put("sumPrice","1000.0");
-            params.put("sumPriceVat","100");
-            params.put("countNo","100");
-            params.put("sumProductPriceAll","100");
+            params.put("sumPrice",dateTex.getSumPrice());
+            params.put("sumPriceVat",dateTex.getSumPriceVat());
+            params.put("countNo",dateTex.getCountNo());
+            params.put("sumProductPriceAll",dateTex.getSumProductPriceAll());
 
 
             System.out.println(type);
-            List<TaxReportDTO> dateTex = dataReport(type, userId, startDate, endDate);
+
 
 //            params.put("reportSource", reportSource);
              JRDataSource dataSource = null;
 //            dataSource = new JRBeanCollectionDataSource(dateTex);
 //            JRDataSource dataSource = null;
 //            dataSource = new JREmptyDataSource();
-            if(dateTex!=null && dateTex.size()>0){
-                dataSource = new JRBeanCollectionDataSource(dateTex);
+            if(dateTex.getTaxReportDTO()!=null && dateTex.getTaxReportDTO().size()>0){
+                dataSource = new JRBeanCollectionDataSource(dateTex.getTaxReportDTO());
             }else {
                 dataSource = new JREmptyDataSource();
             }
@@ -288,22 +296,33 @@ public class SalesTaxService {
 
     }
 
-    public List<TaxReportDTO> dataReport(String type, String userId, String startDate, String endDate) throws Exception{
+    public ReportResponseDTO dataReport(String type, String userId, String startDate, String endDate) throws Exception{
         List<TaxReport> reports = new ArrayList<>();
         List<TaxReportDTO> dtos = new ArrayList<>();
+        ReportResponseDTO responseDTO =new ReportResponseDTO();
+        int no=0;
+        String endDateForm="";
+        String monthTH="";
+        float sumPrice =0;
+        float sumProductPriceAll=0;
+        float sumPriceVat = 0;
         try {
 
             StringBuilder sb =new StringBuilder();
-            sb.append(" SELECT * FROM tax_report ");
-            if (startDate!=null&&endDate!=null){
+            sb.append(" SELECT * FROM tax_report WHERE 1=1");
+            if (type!=null && type.length()>0)
+            sb.append(" and type = '"+type+"'");
+            if ((startDate!=null && startDate.length()>9) &&(endDate!=null&&endDate.length()>9)){
                 sb.append(" AND date BETWEEN '"+startDate+"' AND '"+endDate+"'");
             }
             reports = jdbcTemplate.query(
                     sb.toString(),
                     new BeanPropertyRowMapper(TaxReport.class));
+
             for (TaxReport report:reports) {
                 TaxReportDTO dto = new TaxReportDTO();
-
+                no++;
+                dto.setNo(String.valueOf(no));
                 dto.setId(report.getId());
                 dto.setDateStr(dateFormat.format(report.getDate()));
                 dto.setDepartmentId(report.getDepartmentId());
@@ -319,11 +338,31 @@ public class SalesTaxService {
                 dto.setCompany(report.getCompany());
                 dto.setF2Id(report.getF2Id());
                 dtos.add(dto);
+                endDateForm =report.getDate().toString();
+                sumPrice +=report.getPrice();
+                sumProductPriceAll+=report.getProductPriceAll();
+                sumPriceVat+=report.getPriceVat();
             }
+
+            responseDTO.setCountNo(String.valueOf(no));
+            responseDTO.setSumPrice(String.valueOf(sumPrice));
+            responseDTO.setSumProductPriceAll(String.valueOf(sumProductPriceAll));
+            responseDTO.setSumPriceVat(String.valueOf(sumPriceVat));
+            responseDTO.setTaxReportDTO(dtos);
+
+            if (endDateForm!=null){
+                String[] sp =endDateForm.split(" ");
+                String set =sp[0];
+                LocalDate date = LocalDate.parse(set);
+                monthTH = setMontrTh(date.getMonthValue());
+                endDateForm =date.getDayOfMonth() +" "+monthTH+" ปี "+(date.getYear()+543);
+            }
+            responseDTO.setDateForm(endDateForm);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return dtos;
+        return responseDTO;
     }
     public String setMontrTh(Integer montr) {
         String dateSet = "";
