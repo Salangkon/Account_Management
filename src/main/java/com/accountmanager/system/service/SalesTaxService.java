@@ -355,7 +355,7 @@ public class SalesTaxService {
                 String set =sp[0];
                 LocalDate date = LocalDate.parse(set);
                 monthTH = setMontrTh(date.getMonthValue());
-                endDateForm =date.getDayOfMonth() +" "+monthTH+" ปี "+(date.getYear()+543);
+                endDateForm =monthTH+" ปี "+(date.getYear()+543);
             }
             responseDTO.setDateForm(endDateForm);
 
