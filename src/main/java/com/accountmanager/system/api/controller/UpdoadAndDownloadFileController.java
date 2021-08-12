@@ -86,7 +86,13 @@ public class UpdoadAndDownloadFileController {
 	public String fileUpload(@PathVariable("directoryId") String dir, @PathVariable("createBy") String createBy, @RequestParam("file") MultipartFile file)
 			throws IOException {
 		
-		String path = pathNas + "\\" + directoryRepo.findOne(dir).getName() + "\\" + file.getOriginalFilename();
+		System.out.println("pathNas: " + pathNas );
+		System.out.println("directory: " + dir );
+		System.out.println("file: " +  file.getOriginalFilename() );
+		
+		Directory directory = directoryRepo.findByName(dir);
+
+		String path = pathNas + "\\" + directory.getName() + "\\" + file.getOriginalFilename();
 		File convertFile = new File(path);
 
 		convertFile.createNewFile();
@@ -99,7 +105,7 @@ public class UpdoadAndDownloadFileController {
 		DBFile dbFile = new DBFile();
 		dbFile.setFileName(file.getOriginalFilename());
 		dbFile.setFileType(file.getName());
-		dbFile.setDirectoryId(dir);
+		dbFile.setDirectoryId(directory.getId());
 		dbFile.setCreatedBy(createBy);
 		DBFileRepo.save(dbFile);
 		return "File has uploaded successfully";
@@ -195,7 +201,10 @@ public class UpdoadAndDownloadFileController {
 	@GetMapping("/file-by/{directoryId}")
 	private List<HashMap<String, String>> fileAll(@PathVariable("directoryId") String directoryId) {
 		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-		List<DBFile> dbFiles = DBFileRepo.findByDirectoryId(directoryId);
+//		List<DBFile> dbFiles = DBFileRepo.findByDirectoryId(directoryId);
+		Directory directory = directoryRepo.findByName(directoryId);
+
+		List<DBFile> dbFiles = DBFileRepo.findByDirectoryId(directory.getId());
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.US);
 		for (DBFile dbFile : dbFiles) {
 			HashMap<String, String> map = new HashMap<String, String>();
