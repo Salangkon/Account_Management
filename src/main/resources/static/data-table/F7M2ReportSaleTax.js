@@ -104,15 +104,21 @@ function reportSaleTax() {
 }; // END tableQuotation
 
 function reportSaleTaxPrint() {
-    var startDate ="";
-    var endDate =""
-    if(document.getElementById('fromDate').value!=''){
-        startDate= document.getElementById('fromDate').value;
+
+    var url="";
+    var fromDate = "";
+    var toDate = "";
+    if (document.getElementById('fromDate').value != '') {
+        fromDate = document.getElementById('fromDate').value
+        url +="&startDate="+fromDate;
     }
-    if (toDate = document.getElementById('toDate').value!=''){
-        endDate = document.getElementById('toDate').value;
+    if (document.getElementById('toDate').value != '') {
+        toDate = document.getElementById('toDate').value;
+        url +="&endDate="+toDate;
     }
-    window.open("/api/report/reportBuyTax?type=ReportBuyTax&userid=" + $('#createBy').val() + "&startDate="+startDate+"&endDate=+"+endDate);
+
+    console.log(url)
+    window.open("/api/report/reportTax?type=ReportSaleTax&userid=" + $('#createBy').val() + url);
     // window.location.href = "/api/report/type/reportBuyTax/userid/s1/startDate/0/endDate/0/รายงานภาษี";
     // http://localhost:8082/api/report/reportBuyTax?type=ReportBuyTax&userid=admin&startDate=2021-07-01&endDate=2021-08-04
 }

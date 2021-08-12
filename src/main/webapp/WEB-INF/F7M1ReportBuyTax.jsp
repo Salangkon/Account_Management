@@ -73,7 +73,7 @@
 
 		<!-- script -->
 		<%@include file="/WEB-INF/Extensions/js.jsp" %>
-			<script src="/data-table/F7M1ReportBuyTax.js" type="text/javascript"></script>
+			<script src="/data-table/F7M1ReportBuyTax.js?a=123" type="text/javascript"></script>
 
 	</body>
 

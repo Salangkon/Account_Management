@@ -114,7 +114,14 @@ public class SalesTaxService {
 
     public void genReportBuyTaxPDF(HttpServletResponse response,String type, String userId, String startDate, String endDate) {
 
+
         Resource resource = context.getResource("classpath:reports/reportBuyTax.jrxml");
+        if (type.equals("ReportBuyTax")){
+            resource = context.getResource("classpath:reports/reportBuyTax.jrxml");
+        }
+        if (type.equals("ReportSaleTax")){
+            resource = context.getResource("classpath:reports/reportSaleTax.jrxml");
+        }
         InputStream inputStream = null;
         try {
             inputStream = resource.getInputStream();
@@ -309,9 +316,12 @@ public class SalesTaxService {
         try {
 
             StringBuilder sb =new StringBuilder();
-            sb.append(" SELECT * FROM tax_report WHERE 1=1");
-            if (type!=null && type.length()>0)
-            sb.append(" and type = '"+type+"'");
+            sb.append(" SELECT * FROM tax_report WHERE 1=1 ");
+            sb.append("  and create_by='"+userId+"'");
+            if (type!=null && type.length()>0){
+                sb.append(" and type = '"+type+"'");
+            }
+
             if ((startDate!=null && startDate.length()>9) &&(endDate!=null&&endDate.length()>9)){
                 sb.append(" AND date BETWEEN '"+startDate+"' AND '"+endDate+"'");
             }
@@ -356,6 +366,8 @@ public class SalesTaxService {
                 LocalDate date = LocalDate.parse(set);
                 monthTH = setMontrTh(date.getMonthValue());
                 endDateForm =monthTH+" ปี "+(date.getYear()+543);
+            }else {
+                endDateForm ="";
             }
             responseDTO.setDateForm(endDateForm);
 

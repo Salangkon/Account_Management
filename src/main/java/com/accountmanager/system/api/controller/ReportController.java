@@ -63,7 +63,7 @@ public class ReportController {
 
         purchaseTaxService.textPDF(response);
     }
-    @GetMapping(value = "reportBuyTax")
+    @GetMapping(value = "reportTax")
     public void genReportBuyTaxPDF(HttpServletResponse response ,String type,String userid,String startDate, String endDate)
             throws Exception {
 

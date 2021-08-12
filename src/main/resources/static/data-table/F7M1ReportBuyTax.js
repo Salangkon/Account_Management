@@ -106,18 +106,19 @@ function reportBuyTax() {
 function reportBuyTaxPrint() {
     // window.open("/api/report/type/reportBuyTax/userid/" + $('#createBy').val() + "/startDate/0/endDate/0/รายงานภาษี");
     // window.location.href = "/api/report/type/reportBuyTax/userid/s1/startDate/0/endDate/0/รายงานภาษี";
-    var startDate ="";
-    var endDate =""
-    var url ="";
-    if(document.getElementById('fromDate').value!=''){
-        startDate= document.getElementById('fromDate').value;
-        url ="&startDate="+startDate
+    var url="";
+    var fromDate = "";
+    var toDate = "";
+    if (document.getElementById('fromDate').value != '') {
+        fromDate = document.getElementById('fromDate').value
+        url +="&startDate="+fromDate;
     }
-    if (toDate = document.getElementById('toDate').value!=''){
-        endDate = document.getElementById('toDate').value;
-        url="&endDate="+endDate;
+    if (document.getElementById('toDate').value != '') {
+        toDate = document.getElementById('toDate').value;
+        url +="&endDate="+toDate;
     }
-    console.log(url);
-    window.open("/api/report/reportBuyTax?type=ReportBuyTax&userid=" + $('#createBy').val() + url);
+
+    console.log(url)
+    window.open("/api/report/reportTax?type=ReportBuyTax&userid=" + $('#createBy').val() + url);
 
 }
