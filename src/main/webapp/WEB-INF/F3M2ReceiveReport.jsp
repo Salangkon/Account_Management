@@ -28,6 +28,11 @@
 				.hide {
 					display: none;
 				}
+
+				.file {
+					visibility: hidden;
+					position: absolute;
+				}
 			</style>
 
 	</head>
@@ -274,12 +279,33 @@
 														</tfoot>
 													</table>
 													<div class="form-group row" style="margin-top: 30px;">
-														<div class="col-sm-4">
+														<div class="col-sm-4" style="text-align: left;">
 															<p style="text-align: left;">หมายเหตุ</p>
 															<textarea class="form-control" style="height: 80px"
-																id="note"></textarea>
+																id="note"></textarea><br>
 														</div>
-														<div class="col-sm-5"></div>
+														<div class="col-sm-5">
+															<div class="row">
+																<div class="col-sm-1"></div>
+																<div class="col-sm-9">
+																	<i class="fa fa-paperclip"
+																		style="font-size:15px;cursor: pointer;">
+																		แนบไฟล์</i>
+																	<input id="singleFileUploadInput" type="file"
+																		name="img[]" class="file">
+																	<div class="input-group my-3" id="fileBrowseFlg">
+																		<div class="input-group-append">
+																			<button type="button"
+																				class="browse btn btn-primary">Browse…</button>
+																		</div>
+																		<input type="text" class="form-control" disabled
+																			placeholder="Upload File" id="file">
+																	</div>
+																	<div id="filesDataTableDisplay"></div>
+																</div>
+																<div class="col-sm-2"></div>
+															</div>
+														</div>
 														<div class="col-sm-3">
 															<!-- ไม่รวมภาษี -->
 															<div class="form-group row" id="statusVat1">
