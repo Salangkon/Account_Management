@@ -154,7 +154,7 @@
 													<input id="id" hidden>
 													<div class="col-sm-5 mb-3 mb-sm-0">
 														<div class="form-group row">
-															<div class="col-sm-4"><label>ชื่อลูกค้า</label></div>
+															<div class="col-sm-4"><label>ชื่อผู้ติดต่อ</label></div>
 															<div class="col-sm-8">
 																<input id="id" hidden>
 																<input id="setType" value="2" hidden>
@@ -173,11 +173,11 @@
 																	<div class="autocomplete" style="width: 100%;">
 																		<input class="form-control form-control" id="customers"
 																			type="text" name="customers"
-																			placeholder="ใส่ชื่อลูกค้าที่ต้องการออกใบเสร็จรับเงิน">
+																			placeholder="ใส่ชื่อผู้ติดต่อ">
 																	</div>
 																</form>
 																<div hidden class="invalid" id="invalid-customers">
-																	กรุณาระบุชื่อลูกค้า
+																	กรุณาระบุชื่อผู้ติดต่อ
 																</div>
 															</div>
 															<div class="col-sm-4">
