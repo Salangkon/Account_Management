@@ -249,12 +249,15 @@ function changeFunc($i) {
     }
 } // end update status
 
+var fileFlg = true;
 // update Quotation
 function updateQuotation(id, checkFlg) {
     if (checkFlg == "checkReceiveReportFlg") {
         document.getElementById("receiveReportFlg").hidden = true;
+        fileFlg = true;
     } else {
         document.getElementById("receiveReportFlg").hidden = false;
+        fileFlg = false;
     }
     if (id != null) {
         $.ajax({
@@ -263,6 +266,8 @@ function updateQuotation(id, checkFlg) {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
+                getFile(msg.departmentId);
+
                 $('#id').val(msg.id); //เลขที่เอกสาร
                 $('#departmentId').val(msg.departmentId); //เลขที่เอกสาร
                 $('#status').val(msg.type); //สถานะ
@@ -403,6 +408,7 @@ function updateQuotation(id, checkFlg) {
     $('#myModal').modal('show');
 } // end update Quotation
 
+var directoryFlg;
 function genDepartment() {
     $.ajax({
         type: "GET",
@@ -410,9 +416,136 @@ function genDepartment() {
         success: function (msg) {
             console.log("dd" + msg)
             $('#departmentId').val(msg) //เลขที่เอกสาร
+            AddFolder(msg);
+            directoryFlg = msg;
         }
     })
 }
+
+//////////////////////////////START UPLOAD FILE///////////////////////////////////////
+function AddFolder(createFolder) {
+    console.log(createFolder);
+    $.ajax({
+        url: '/create-directory/' + createFolder + "/" + $('#createBy').val(),
+        type: 'GET',
+        success: function (result) {
+            getFile(createFolder);
+        }
+    });
+}
+var setFile;
+function getFile(id) {
+    setFile = id;
+    console.log("Get File :: " + id);
+    if (id == null) {
+        filesDataTable("");
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "/file-by/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                filesDataTable(msg);
+                console.log(JSON.stringify(msg));
+            }
+        });
+    }
+}
+function filesDataTable(data) {
+    $('#filesDataTableDisplay').empty().append("");;
+    var filesDataTable = [];
+    if (data != "") {
+        var i = 0;
+        data.forEach(value => {
+            i++;
+            if (fileFlg) {
+                document.getElementById("fileBrowseFlg").hidden = true;
+                filesDataTable.push('<div class="fa fa-download" style="cursor: pointer;color: blue" onclick="getDownload(' + "'" + value.id + "'" + ')"></div> ' + i + ". " + value.name + '<br>');
+            } else {
+                document.getElementById("fileBrowseFlg").hidden = false;
+                filesDataTable.push('<div class="fa fa-download" style="cursor: pointer;color: blue" onclick="getDownload(' + "'" + value.id + "'" + ')"></div><div class="fas fa-trash-alt" style="cursor: pointer;color: red" onclick="deleteFile(' + "'" + value.id + "'" + ')"></div> ' + i + ". " + value.name + '<br>');
+            }
+        });
+        $('#filesDataTableDisplay').append(filesDataTable);
+    } else {
+        document.getElementById("fileBrowseFlg").hidden = false;
+    }
+}
+function getDownload(id) {
+    window.open("http://localhost:8080/download/" + id)
+}
+function deleteFile(id) {
+    $.ajax({
+        url: '/delete-file/' + id,
+        type: 'DELETE',
+        success: function (result) {
+            if (result) {
+                getFile(setFile);
+                console.log("Delete Success");
+            } else {
+                alert("Delete Fail!!!");
+            }
+        }
+    });
+}
+var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+$(document).on("click", ".browse", function () {
+    var file = $(this).parents().find(".file");
+    file.trigger("click");
+});
+$('input[type="file"]').change(function (event) {
+    var input = event.target;
+    var fileName = event.target.files[0].name;
+    $("#file").val(fileName);
+    var reader = new FileReader();
+    reader.onloadstart = function () {
+        reader.abort();
+    };
+    reader.onloadend = function () {
+        console.log(reader.error.message);
+    };
+    reader.readAsDataURL(input.files[0]);
+    ///Add File///
+    console.log("directoryFlg: " + directoryFlg);
+    $.ajax({
+        type: "GET",
+        url: "/file-by/" + directoryFlg,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.length > 9) {
+                alert("จำกัดจำนวน 10 ไฟล์");
+            } else {
+                AddFiles();
+            }
+        }
+    });
+});
+function AddFiles() {
+    var files = singleFileUploadInput.files;
+    if (singleFileUploadInput.files.length > 0) {
+        uploadSingleFile(files[0]);
+        logo = files[0].name;
+    }
+}
+function uploadSingleFile(file) {
+    var formData = new FormData();
+    formData.append("file", file);
+    $.ajax({
+        url: "/fileUpload/" + setFile + "/" + $('#createBy').val(),
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+        success: function (data) {
+            getFile(setFile);
+        }
+    });
+}
+//////////////////////////////END UPLOAD FILE///////////////////////////////////////
 
 function updateStatus(id, status) {
     $.ajax({

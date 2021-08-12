@@ -39,7 +39,7 @@
 						</div>
 						<div class="col-lg-1" style="margin-left: -25px;">
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
-								onclick="add(null)">เพิ่มผู้ใช้งาน</button>
+								onclick="add(null)">ตั้งชื่อผู้ใช้งาน</button>
 						</div>
 					</div>
 
